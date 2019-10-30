@@ -263,7 +263,7 @@ html_search_language = 'zh'
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'FISCO_BCOS_doc'
+htmlhelp_basename = 'WeCross_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
