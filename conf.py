@@ -100,7 +100,7 @@ master_doc = 'index'
 # General information about the project.
 project = u'WeCross'
 copyright = u'© 2019. All rights reserved.'
-author = u'fisco-bcos-dev'
+author = u'WeCross Community'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -166,9 +166,9 @@ todo_include_todos = True
 # VCS options: https://docs.readthedocs.io/en/latest/vcs.html#github
 html_context = {
     "display_github": True, # Integrate GitHub
-    "github_repo": "FISCO-BCOS-DOC", # Repo name
-    "github_user": "FISCO-BCOS",
-    "github_version": "master", # Version
+    "github_repo": "WeCross", # Repo name
+    "github_user": "fisco-dev",
+    "github_version": "0.2", # Version
     "conf_py_path": "/", # Path in the checkout to the docs root
 }
 
