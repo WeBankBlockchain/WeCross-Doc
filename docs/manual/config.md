@@ -1,17 +1,13 @@
-# 配置文件
+## 配置文件
 WeCross通过配置文件管理Stub以及每个Stub中的跨链资源，启动时首先加载配置文件，根据配置去初始化各个Stub以及相应的资源，如果配置出错，则启动失败。
 
-
-
-```
+```eval_rst
 .. note::
     - WeCross在开发阶段尝试了XML、YAML等不同的配置了文件格式，在综合易用性、灵活性、功能性以及需求契合性等多方面因素的考量后，最终采用了Toml的配置格式。
     - Toml是一种语义化配置文件格式，可以无二义性地转换为一个哈希表，支持多层级配置，无缩进和空格要求，配置容错率高。
 ```
 
-
-
-## 配置结构
+### 配置结构
 
 WeCross的配置分为根配置和子配置两级，根配置负责P2P、Tomcat Server等和WeCross服务相关的必要信息；子配置主要有两个重要的配置项，分别是Stub对应区块链客户端的建连配置以及区块链上的资源列表信息。如果子配置缺省，WeCross仍能启动成功，只是不能提供任何跨链服务。
 
@@ -28,11 +24,11 @@ WeCross根配置文件名为`wecross.toml`，子配置文件名为`stub.toml`，
 └── wecross.toml
 ```
 
-## 根配置
+### 根配置
 
 WeCross的根配置示例文件`wecross-sample.toml`编译后位于`WeCross/dist/conf`目录，使用前需拷贝成指定文件名`wecross.toml`。
 
-```
+```bash
 cd dist
 cp conf/wecross-sample.toml conf/wecross.toml
 ```
@@ -49,15 +45,15 @@ cp conf/wecross-sample.toml conf/wecross.toml
 
 [server]
     address = '127.0.0.1'
-    port = 8080
+    port = 8250
 
 [p2p]
     listenIP = '0.0.0.0'
-    listenPort = 12346
+    listenPort = 25500
     caCert = 'classpath:p2p/ca.crt'
     sslCert = 'classpath:p2p/node.crt'
     sslKey = 'classpath:p2p/node.key'
-    peers = ['127.0.0.1:12345','127.0.0.1:12347']
+    peers = ['127.0.0.1:25501','127.0.0.1:25502']
 
 [test]
     enableTestResource = false
@@ -104,21 +100,129 @@ cp conf/wecross-sample.toml conf/wecross.toml
    ```
 3. 若通过build_wecross.sh脚本生成的项目，那么已自动帮忙配置好了`wecross.toml`，包括P2P的配置，其中Stub的根目录默认为`stubs`。
 
-## 子配置
+### 子配置
 
 子配置即每个Stub的配置，是WeCross跨链业务的核心，配置了Stub和区块链交互所需的信息，以及注册了各个链需要参与跨链的资源。WeCross启动后会在`wecross.toml`中所指定的Stub的根目录下去遍历所有的一级目录，目录名即为Stub的名字，不同的目录代表不同的链，然后尝试读取每个目录下的stub.toml`文件。
 
-
-
 目前WeCross支持的Stub类型包括：[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)、[Fabric](https://github.com/hyperledger/fabric)和[JDChain]()
 
+#### FISCO BCOS
+
+配置示例如下：
+
+```toml
+[common]
+    stub = 'bcos' # stub must be same with directory name
+    type = 'BCOS'
+
+[smCrypto]
+    # boolean
+    enable = false
+
+[account]
+    accountFile = 'classpath:/stubs/bcos/0xa1ca07c7ff567183c889e1ad5f4dcd37716831ca.pem'
+    password = ''  # if you choose .p12, then password is required
 
 
-### FISCO BCOS
+[channelService]
+    timeout = 60000  # millisecond
+    caCert = 'classpath:/stubs/bcos/ca.crt'
+    sslCert = 'classpath:/stubs/bcos/sdk.crt'
+    sslKey = 'classpath:/stubs/bcos/sdk.key'
+    groupId = 1
+    connectionsStr = ['127.0.0.1:20200']
 
-### JDChain
+# resources is a list
+[[resources]]
+    # name cannot be repeated
+    name = 'HelloWorldContract'
+    type = 'BCOS_CONTRACT'
+    contractAddress = '0x8827cca7f0f38b861b62dae6d711efe92a1e3602'
+[[resources]]
+    name = 'FirstTomlContract'
+    type = 'BCOS_CONTRACT'
+    contractAddress = '0x584ecb848dd84499639fbe2581bfb8a8774b485c'
+```
 
-### Fabric
+配置方法详见[FISCO BCOS Stub配置]()
 
+#### Fabric
 
+配置示例如下：
 
+```toml
+[common]
+    stub = 'fabric' # stub must be same with directory name
+    type = 'FABRIC'
+
+# fabricServices is a list
+[fabricServices]
+     channelName = 'mychannel'
+     orgName = 'Org1'
+     mspId = 'Org1MSP'
+     orgUserName = 'Admin'
+     orgUserKeyFile = 'classpath:/stubs/fabric/5895923570c12e5a0ba4ff9a908ed10574b475797b1fa838a4a465d6121b8ddf_sk'
+     orgUserCertFile = 'classpath:/stubs/fabric/Admin@org1.example.com-cert.pem'
+     ordererTlsCaFile = 'classpath:/stubs/fabric/tlsca.example.com-cert.pem'
+     ordererAddress = 'grpcs://127.0.0.1:7050'
+     
+[peers]
+    [peers.a]
+        peerTlsCaFile = 'classpath:/stubs/fabric/tlsca.org1.example.com-cert.pem'
+        peerAddress = 'grpcs://127.0.0.1:7051'
+    [peers.b]
+         peerTlsCaFile = 'classpath:/stubs/fabric/tlsca.org2.example.com-cert.pem'
+         peerAddress = 'grpcs://127.0.0.1:9051'   
+           
+# resources is a list
+[[resources]]
+    # name cannot be repeated
+    name = 'HelloWorldContract'
+    type = 'FABRIC_CONTRACT'
+    chainCodeName = 'mycc'
+    chainLanguage = "go"
+    peers=['a','b']
+[[resources]]
+    name = 'FirstTomlContract'
+    type = 'FABRIC_CONTRACT'
+    chainLanguage = "go"
+    chainCodeName = 'cscc'
+    peers=['a','b']
+```
+
+配置方法详见[Fabric Stub配置]()
+
+#### JDChain
+
+配置示例如下：
+
+```toml
+[common]
+    stub = 'jd' # stub must be same with directory name
+    type = 'JDCHAIN'
+
+# jdServices is a list
+[[jdServices]]
+     privateKey = '0000000000000000'
+     publicKey = '111111111111111'
+     password = '222222222222222'
+     connectionsStr = '127.0.0.1:18081'
+[[jdServices]]
+     privateKey = '0000000000000000'
+     publicKey = '111111111111111'
+     password = '222222222222222'
+     connectionsStr = '127.0.0.1:18082'
+
+# resources is a list
+[[resources]]
+    # name cannot be repeated
+    name = 'HelloWorldContract'
+    type = 'JDCHAIN_CONTRACT'
+    contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
+[[resources]]
+    name = 'FirstTomlContract'
+    type = 'JDCHAIN_CONTRACT'
+    contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
+```
+
+配置方法详见[JDChain Stub配置]()
