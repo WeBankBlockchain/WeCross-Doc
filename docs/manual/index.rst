@@ -11,3 +11,4 @@
    console.md
    sdk.md
    api.md
+   scripts.md
