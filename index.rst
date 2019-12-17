@@ -8,7 +8,6 @@ WeCross 是
 
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
    
    docs/introduction/introduction.md
