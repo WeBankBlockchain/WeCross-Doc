@@ -4,11 +4,10 @@
 
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
    
    framework.md
-   curi.md
+   ubi.md
    call.md
    proof.md
    sync.md
