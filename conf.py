@@ -44,6 +44,7 @@ if on_rtd:
         objects = []
 
         try:
+            print("lfs_url =" + lfs_url)
             objects.extend(_fetch_urls(lfs_url, oid_list))
         except HTTPError as err:
             if err.code != 413:
