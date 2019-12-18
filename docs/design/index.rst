@@ -4,7 +4,6 @@
 
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
    
    framework.md
