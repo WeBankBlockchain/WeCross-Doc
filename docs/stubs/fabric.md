@@ -270,13 +270,17 @@ WeCross配置好之后，默认的conf目录结构如下：
 ```ordererAddress```：连接的order节点的地址，默认将```ordererAddress```中127.0.0.1替换为实际ip地址的即可。
 
 
-```[peers]```用于配置背书节点集合信息，包括证书文件和地址。默认将```peerAddress```中127.0.0.1替换为实际ip地址的即可，上述搭链的证书路径分别为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem```和```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem```。
+```[peers]```:用于配置背书节点集合信息，包括证书文件和地址。默认将```peerAddress```中127.0.0.1替换为实际ip地址的即可，上述搭链的证书路径分别为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem```和```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem```。
 
 [[resources]]:用于配置合约信息
 
 ```name```:资源名称，需要唯一。
+
 ```type```:类型，默认都是```FABRIC_CONTRACT```。
+
 ```chainCodeName```:chainCode名称，由链码初始化时指定。
+
 ```chainLanguage```:合约代码的开发语言，当前包括```go```,```node```,```java```；分别代表go，nodejs和java语言。
+
 ```peers```: 背书节点列表，必须是```[peers]```的子集。
 
