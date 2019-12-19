@@ -192,13 +192,20 @@ WeCross配置好之后，默认的conf目录结构如下：
     contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
 ```
 ```[[jdServices]]```：配置的是WeCross连接的JDChain的gateway配置信息，包括gateway连接的JDChain的公私钥以及密码。
+
 ```privateKey```：配置JDChain节点的私钥，搭链过程中的生成的私钥。
+
 ```publicKey```：配置JDChain节点的公钥，搭链过程中的生成的公钥。
+
 ```password```：密码，搭链过程输入的密码。
+
 ```connectionsStr```：gateway地址。
+
 
 ```[[resources]]```: 配置资源相关信息，包括资源名称，类型，合约地址等。
 
 ```name```:资源名称，需要唯一。
+
 ```type```:类型，默认都是```JDCHAIN_CONTRACT```。
+
 ```contractAddress```:合约地址。
