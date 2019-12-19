@@ -31,7 +31,7 @@ compile ('com.webank:wecross-sdk:0.2')
 
 ## 使用方法
 
-### 调用SDK的[JSON-RPC API](./apo.xml)
+### 调用SDK的[JSON-RPC API](./api.html)
 示例代码如下：
 ```java
 
