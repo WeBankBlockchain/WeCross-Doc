@@ -1,12 +1,12 @@
 # 接入JDChain
 
 ## JDChain逻辑架构图
-![JDChain架构图](../images/stubs/jdChainArch.png)
+![jdChainArch](../images/stubs/jdChainArch.png)
 
 
 ## JDChain部署流程
 
-![JDChain部署流程](../images/stubs/jdChainBuildChain.png)
+![jdChainBuildChain](../images/stubs/jdChainBuildChain.png)
 
 为简化部署条件、方便开发者学习，我们的示例使用一台服务器进行部署演示，因此我们将4个共识节点的端口进行如下约定：
 管理工具的端口定义分别为：8000/8001/8002/8003
@@ -36,7 +36,7 @@ wget http://storage.jd.com/jd.block.chain/jdchain-peer-1.1.0.RELEASE.zip
 cd ~/jdchain/peer1/bin/
 vi manager-startup.sh
 ```
-![manager.png](../images/stubs/jdchainManager.png)
+![jdchainManager](../images/stubs/jdchainManager.png)
 
 
 #### 修改peer监听端口
@@ -90,23 +90,23 @@ sh manager-startup.sh
 
 协调方配置信息参考如下：
 
-![京东链协调方.png](../images/stubs/jchainCoordinator.png)
+![jchainCoordinator](../images/stubs/jchainCoordinator.png)
 
 参与配置信息参考如下：
 
-![京东链参与方.png](../images/stubs/jdchainParticipant.png)
+![jdchainParticipant](../images/stubs/jdchainParticipant.png)
 
 四个参与方都点击“保存配置信息”后，配置信息会在四个参与方之间共享。界面如下：
-![参与方.png](../images/stubs/jdchainInit.png)
+![jdchainInit](../images/stubs/jdchainInit.png)
 
 然后点击界面下方的“开始”按钮，则启动四个参与方的初始化操作，初始化进度会在下方展示。最终展示界面如下：
-![启动前.png](../images/stubs/jdchainSave.png)
+![jdchainSave](../images/stubs/jdchainSave.png)
 
 
 然后点击菜单：账本→查看账本，刚生成的账本会在内容区展示。点击其中的“启动节点”按钮，即可启动peer节点（见下图）。
 
 
-![启动后.png](../images/stubs/jdchainLoad.png)
+![jdchainLoad](../images/stubs/jdchainLoad.png)
 
 
 启动无误后，状态展示为：已启动→已加载。
@@ -124,7 +124,7 @@ gateway的配置需要配置3个东西，公钥，私钥，以及加密后的密
 ```
  cat ~/jdchain/peer0/config/keys/*.pwd
  ```
- ![gateway.png](../images/stubs/jdchainGateway.png)
+ ![gateway](../images/stubs/jdchainGateway.png)
  
  
  配置完成之后，启动gateway。
@@ -135,7 +135,7 @@ cd /home/app/jdchain/gateway/bin
 sh startup.sh
 ```
 通过web页面访问区块链浏览器，格式为：http://192.168.0.1:18081，<font color=#A52A2A size=4 >（请自行替换对应ip和端口）</font>。界面如下：
-![浏览器.png](../images/stubs/jdchainBrowser.png)
+![jdchainBrowser.png](../images/stubs/jdchainBrowser.png)
 
 
 ## JDChain stub配置
