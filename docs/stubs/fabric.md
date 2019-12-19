@@ -239,7 +239,7 @@ WeCross配置好之后，默认的conf目录结构如下：
 ```
 
 再讲述配置文件配置之前，需要讲述下fabric的交易运行过程：
-![](../images/stubs/fabricExecute.png)
+![](../images/stubs/FabricExecute.png)
 
 
 ```[fabricServices] ```:配置的是fabric的用户证书以及连接的order节点信息。
