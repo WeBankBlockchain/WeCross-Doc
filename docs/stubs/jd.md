@@ -1,12 +1,12 @@
 # 接入JDChain
 
 ## JDChain逻辑架构图
-![JDChain架构图](../images/jdChainArch.png)
+![](../images/stubs/JDChainArch.png)
 
 
 ## JDChain部署流程
 
-![JDChain部署流程](../images/jdChainBuildChain.jpg)
+![](../images/stubs/JDChainBuildChain.png)
 
 为简化部署条件、方便开发者学习，我们的示例使用一台服务器进行部署演示，因此我们将4个共识节点的端口进行如下约定：
 管理工具的端口定义分别为：8000/8001/8002/8003
@@ -36,7 +36,7 @@ wget http://storage.jd.com/jd.block.chain/jdchain-peer-1.1.0.RELEASE.zip
 cd ~/jdchain/peer1/bin/
 vi manager-startup.sh
 ```
-![manager.png](../images/jdchainManager.png)
+![](../images/stubs/JDChainManager.png)
 
 
 #### 修改peer监听端口
@@ -45,7 +45,7 @@ vi manager-startup.sh
 cd ~/jdchain/peer1/bin/
 vi peer-startup.sh
 ```
-![peer.png](../images/jdchainPeer.png)
+![](../images/stubs/JDChainPeer.png)
 
 
 ### 启动管理端
@@ -69,14 +69,14 @@ sh manager-startup.sh
 ```
 启动完成后，可以看到服务器新增了8000~8003的端口监听。同时可以使用 tail -f jump.out查看日志。
 
-![manager_port.png](../images/manager_port.png)
+![](../images/stubs/manager_port.png)
 
 ### 创建公私钥
 
 分别登录<font color=#A52A2A size=4 >四个节点</font>对应端口的管理工具，例如：http://192.168.0.1:8000<font color=#A52A2A size=4 >（请自行替换对应ip和端口）</font>
 
 点击左侧菜单：公私钥管理→生成公私钥。在弹出的界面中填写相关信息：
-![generate_ppk.png](../images/jdChainGeneratePpk.png)
+![](../images/stubs/JDChainGeneratePpk.png)
 
 
 ### 账本初始化
@@ -90,23 +90,23 @@ sh manager-startup.sh
 
 协调方配置信息参考如下：
 
-![京东链协调方.png](../images/jchainCoordinator.png)
+![](../images/stubs/jchainCoordinator.png)
 
 参与配置信息参考如下：
 
-![京东链参与方.png](../images/jdchainParticipant.png)
+![](../images/stubs/JDChainParticipant.png)
 
 四个参与方都点击“保存配置信息”后，配置信息会在四个参与方之间共享。界面如下：
-![参与方.png](../images/jdchainInit.png)
+![](../images/stubs/JDChainInit.png)
 
 然后点击界面下方的“开始”按钮，则启动四个参与方的初始化操作，初始化进度会在下方展示。最终展示界面如下：
-![启动前.png](../images/jdchainSave.png)
+![](../images/stubs/JDChainSave.png)
 
 
 然后点击菜单：账本→查看账本，刚生成的账本会在内容区展示。点击其中的“启动节点”按钮，即可启动peer节点（见下图）。
 
 
-![启动后.png](../images/jdchainLoad.png)
+![](../images/stubs/JDChainLoad.png)
 
 
 启动无误后，状态展示为：已启动→已加载。
@@ -124,7 +124,7 @@ gateway的配置需要配置3个东西，公钥，私钥，以及加密后的密
 ```
  cat ~/jdchain/peer0/config/keys/*.pwd
  ```
- ![gateway.png](../images/jdchainGateway.png)
+ ![](../images/stubs/JDChainGateway.png)
  
  
  配置完成之后，启动gateway。
@@ -135,7 +135,7 @@ cd /home/app/jdchain/gateway/bin
 sh startup.sh
 ```
 通过web页面访问区块链浏览器，格式为：http://192.168.0.1:18081，<font color=#A52A2A size=4 >（请自行替换对应ip和端口）</font>。界面如下：
-![浏览器.png](../images/jdchainBrowser.png)
+![](../images/stubs/JDChainBrowser.png)
 
 
 ## JDChain stub配置
@@ -192,13 +192,20 @@ WeCross配置好之后，默认的conf目录结构如下：
     contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
 ```
 ```[[jdServices]]```：配置的是WeCross连接的JDChain的gateway配置信息，包括gateway连接的JDChain的公私钥以及密码。
+
 ```privateKey```：配置JDChain节点的私钥，搭链过程中的生成的私钥。
+
 ```publicKey```：配置JDChain节点的公钥，搭链过程中的生成的公钥。
+
 ```password```：密码，搭链过程输入的密码。
+
 ```connectionsStr```：gateway地址。
 
-```[[resources]]```： 配置资源相关信息，包括资源名称，类型，合约地址等。
+
+```[[resources]]```: 配置资源相关信息，包括资源名称，类型，合约地址等。
 
 ```name```:资源名称，需要唯一。
+
 ```type```:类型，默认都是```JDCHAIN_CONTRACT```。
+
 ```contractAddress```:合约地址。
