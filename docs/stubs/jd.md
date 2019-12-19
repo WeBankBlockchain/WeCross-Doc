@@ -1,12 +1,12 @@
 # 接入JDChain
 
 ## JDChain逻辑架构图
-![jdChainArch](../images/stubs/jdChainArch.png)
+![](../images/stubs/jdChainArch.png)
 
 
 ## JDChain部署流程
 
-![jdChainBuildChain](../images/stubs/jdChainBuildChain.png)
+![](../images/stubs/jdChainBuildChain.png)
 
 为简化部署条件、方便开发者学习，我们的示例使用一台服务器进行部署演示，因此我们将4个共识节点的端口进行如下约定：
 管理工具的端口定义分别为：8000/8001/8002/8003
@@ -36,7 +36,7 @@ wget http://storage.jd.com/jd.block.chain/jdchain-peer-1.1.0.RELEASE.zip
 cd ~/jdchain/peer1/bin/
 vi manager-startup.sh
 ```
-![jdchainManager](../images/stubs/jdchainManager.png)
+![](../images/stubs/jdchainManager.png)
 
 
 #### 修改peer监听端口
@@ -45,7 +45,7 @@ vi manager-startup.sh
 cd ~/jdchain/peer1/bin/
 vi peer-startup.sh
 ```
-![peer.png](../images/stubs/jdchainPeer.png)
+![](../images/stubs/jdchainPeer.png)
 
 
 ### 启动管理端
@@ -69,14 +69,14 @@ sh manager-startup.sh
 ```
 启动完成后，可以看到服务器新增了8000~8003的端口监听。同时可以使用 tail -f jump.out查看日志。
 
-![manager_port.png](../images/stubs/manager_port.png)
+![](../images/stubs/manager_port.png)
 
 ### 创建公私钥
 
 分别登录<font color=#A52A2A size=4 >四个节点</font>对应端口的管理工具，例如：http://192.168.0.1:8000<font color=#A52A2A size=4 >（请自行替换对应ip和端口）</font>
 
 点击左侧菜单：公私钥管理→生成公私钥。在弹出的界面中填写相关信息：
-![generate_ppk.png](../images/stubs/jdChainGeneratePpk.png)
+![](../images/stubs/jdChainGeneratePpk.png)
 
 
 ### 账本初始化
@@ -90,23 +90,23 @@ sh manager-startup.sh
 
 协调方配置信息参考如下：
 
-![jchainCoordinator](../images/stubs/jchainCoordinator.png)
+![](../images/stubs/jchainCoordinator.png)
 
 参与配置信息参考如下：
 
-![jdchainParticipant](../images/stubs/jdchainParticipant.png)
+![](../images/stubs/jdchainParticipant.png)
 
 四个参与方都点击“保存配置信息”后，配置信息会在四个参与方之间共享。界面如下：
-![jdchainInit](../images/stubs/jdchainInit.png)
+![](../images/stubs/jdchainInit.png)
 
 然后点击界面下方的“开始”按钮，则启动四个参与方的初始化操作，初始化进度会在下方展示。最终展示界面如下：
-![jdchainSave](../images/stubs/jdchainSave.png)
+![](../images/stubs/jdchainSave.png)
 
 
 然后点击菜单：账本→查看账本，刚生成的账本会在内容区展示。点击其中的“启动节点”按钮，即可启动peer节点（见下图）。
 
 
-![jdchainLoad](../images/stubs/jdchainLoad.png)
+![](../images/stubs/jdchainLoad.png)
 
 
 启动无误后，状态展示为：已启动→已加载。
@@ -124,7 +124,7 @@ gateway的配置需要配置3个东西，公钥，私钥，以及加密后的密
 ```
  cat ~/jdchain/peer0/config/keys/*.pwd
  ```
- ![gateway](../images/stubs/jdchainGateway.png)
+ ![](../images/stubs/jdchainGateway.png)
  
  
  配置完成之后，启动gateway。
@@ -135,7 +135,7 @@ cd /home/app/jdchain/gateway/bin
 sh startup.sh
 ```
 通过web页面访问区块链浏览器，格式为：http://192.168.0.1:18081，<font color=#A52A2A size=4 >（请自行替换对应ip和端口）</font>。界面如下：
-![jdchainBrowser.png](../images/stubs/jdchainBrowser.png)
+![](../images/stubs/jdchainBrowser.png)
 
 
 ## JDChain stub配置
