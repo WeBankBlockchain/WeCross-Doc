@@ -239,10 +239,10 @@ WeCross配置好之后，默认的conf目录结构如下：
 ```
 
 再讲述配置文件配置之前，需要讲述下fabric的交易运行过程：
-![fabric交易流程](../images/fabricExecute.png)
+![fabric交易流程](../images/stubs/fabricExecute.png)
 
 
-```[fabricServices] ```配置的是fabric的用户证书以及连接的order节点信息。
+```[fabricServices] ```:配置的是fabric的用户证书以及连接的order节点信息。
 ```channelName```：channel名称，每个Channel之间是相互隔离。
 ```orgName```：机构名称，使用默认即可。
 ```mspId```：使用默认即可。
@@ -254,9 +254,9 @@ WeCross配置好之后，默认的conf目录结构如下：
 ```ordererAddress```：连接的order节点的地址，默认将```ordererAddress```中127.0.0.1替换为实际ip地址的即可。
 
 
-```[peers]```用于配置背书节点集合信息，包括证书文件和地址。默认将```peerAddress```中127.0.0.1替换为实际ip地址的即可，上述搭链的证书路径分别为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem```和```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem```。
+```[peers]```:用于配置背书节点集合信息，包括证书文件和地址。默认将```peerAddress```中127.0.0.1替换为实际ip地址的即可，上述搭链的证书路径分别为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem```和```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem```。
 
-[[resources]]用于配置合约信息
+```[[resources]]```:用于配置合约信息
 
 ```name```:资源名称，需要唯一。
 ```type```:类型，默认都是```FABRIC_CONTRACT```。
