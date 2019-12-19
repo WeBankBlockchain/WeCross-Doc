@@ -8,19 +8,23 @@
 - **指令**: 指令是执行的操作命令，包括获取跨链资源列表，查询资源状态指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
   
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
+- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](./api.md)。
 
 ### 脚本命令
 WeCross控制台为了方便用户使用，还提供了类脚本的使用方式，比如将跨链资源标识赋值给变量，初始化一个类，并用`.command`的方式访问方法。
-详见：[脚本模式](./console.html#脚本模式)
+详见：[脚本模式](#脚本模式)
 
 ### 常用命令链接
+
 #### 合约调用命令
-    - call(不发交易): [call](./console.html#call)
-    - sendTransaction(发交易)): [sendTransaction](./console.html#sendTransaction)
+
+- call(不发交易): [call](#call)
+- sendTransaction(发交易)): [sendTransaction](#sendTransaction)
+
 #### 脚本命令
-    - 初始化资源实例: [WeCross.getResource](./console.html#WeCross.getResource)
-    - 访问资源UBI接口: [[resource].[command]](./console.html#[resource].[command])
+
+- 初始化资源实例: [WeCross.getResource](#WeCross.getResource)
+- 访问资源UBI接口: [[resource].[command]](#[resource].[command])
 
 ### 快捷键
 - `Ctrl+A`：光标移动到行首
@@ -35,14 +39,14 @@ WeCross控制台为了方便用户使用，还提供了类脚本的使用方式�
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](./api.html#rpc)。
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](./api.md#rpc)。
 
 
 ## 控制台配置与运行
 
 ```eval_rst
 .. important::
-    前置条件：部署WeCross请参考 `快速入门 <../tutorial/setup.html#部署WeCross>`。
+    前置条件：部署WeCross请参考 `快速入门<../tutorial/setup.md#部署WeCross>`_。
 ```
 ### 获取控制台
 
