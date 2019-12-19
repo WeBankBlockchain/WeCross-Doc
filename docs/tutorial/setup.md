@@ -29,7 +29,7 @@ bash build_wecross.sh -i payment 127.0.0.1 8250 25500
 ```eval_rst
 .. note::
     - 其中-i选项指定服务配置，参数分别代表：[跨链网络标识符]，[rpc_listen_ip]，[rpc_port]，[p2p_port]。
-    - 详细的使用教程详见`Build WeCross脚本 <../manual/script.html#构建WeCross脚本>`_。
+    - 详细的使用教程详见`Build WeCross脚本 <../manual/script.md#构建WeCross脚本>`_。
 ```
 
 命令执行成功会输出`Build WeCross successfully`，并生成目录`127.0.0.1-8250-25500`。如果执行出错，请查看屏幕打印提示。
@@ -112,7 +112,7 @@ cp conf/console-sample.xml conf/console.xml
 
 ```eval_rst
 .. note::
-    - 若搭建WeCross的IP和端口未使用默认配置，拷贝完配置文件后，需自行更改，详见[控制台配置](../manual/console.html#配置控制台)
+    - 若搭建WeCross的IP和端口未使用默认配置，拷贝完配置文件后，需自行更改，详见`控制台配置 <../manual/console.md#配置控制台>`_。
 ```
 
 - 启动
@@ -132,7 +132,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 - 调用测试资源
 
-可以通过`listResources`命令查看当前连接的WeCross已配置的资源，可以通过`call, sendTransaction`等命令实现资源的UBI接口调用。测试资源所有命令的返回值都是**入参**。具体的命令列表与含义详见[控制台命令](../manual/console.html#控制台命令)
+可以通过`listResources`命令查看当前连接的WeCross已配置的资源，可以通过`call, sendTransaction`等命令实现资源的UBI接口调用。测试资源所有命令的返回值都是**入参**。具体的命令列表与含义详见[控制台命令](../manual/console.md#控制台命令)
 
 ```bash
 [server1]> listResources
@@ -246,8 +246,8 @@ bash create_stubs_config.sh -b stubs bcoschain
 ```eval_rst
 .. note::
     - 其中-b代表创建FISCO BCOS Stub配置文件，参数分别表示：[配置文件根目录]，[Stub名字]即区块链标识。
-    - 其中的[配置文件根目录]需要和根配置文件`wecross.toml`中的[stubs.path]保存一致。
-    - 详细的使用教程详见[Build WeCross脚本]()。
+    - 其中的[配置文件根目录]需要和根配置文件wecross.toml中的[stubs.path]保存一致。
+    - 详细的使用教程详见`Build WeCross <../manual/scripts.md#创建Stubs配置脚本>`_。
 ```
 
 命令执行成功会输出`Create stubs/bcoschain/stub.toml successfully`，并生成文件`conf/stubs/bcoschain/stub.toml`。如果执行出错，请查看屏幕打印提示。
