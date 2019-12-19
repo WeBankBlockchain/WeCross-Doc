@@ -1,11 +1,7 @@
 # JSON-RPC API
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http请求，可以访问WeCross的JSON RPC接口。curl命令的url地址设置为WeCross根配置中的RPC监听IP和端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](#RPC错误码)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http请求，可以访问WeCross的JSON RPC接口。curl命令的url地址设置为WeCross根配置中的RPC监听IP和端口。可使用[jq](https://stedolan.github.io/jq/)工具对结果进行格式化显示。错误码参考[RPC错误码](#rpc)。
 
-```eval_rst
-.. important::
-    - 所有UBI接口的RPC API都是针对跨链资源，因此需要将跨链资源标识转换成url再进行调用。
-```
 
 ## API列表
 - RemoteCall<Response> status(String path);
@@ -47,7 +43,8 @@
 
 ```eval_rst
 .. important::
-    - `call`和`sendTransaction`需要传入返回值类型列表，类型为字符串数组。
+    - 所有UBI接口的RPC API都是针对跨链资源，因此需要将跨链资源标识转换成url再进行调用。
+    - `call <#id20>`_ 和 `sendTransaction <#id30>`_ 需要传入返回值类型列表，类型为字符串数组。
     - 目前支持的类型包括：Int(整型)，IntArray(整型数组)，String(字符串)，StringArray(字符串数组)。
 ```
 
