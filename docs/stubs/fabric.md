@@ -368,6 +368,5 @@ WeCross配置好之后，默认的conf目录结构如下：
     chainLanguage = "go"
     peers=['org1','org2']
 ```
-
 ### Fabric stub配置文件修改
 将```ordererAddress```和```peerAddress```修改成为实际ip地址。

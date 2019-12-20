@@ -29,7 +29,7 @@ bash build_wecross.sh -i payment 127.0.0.1 8250 25500
 ```eval_rst
 .. note::
     - 其中-i选项指定服务配置，参数分别代表：[跨链网络标识符]，[rpc_listen_ip]，[rpc_port]，[p2p_port]。
-    - 详细的使用教程详见[Build WeCross脚本]()。
+    - 详细的使用教程详见 `Build WeCross脚本 <../manual/scripts.html#wecross>`_。
 ```
 
 命令执行成功会输出`Build WeCross successfully`，并生成目录`127.0.0.1-8250-25500`。如果执行出错，请查看屏幕打印提示。
@@ -112,7 +112,7 @@ cp conf/console-sample.xml conf/console.xml
 
 ```eval_rst
 .. note::
-    - 若搭建WeCross的IP和端口未使用默认配置，拷贝完配置文件后，需自行更改，详见[控制台配置]()
+    - 若搭建WeCross的IP和端口未使用默认配置，拷贝完配置文件后，需自行更改，详见 `控制台配置 <../manual/console.html#id11>`_。
 ```
 
 - 启动
@@ -132,7 +132,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 - 调用测试资源
 
-可以通过`listResources`命令查看当前连接的WeCross已配置的资源，可以通过`call, sendTransaction`等命令实现资源的UBI接口调用。测试资源所有命令的返回值都是**入参**。具体的命令列表与含义详见[控制台命令]()
+可以通过`listResources`命令查看当前连接的WeCross已配置的资源，可以通过`call, sendTransaction`等命令实现资源的UBI接口调用。测试资源所有命令的返回值都是**入参**。具体的命令列表与含义详见[控制台命令](../manual/console.html#id13)
 
 ```bash
 [server1]> listResources
@@ -192,7 +192,7 @@ Receipt{
 
 - 停止WeCross
 
-在`127.0.0.1-8250-25500`目录下提供了启动和停止脚步，运行`stop.sh`可停止WeCross服务。
+在`127.0.0.1-8250-25500`目录下提供了启动和停止脚本，运行`stop.sh`可停止WeCross服务。
 
 ```bash 
 bash stop.sh
@@ -237,7 +237,7 @@ contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 
 - 生成配置文件
 
-运行`create_stubs_config.sh`脚本，生成FISCO BCOS Stub的配置文件。
+运行`create_stubs_config.sh`脚本，该脚本位于`127.0.0.1-8250-25500`目录，生成FISCO BCOS Stub的配置文件。
 
 ```bash
 bash create_stubs_config.sh -b stubs bcoschain
@@ -246,8 +246,8 @@ bash create_stubs_config.sh -b stubs bcoschain
 ```eval_rst
 .. note::
     - 其中-b代表创建FISCO BCOS Stub配置文件，参数分别表示：[配置文件根目录]，[Stub名字]即区块链标识。
-    - 其中的[配置文件根目录]需要和根配置文件`wecross.toml`中的[stubs.path]保存一致。
-    - 详细的使用教程详见[Build WeCross脚本]()。
+    - 其中的[配置文件根目录]需要和根配置文件wecross.toml中的[stubs.path]保存一致。
+    - 详细的使用教程详见 `Stubs配置脚本 <../manual/scripts.html#stubs>`_。
 ```
 
 命令执行成功会输出`Create stubs/bcoschain/stub.toml successfully`，并生成文件`conf/stubs/bcoschain/stub.toml`。如果执行出错，请查看屏幕打印提示。

@@ -144,7 +144,7 @@ cp conf/wecross-sample.toml conf/wecross.toml
     contractAddress = '0x584ecb848dd84499639fbe2581bfb8a8774b485c'
 ```
 
-配置方法详见[FISCO BCOS Stub配置]()
+配置方法详见[FISCO BCOS Stub配置](../stubs/bcos.html#fisco-bcos-stub)
 
 #### Fabric
 
@@ -190,7 +190,7 @@ cp conf/wecross-sample.toml conf/wecross.toml
     peers=['a','b']
 ```
 
-配置方法详见[Fabric Stub配置]()
+配置方法详见[Fabric Stub配置](../stubs/fabric.html#fabric-stub)
 
 #### JDChain
 
@@ -225,4 +225,4 @@ cp conf/wecross-sample.toml conf/wecross.toml
     contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
 ```
 
-配置方法详见[JDChain Stub配置]()
+配置方法详见[JDChain Stub配置](../stubs/jd.html#jdchain-stub)
