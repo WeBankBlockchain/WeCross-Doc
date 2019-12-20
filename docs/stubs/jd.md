@@ -131,7 +131,7 @@ gateway的配置需要配置3个东西，公钥，私钥，以及加密后的密
  
  ```
 cd  ~/jdchain
-cd /home/app/jdchain/gateway/bin
+cd ~/jdchain/gateway/bin
 sh startup.sh
 ```
 通过web页面访问区块链浏览器，格式为：http://192.168.0.1:18081，<font color=#A52A2A size=4 >（请自行替换对应ip和端口）</font>。界面如下：

@@ -107,7 +107,7 @@ sudo vim /etc/profile
 ```
 export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/go
-export GOPATH=/home/app/go/
+export GOPATH=/data/go/
 export PATH=$PATH:$GOROOT/bin
 ```
 
@@ -180,6 +180,86 @@ sudo vi /etc/profile 新增如下一行
 ```
 
 ## Fabric stub配置
+
+### Fabric证书文件拷贝
+
+在fabric链的服务器，执行如下命令。
+```
+    cd ~
+    touch copyFile.sh
+```
+将下面内容拷贝到```copyFile.sh```。
+```
+#!/bin/bash
+
+cd ~
+if [ ! -d "fabricFile" ]; then
+  mkdir fabricFile
+fi
+rm -f fabricFile/*;
+cd fabricFile;
+echo "gopath:$GOPATH"
+orgUserKeyFile="$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk"
+echo "orgUserKeyFile:$orgUserKeyFile"
+orgUserKeyFile=`ls  $orgUserKeyFile `
+echo "orgUserKeyFile:$orgUserKeyFile"
+if [  ! -f "$orgUserKeyFile" ];then
+	echo "orgUserKeyFile:$orgUserKeyFile not exist please check!";
+	exit;
+fi
+cp $orgUserKeyFile	./orgUserKeyFile
+orgUserCertFile="$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem"
+echo "orgUserCertFile:$orgUserCertFile"
+if [  ! -f "$orgUserCertFile" ];then
+	echo "orgUserCertFile:$orgUserCertFile not exist please check!";
+	exit;
+fi
+cp $orgUserCertFile	./orgUserCertFile
+ordererTlsCaFile="$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem"
+echo "ordererTlsCaFile:$ordererTlsCaFile"
+if [  ! -f "$ordererTlsCaFile" ];then
+	echo "ordererTlsCaFile:$ordererTlsCaFile not exist please check!";
+	exit;
+fi
+cp $ordererTlsCaFile	./ordererTlsCaFile
+peerOrg1CertFile="$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
+echo "peerOrg1CertFile:$peerOrg1CertFile"
+if [  ! -f "$peerOrg1CertFile" ];then
+	echo "peerOrg1CertFile:$peerOrg1CertFile not exist please check!";
+	exit;
+fi
+cp $peerOrg1CertFile	./peerOrg1CertFile
+peerOrg2CertFile="$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
+echo "peerOrg2CertFile:$peerOrg2CertFile"
+
+if [  ! -f "$peerOrg2CertFile" ];then
+	echo "peerOrg2CertFile:$peerOrg2CertFile not exist please check!";
+	exit;
+fi
+cp $peerOrg2CertFile	./peerOrg2CertFile
+echo "all cert files copy successfully"
+```
+
+执行如下命令进行参数拷贝
+
+```
+    dos2Unix copyFile.sh
+    sh copyFile.sh
+```
+
+如果证书拷贝成功，```fabricFile```目录下会有如下证书文件目录。
+```
+[app@VM_105_134_centos ~]$ tree fabricFile/
+fabricFile/
+├── ordererTlsCaFile
+├── orgUserCertFile
+├── orgUserKeyFile
+├── peerOrg1CertFile
+└── peerOrg2CertFile
+0 directories, 5 files
+```
+
+### Fabric stub证书文件拷贝
 WeCross配置好之后，默认的conf目录结构如下：
 ```
 ├── log4j2.xml
@@ -200,9 +280,60 @@ WeCross配置好之后，默认的conf目录结构如下：
 ```
 假定当前目录在conf，执行如下操作:
 ```
-    cd fabric;
+    mkdir fabric;
+    cd stubs/fabric;
     cp stub-sample.toml  stub.toml
 ```
+
+执行上述命令之后，目录结构变成如下：
+```
+├── log4j2.xml
+├── fabric
+├── p2p
+│   ├── ca.crt
+│   ├── node.crt
+│   ├── node.key
+│   └── node.nodeid
+├── stubs
+│   ├── bcos
+│   │   └── stub-sample.toml
+│   ├── fabric
+│   │   └── stub-sample.toml
+│   │   └── stub.toml
+│   │
+│   └── jd
+│       └── stub-sample.toml
+├── wecross-sample.toml
+└── wecross.toml
+```
+
+将上一步从fabric链上拷贝的五个证书文件拷贝到```conf/fabric```。拷贝完成后通过```tree conf```命令可以看到如下目录结构：
+```
+├── log4j2.xml
+├── fabric
+│   ├── ordererTlsCaFile
+│   ├── orgUserCertFile
+│   ├── orgUserKeyFile
+│   ├── peerOrg1CertFile
+│   ├── peerOrg2CertFile
+├── p2p
+│   ├── ca.crt
+│   ├── node.crt
+│   ├── node.key
+│   └── node.nodeid
+├── stubs
+│   ├── bcos
+│   │   └── stub-sample.toml
+│   ├── fabric
+│   │   └── stub-sample.toml
+│   │   └── stub.toml
+│   │
+│   └── jd
+│       └── stub-sample.toml
+├── wecross-sample.toml
+└── wecross.toml
+```
+
 查看stub.toml，可以看到文件内容如下：
 ```
 [common]
@@ -215,17 +346,17 @@ WeCross配置好之后，默认的conf目录结构如下：
      orgName = 'Org1'
      mspId = 'Org1MSP'
      orgUserName = 'Admin'
-     orgUserKeyFile = 'classpath:/fabric/5895923570c12e5a0ba4ff9a908ed10574b475797b1fa838a4a465d6121b8ddf_sk'
-     orgUserCertFile = 'classpath:/fabric/Admin@org1.example.com-cert.pem'
-     ordererTlsCaFile = 'classpath:/fabric/tlsca.example.com-cert.pem'
+     orgUserKeyFile = 'classpath:/fabric/orgUserKeyFile'
+     orgUserCertFile = 'classpath:/fabric/orgUserCertFile'
+     ordererTlsCaFile = 'classpath:/fabric/ordererTlsCaFile'
      ordererAddress = 'grpcs://127.0.0.1:7050'
      
 [peers]
-    [peers.a]
-        peerTlsCaFile = 'classpath:/fabric/tlsca.org1.example.com-cert.pem'
+    [peers.org1]
+        peerTlsCaFile = 'classpath:/fabric/peerOrg1CertFile'
         peerAddress = 'grpcs://127.0.0.1:7051'
-    [peers.b]
-         peerTlsCaFile = 'classpath:/fabric/tlsca.org2.example.com-cert.pem'
+    [peers.org2]
+         peerTlsCaFile = 'classpath:/fabric/peerOrg2CertFile'
          peerAddress = 'grpcs://127.0.0.1:9051'
            
 # resources is a list
@@ -235,45 +366,8 @@ WeCross配置好之后，默认的conf目录结构如下：
     type = 'FABRIC_CONTRACT'
     chainCodeName = 'mycc'
     chainLanguage = "go"
-    peers=['a','b']
+    peers=['org1','org2']
 ```
 
-再讲述配置文件配置之前，需要讲述下fabric的交易运行过程：
-![](../images/stubs/FabricExecute.png)
-
-
-```[fabricServices] ```:配置的是fabric的用户证书以及连接的order节点信息。
-
-```channelName```：channel名称，每个Channel之间是相互隔离。
-
-```orgName```：机构名称，使用默认即可。
-
-```mspId```：使用默认即可。
-
-```orgUserName```：机构用户名称，使用默认即可。也可以配置成```User1```，配置不一样会影响```orgUserKeyFile```和```orgUserCertFile```配置。
-```orgUserKeyFile```：用户私钥文件，如果```orgUserName```为```Admin```则此文件的源路径为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk```，如果为```User1```，则此文件的源路径为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/*_sk```
-
-```ordererTlsCaFile```：连接的order节点的证书。上述搭链生成的证书路径为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem```。
-```orgUserCertFile```：用户私钥文件，如果```orgUserName```为```Admin```则此文件的源路径为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem```，如果为```User1```，则此文件的源路径为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem```
-
-```ordererTlsCaFile```：连接的order节点的证书。上述搭链生成的证书路径为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem```。
-
-```ordererAddress```：连接的order节点的地址，默认将```ordererAddress```中127.0.0.1替换为实际ip地址的即可。
-
-
-```[peers]```:用于配置背书节点集合信息，包括证书文件和地址。默认将```peerAddress```中127.0.0.1替换为实际ip地址的即可，上述搭链的证书路径分别为```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem```和```$GOPATH/src/github.com/hyperledger/fabric-samples/first-network//crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem```。
-
-
-```[[resources]]```:用于配置合约信息
-
-```name```:资源名称，需要唯一。
-
-```type```:类型，默认都是```FABRIC_CONTRACT```。
-
-```chainCodeName```:chainCode名称，由链码初始化时指定。
-
-```chainLanguage```:合约代码的开发语言，当前包括```go```,```node```,```java```；分别代表go，nodejs和java语言。
-
-```peers```: 背书节点列表，必须是```[peers]```的子集。
-
-
+### Fabric stub配置文件修改
+将```ordererAddress```和```peerAddress```修改成为实际ip地址。
