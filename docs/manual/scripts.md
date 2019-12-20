@@ -4,6 +4,8 @@
 
 ## 启动脚本
 
+**start.sh**
+
 启动脚本`start.sh`用于启动WeCross服务，启动过程中的完整信息记录在start.out中。
 
 ```bash
@@ -23,6 +25,8 @@ See logs/error.log for details
 
 ## 停止脚本
 
+**stop.sh**
+
 停止脚本`stop.sh`用于停止WeCross服务。
 
 ```bash
@@ -31,49 +35,39 @@ bash  stop.sh
 
 ## 构建WeCross脚本
 
-构建WeCross脚本`build_wecross.sh`用于快速部署WeCross，该脚本默认从[GitHub](https://github.com/WeBankFinTech/WeCross)下载`master`分支代码进行相关环境的搭建。
+**build_wecross.sh**
 
-`build_wecross.sh`主要完成的工作包括：下载和编译源码，生成P2P证书，帮助用户完成根配置文件`wecross.toml`的配置。
-
-可通过-h查看帮助信息：
+生成WeCross跨链路由网络
 
 ```bash
-bash build_wecross.sh -h
-
 Usage:
-    -i [Network ID] [IP] [Port] [Port]     Init wecross project by wecross network id, ip, rpc_port and p2p_port, e.g: payment 127.0.0.1 8250 25500
-    -f [Network ID] [File]                 Init wecross project by wecross network id and ip&ports file. file should be splited by line "ip rpc_port p2p_port" e.g: 127.0.0.1 8250 25500
-    -h                                     Call for help
+    -n  [Network id]                [Required] Set network ID
+    -l  [ip:rpc-port:p2p-port]      [Optional] "ip:rpc-port:p2p-port" e.g:"127.0.0.1:8250:25500"
+    -f  [ip list file]              [Optional] split by line, every line should be "ip:rpc-port:p2p-port". eg "127.0.0.1:8250:25500"
+    -o  [Output dir]                Default ./wecross/
+    -z  [Generate tar packet]       Default no
+    -T  [Enable test mode]          Default no. Enable test resource.
+    -h  Help
 e.g
-    bash build_wecross.sh -i payment 127.0.0.1 8250 25500
+    bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500
+    bash build_wecross.sh -n payment -f ipfile
 ```
 
-- **`i`选项:** 
-用于指定跨链网络标识，RPC监听的IP和端口，以及用于P2P通讯的端口。
+- **`-n`**：指定跨链网络标识
+- **`-l`**：指定生成一个跨链路由，与`-f`二选一，单行，如：`192.168.0.1:8250:25500`
+- **`-f`**：指定生成多个跨链路由，与`-l`二选一，多行，**不可有空行**，例如：
 
-- **`f`选项** 
-    + 参数包括跨链网络标识和文件名。
-    + 用于根据配置文件生成多个WeCross项目，最后输出`tar.gz`格式的压缩文件。
-    + 文件按行分割，每一行表示一个WeCross项目，格式为`[IP] [Port] [Port]`，每行内的项使用空格分割，**不可有空行**。
-
-下面是一个配置文件的例子，每个配置项以空格分隔。
-
-```bash
-192.168.0.1 8250 25500
-192.168.0.1 8251 25501
-192.168.0.2 8252 25502
-192.168.0.3 8253 25503
-192.168.0.4 8254 25504 
-```
-如果执行成功，则输出如下信息，生成的五个WeCross项目互为Peer。
-```bash
-Create 192.168.0.1-8250-25500.tar.gz  successfully
-Create 192.168.0.1-8251-25501.tar.gz  successfully
-Create 192.168.0.2-8252-25502.tar.gz  successfully
-Create 192.168.0.3-8253-25503.tar.gz  successfully
-Create 192.168.0.4-8254-25504.tar.gz  successfully
-Build Wecross successfully
-```
+    ```
+    192.168.0.1:8250:25500
+    192.168.0.1:8251:25501
+    192.168.0.2:8252:25502
+    192.168.0.3:8253:25503
+    192.168.0.4:8254:25504 
+    ```
+* **`-o`**：指定跨链路由生成目录，默认`wecross/`
+* **`-z`**：若设置，则生成跨链路由的压缩包，方便拷贝至其它机器
+* **`-T`**：若设置，生成的跨链路由开启测试资源
+* **`-h`**：打印Usage
 
 ## 创建Stubs配置脚本
 
@@ -134,6 +128,8 @@ tree
 
 ## 创建P2P证书脚本
 
+**create_cert.sh**
+
 创建P2P证书脚本`create_cert.sh`用于创建P2P证书文件。WeCross Router之间通讯需要证书用于认证，只有具有相同`ca.crt`根证书的WeCross Router直接才能建立连接。
 
 可通过-h查看帮助信息：
@@ -169,11 +165,3 @@ e.g
 
 - **`t`选项:** 
 指定`cert.cnf`的路径
-
-## 创建FISCO BCOS账户脚本
-
-脚本`create_bcos_account.sh`用于生成FISCO BCOS的账户。
-
-FISCO BCOS账户文件有两种类型`.pem, .p12`，其中`.p12`需要输入口令。
-
-脚本`create_bcos_account.sh`会同时生成两种类型的账户，用户可根据需求选择使用不同的账户。
