@@ -34,10 +34,10 @@ WeCross提供了多种脚本帮助用户快速体验，这些脚本依赖`openss
 
 ```bash
 # Ubuntu
-sudo apt-get install openssl curl expect
+sudo apt-get install -y openssl curl expect
 
 # CentOS
-sudo yum install openssl curl expect
+sudo yum install -y openssl curl expect
 
 # MacOS
 brew install openssl curl expect
