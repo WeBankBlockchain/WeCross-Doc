@@ -152,7 +152,7 @@ cp conf/wecross-sample.toml conf/wecross.toml
 
 ```toml
 [common]
-    stub = 'fabric' # stub must be same with directory name
+    stub = 'fabric'
     type = 'FABRIC'
 
 # fabricServices is a list
@@ -161,18 +161,18 @@ cp conf/wecross-sample.toml conf/wecross.toml
      orgName = 'Org1'
      mspId = 'Org1MSP'
      orgUserName = 'Admin'
-     orgUserKeyFile = 'classpath:/stubs/fabric/5895923570c12e5a0ba4ff9a908ed10574b475797b1fa838a4a465d6121b8ddf_sk'
-     orgUserCertFile = 'classpath:/stubs/fabric/Admin@org1.example.com-cert.pem'
-     ordererTlsCaFile = 'classpath:/stubs/fabric/tlsca.example.com-cert.pem'
+     orgUserKeyFile = 'classpath:/fabric/orgUserKeyFile'
+     orgUserCertFile = 'classpath:/fabric/orgUserCertFile'
+     ordererTlsCaFile = 'classpath:/fabric/ordererTlsCaFile'
      ordererAddress = 'grpcs://127.0.0.1:7050'
      
 [peers]
-    [peers.a]
-        peerTlsCaFile = 'classpath:/stubs/fabric/tlsca.org1.example.com-cert.pem'
+    [peers.org1]
+        peerTlsCaFile = 'classpath:/fabric/peerOrg1CertFile'
         peerAddress = 'grpcs://127.0.0.1:7051'
-    [peers.b]
-         peerTlsCaFile = 'classpath:/stubs/fabric/tlsca.org2.example.com-cert.pem'
-         peerAddress = 'grpcs://127.0.0.1:9051'   
+    [peers.org2]
+         peerTlsCaFile = 'classpath:/fabric/peerOrg2CertFile'
+         peerAddress = 'grpcs://127.0.0.1:9051'
            
 # resources is a list
 [[resources]]
@@ -181,13 +181,7 @@ cp conf/wecross-sample.toml conf/wecross.toml
     type = 'FABRIC_CONTRACT'
     chainCodeName = 'mycc'
     chainLanguage = "go"
-    peers=['a','b']
-[[resources]]
-    name = 'FirstTomlContract'
-    type = 'FABRIC_CONTRACT'
-    chainLanguage = "go"
-    chainCodeName = 'cscc'
-    peers=['a','b']
+    peers=['org1','org2']
 ```
 
 配置方法详见[Fabric Stub配置](../stubs/fabric.html#fabric-stub)
@@ -198,7 +192,7 @@ cp conf/wecross-sample.toml conf/wecross.toml
 
 ```toml
 [common]
-    stub = 'jd' # stub must be same with directory name
+    stub = 'jd'
     type = 'JDCHAIN'
 
 # jdServices is a list

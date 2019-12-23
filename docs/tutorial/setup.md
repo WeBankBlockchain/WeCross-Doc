@@ -27,10 +27,10 @@ bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500 -T
 
 ```eval_rst
 .. note::
-    - -n 指定跨链网络标识符（network id），跨链网络通过network id进行区分
+    - -n 指定跨链网络标识符(network id)，跨链网络通过network id进行区分
     - -l 指定此WeCross跨链路由的ip地址，rpc端口，p2p端口
     - -T 启用测试资源
-    详细的使用教程详见[Build WeCross脚本]()。
+    详细的使用教程详见 `Build WeCross脚本 <../manual/scripts.html#wecross>`_。
 ```
 
 命令执行成功，跨链路由生成至`wecross/`目录下，生成了一个跨链路由`127.0.0.1-8250-25500`
@@ -112,7 +112,7 @@ cp conf/console-sample.xml conf/console.xml
 
 ```eval_rst
 .. note::
-    - 若搭建WeCross的IP和端口未使用默认配置，拷贝完配置文件后，需自行更改，详见[控制台配置]()
+    - 若搭建WeCross的IP和端口未使用默认配置，拷贝完配置文件后，需自行更改，详见 `控制台配置 <../manual/console.html#id11>`_。
 ```
 
 - 启动控制台
@@ -132,7 +132,8 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 #### 操作测试资源
 
-具体的控制台命令列表与含义详见[控制台命令]()
+可以通过`listResources`命令查看当前连接的WeCross已配置的资源，可以通过`call, sendTransaction`等命令实现资源的UBI接口调用。具体的命令列表与含义详见[控制台命令](../manual/console.html#id13)
+
 
 - 查看已有资源
 
@@ -258,20 +259,19 @@ contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 
 - 生成配置文件
 
-运行`create_stubs_config.sh`脚本，生成FISCO BCOS Stub的配置文件。
+运行`create_bcos_stub_config.sh`脚本，生成FISCO BCOS Stub的配置文件。
 
 ```bash
-bash create_stubs_config.sh -b stubs bcoschain
+bash create_bcos_stub_config.sh -r stubs -n bcoschain
 ```
 
 ```eval_rst
 .. note::
-    - 其中-b代表创建FISCO BCOS Stub配置文件，参数分别表示：[配置文件根目录]，[Stub名字]即区块链标识。
-    - 其中的[配置文件根目录]需要和根配置文件`wecross.toml`中的[stubs.path]保存一致。
-    - 详细的使用教程详见[Build WeCross脚本]()。
+    - -r指定配置文件根目录，需要和根配置文件wecross.toml中的[stubs.path]保存一致。
+    - 详细的使用教程详见 `Stubs配置脚本 <../manual/scripts.html#fisco-bcos-stub>`_。
 ```
 
-命令执行成功会输出`Create stubs/bcoschain/stub.toml successfully`，并生成文件`conf/stubs/bcoschain/stub.toml`。如果执行出错，请查看屏幕打印提示。
+命令执行成功会输出`[INFO] Create stubs/bcoschain/stub.toml successfully`，并生成文件`conf/stubs/bcoschain/stub.toml`。如果执行出错，请查看屏幕打印提示。
 
 在`conf/stubs/bcoschain`目录下的`.pem`文件即FISCO BCOS的账户文件，已自动配置在了`stub.toml`文件中，之后只需要配置证书、群组以及资源信息。
 
