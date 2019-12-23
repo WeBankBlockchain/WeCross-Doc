@@ -1,4 +1,7 @@
 # 接入FISCO BCOS
+
+接入FISCO BCOS需要满足底层版本和兼容性版本均不低于v2.2.0。
+
 ## FISCO BCOS环境搭建
 FISCO BCOS环境搭建参考[部署文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)
 

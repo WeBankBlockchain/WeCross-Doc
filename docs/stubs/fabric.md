@@ -4,8 +4,10 @@
 
 ## 前置准备工作
 #### docker安装
-##### centos环境下docker安装
+
 docker安装需要满足内核版本不低于3.10。
+
+##### centos环境下docker安装
 ###### 卸载旧版本
 ```
 sudo yum remove docker docker-common docker-selinux docker-engine
@@ -134,6 +136,8 @@ export PATH=$PATH:$GOROOT/bin
 ```
     hello world.
 ```
+
+请确保这一步可以正常输出，如果不能正常输出，请检查go的版本以及环境变量配置。
 
 #### Fabric链搭建
 ##### 目录准备
@@ -280,7 +284,6 @@ WeCross配置好之后，默认的conf目录结构如下：
 ```
 假定当前目录在conf，执行如下操作:
 ```
-    mkdir fabric;
     cd stubs/fabric;
     cp stub-sample.toml  stub.toml
 ```
@@ -288,7 +291,6 @@ WeCross配置好之后，默认的conf目录结构如下：
 执行上述命令之后，目录结构变成如下：
 ```
 ├── log4j2.xml
-├── fabric
 ├── p2p
 │   ├── ca.crt
 │   ├── node.crt
@@ -310,12 +312,6 @@ WeCross配置好之后，默认的conf目录结构如下：
 将上一步从fabric链上拷贝的五个证书文件拷贝到```conf/fabric```。拷贝完成后通过```tree conf```命令可以看到如下目录结构：
 ```
 ├── log4j2.xml
-├── fabric
-│   ├── ordererTlsCaFile
-│   ├── orgUserCertFile
-│   ├── orgUserKeyFile
-│   ├── peerOrg1CertFile
-│   ├── peerOrg2CertFile
 ├── p2p
 │   ├── ca.crt
 │   ├── node.crt
@@ -327,6 +323,11 @@ WeCross配置好之后，默认的conf目录结构如下：
 │   ├── fabric
 │   │   └── stub-sample.toml
 │   │   └── stub.toml
+│   │   └── ordererTlsCaFile
+│   │   └── orgUserCertFile
+│   │   └── orgUserKeyFile
+│   │   └── peerOrg1CertFile
+│   │   └── peerOrg2CertFile
 │   │
 │   └── jd
 │       └── stub-sample.toml
@@ -346,17 +347,17 @@ WeCross配置好之后，默认的conf目录结构如下：
      orgName = 'Org1'
      mspId = 'Org1MSP'
      orgUserName = 'Admin'
-     orgUserKeyFile = 'classpath:/fabric/orgUserKeyFile'
-     orgUserCertFile = 'classpath:/fabric/orgUserCertFile'
-     ordererTlsCaFile = 'classpath:/fabric/ordererTlsCaFile'
+     orgUserKeyFile = 'classpath:/stub/fabric/orgUserKeyFile'
+     orgUserCertFile = 'classpath:/stub/fabric/orgUserCertFile'
+     ordererTlsCaFile = 'classpath:/stub/fabric/ordererTlsCaFile'
      ordererAddress = 'grpcs://127.0.0.1:7050'
      
 [peers]
     [peers.org1]
-        peerTlsCaFile = 'classpath:/fabric/peerOrg1CertFile'
+        peerTlsCaFile = 'classpath:/stub/fabric/peerOrg1CertFile'
         peerAddress = 'grpcs://127.0.0.1:7051'
     [peers.org2]
-         peerTlsCaFile = 'classpath:/fabric/peerOrg2CertFile'
+         peerTlsCaFile = 'classpath:/stub/fabric/peerOrg2CertFile'
          peerAddress = 'grpcs://127.0.0.1:9051'
            
 # resources is a list
@@ -368,5 +369,26 @@ WeCross配置好之后，默认的conf目录结构如下：
     chainLanguage = "go"
     peers=['org1','org2']
 ```
+
 ### Fabric stub配置文件修改
 将```ordererAddress```和```peerAddress```修改成为实际ip地址。
+
+
+### Fabric环境搭建常见问题定位
+
+1.  启动docker提示:```dial unix /var/run/docker.sock: connect: `permission denied````
+解决方案：将当前用户加入到docker用户组
+```
+    sudo gpasswd -a ${USER} docker
+```
+
+
+2 节点启动或者停止过程出现类似```ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53dd92447a44f7654aa36563adabbd06: driver "overlay2" failed to remove root filesystem: unlinkat /var/lib/docker/overlay2/14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31/merged: device or resource busy```错误。
+
+解决方案:获得所有和docker相关的进程，找到正在使用的设备号对应的进程，kill掉进程。
+
+```
+    grep docker /proc/*/mountinfo | grep 14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31 | awk -F ':' '{print $1}' | awk -F'/' '{print $3}'
+```
+
+
