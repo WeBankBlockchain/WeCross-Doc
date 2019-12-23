@@ -1,5 +1,7 @@
 # 接入JDChain
 
+JDChain节点peer，gateway以及sdk需要保持一致，weCross使用的sdk是v1.1.0,因此节点peer和gateway也需要为v1.1.0。
+
 ## JDChain逻辑架构图
 ![](../images/stubs/JDChainArch.png)
 
@@ -191,7 +193,7 @@ WeCross配置好之后，默认的conf目录结构如下：
     type = 'JDCHAIN_CONTRACT'
     contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
 ```
-```[[jdServices]]```：配置的是WeCross连接的JDChain的gateway配置信息，包括gateway连接的JDChain的公私钥以及密码。
+```[[jdServices]]```：配置的是WeCross连接的JDChain的gateway配置信息，可以配置多个```jdServices```以确保系统的容错性。
 
 ```privateKey```：配置JDChain节点的私钥，搭链过程中的生成的私钥。
 
@@ -209,3 +211,45 @@ WeCross配置好之后，默认的conf目录结构如下：
 ```type```:类型，默认都是```JDCHAIN_CONTRACT```。
 
 ```contractAddress```:合约地址。
+
+
+## JDChain搭建过程常见问题定位
+
+1.  查看账本的时候报错：java.lang.NoClassDefFoundError: sun/jvmstat/monitor/MonitoredHost
+
+此问题出现于Oracle Jdk版本，本质问题是JDChain加载tool.jar失败。执行如下操作进行jar包拷贝:
+```
+    cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer0/libs/tools.jar 
+    cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer1/libs/tools.jar 
+    cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer2/libs/tools.jar 
+    cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer3/libs/tools.jar 
+```
+
+2.   节点启动过程出现```java.lang.IllegalStateException: java.lang.IllegalStateException: Peer Node Start UP Fail !!!```错误。
+
+
+这个问题需要到节点的```bin```目录下查看```hs_err_pid*.log```日志。一般的问题是机器内存不够导致。如果是机器内存不足，日志上可以看到如下相关信息
+```
+    Stack: [0x00007f836d873000,0x00007f836d973000],  sp=0x00007f836d971380,  free space=1016k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0xacb18a]  VMError::report_and_die()+0x2ba
+V  [libjvm.so+0x4ff4db]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*)+0x8b
+V  [libjvm.so+0x927d23]  os::Linux::commit_memory_impl(char*, unsigned long, bool)+0x103
+V  [libjvm.so+0x928279]  os::pd_commit_memory(char*, unsigned long, unsigned long, bool)+0x29
+V  [libjvm.so+0x92249a]  os::commit_memory(char*, unsigned long, unsigned long, bool)+0x2a
+V  [libjvm.so+0x996ff3]  PSVirtualSpace::expand_by(unsigned long)+0x53
+V  [libjvm.so+0x987107]  PSOldGen::initialize(ReservedSpace, unsigned long, char const*, int)+0xb7
+V  [libjvm.so+0x2dac3a]  AdjoiningGenerations::AdjoiningGenerations(ReservedSpace, GenerationSizer*, unsigned long)+0x39a
+V  [libjvm.so+0x94b3a6]  ParallelScavengeHeap::initialize()+0x1d6
+V  [libjvm.so+0xa93203]  Universe::initialize_heap()+0xf3
+V  [libjvm.so+0xa9376e]  universe_init()+0x3e
+V  [libjvm.so+0x640565]  init_globals()+0x65
+V  [libjvm.so+0xa76e5e]  Threads::create_vm(JavaVMInitArgs*, bool*)+0x23e
+V  [libjvm.so+0x6d4e64]  JNI_CreateJavaVM+0x74
+```
+确认是这种问题的话，修改```peer-startup.sh ```启动脚本
+
+![](../images/stubs/MemoryUse.png)
+
+将上图的2g改成512m然后重新启动节点。
+
