@@ -41,16 +41,17 @@ bash  stop.sh
 
 ```
 Usage:
-    -n  [Network id]                [Required] Set network ID
-    -l  [ip:rpc-port:p2p-port]      [Optional] "ip:rpc-port:p2p-port" e.g:"127.0.0.1:8250:25500"
-    -f  [ip list file]              [Optional] split by line, every line should be "ip:rpc-port:p2p-port". eg "127.0.0.1:8250:25500"
-    -o  [Output dir]                Default ./wecross/
-    -z  [Generate tar packet]       Default no
-    -T  [Enable test mode]          Default no. Enable test resource.
-    -h  Help
+    -n  <network id>                [Required]   set network ID
+    -l  <ip:rpc-port:p2p-port>      [Optional]   "ip:rpc-port:p2p-port" e.g:"127.0.0.1:8250:25500"
+    -f  <ip list file>              [Optional]   split by line, every line should be "ip:rpc-port:p2p-port". eg "127.0.0.1:8250:25500"
+    -o  <output dir>                [Optional]   default ./routers/
+    -z  <generate tar packet>       [Optional]   default no
+    -T  <enable test mode>          [Optional]   default no. Enable test resource.
+    -h  call for help
 e.g
-    bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500
-    bash build_wecross.sh -n payment -f ipfile
+    bash $0 -n payment -l 127.0.0.1:8250:25500
+    bash $0 -n payment -f ipfile
+EOF
 ```
 
 - **`-n`**：指定跨链网络标识
@@ -77,35 +78,39 @@ e.g
 
 ```
 Usage:
-    default                             use pem as bcos account type
-    -r  [Root Dir]        [Required]    specify the stubs root dir
-    -n  [stub name]       [Required]    specify the name of stub
-    -p  [password]        [Optional]    password for p12
-    -h  Call for help
+    -r  <root dir>        [Required]    specify the stubs root dir
+    -o  <stub name>       [Required]    specify the name of stub
+    -d  <conf path>       [Required]    specify the path of conf dir
+    -p  <password>        [Optional]    password for p12 a type of FISCO BCOS account, default is null and use pem
+    -h  call for help
 e.g
-    bash create_bcos_stub_config.sh -r stubs -n bcoschain -p 123456
+    bash create_bcos_stub_config -r stubs -o bcos -d conf -p 123456
 ```
 
 - **`-r`**： 
 指定配置文件根目录，需要和根配置文件`wecross.toml`中的[stubs.path]保存一致。
 
-- **`-n`**：
-指定区块链跨链标识，即stub的名字。
+- **`-o`**：
+指定区块链跨链标识，即stub的名字；同时也会在**`-r`**指定的目录下生成与stub相同名字的目录来保存配置文件。
+
+- **`-d`**：
+指定加载配置文件时的`classpath`路径，所有的配置文件都保存在该路径下，默认为与启动脚本同级的`conf`目录。
 
 - **`-p`**：
 表示使用`p.12`格式的账户文件，并指定口令。默认是`pem`格式，无需口令。
 
 例如：
 ```bash
-bash create_bcos_stub_config.sh -r stubs -n bcoschain -p 123456
+bash create_bcos_stub_config.sh -r stubs -o bcos -d conf -p 123456
 ```
-在`stubs`目录下查看目录结构:
+执行结果的目录结构如下:
 ```bash
-tree
 .
-├── bcoschain
-│   ├── 0x0ee5b8ee4af461cac320853aebb7a68d3d4858b4.pem
-│   └── stub.toml
+├── conf
+│   └── stubs
+│       └── bcos
+│           ├── 0x7c459bb9e35c90cf5a64b562b41c2efa951b9845.p12
+│           └── stub.toml
 ```
 
 ## 创建Fabric stub配置文件脚本
@@ -116,62 +121,76 @@ tree
 
 ```
 Usage:
-    -r  [Root Dir]        [Required]    specify the stubs root dir
-    -n  [stub name]       [Required]    specify the name of stub
-    -h  Call for help
+    -r  <root dir>        [Required]    specify the stubs root dir
+    -o  <stub name>       [Required]    specify the name of stub
+    -d  <conf path>       [Required]    specify the path of conf dir
+    -h  call for help
 e.g
-    bash create_fabric_stub_config.sh -r stubs -n fabricchain
+    bash create_fabric_stub_config -r stubs -o fabric -d conf
+EOF
 ```
 
 - **`-r`**： 
 指定配置文件根目录，需要和根配置文件`wecross.toml`中的[stubs.path]保存一致。
 
-- **`-n`**：
-指定区块链跨链标识，即stub的名字。
+- **`-o`**：
+指定区块链跨链标识，即stub的名字；同时也会生成相同名字的目录来保存配置文件。
+
+- **`-d`**：
+指定加载配置文件时的`classpath`路径，所有的配置文件都保存在该路径下，默认为与启动脚本同级的`conf`目录。
+
 
 例如：
 ```bash
-bash create_fabric_stub_config.sh -r stubs -n fabricchain
+bash create_fabric_stub_config -r stubs -o fabric -d conf
 ```
-在`stubs`目录下查看目录结构:
+
+执行结果的目录结构如下:
 ```bash
-tree
 .
-└── fabricchain
-    └── stub.toml
+├── conf
+│   └── stubs
+│       └── fabric
+│           └── stub.toml
 ```
 
 ## 创建JDChain stub配置文件脚本
 
-脚本`create_jdchain_config.sh`用于快速创建JDChain stub的配置文件。
+脚本`create_jdchain_stub_config.sh`用于快速创建JDChain stub的配置文件。
 
 可通过-h查看帮助信息：
 
 ```
 Usage:
-    -r  [Root Dir]        [Required]    specify the stubs root dir
-    -n  [stub name]       [Required]    specify the name of stub
-    -h  Call for help
+    -r  <root dir>        [Required]    specify the stubs root dir
+    -o  <stub name>       [Required]    specify the name of stub
+    -d  <conf path>       [Required]    specify the path of conf dir
+    -h  call for help
 e.g
-    bash create_jdchain_stub_config.sh -r stubs -n jdchain
+    bash create_jdchain_stub_config.sh -r stubs -o jd -d conf
 ```
 
 - **`-r`**： 
 指定配置文件根目录，需要和根配置文件`wecross.toml`中的[stubs.path]保存一致。
 
-- **`-n`**：
-指定区块链跨链标识，即stub的名字。
+- **`-o`**：
+指定区块链跨链标识，即stub的名字；同时也会生成相同名字的目录来保存配置文件。
+
+- **`-d`**：
+指定加载配置文件时的`classpath`路径，所有的配置文件都保存在该路径下，默认为与启动脚本同级的`conf`目录。
+
 
 例如：
 ```bash
-bash create_jdchain_stub_config.sh -r stubs -n jdchain
+bash create_jdchain_stub_config.sh -r stubs -o jd -d conf
 ```
-在`stubs`目录下查看目录结构:
+
+执行结果的目录结构如下:
 ```bash
-tree
-.
-└── jdchain
-    └── stub.toml
+├── conf
+│   └── stubs
+│       └── jd
+│           └── stub.toml
 ```
 
 ## 创建P2P证书脚本
