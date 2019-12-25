@@ -1,26 +1,33 @@
-## 快速部署
-如果环境件已准备就绪，接下来的教程将带领您快速部署WeCross。
+# 快速部署
 
-### 准备工作
-- 创建操作目录
+操作以`~`目录下为例进行
 
-```bash
-cd ~ && mkdir -p wecross && cd wecross
+``` shell
+cd ~
 ```
 
-- 下载`build_wecross.sh`脚本
+## 部署 WeCross
 
-```bash
-curl -LO https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0.2/scripts/build_wecross.sh
+下载WeCross，用WeCross中的工具生成跨链路由，并启动跨链路由。
+
+### 下载WeCross
+
+执行如下命令进行下载（提供[三种下载方式](./download.md)，可根据网络环境选择合适的方式进行下载）
+
+```shell
+bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0.2/scripts/download_wecross.sh)
 ```
 
-### 部署WeCross
+### 生成跨链路由
+
+生成一个WeCross跨链路由，并调用其自带的测试资源，检查跨链组件是否正常运行。
 
 在不接入何链的情况下，部署一个WeCross跨链路由，并调用其自带的测试资源，检查跨链组件是否正常运行。
 
 在`WeCross`目录下执行下面的指令，请确保机器的`8250, 25500`端口没有被占用。
 
 ```bash
+cd ~/WeCross
 bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500 -T
 ```
 
@@ -32,7 +39,7 @@ bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500 -T
     详细的使用教程详见 `Build WeCross脚本 <../manual/scripts.html#wecross>`_。
 ```
 
-命令执行成功，在`wecross/routers`目录下，生成了一个跨链路由`127.0.0.1-8250-25500`，输出如下信息：
+命令执行成功，在目录下生成`routers`目录，目录中包含`127.0.0.1-8250-25500`
 
 ``` bash
 [INFO] All completed. WeCross routers are generated in: routers/
@@ -60,13 +67,15 @@ bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500 -T
 └── stop.sh                 # 停止脚本
 ```
 
-### 启动WeCross
+### 启动跨链路由
+
+* 启动服务
 
 ```bash
 cd routers/127.0.0.1-8250-25500/
 bash start.sh
 ```
-启动成功
+成功
 
 ```
 WeCross booting up .........
@@ -84,55 +93,51 @@ netstat -an | grep tcp
 cat logs/error.log
 ```
 
-### 检查服务
+* 检查服务
+
 WeCross模拟了一个用于测试的合约资源，可通过访问测试资源的status接口，确认服务是否正常。
 ``` bash
 curl http://127.0.0.1:8250/test-network/test-stub/test-resource/status
 
 # 如果输出如下内容，说明跨链路由服务已完全启动
-{"version":"0.2","result":0,"message":null,"data":"exists"}%  
+{"version":"0.2","result":0,"message":null,"data":"exists"}  
 ```
 
-### 停止WeCross
+* 停止服务
+
 通过停止脚本`stop.sh`停止跨链路由服务，该脚本也位于`127.0.0.1-8250-25500`目录。
 
 ```bash 
 bash stop.sh
 ```
 
-### 安装WeCross控制台
+## 部署WeCross控制台
 
 WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本`build_console.sh`搭建一个WeCross控制台。
 
-- 下载脚本
+* 下载WeCross控制台
 
-```bash
-cd ~/wecross
-curl -LO https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/dev/scripts/build_console.sh
+执行如下命令进行下载（提供[三种下载方式](./download.md)，可根据网络环境选择合适的方式进行下载）
+
+```shell
+bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/dev/scripts/download_console.sh)
 ```
 
-- 搭建控制台
-
-控制台需要配置所有连接的WeCross的IP和端口信息。
+- 配置控制台
 
 ```bash
-bash build_console.sh
-```
-
-如果构建成功，将输入以下信息：
-```bash
-[INFO] Build WeCross console successfully
+cd ~/WeCross-Console/
+cp conf/console-sample.xml conf/console.xml
 ```
 
 ```eval_rst
 .. important::
-    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改console/conf/console.xml，详见 `控制台配置 <../manual/console.html#id11>`_。
+    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/console.xml，详见 `控制台配置 <../manual/console.html#id11>`_。
 ```
 
 - 启动控制台
 
 ```bash
-cd console
 bash start.sh
 ```
 
