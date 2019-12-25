@@ -11,3 +11,5 @@
    
    env.md
    setup.md
+   chain.md
+   networks.md
