@@ -1,12 +1,5 @@
 ## 获取程序
 
-为了方便举例，所有操作在`~/we/`目录中进行。
-
-``` shell
-mkdir ~/we
-cd ~/we/
-```
-
 ### 下载WeCross
 
 提供三种方式，根据网络环境选择合适的方式进行下载。
@@ -29,13 +22,13 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0
 
 * [github release](https://github.com/WeBankFinTech/WeCross/releases)（下载最新版本的 `WeCross.tar.gz`）
 
-  手动下载后将包放入`~/we/`，解压
+  手动下载后解压
 
   ``` shell
   tar -zxvf WeCross.tar.gz
   ```
 
-下载后，`~/we/`目录下包含`WeCross/`文件夹。
+解压后，目录下包含`WeCross/`文件夹。
 
 ### 下载WeCross控制台
 
@@ -59,10 +52,11 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/d
 
 - [github release](https://github.com/WeBankFinTech/WeCross-Console/releases)（下载最新版本的 `WeCross-Console.tar.gz`）
 
-  手动下载后将包放入`~/we/`，解压
+  手动下载解压
 
   ```shell
   tar -zxvf WeCross-Console.tar.gz
   ```
 
-下载后，`~/we/`目录下包含`WeCross/`文件夹。
+下载后，目录下包含`WeCross/`文件夹。
+
