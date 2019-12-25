@@ -20,11 +20,3 @@
 - 提交代码(Pull Requests)。
 - [提问和提交BUG](https://github.com/WeBankFinTech/WeCross/issues)
 
-<a name="QR"></a>
-
-![](../images/community/qr_code.png)
-
-![](../images/community/changeable_body.png)
-
-![](../images/community/tailer.png)
-
