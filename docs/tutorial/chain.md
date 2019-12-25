@@ -1,107 +1,4 @@
-## 快速部署
-如果环境件已准备就绪，接下来的教程将带领您快速部署WeCross。
-
-- 创建操作目录
-
-```bash
-cd ~ && mkdir -p wecross && cd wecross
-```
-
-- 下载`build_wecross.sh`脚本
-
-```bash
-curl -LO https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0.2/scripts/build_wecross.sh
-```
-
-### 部署WeCross
-
-在不接入何链的情况下，部署一个WeCross跨链路由，并调用其自带的测试资源，检查跨链组件是否正常运行。
-
-#### 构建跨链路由
-
-在`WeCross`目录下执行下面的指令，部署一个WeCross跨链路由。请确保机器的`8250, 25500`端口没有被占用。
-
-```bash
-bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500 -T
-```
-
-```eval_rst
-.. note::
-    - -n 指定跨链网络标识符(network id)，跨链网络通过network id进行区分，可以理解为业务名称。
-    - -l 指定此WeCross跨链路由的ip地址，rpc端口，p2p端口。
-    - -T 启用测试资源，它不属于任何一条链，仅用户测试跨链服务是否正常运行。
-    详细的使用教程详见 `Build WeCross脚本 <../manual/scripts.html#wecross>`_。
-```
-
-命令执行成功，在`wecross/routers`目录下，生成了一个跨链路由`127.0.0.1-8250-25500`，输出如下信息：
-
-``` bash
-[INFO] All completed. WeCross routers are generated in: routers/
-```
-
-生成的WeCross跨链路由目录内容如下
-
-```bash
-# 已屏蔽lib目录，该目录存放所有依赖的jar包
-.
-├── apps
-│   └── WeCross.jar         # WeCross路由jar包
-├── build_wecross.sh
-├── conf                    # 配置文件目录
-│   ├── application.properties	
-│   ├── log4j2.xml 
-│   ├── p2p                 # p2p证书目录
-│   │   ├── ca.crt          # 根证书
-│   │   ├── node.crt        # 跨链路由证书
-│   │   ├── node.key        # 跨链路由私钥
-│   │   └── node.nodeid     # 跨链路由nodeid
-│   ├── stubs               # stub配置目录，要接入不同的链，在此目录下进行配置
-│   └── wecross.toml        # 根配置
-├── start.sh                # 启动脚本
-└── stop.sh                 # 停止脚本
-```
-
-#### 启动跨链路由
-
-```bash
-cd routers/127.0.0.1-8250-25500/
-bash start.sh
-```
-启动成功
-
-```
-WeCross booting up .........
-WeCross start successfully
-```
-如果启动失败，检查`8250, 25500`端口是否被占用
-
-``` shell
-netstat -an | grep tcp
-```
-
-查看失败日志
-
-```bash
-cat logs/error.log
-```
-
-#### 检查服务
-WeCross模拟了一个用于测试的合约资源，可通过访问测试资源的status接口，确认服务是否正常。
-``` bash
-curl http://127.0.0.1:8250/test-network/test-stub/test-resource/status
-
-# 如果输出如下内容，说明跨链路由服务已完全启动
-{"version":"0.2","result":0,"message":null,"data":"exists"}%  
-```
-
-#### 停止服务
-通过停止脚本`stop.sh`停止跨链路由服务，该脚本也位于`127.0.0.1-8250-25500`目录。
-
-```bash 
-bash stop.sh
-```
-
-### 体验WeCross+区块链
+## 接入区块链
 
 完成了WeCross的部署，如何让它和一条真实的区块链交互，相信优秀的您一定在跃跃欲试。接下来的教程将以**接入FISCO BCOS**为例介绍如何体验WeCross+区块链。
 
@@ -176,7 +73,7 @@ cp ~/wecross/routers/127.0.0.1-8250-25500/conf/stubs-sample/bcos/HelloWeCross.so
 ```bash
 cd ~/fisco/console && bash start.sh
 ```
-  
+
 输出下述信息表明启动成功 否则请检查`conf/applicationContext.xml`中节点端口配置是否正确
 ```bash
 =============================================================================================
