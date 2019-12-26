@@ -2,7 +2,7 @@
 
 完成了WeCross的部署，如何让它和一条真实的区块链交互，相信优秀的您一定在跃跃欲试。接下来的教程将以**接入FISCO BCOS**为例介绍如何体验WeCross+区块链。
 
-#### 一键搭链
+### 一键搭链
 
 若已有搭建好的FISCO BCOS链，请忽略本小节。
 
@@ -42,7 +42,7 @@ node0 start successfully
 node3 start successfully
 ```
 
-#### 部署HelloWeCross合约
+### 部署HelloWeCross合约
 
 通过FISCO BCOS控制台部署HelloWeCross合约，控制台的安装和使用详见官方文档[配置及使用控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#id7)
 
@@ -99,7 +99,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 ```
 
-#### 配置FISCO BCOS stub
+### 配置FISCO BCOS stub
 
 完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS stub，即配置连接信息以及链上的资源。
 
@@ -213,7 +213,7 @@ bash stop.sh
 bash start.sh
 ```
 
-#### 控制台访问跨链资源
+### 控制台访问跨链资源
 
 - 启动控制台
 
