@@ -1,4 +1,4 @@
-## 获取程序
+## 下载程序
 
 ### 下载WeCross
 
@@ -29,6 +29,8 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0
   ```
 
 解压后，目录下包含`WeCross/`文件夹。
+
+<hr>
 
 ### 下载WeCross控制台
 

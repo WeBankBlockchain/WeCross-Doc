@@ -10,7 +10,6 @@
    :maxdepth: 1
    
    env.md
-   download.md
    setup.md
    chain.md
    networks.md
