@@ -349,14 +349,14 @@ WeCross配置好之后，默认的conf目录结构如下：
 
 ### Fabric环境搭建常见问题定位
 
-1.  启动docker提示:```dial unix /var/run/docker.sock: connect: `permission denied````
+1.  启动docker提示:"dial unix /var/run/docker.sock: connect: `permission denied`"
 解决方案：将当前用户加入到docker用户组
 ```
     sudo gpasswd -a ${USER} docker
 ```
 
 
-2 节点启动或者停止过程出现类似```ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53dd92447a44f7654aa36563adabbd06: driver "overlay2" failed to remove root filesystem: unlinkat /var/lib/docker/overlay2/14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31/merged: device or resource busy```错误。
+2 节点启动或者停止过程出现类似"ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53dd92447a44f7654aa36563adabbd06: driver "overlay2" failed to remove root filesystem: unlinkat /var/lib/docker/overlay2/14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31/merged: device or resource busy"错误。
 
 解决方案:获得所有和docker相关的进程，找到正在使用的设备号对应的进程，kill掉进程。
 

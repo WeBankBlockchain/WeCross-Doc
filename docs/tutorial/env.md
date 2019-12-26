@@ -10,19 +10,19 @@ WeCross负责管理多个Stub并与多条链通讯，同时作为Web Server提�
 +==========+=========+=============================================+
 | CPU      | 1.5GHz  | 2.4GHz                                      |
 +----------+---------+---------------------------------------------+
-| 内存     | 1GB     | 8GB                                         |
+| 内存     | 4GB     | 8GB                                         |
 +----------+---------+---------------------------------------------+
-| 核心     | 1核     | 4核                                         |
+| 核心     | 4核     | 8核                                         |
 +----------+---------+---------------------------------------------+
-| 带宽     | 1Mb     | 10Mb                                        |
+| 带宽     | 2Mb     | 10Mb                                        |
 +----------+---------+---------------------------------------------+
 ```
 
 ## 支持的平台
 
-- Ubuntu 16.04
-- CentOS 7.2+
-- MacOS 10.14+
+- Ubuntu 16.04及以上
+- CentOS 7.2及以上
+- MacOS 10.14及以上
 
 ## 软件依赖
 
@@ -34,11 +34,11 @@ WeCross提供了多种脚本帮助用户快速体验，这些脚本依赖`openss
 
 ```bash
 # Ubuntu
-sudo apt-get install -y openssl curl expect
+sudo apt-get install -y openssl curl expect tree
 
 # CentOS
-sudo yum install -y openssl curl expect
+sudo yum install -y openssl curl expect tree
 
 # MacOS
-brew install openssl curl expect
+brew install openssl curl expect tree
 ```
