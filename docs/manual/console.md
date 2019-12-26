@@ -4,22 +4,26 @@
 
 
 ### 控制台命令
-控制台命令由两部分组成，即指令和指令相关的参数：   
+
+控制台命令可分为两类，普通命令和交互式命令。
+
+#### 普通命令
+普通命令由两部分组成，即指令和指令相关的参数：   
 - **指令**: 指令是执行的操作命令，包括获取跨链资源列表，查询资源状态指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
   
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](./api.html)。
 
-### 交互式命令
+#### 交互式命令
 WeCross控制台为了方便用户使用，还提供了交互式的使用方式，比如将跨链资源标识赋值给变量，初始化一个类，并用`.command`的方式访问方法。
-详见：[交互模式](#id14)
+详见：[交互式命令](#id14)
 
 ### 常用命令链接
 
-#### 合约调用命令
+#### 普通命令
 
 - call(不发交易): [call](#call)
-- sendTransaction(发交易)): [sendTransaction](#sendTransaction)
+- sendTransaction(发交易)): [sendTransaction](#sendtransaction)
 
 ```eval_rst
 .. important::
@@ -29,10 +33,10 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
     - 参数列表传入字面量，因此字符串需要用单引号或双引号括起来。
 ```
 
-#### 脚本命令
+#### 交互式命令
 
-- 初始化资源实例: [WeCross.getResource](#WeCross.getResource)
-- 访问资源UBI接口: [[resource].[command]](#[resource].[command])
+- 初始化资源实例: [WeCross.getResource](#wecross-getresource)
+- 访问资源UBI接口: [\[resource\].\[command\]](#resource-command)
 
 ### 快捷键
 - `Ctrl+A`：光标移动到行首
@@ -47,7 +51,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](./api.html#rpc)。
+- **状态码:** 控制台的命令调用JSON-RPC接口时，状态码[参考这里](./api.html#rpc)。
 
 
 ### 控制台配置与运行
@@ -122,7 +126,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-### 控制台命令
+### 普通命令
 #### **help**
 输入help或者h，查看控制台所有的命令。
 
@@ -238,7 +242,7 @@ Resources{
 查看跨链资源的状态，即是否存在于连接的WeCross跨链代理中。
 
 参数：     
-- CPath：跨链资源标识。    
+- IPath：跨链资源标识。    
 
 ```bash
 [server1]> status payment.bcos.HelloWeCross
@@ -248,7 +252,7 @@ Result ==> exists
 预留接口，根据`key`查询`value`，目前没有链支持。
 
 参数：   
-- CPath：跨链资源标识。   
+- IPath：跨链资源标识。   
 - key：字符串。      
 
 ```bash
@@ -264,7 +268,7 @@ StatusAndValue{
 预留接口，根据`key`更新`value`，目前没有链支持。
 
 参数：   
-- CPath：跨链资源标识。   
+- IPath：跨链资源标识。   
 - key：字符串。 
 - value：字符串。
 
@@ -281,7 +285,7 @@ StatusAndValue{
 调用智能合约的方法，不涉及状态的更改，不发交易。
 
 参数：   
-- CPath：跨链资源标识。   
+- IPath：跨链资源标识。   
 - retTypes：返回值类型列表。
 - method：合约方法名。
 - args：参数列表。
@@ -303,7 +307,7 @@ Receipt{
 `call`的衍生命令，返回值为整型。
 
 参数：   
-- CPath：跨链资源标识。   
+- IPath：跨链资源标识。   
 - method：合约方法名。
 - args：参数列表。
 
@@ -321,7 +325,7 @@ CallResult{
 `call`的衍生命令，返回值为整型数组。
 
 参数：   
-- CPath：跨链资源标识。   
+- IPath：跨链资源标识。   
 - method：合约方法名。
 - args：参数列表。
 
@@ -343,7 +347,7 @@ CallResult{
 `call`的衍生命令，返回值为字符串。
 
 参数：   
-- CPath：跨链资源标识。   
+- IPath：跨链资源标识。   
 - method：合约方法名。
 - args：参数列表。
 
@@ -363,7 +367,7 @@ Receipt{
 `call`的衍生命令，返回值为字符串数组。
 
 参数：   
-- CPath：跨链资源标识。   
+- IPath：跨链资源标识。   
 - method：合约方法名。
 - args：参数列表。
 
@@ -386,7 +390,7 @@ CallResult{
 调用智能合约的方法，会更改链上状态，需要发交易。
 
 参数：   
-- CPath：跨链资源标识。 
+- IPath：跨链资源标识。 
 - retTypes：返回值类型列表。  
 - method：合约方法名。
 - args：参数列表。
@@ -408,7 +412,7 @@ Receipt{
 `sendTransactionInt`的衍生命令，返回值为整型。
 
 参数：   
-- CPath：跨链资源标识。  
+- IPath：跨链资源标识。  
 - method：合约方法名。
 - args：参数列表。
 
@@ -426,7 +430,7 @@ CallResult{
 `sendTransactionIntArray`的衍生命令，返回值为整型数组。
 
 参数：   
-- CPath：跨链资源标识。  
+- IPath：跨链资源标识。  
 - method：合约方法名。
 - args：参数列表。
 
@@ -448,7 +452,7 @@ CallResult{
 `sendTransactionString`的衍生命令，返回值为字符串。
 
 参数：   
-- CPath：跨链资源标识。  
+- IPath：跨链资源标识。  
 - method：合约方法名。
 - args：参数列表。
 
@@ -466,7 +470,7 @@ CallResult{
 `sendTransactionStringArray`的衍生命令，返回值为字符串数组。
 
 参数：   
-- CPath：跨链资源标识。  
+- IPath：跨链资源标识。  
 - method：合约方法名。
 - args：参数列表。
 

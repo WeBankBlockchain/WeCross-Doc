@@ -1,5 +1,5 @@
 ## 配置文件
-WeCross通过配置文件管理Stub以及每个Stub中的跨链资源，启动时首先加载配置文件，根据配置去初始化各个Stub以及相应的资源，如果配置出错，则启动失败。
+WeCross通过配置文件管理[Stub](../introduction/introduction.html#id2)以及每个Stub中的[跨链资源](../introduction/introduction.html#id2)，启动时首先加载配置文件，根据配置去初始化各个Stub以及相应的资源，如果配置出错，则启动失败。
 
 ```eval_rst
 .. note::
@@ -64,7 +64,7 @@ cp conf/wecross-sample.toml conf/wecross.toml
     enableTestResource = false
 ```
 
-根配置有五个配置项，分别是`[common]`、`[stubs]`、`[server]`、`[p2p]`以及`[test]`，各个配置项含义如下：
+跨链服务配置有五个配置项，分别是`[common]`、`[stubs]`、`[server]`、`[p2p]`以及`[test]`，各个配置项含义如下：
 
 - [common] 通用配置
   - network：字符串；跨链网络标识符；通常一种跨链业务/应用为一个跨链网络
