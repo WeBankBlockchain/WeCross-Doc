@@ -1,8 +1,8 @@
 # JSON-RPC API
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http请求，可以访问WeCross的JSON RPC接口。curl命令的url地址需要设置为WeCross跨链代理的RPC监听IP和端口。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令。curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http请求，可以访问WeCross的JSON RPC接口。curl命令的url地址需要设置为WeCross跨链代理的RPC监听IP和端口。
 
-可使用[jq](https://stedolan.github.io/jq/)工具对结果进行格式化显示。RPC错误码参考[RPC错误码](#rpc)。
+可使用[jq](https://stedolan.github.io/jq/)工具对结果进行格式化显示。RPC状态码参考[RPC状态码](#rpc)。
 
 
 ## API列表
@@ -503,14 +503,14 @@ curl --data '{"version":"1", "path":"payment.bcos.HelloWeCross", "method":"sendT
 - sendTransactionStringArray: 调用返回值为StringArray类型的sendTransaction
 
 
-## RPC错误码
+## RPC状态码
 
 当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
 
 - result: 使用数值表示该异常的错误类型，必须为整数。          
 - message: 对该错误的简单描述字符串。       
 
-标准错误码及其对应的含义如下：  
+标准状态码及其对应的含义如下：  
 
 | code     | 含义            |
 | :------- | :------------- |

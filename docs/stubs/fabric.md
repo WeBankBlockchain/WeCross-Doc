@@ -262,7 +262,7 @@ WeCross配置好之后，默认的conf目录结构如下：
 │   ├── node.crt
 │   ├── node.key
 │   └── node.nodeid
-├── stubs
+├── stubs-sample
 │   ├── bcos
 │   │   └── stub-sample.toml
 │   ├── fabric
@@ -273,8 +273,8 @@ WeCross配置好之后，默认的conf目录结构如下：
 
 假定当前目录在conf，执行如下操作:
 ```
-    cd stubs/fabric;
-    cp stub-sample.toml  stub.toml
+    mkdir -p stubs/fabric;
+    cp stubs-sample/fabric/stub-sample.toml  stubs/fabric/stub.toml
 ```
 
 执行上述命令之后，目录结构变成如下：
@@ -304,14 +304,15 @@ WeCross配置好之后，默认的conf目录结构如下：
 
 # fabricServices is a list
 [fabricServices]
-     channelName = 'mychannel'
-     orgName = 'Org1'
-     mspId = 'Org1MSP'
-     orgUserName = 'Admin'
-     orgUserKeyFile = 'classpath:/stub/fabric/orgUserKeyFile'
-     orgUserCertFile = 'classpath:/stub/fabric/orgUserCertFile'
-     ordererTlsCaFile = 'classpath:/stub/fabric/ordererTlsCaFile'
-     ordererAddress = 'grpcs://127.0.0.1:7050'  
+    channelName = 'mychannel'
+    orgName = 'Org1'
+    mspId = 'Org1MSP'
+    orgUserName = 'Admin'
+    orgUserKeyFile = 'classpath:/stub/fabric/orgUserKeyFile'
+    orgUserCertFile = 'classpath:/stub/fabric/orgUserCertFile'
+    ordererTlsCaFile = 'classpath:/stub/fabric/ordererTlsCaFile'
+    ordererAddress = 'grpcs://127.0.0.1:7050'
+
 [peers]
     [peers.org1]
         peerTlsCaFile = 'classpath:/stub/fabric/peerOrg1CertFile'
@@ -319,13 +320,19 @@ WeCross配置好之后，默认的conf目录结构如下：
     [peers.org2]
          peerTlsCaFile = 'classpath:/stub/fabric/peerOrg2CertFile'
          peerAddress = 'grpcs://127.0.0.1:9051'
-           
+
 # resources is a list
 [[resources]]
     # name cannot be repeated
-    name = 'HelloWorldContract'
+    name = 'HelloWeCross'
     type = 'FABRIC_CONTRACT'
     chainCodeName = 'mycc'
+    chainLanguage = "go"
+    peers=['org1','org2']
+[[resources]]
+    name = 'HelloWorld'
+    type = 'FABRIC_CONTRACT'
+    chainCodeName = 'mygg'
     chainLanguage = "go"
     peers=['org1','org2']
 ```
