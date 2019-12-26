@@ -47,6 +47,7 @@ bash ./WeCross/build_wecross.sh -n payment -l 127.0.0.1:8250:25500
 
 ```bash
 # 已屏蔽lib目录，该目录存放所有依赖的jar包
+tree routers/127.0.0.1-8250-25500/ -I "lib"
 .
 ├── apps
 │   └── WeCross.jar         # WeCross路由jar包
@@ -70,7 +71,7 @@ bash ./WeCross/build_wecross.sh -n payment -l 127.0.0.1:8250:25500
 * 启动服务
 
 ```bash
-cd routers/127.0.0.1-8250-25500/
+cd ~/wecross/routers/127.0.0.1-8250-25500/
 bash start.sh 
 #停止: bash stop.sh
 ```
@@ -83,7 +84,8 @@ WeCross start successfully
 如果启动失败，检查`8250, 25500`端口是否被占用
 
 ``` shell
-netstat -an | grep tcp
+netstat -napl | grep 8250
+netstat -napl | grep 25500
 ```
 
 查看失败日志
@@ -96,7 +98,7 @@ cat logs/error.log
 
 调用服务的test接口，检查服务是否启动
 ``` bash
-curl http://127.0.0.1:8250/test
+curl http://127.0.0.1:8250/test && echo
 
 # 如果输出如下内容，说明跨链路由服务已完全启动
 OK！

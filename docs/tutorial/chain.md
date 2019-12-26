@@ -218,7 +218,7 @@ bash start.sh
 - 启动控制台
 
 ```bash
-cd ~/wecross/console
+cd ~/wecross/WeCross-Console
 bash start.sh
 ```
 

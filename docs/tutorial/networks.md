@@ -126,7 +126,7 @@ bash start.sh
 在控制台配置文件中增加新的跨链路由的信息。
 
 ```bash
-cd ~/wecross/console
+cd ~/wecross/WeCross-Console
 vi conf/console.xml 
 # 配置map信息
 <map>

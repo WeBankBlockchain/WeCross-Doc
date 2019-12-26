@@ -18,7 +18,7 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0
 
 **方式3：手动下载**
 
-* 国内官网（点击下载，速度较快）
+* 国内资源（速度较快，占未开放）
 
 * [github release](https://github.com/WeBankFinTech/WeCross/releases)（下载最新版本的 `WeCross.tar.gz`）
 
@@ -50,7 +50,7 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/d
 
 **方式3：手动下载**
 
-- 国内官网（点击下载，速度较快）
+- 国内资源（速度较快，占未开放）
 
 - [github release](https://github.com/WeBankFinTech/WeCross-Console/releases)（下载最新版本的 `WeCross-Console.tar.gz`）
 
@@ -60,5 +60,5 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/d
   tar -zxvf WeCross-Console.tar.gz
   ```
 
-下载后，目录下包含`WeCross/`文件夹。
+下载后，目录下包含`WeCross-Console/`文件夹。
 
