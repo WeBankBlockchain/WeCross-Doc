@@ -14,35 +14,35 @@ WeCross配置好之后，默认的conf目录结构如下：
 │   ├── node.crt
 │   ├── node.key
 │   └── node.nodeid
-├── stubs
+├── stubs-sample
 │   ├── bcos
 │   │   └── stub-sample.toml
 │   ├── fabric
 │   │   └── stub-sample.toml
-│   └── jd
-│       └── stub-sample.toml
 ├── wecross-sample.toml
 └── wecross.toml
 ```
 假定当前目录在conf，执行如下操作:
 ```
-    cd bcos;
-    cp stub-sample.toml  stub.toml
+    mkdir -p stubs/bcos;
+    cp stubs-sample/bcos/stub-sample.toml  stubs/bcos/stub.toml
 ```
 
 查看stub.toml，可以看到文件内容如下：
 
 ```
 [common]
-    stub = 'bcos'
+    stub = 'bcos' # stub must be same with directory name
     type = 'BCOS'
 
-[guomi]
+[smCrypto]
     # boolean
     enable = false
 
 [account]
     accountFile = 'classpath:/stubs/bcos/0xa1ca07c7ff567183c889e1ad5f4dcd37716831ca.pem'
+    password = ''  # if you choose .p12, then password is required
+
 
 [channelService]
     timeout = 60000  # millisecond
@@ -54,14 +54,15 @@ WeCross配置好之后，默认的conf目录结构如下：
 
 # resources is a list
 [[resources]]
-    # name cannot be repeated
-    name = 'HelloWorldContract'
+    # name must be unique
+    name = 'HelloWeCross'
     type = 'BCOS_CONTRACT'
     contractAddress = '0x8827cca7f0f38b861b62dae6d711efe92a1e3602'
 [[resources]]
-    name = 'FirstTomlContract'
+    name = 'HelloWorld'
     type = 'BCOS_CONTRACT'
-    contractAddress = '0x8827cca7f0f38b861b62dae6d711efe92a1e3602'           
+    contractAddress = '0x584ecb848dd84499639fbe2581bfb8a8774b485c'
+           
 ```
 ```[account]```:发送交易的账户信息。
 

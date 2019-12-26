@@ -262,7 +262,7 @@ WeCross配置好之后，默认的conf目录结构如下：
 │   ├── node.crt
 │   ├── node.key
 │   └── node.nodeid
-├── stubs
+├── stubs-sample
 │   ├── bcos
 │   │   └── stub-sample.toml
 │   ├── fabric
@@ -273,8 +273,8 @@ WeCross配置好之后，默认的conf目录结构如下：
 
 假定当前目录在conf，执行如下操作:
 ```
-    cd stubs/fabric;
-    cp stub-sample.toml  stub.toml
+    mkdir -p stubs/fabric;
+    cp stubs-sample/fabric/stub-sample.toml  stubs/fabric/stub.toml
 ```
 
 执行上述命令之后，目录结构变成如下：
@@ -304,14 +304,15 @@ WeCross配置好之后，默认的conf目录结构如下：
 
 # fabricServices is a list
 [fabricServices]
-     channelName = 'mychannel'
-     orgName = 'Org1'
-     mspId = 'Org1MSP'
-     orgUserName = 'Admin'
-     orgUserKeyFile = 'classpath:/stub/fabric/orgUserKeyFile'
-     orgUserCertFile = 'classpath:/stub/fabric/orgUserCertFile'
-     ordererTlsCaFile = 'classpath:/stub/fabric/ordererTlsCaFile'
-     ordererAddress = 'grpcs://127.0.0.1:7050'  
+    channelName = 'mychannel'
+    orgName = 'Org1'
+    mspId = 'Org1MSP'
+    orgUserName = 'Admin'
+    orgUserKeyFile = 'classpath:/stub/fabric/orgUserKeyFile'
+    orgUserCertFile = 'classpath:/stub/fabric/orgUserCertFile'
+    ordererTlsCaFile = 'classpath:/stub/fabric/ordererTlsCaFile'
+    ordererAddress = 'grpcs://127.0.0.1:7050'
+
 [peers]
     [peers.org1]
         peerTlsCaFile = 'classpath:/stub/fabric/peerOrg1CertFile'
@@ -319,13 +320,19 @@ WeCross配置好之后，默认的conf目录结构如下：
     [peers.org2]
          peerTlsCaFile = 'classpath:/stub/fabric/peerOrg2CertFile'
          peerAddress = 'grpcs://127.0.0.1:9051'
-           
+
 # resources is a list
 [[resources]]
     # name cannot be repeated
-    name = 'HelloWorldContract'
+    name = 'HelloWeCross'
     type = 'FABRIC_CONTRACT'
     chainCodeName = 'mycc'
+    chainLanguage = "go"
+    peers=['org1','org2']
+[[resources]]
+    name = 'HelloWorld'
+    type = 'FABRIC_CONTRACT'
+    chainCodeName = 'mygg'
     chainLanguage = "go"
     peers=['org1','org2']
 ```
@@ -356,7 +363,11 @@ WeCross配置好之后，默认的conf目录结构如下：
 ```
 
 
-2 节点启动或者停止过程出现类似"ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53dd92447a44f7654aa36563adabbd06: driver "overlay2" failed to remove root filesystem: unlinkat /var/lib/docker/overlay2/14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31/merged: device or resource busy"错误。
+2 节点启动或者停止过程出现类似错误:
+
+```
+ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53dd92447a44f7654aa36563adabbd06: driver "overlay2" failed to remove root filesystem: unlinkat /var/lib/docker/overlay2/14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31/merged: device or resource busy
+```
 
 解决方案:获得所有和docker相关的进程，找到正在使用的设备号对应的进程，kill掉进程。
 

@@ -101,7 +101,7 @@ contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 
 ### 配置FISCO BCOS stub
 
-完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS stub，即配置连接信息以及链上的资源。
+完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS stub，即配置连接信息以及链上的[资源](../introduction/introduction.html#id2)。
 
 - 生成配置文件
 返回跨链路由的目录，并运行`create_bcos_stub_config.sh`脚本，在`conf`目录下生成FISCO BCOS stub的配置文件。
@@ -113,7 +113,7 @@ bash create_bcos_stub_config.sh -n bcos
 
 ```eval_rst
 .. note::
-    - -n指定区块链跨链标识，即stub的名字；同时也会在-r指定的目录下生成与stub相同名字的目录来保存配置文件。
+    - -n指定区块链跨链标识，即stub的名字；同时也会在-r指定的目录下生成与 `Stub <../introduction/introduction.html#id2>`_相同名字的目录来保存配置文件。
     详细的使用教程见 `Stubs配置脚本 <../manual/scripts.html#fisco-bcos-stub>`_。
 ```
 
