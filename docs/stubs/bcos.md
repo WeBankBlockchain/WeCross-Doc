@@ -6,7 +6,7 @@
 FISCO BCOS环境搭建参考[部署文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)
 
 ## FISCO BCOS stub配置
-WeCross配置好之后，默认的conf目录结构如下：
+WeCross配置好之后，默认的conf目录结构如下： 
 ```
 ├── log4j2.xml
 ├── p2p
