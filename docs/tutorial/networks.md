@@ -94,7 +94,17 @@ vi conf/stubs/bcos2/stub.toml
     contractAddress = '0xe51eb006c96345f8f0d431f100f0bf619f6145d4'
 ```
 
-- 启动跨链路由
+- 拷贝证书
+
+```bash
+# 拷贝到127.0.0.1-8251-25501
+cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers/127.0.0.1-8251-25501/conf/stubs/bcos1
+
+# 拷贝到127.0.0.1-8252-25502
+cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers/127.0.0.1-8252-25502/conf/stubs/bcos2
+```
+
+### 启动跨链路由
 
 ```bash
 # 由于127.0.0.1-8250-25500更新了P2P配置，因此需要重新启动
