@@ -121,12 +121,6 @@ curl --data '{"version":"0.2", "path":"", "method":"list", "data": {"ignoreRemot
         "type": "BCOS_CONTRACT",
         "distance": 0,
         "path": "payment.bcoschain.HelloWorldContract"
-      },
-      {
-        "checksum": "0x7644243d71d1b1c154c717075da7bfe2d22bb2a94d7ed7693ab481f6cb11c756",
-        "type": "TEST_RESOURCE",
-        "distance": 0,
-        "path": "test-network.test-stub.test-resource"
       }
     ]
   }

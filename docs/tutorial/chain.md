@@ -2,7 +2,7 @@
 
 完成了WeCross的部署，如何让它和一条真实的区块链交互，相信优秀的您一定在跃跃欲试。接下来的教程将以**接入FISCO BCOS**为例介绍如何体验WeCross+区块链。
 
-### 一键搭链
+#### 搭链FISCO BCOS链
 
 若已有搭建好的FISCO BCOS链，请忽略本小节。
 
@@ -17,7 +17,7 @@ FISCO BCOS官方提供了一键搭链的教程，详见[单群组FISCO BCOS联�
 cd ~ && mkdir -p fisco && cd fisco
 
 # 下载build_chain.sh脚本
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 
 # 搭建单群组4节点联盟链
 # 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
@@ -42,7 +42,7 @@ node0 start successfully
 node3 start successfully
 ```
 
-### 部署HelloWeCross合约
+#### 部署HelloWeCross合约
 
 通过FISCO BCOS控制台部署HelloWeCross合约，控制台的安装和使用详见官方文档[配置及使用控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#id7)
 
@@ -99,7 +99,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 ```
 
-### 配置FISCO BCOS stub
+#### 配置FISCO BCOS stub
 
 完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS stub，即配置连接信息以及链上的资源。
 
@@ -213,7 +213,7 @@ bash stop.sh
 bash start.sh
 ```
 
-### 控制台访问跨链资源
+#### 控制台访问跨链资源
 
 - 启动控制台
 
@@ -239,12 +239,6 @@ Resources{
             type='BCOS_CONTRACT',
             distance=0,
             path='payment.bcos.HelloWeCross'
-        },
-        WeCrossResource{
-            checksum='0x7644243d71d1b1c154c717075da7bfe2d22bb2a94d7ed7693ab481f6cb11c756',
-            type='TEST_RESOURCE',
-            distance=0,
-            path='test-network.test-stub.test-resource'
         }
     ]
 }
