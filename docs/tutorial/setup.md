@@ -1,9 +1,14 @@
 # 快速部署
 
-操作以`~`目录下为例进行
+本文档指导完成**跨链路由**和**跨链控制台**的部署。
+
+* **跨链路由**：    与区块链节点对接，并彼此互连，形成跨链网络，负责跨链请求的转发
+* **跨链控制台**：查询和发送交易的操作终端
+
+操作以`~/wecross/`目录下为例进行
 
 ``` shell
-cd ~
+mkdir -p ~/wecross/ && cd ~/wecross/
 ```
 
 ## 部署 WeCross
@@ -12,7 +17,7 @@ cd ~
 
 ### 下载WeCross
 
-执行如下命令进行下载（提供[三种下载方式](./download.md)，可根据网络环境选择合适的方式进行下载）
+WeCross中包含了生成跨链路由的工具，执行以下命令进行下载（提供[三种下载方式](../version/download.html#wecross)，可根据网络环境选择合适的方式进行下载），程序下载后得到目录`WeCross/`中。
 
 ```shell
 bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0.2/scripts/download_wecross.sh)
@@ -20,32 +25,25 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0
 
 ### 生成跨链路由
 
-生成一个WeCross跨链路由，并调用其自带的测试资源，检查跨链组件是否正常运行。
-
-在不接入何链的情况下，部署一个WeCross跨链路由，并调用其自带的测试资源，检查跨链组件是否正常运行。
-
-在`WeCross`目录下执行下面的指令，请确保机器的`8250, 25500`端口没有被占用。
+用WeCross中的 [build_wecross.sh](../manual/scripts.html#wecross) 生成一个跨链路由。请确保机器的`8250`, `25500`端口没有被占用。
 
 ```bash
-cd ~/WeCross
-bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500 -T
+bash ./WeCross/build_wecross.sh -n payment -l 127.0.0.1:8250:25500 
 ```
 
 ```eval_rst
 .. note::
     - -n 指定跨链网络标识符(network id)，跨链网络通过network id进行区分，可以理解为业务名称。
     - -l 指定此WeCross跨链路由的ip地址，rpc端口，p2p端口。
-    - -T 启用测试资源，它不属于任何一条链，仅用户测试跨链服务是否正常运行。
-    详细的使用教程详见 `Build WeCross脚本 <../manual/scripts.html#wecross>`_。
 ```
 
-命令执行成功，在目录下生成`routers`目录，目录中包含`127.0.0.1-8250-25500`
+命令执行成功，生成`routers/`目录，目录中包含一个跨链路由`127.0.0.1-8250-25500`
 
 ``` bash
 [INFO] All completed. WeCross routers are generated in: routers/
 ```
 
-生成的WeCross跨链路由目录内容如下
+生成的跨链路由`127.0.0.1-8250-25500`目录内容如下
 
 ```bash
 # 已屏蔽lib目录，该目录存放所有依赖的jar包
@@ -73,7 +71,8 @@ bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500 -T
 
 ```bash
 cd routers/127.0.0.1-8250-25500/
-bash start.sh
+bash start.sh 
+#停止: bash stop.sh
 ```
 成功
 
@@ -95,20 +94,12 @@ cat logs/error.log
 
 * 检查服务
 
-WeCross模拟了一个用于测试的合约资源，可通过访问测试资源的status接口，确认服务是否正常。
+调用服务的test接口，检查服务是否启动
 ``` bash
-curl http://127.0.0.1:8250/test-network/test-stub/test-resource/status
+curl http://127.0.0.1:8250/test
 
 # 如果输出如下内容，说明跨链路由服务已完全启动
-{"version":"0.2","result":0,"message":null,"data":"exists"}  
-```
-
-* 停止服务
-
-通过停止脚本`stop.sh`停止跨链路由服务，该脚本也位于`127.0.0.1-8250-25500`目录。
-
-```bash 
-bash stop.sh
+OK！
 ```
 
 ## 部署WeCross控制台
@@ -117,16 +108,17 @@ WeCross提供了控制台，方便用户进行跨链开发和调试。可通过�
 
 * 下载WeCross控制台
 
-执行如下命令进行下载（提供[三种下载方式](./download.md)，可根据网络环境选择合适的方式进行下载）
+执行如下命令进行下载（提供[三种下载方式](../version/download.html#id2)，可根据网络环境选择合适的方式进行下载），下载后在执行命令的目录下生成`WeCross-Console`目录。
 
 ```shell
+cd ~/wecross/
 bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/dev/scripts/download_console.sh)
 ```
 
 - 配置控制台
 
 ```bash
-cd ~/WeCross-Console/
+cd ./WeCross-Console/
 cp conf/console-sample.xml conf/console.xml
 ```
 
@@ -141,35 +133,25 @@ cp conf/console-sample.xml conf/console.xml
 bash start.sh
 ```
 
-启动成功则输出如下信息，通过`-h`可查看控制台帮助
+启动成功则输出如下信息，通过`help`可查看控制台帮助
 
 ```bash
 =================================================================================
-Welcome to WeCross console(0.2)!
+Welcome to WeCross console(v1.0.0-rc1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =================================================================================
 ```
 
 - 测试功能
 
-使用`listResources`命令查看WeCross管理的跨链资源列表，更多的命令以及其含义详见[控制台命令](../manual/console.html#id13)。
-
 ```bash
-[server1]> listResources 
-Resources{
-    errorCode=0,
-    errorMessage='',
-    resourceList=[
-        WeCrossResource{
-        WeCrossResource{
-            checksum='0x7644243d71d1b1c154c717075da7bfe2d22bb2a94d7ed7693ab481f6cb11c756',
-            type='TEST_RESOURCE',
-            distance=0,
-            path='test-network.test-stub.test-resource'
-        }
-    ]
-}
+# 查看此控制台已连接上的跨链路由
+[server1]> currentServer
+[server1, 127.0.0.1:8250]
 
 # 退出控制台
 [server1]> q
 ```
+
+更多控制台命令及含义详见[控制台命令](../manual/console.html#id13)。
+

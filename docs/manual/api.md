@@ -1,6 +1,8 @@
 # JSON-RPC API
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http请求，可以访问WeCross的JSON RPC接口。curl命令的url地址设置为WeCross根配置中的RPC监听IP和端口。可使用[jq](https://stedolan.github.io/jq/)工具对结果进行格式化显示。错误码参考[RPC错误码](#rpc)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http请求，可以访问WeCross的JSON RPC接口。curl命令的url地址需要设置为WeCross跨链代理的RPC监听IP和端口。
+
+可使用[jq](https://stedolan.github.io/jq/)工具对结果进行格式化显示。RPC错误码参考[RPC错误码](#rpc)。
 
 
 ## API列表
@@ -64,9 +66,12 @@
      
 #### java示例
 ```java
+    // 初始化RPC
     WeCrossService weCrossService = new WeCrossRPCService("127.0.0.1:8250");
     WeCrossRPC weCrossRPC = WeCrossRPC.init(weCrossService);
-    Response response = weCrossRPC.status("payment.bcoschain.HelloWorldContract").send();
+
+    // 调用RPC接口，目前只支持同步调用
+    Response response = weCrossRPC.status("payment.bcos.HelloWeCross").send();
 ```
 **注**
     - 之后的java示例，会省去初始化WeCrossRPC的步骤。
@@ -74,11 +79,11 @@
 #### curl示例          
 ``` bash
 # Request
-curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "method":"status"}' http://127.0.0.1:8250/payment/bcoschain/HelloWorldContract/status | jq
+curl --data '{"version":"1", "path":"payment.bcos.HelloWeCross", "method":"status"}' http://127.0.0.1:8250/payment/bcos/HelloWeCross/status | jq
 
 # Result
 {
-  "version": "0.2",
+  "version": "1",
   "result": 0,
   "message": null,
   "data": "exists"
@@ -105,11 +110,11 @@ curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "m
 #### curl示例          
 ``` bash
 # Request
-curl --data '{"version":"0.2", "path":"", "method":"list", "data": {"ignoreRemote": true}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/list | jq
+curl --data '{"version":"1", "path":"", "method":"list", "data": {"ignoreRemote": true}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/list | jq
 
 # Result
 {
-  "version": "0.2",
+  "version": "1",
   "result": 0,
   "message": null,
   "data": {
@@ -117,16 +122,14 @@ curl --data '{"version":"0.2", "path":"", "method":"list", "data": {"ignoreRemot
     "errorMessage": "",
     "resources": [
       {
-        "checksum": "0x320a7e701e655cb67a3d1a5283d6083cbe228b080503d4b791fa060bf7f7d926",
+        "checksum": "0xa88063c594ede65ee3c4089371a1e28482bd21d05ec1e15821c5ec7366bb0456",
         "type": "BCOS_CONTRACT",
         "distance": 0,
+<<<<<<< Updated upstream
         "path": "payment.bcoschain.HelloWorldContract"
-      },
-      {
-        "checksum": "0x7644243d71d1b1c154c717075da7bfe2d22bb2a94d7ed7693ab481f6cb11c756",
-        "type": "TEST_RESOURCE",
-        "distance": 0,
-        "path": "test-network.test-stub.test-resource"
+=======
+        "path": "payment.bcos.HelloWeCross"
+>>>>>>> Stashed changes
       }
     ]
   }
@@ -149,17 +152,17 @@ curl --data '{"version":"0.2", "path":"", "method":"list", "data": {"ignoreRemot
      
 #### java示例
 ```java
-    GetDataResponse response = weCrossRPC.getData("payment.bcoschain.HelloWorldContract", "get").send();
+    GetDataResponse response = weCrossRPC.getData("payment.bcos.HelloWeCross", "get").send();
 ```
 
 #### curl示例          
 ``` bash
 # Request
-curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "method":"getData", "data": {"key": "get"}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcoschain/HelloWorldContract/getData | jq
+curl --data '{"version":"1", "path":"payment.bcos.HelloWeCross", "method":"getData", "data": {"key": "name"}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcos/HelloWeCross/getData | jq
 
 # Result
 {
-  "version": "0.2",
+  "version": "1",
   "result": 0,
   "message": null,
   "data": {
@@ -186,17 +189,17 @@ curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "m
      
 #### java示例
 ```java
-    GetDataResponse response = weCrossRPC.setData("payment.bcoschain.HelloWorldContract", "set", "Hello World").send();
+    GetDataResponse response = weCrossRPC.setData("payment.bcos.HelloWeCross", "set", "Hello World").send();
 ```
 
 #### curl示例          
 ``` bash
 # Request
-curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "method":"setData", "data": {"key": "set", "value":"Hello World"}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcoschain/HelloWorldContract/setData | jq
+curl --data '{"version":"1", "path":"payment.bcos.HelloWeCross", "method":"setData", "data": {"key": "name", "value":"dou dou"}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcos/HelloWeCross/setData | jq
 
 # Result
 {
-  "version": "0.2",
+  "version": "1",
   "result": 0,
   "message": null,
   "data": {
@@ -226,43 +229,31 @@ curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "m
     TransactionResponse transactionResponseVoid =
         weCrossRPC
             .call(
-                "test-network.test-stub.test-resource",
-                    "test"
-                    123,
-                    "Hello")
+                "payment.bcos.HelloWeCross",
+                    "getNumber")
             .send();
 ```
 
 #### curl示例          
 ``` bash
 # Request
-curl --data '{"version":"0.2", "path":"test-network.test-stub.test-resource", "method":"call", "data": {"method": "test", "args":[123,"Hello World"]}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/test-network/test-stub/test-resource/call | jq
+curl --data '{"version":"1", "path":"payment.bcos.HelloWeCross", "method":"call", "data": {"method": "getNumber", "args":[]}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcos/HelloWeCross/call | jq
 
 # Result
 {
-  "version": "0.2",
+  "version": "1",
   "result": 0,
   "message": null,
   "data": {
     "errorCode": 0,
-    "errorMessage": "call test resource success",
-    "hash": "010157f4",
+    "errorMessage": "success",
+    "hash": null,
     "extraHashes": null,
-    "result": [
-      {
-        "sig": null,
-        "retTypes": null,
-        "method": "test",
-        "args": [
-          123,
-          "Hello World"
-        ]
-      }
-    ],
-    "type": "",
-    "encryptType": "",
+    "result": [],
+    "type": "NORMAL",
+    "encryptType": "NORMAL",
     "blockHeader": null,
-    "proofs": []
+    "proofs": null
   }
 }
 ```
@@ -287,20 +278,20 @@ curl --data '{"version":"0.2", "path":"test-network.test-stub.test-resource", "m
     TransactionResponse transactionResponseVoid =
         weCrossRPC
             .call(
-                "payment.bcoschain.HelloWorldContract",
+                "payment.bcos.HelloWeCross",
                 new String[] {"String"}
-                    "get")
+                    "getMessage")
             .send();
 ```
 
 #### curl示例          
 ``` bash
 # Request
-curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "method":"call", "data": {"retTypes":["String"], "method": "get", "args":[]}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcoschain/HelloWorldContract/call | jq
+curl --data '{"version":"1", "path":"payment.bcos.HelloWeCross", "method":"call", "data": {"retTypes":["String"], "method": "getMessage", "args":[]}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcos/HelloWeCross/call | jq
 
 # Result
 {
-  "version": "0.2",
+  "version": "1",
   "result": 0,
   "message": null,
   "data": {
@@ -309,7 +300,7 @@ curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "m
     "hash": null,
     "extraHashes": null,
     "result": [
-      "Hello World"
+      "Ha Ha"
     ],
     "type": "NORMAL",
     "encryptType": "NORMAL",
@@ -346,43 +337,71 @@ curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "m
     TransactionResponse transactionResponseVoid =
         weCrossRPC
             .sendTransaction(
-                "test-network.test-stub.test-resource",
-                    "test"
-                    123,
-                    "Hello")
+                "payment.bcos.HelloWeCross",
+                    "setNumber"
+                    123)
             .send();
 ```
 
 #### curl示例          
 ``` bash
 # Request
-curl --data '{"version":"0.2", "path":"test-network.test-stub.test-resource", "method":"sendTransaction", "data": {"method": "test", "args":[123,"Hello World"]}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/test-network/test-stub/test-resource/sendTransaction | jq
+curl --data '{"version":"1", "path":"payment.bcos.HelloWeCross", "method":"sendTransaction", "data": {"method": "setNumber", "args":[123]}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcos/HelloWeCross/sendTransaction | jq
 
 # Result
 {
-  "version": "0.2",
+  "version": "1",
   "result": 0,
   "message": null,
   "data": {
     "errorCode": 0,
-    "errorMessage": "sendTransaction test resource success",
-    "hash": "010157f4",
-    "extraHashes": null,
-    "result": [
-      {
-        "sig": null,
-        "retTypes": null,
-        "method": "test",
-        "args": [
-          123,
-          "Hello World"
-        ]
-      }
+    "errorMessage": null,
+    "hash": "0x5fe42cf98516c70b0b490ee8957088e341faa1382d4071cd6bbad7b704fd1870",
+    "extraHashes": [
+      "0x4c17d7a9ef8c244fcc864251143bcbc773632d5356086f08c84e95cb80e0f894"
     ],
-    "type": "",
-    "encryptType": "",
-    "blockHeader": null,
-    "proofs": []
+    "result": [],
+    "type": "NORMAL",
+    "encryptType": "NORMAL",
+    "blockHeader": {
+      "blockNumber": 40,
+      "hash": "0x2e592998b752369087c9286048e0638d606ebf20cb9964350fa9926d5c23d30d",
+      "roots": [
+        "0x13874fc5554d177b8739595b8ea6a97443805697238279e170d7219533fb1542",
+        "0xc9a1779a4ceaf2134653f2be3468e6081cfabcd9044d602d9e9229512dc5a1b2",
+        "0x767cc8d0cd30b74c42698b224cd65a46db251241aa6c74ab028f72f5f40c0afb"
+      ]
+    },
+    "proofs": [
+      {
+        "root": "0x767cc8d0cd30b74c42698b224cd65a46db251241aa6c74ab028f72f5f40c0afb",
+        "path": [
+          {
+            "left": [],
+            "right": []
+          }
+        ],
+        "leaf": {
+          "index": "0x0",
+          "leaf": "0x5fe42cf98516c70b0b490ee8957088e341faa1382d4071cd6bbad7b704fd1870",
+          "proof": "0x805fe42cf98516c70b0b490ee8957088e341faa1382d4071cd6bbad7b704fd1870"
+        }
+      },
+      {
+        "root": "0xc9a1779a4ceaf2134653f2be3468e6081cfabcd9044d602d9e9229512dc5a1b2",
+        "path": [
+          {
+            "left": [],
+            "right": []
+          }
+        ],
+        "leaf": {
+          "index": "0x0",
+          "leaf": "0x4c17d7a9ef8c244fcc864251143bcbc773632d5356086f08c84e95cb80e0f894",
+          "proof": "0x804c17d7a9ef8c244fcc864251143bcbc773632d5356086f08c84e95cb80e0f894"
+        }
+      }
+    ]
   }
 }
 ```
@@ -407,9 +426,10 @@ curl --data '{"version":"0.2", "path":"test-network.test-stub.test-resource", "m
     TransactionResponse transactionResponseVoid =
         weCrossRPC
             .sendTransaction(
-                "payment.bcoschain.HelloWorldContract",
-                null,
-                "set",
+                "payment.bcos.HelloWeCross",
+                new String[] {"Int", "String"},
+                "setNumAndMsg",
+                234,
                 "Hello WeCross")
             .send();
 ```
@@ -417,36 +437,38 @@ curl --data '{"version":"0.2", "path":"test-network.test-stub.test-resource", "m
 #### curl示例          
 ``` bash
 # Request
-curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "method":"sendTransaction", "data": {"retTypes":null, "method": "set", "args":["Hello WeCross"]}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcoschain/HelloWorldContract/sendTransaction | jq
+curl --data '{"version":"1", "path":"payment.bcos.HelloWeCross", "method":"sendTransaction", "data": {"retTypes":["Int", "String"], "method": "setNumAndMsg", "args":[234,"Hello WeCross"]}}' -H "Content-Type:application/json"  http://127.0.0.1:8250/payment/bcos/HelloWeCross/sendTransaction | jq
 
 # Result
 {
-  "version": "0.2",
+  "version": "1",
   "result": 0,
   "message": null,
   "data": {
     "errorCode": 0,
     "errorMessage": null,
-    "hash": "0x4b9868f7846706006962dc88fabd3b27aaeab4187afabd0b5182e46452aa83d1",
-    "result": [],
-    # 以下内容在SDK中不会返回
+    "hash": "0xc0a842c9edf35484ad7d3eb1bdb12deb7f20bd356ed9eb3c063ec9fe0de4401e",
     "extraHashes": [
-      "0x229a233f58068e1502f065b45c74dcbd2f4ce6fbefe1cfbf1d0262843e4543a4"
+      "0x58a663c23ebac75168d8e9859f0db803c926f0a452cbd537beffe0b3426f4394"
+    ],
+    "result": [
+      234,
+      "Hello WeCross"
     ],
     "type": "NORMAL",
     "encryptType": "NORMAL",
     "blockHeader": {
-      "blockNumber": 13,
-      "hash": "0x9c2524911aef82dee67df8b091616c9de2300271b5c34e5684c1f85c7d106adb",
+      "blockNumber": 42,
+      "hash": "0x43956a4330ee652bbd2234894960f6c78234775a25ca66741cfcc7ddf22f9cfb",
       "roots": [
-        "0x4c7fb20023f2a1d7c4116ccb5b6a0b427ccc7345420133968aebe6b332987ad3",
-        "0x58916a5002355561ab46e5e4edb3eaa57375ccaaace797d51c129f1326aa23be",
-        "0xb936177f128249b9a638ae9f8228d2876a1941e33903a48468c90c953228ba57"
+        "0xfb146b917eacedf386e40396d3b5c526576308008ebbd2f42f0cef89615ac961",
+        "0x99cbcd0d1aa8742e23148db18436a120ddfecf0635dc1289129c3e0b260e323f",
+        "0x3e58b5157ecd7e5024aaa66c925ca8685dd5b8444a534c0f9387d36051067a00"
       ]
     },
     "proofs": [
       {
-        "root": "0x4c7fb20023f2a1d7c4116ccb5b6a0b427ccc7345420133968aebe6b332987ad3",
+        "root": "0x3e58b5157ecd7e5024aaa66c925ca8685dd5b8444a534c0f9387d36051067a00",
         "path": [
           {
             "left": [],
@@ -455,12 +477,12 @@ curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "m
         ],
         "leaf": {
           "index": "0x0",
-          "leaf": "0x4b9868f7846706006962dc88fabd3b27aaeab4187afabd0b5182e46452aa83d1",
-          "proof": "0x804b9868f7846706006962dc88fabd3b27aaeab4187afabd0b5182e46452aa83d1"
+          "leaf": "0xc0a842c9edf35484ad7d3eb1bdb12deb7f20bd356ed9eb3c063ec9fe0de4401e",
+          "proof": "0x80c0a842c9edf35484ad7d3eb1bdb12deb7f20bd356ed9eb3c063ec9fe0de4401e"
         }
       },
       {
-        "root": "0x58916a5002355561ab46e5e4edb3eaa57375ccaaace797d51c129f1326aa23be",
+        "root": "0xfb146b917eacedf386e40396d3b5c526576308008ebbd2f42f0cef89615ac961",
         "path": [
           {
             "left": [],
@@ -469,8 +491,8 @@ curl --data '{"version":"0.2", "path":"payment.bcoschain.HelloWorldContract", "m
         ],
         "leaf": {
           "index": "0x0",
-          "leaf": "0x229a233f58068e1502f065b45c74dcbd2f4ce6fbefe1cfbf1d0262843e4543a4",
-          "proof": "0x80229a233f58068e1502f065b45c74dcbd2f4ce6fbefe1cfbf1d0262843e4543a4"
+          "leaf": "0x58a663c23ebac75168d8e9859f0db803c926f0a452cbd537beffe0b3426f4394",
+          "proof": "0x8058a663c23ebac75168d8e9859f0db803c926f0a452cbd537beffe0b3426f4394"
         }
       }
     ]

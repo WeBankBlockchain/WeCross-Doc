@@ -8,5 +8,4 @@
    
    bcos.md
    fabric.md
-   jd.md
-   
+..    jd.md

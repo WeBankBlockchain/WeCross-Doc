@@ -2,7 +2,11 @@
 
 完成了WeCross的部署，如何让它和一条真实的区块链交互，相信优秀的您一定在跃跃欲试。接下来的教程将以**接入FISCO BCOS**为例介绍如何体验WeCross+区块链。
 
+<<<<<<< HEAD
 ### 一键搭链
+=======
+#### 搭链FISCO BCOS链
+>>>>>>> 2c520dd3a83a13f1497ca0c94a98ce1650d27709
 
 若已有搭建好的FISCO BCOS链，请忽略本小节。
 
@@ -17,7 +21,7 @@ FISCO BCOS官方提供了一键搭链的教程，详见[单群组FISCO BCOS联�
 cd ~ && mkdir -p fisco && cd fisco
 
 # 下载build_chain.sh脚本
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 
 # 搭建单群组4节点联盟链
 # 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
@@ -239,12 +243,6 @@ Resources{
             type='BCOS_CONTRACT',
             distance=0,
             path='payment.bcos.HelloWeCross'
-        },
-        WeCrossResource{
-            checksum='0x7644243d71d1b1c154c717075da7bfe2d22bb2a94d7ed7693ab481f6cb11c756',
-            type='TEST_RESOURCE',
-            distance=0,
-            path='test-network.test-stub.test-resource'
         }
     ]
 }
