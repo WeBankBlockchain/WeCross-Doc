@@ -125,7 +125,11 @@ curl --data '{"version":"1", "path":"", "method":"list", "data": {"ignoreRemote"
         "checksum": "0xa88063c594ede65ee3c4089371a1e28482bd21d05ec1e15821c5ec7366bb0456",
         "type": "BCOS_CONTRACT",
         "distance": 0,
+<<<<<<< Updated upstream
+        "path": "payment.bcoschain.HelloWorldContract"
+=======
         "path": "payment.bcos.HelloWeCross"
+>>>>>>> Stashed changes
       }
     ]
   }
