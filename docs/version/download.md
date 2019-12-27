@@ -7,13 +7,13 @@
 **方式1：命令下载**
 
 ``` shell
-bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0.2/scripts/download_wecross.sh)
+bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/master/scripts/download_wecross.sh)
 ```
 
 **方式2：命令下载（源码编译模式）**
 
 ``` shell
-bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0.2/scripts/download_wecross.sh) -s
+bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/master/scripts/download_wecross.sh) -s
 ```
 
 **方式3：手动下载**
