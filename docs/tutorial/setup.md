@@ -1,6 +1,6 @@
 # 快速部署
 
-本文档指导完成[**跨链路由**](../introduction/introduction.html#id2)和**跨链控制台**的部署。
+本文档指导完成[**跨链路由**](../introduction/introduction.html#id2)和[**跨链控制台**](../manual/console.md)的部署。
 
 * **跨链路由**：    与区块链节点对接，并彼此互连，形成[跨链网络](../introduction/introduction.html#id2)，负责跨链请求的转发
 * **跨链控制台**：查询和发送交易的操作终端
@@ -28,26 +28,27 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/release-0
 用WeCross中的 [build_wecross.sh](../manual/scripts.html#wecross) 生成一个跨链路由。请确保机器的`8250`, `25500`端口没有被占用。
 
 ```bash
-bash ./WeCross/build_wecross.sh -n payment -l 127.0.0.1:8250:25500 
+bash ./WeCross/build_wecross.sh -n payment -o routers-payment -l 127.0.0.1:8250:25500 
 ```
 
 ```eval_rst
 .. note::
     - -n 指定跨链网络标识符(network id)，跨链网络通过network id进行区分，可以理解为业务名称。
+    - -o 指定输出的目录，并在该目录下生成一个跨链路由。
     - -l 指定此WeCross跨链路由的ip地址，rpc端口，p2p端口。
 ```
 
-命令执行成功，生成`routers/`目录，目录中包含一个跨链路由`127.0.0.1-8250-25500`
+命令执行成功，生成`routers-payment/`目录，目录中包含一个跨链路由`127.0.0.1-8250-25500`
 
 ``` bash
-[INFO] All completed. WeCross routers are generated in: routers/
+[INFO] All completed. WeCross routers are generated in: routers-payment/
 ```
 
 生成的跨链路由`127.0.0.1-8250-25500`目录内容如下
 
 ```bash
 # 已屏蔽lib目录，该目录存放所有依赖的jar包
-tree routers/127.0.0.1-8250-25500/ -I "lib"
+tree routers-payment/127.0.0.1-8250-25500/ -I "lib"
 .
 ├── apps
 │   └── WeCross.jar         # WeCross路由jar包
@@ -71,7 +72,7 @@ tree routers/127.0.0.1-8250-25500/ -I "lib"
 * 启动服务
 
 ```bash
-cd ~/wecross/routers/127.0.0.1-8250-25500/
+cd ~/wecross/routers-payment/127.0.0.1-8250-25500/
 bash start.sh 
 #停止: bash stop.sh
 ```
