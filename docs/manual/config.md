@@ -199,39 +199,40 @@ WeCross启动后会在`wecross.toml`中所指定的Stubs的根目录下去遍历
 
 配置方法详见[Fabric Stub配置](../stubs/fabric.html#fabric-stub)
 
-[^_^]:
+<!--
 
-    #### JDChain
-    
-    配置示例如下：
-    
-    ```toml
-    [common]
-        stub = 'jd' # stub must be same with directory name
-        type = 'JDCHAIN'
-    
-    # jdServices is a list
-    [[jdServices]]
-        privateKey = '0000000000000000'
-        publicKey = '111111111111111'
-        password = '222222222222222'
-        connectionsStr = '127.0.0.1:18081'
-    [[jdServices]]
-        privateKey = '0000000000000000'
-        publicKey = '111111111111111'
-        password = '222222222222222'
-        connectionsStr = '127.0.0.1:18082'
-    
-    # resources is a list
-    [[resources]]
-        # name must be unique
-        name = 'HelloWeCross'
-        type = 'JDCHAIN_CONTRACT'
-        contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
-    [[resources]]
-        name = 'HelloWorld'
-        type = 'JDCHAIN_CONTRACT'
-        contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
-    ```
-    
-    配置方法详见[JDChain Stub配置](../stubs/jd.html#jdchain-stub)
+#### JDChain
+
+配置示例如下：
+
+```toml
+[common]
+stub = 'jd' # stub must be same with directory name
+type = 'JDCHAIN'
+
+# jdServices is a list
+[[jdServices]]
+privateKey = '0000000000000000'
+publicKey = '111111111111111'
+password = '222222222222222'
+connectionsStr = '127.0.0.1:18081'
+[[jdServices]]
+privateKey = '0000000000000000'
+publicKey = '111111111111111'
+password = '222222222222222'
+connectionsStr = '127.0.0.1:18082'
+
+# resources is a list
+[[resources]]
+# name must be unique
+name = 'HelloWeCross'
+type = 'JDCHAIN_CONTRACT'
+contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
+[[resources]]
+name = 'HelloWorld'
+type = 'JDCHAIN_CONTRACT'
+contractAddress = '0x38735ad749aebd9d6e9c7350ae00c28c8903dc7a'
+```
+
+配置方法详见[JDChain Stub配置](../stubs/jd.html#jdchain-stub)
+-->
