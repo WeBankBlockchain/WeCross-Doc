@@ -23,7 +23,7 @@ vi data
 
 ```bash
 # -f 表示以文件为输入
-bash build_wecross.sh -n bill -o routers-bill -f data
+bash ./WeCross/build_wecross.sh -n bill -o routers-bill -f data
 
 # 成功输出如下信息
 [INFO] Create routers/127.0.0.1-8251-25501 successfully
@@ -72,7 +72,7 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8251-25501/con
 ```
 
 
-### 配置127.0.0.1-8252-25502
+#### 配置127.0.0.1-8252-25502
 
 该跨链路由配置`HelloWeCross`合约。在[接入区块链](../chain.md##hellowecross)这一章节已完成了`HelloWeCross`合约的部署，地址为`0x04ae9de7bc7397379fad6220ae01529006022d1b`
 
@@ -84,7 +84,7 @@ vi conf/stubs/bcos2/stub.toml
 # 配置合约资源
 [[resources]]
     # name must be unique
-    name = 'HelloWorld'
+    name = 'HelloWeCross'
     type = 'BCOS_CONTRACT'
     contractAddress = '0x04ae9de7bc7397379fad6220ae01529006022d1b'
 ```
@@ -98,10 +98,10 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8252-25502/con
 ### 启动跨链路由
 
 ```bash
-cd ~/wecross/routers/127.0.0.1-8251-25501 
+cd ~/wecross/routers-bill/127.0.0.1-8251-25501 
 bash start.sh
 
-cd ~/wecross/routers/127.0.0.1-8250-25502 
+cd ~/wecross/routers-bill/127.0.0.1-8250-25502 
 bash start.sh
 ```
 
