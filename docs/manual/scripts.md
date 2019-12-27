@@ -70,7 +70,7 @@ e.g
 * **`-T`**：可选，若设置，生成的跨链路由开启测试资源
 * **`-h`**：可选，打印Usage
 
-## 创建FISCO BCOS stub配置文件脚本
+## BCOS stub配置脚本
 
 脚本`create_bcos_stub_config.sh`用于快速创建FISCO BCOS stub的配置文件。
 
@@ -115,7 +115,7 @@ conf/
 │       └── stub.toml
 ```
 
-## 创建Fabric stub配置文件脚本
+## Fabric stub配置脚本
 
 脚本`create_fabric_stub_config.sh`用于快速创建Fabric stub的配置文件。
 
