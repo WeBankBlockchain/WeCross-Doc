@@ -46,7 +46,7 @@ node3 start successfully
 
 通过FISCO BCOS控制台部署HelloWeCross合约，控制台的安装和使用详见官方文档[配置及使用控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#id7)
 
-`HelloWeCross.sol`位于`~/wecross/routers/127.0.0.1-8250-25500/conf/stubs-sample/bcos/`
+`HelloWeCross.sol`位于`~/wecross/routers-payment/127.0.0.1-8250-25500/conf/stubs-sample/bcos/`
 
 控制台安装配置完后启动并部署`HelloWeCross.sol`，返回的合约地址在之后的WeCross配置中需要用到。详细步骤如下：
 
