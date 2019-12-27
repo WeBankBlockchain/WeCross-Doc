@@ -18,7 +18,8 @@ WeCross的配置分为跨链服务配置和链配置两级。
 
 WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`stub.toml`，配置的目录结构如下：
 
-```
+``` bash
+# 这是conf目录下标准的配置结构，表示配置了两条链，分别叫bcos和fabric
 .
 ├── log4j2.xml   // 日志配置文件，无需更改
 ├── stubs         
@@ -31,12 +32,7 @@ WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`stub
 
 ### 跨链服务配置
 
-配置示例文件`wecross-sample.toml`编译后位于`WeCross/dist/conf`目录，使用前需拷贝成指定文件名`wecross.toml`。
-
-```bash
-cd dist
-cp conf/wecross-sample.toml conf/wecross.toml
-```
+配置示例文件`wecross-sample.toml`位于`conf`目录，使用前需拷贝成指定文件名`wecross.toml`。
 
 配置示例如下：
 
@@ -87,22 +83,7 @@ cp conf/wecross-sample.toml conf/wecross.toml
 **注：**  
 
 1. WeCross启动时会把`conf`目录指定为classpath，若配置项的路径中开头为`classpath:`，则以`conf`为相对目录。
-2.  `[p2p]`配置项中的证书和私钥可以通过`build_cert.sh`脚本生成，脚本位于`dist`目录下，-h可查看帮助信息。使用示例如下：
-
-   ```bash
-   cd dist
-   # 生成根证书ca.crt
-   bash build_cert.sh -c
-   
-   # 生成节点证书和私钥node.crt和node.key
-   # 必须先生成根证书ca.crt，才能生成节点证书和私钥
-   # 该命令还会生成node.nodeid，主要用于P2P出错时的程序调试，可以忽略
-   bash build_cert.sh -n
-   
-   # 批量生成节点证书和私钥
-   # -C后面为数量
-   bash build_cert.sh -n -C 10
-   ```
+2.  `[p2p]`配置项中的证书和私钥可以通过[create_cert.sh](./scripts.md#p2p)脚本生成。
 3. 若通过build_wecross.sh脚本生成的项目，那么已自动帮忙配置好了`wecross.toml`，包括P2P的配置，其中Stub的根目录默认为`stubs`。
 
 ### 链配置

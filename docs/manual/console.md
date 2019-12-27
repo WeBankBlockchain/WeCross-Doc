@@ -60,17 +60,18 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 .. important::
     前置条件：部署WeCross请参考 `快速部署 <../tutorial/setup.html>`_。
 ```
+
 #### 获取控制台
 
+可通过脚本`download_console.sh`获取控制台。
+
 ```bash
-cd ~ && mkdir -p WeCross && cd WeCross
+cd ~ && mkdir -p wecross && cd wecross
 # 获取控制台
-git clone https://github.com/WeBankFinTech/WeCross-Console.git
-cd WeCross-Console
-./gradlew assemble
+bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/dev/scripts/download_console.sh)
 ```
 
-编译成功，会生成`dist`目录，结构如下：
+执行成功后，会生成`WeCross-Console`目录，结构如下：
 
 ```bash
 ├── apps
@@ -78,12 +79,16 @@ cd WeCross-Console
 ├── conf
 │   ├── console-sample.xml   # 配置示例文件
 │   └── log4j2.xml           # 日志配置文件
+├── download_console.sh      # 获取控制台脚本
 ├── lib                      # 相关依赖的jar包目录
 ├── logs                     # 日志文件
 └── start.sh                 # 启动脚本
+
 ```
 
 #### 配置控制台
+
+配置前需要将`console-sample.xml`拷贝成`console.xml`，再配置`console.xml`文件。
 
 控制台唯一需要配置的是所连接的WeCross跨链代理的服务地址，包括IP和端口号。
 
@@ -116,17 +121,20 @@ cd WeCross-Console
 在WeCross服务已经开启的情况下，启动控制台：
 
 ```bash
-cd dist
+cd ~/wecross/WeCross-Console
 bash start.sh
 # 输出下述信息表明启动成功
 =============================================================================================
-Welcome to WeCross console(0.2)!
+Welcome to WeCross console(1.0.0-rc1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 ```
 
 ### 普通命令
+
+以下所有跨链资源相关命令的执行结果以实际配置为准，此处只是示例。
+
 #### **help**
 输入help或者h，查看控制台所有的命令。
 
@@ -226,7 +234,7 @@ Resources{
             checksum='0xdcb8e609e025c8e091d18fe18b8d66d34836bd3051a08ce615118d27e4a29ebe',
             type='REMOTE_RESOURCE',
             distance=1,
-            path='payment.bcos2.HelloWorld'
+            path='payment.bcos.HelloWorld'
         },
         WeCrossResource{
             checksum='0xdcb8e609e025c8e091d18fe18b8d66d34836bd3051a08ce615118d27e4a29ebe',
