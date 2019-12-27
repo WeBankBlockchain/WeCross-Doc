@@ -131,32 +131,10 @@ cd ~/wecross/WeCross-Console
 vi conf/console.xml 
 # 配置map信息
 <map>
-    <entry key="server2" value="127.0.0.1:8251"/>
-    <entry key="server3" value="127.0.0.1:8252"/>
+    <entry key="server1" value="127.0.0.1:8251"/>
+    <entry key="server2" value="127.0.0.1:8252"/>
 </map>
 
-```
-
-配置文件内容如下，配置两个跨链路由地址，同时将默认启动连接的跨链路由设置为`server2`
-
-``` xml
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-
-    <bean id="weCrossServers" class="com.webank.wecross.console.common.WeCrossServers">
-        <property name="servers">
-            <map>
-                <entry key="server2" value="127.0.0.1:8251"/>
-                <entry key="server3" value="127.0.0.1:8252"/>
-            </map>
-        </property>
-        <property name="defaultServer" value="server2"/>                                                                                                                          </bean>
-
-</beans>
 ```
 
 #### 启动跨链控制台
@@ -172,11 +150,11 @@ bash start.sh
 
 ```bash
 # 查看配置的所有跨链路由
-[server2]> listServers 
-{server2=127.0.0.1:8251, server3=127.0.0.1:8252}
+[server1]> listServers 
+{server1=127.0.0.1:8251, server2=127.0.0.1:8252}
 
-# 查看server2的资源列表，可以看到server3所连接的跨链路由的资源（bill.bcos2.HelloWeCross）也在列表中
-[server2]> listResources
+# 查看server1的资源列表，可以看到server2所连接的跨链路由的资源（bill.bcos2.HelloWeCross）也在列表中
+[server1]> listResources
 Resources{
     errorCode=0,
     errorMessage='',
@@ -196,8 +174,8 @@ Resources{
     ]
 }
 
-# 在server2中调用server3连接的资源
-[server2]> call bill.bcos2.HelloWeCross Int getNumber
+# 在server1中调用server2连接的资源
+[server1]> call bill.bcos2.HelloWeCross Int getNumber
 Receipt{
     errorCode=0,
     errorMessage='success',
@@ -207,11 +185,11 @@ Receipt{
     ]
 }
 
-# 切换server3
-[server2]> switch server3
+# 切换server2
+[server1]> switch server2
 
-# server3调用server2的资源
-[server3]> call bill.bcos1.HelloWorld String get
+# server2调用server1的资源
+[server2]> call bill.bcos1.HelloWorld String get
 Receipt{
     errorCode=0,
     errorMessage='success',
@@ -222,3 +200,4 @@ Receipt{
     ]
 }
 ````
+
