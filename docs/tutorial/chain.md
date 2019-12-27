@@ -42,7 +42,7 @@ node0 start successfully
 node3 start successfully
 ```
 
-### 部署HelloWeCross合约
+#### 部署HelloWeCross合约
 
 通过FISCO BCOS控制台部署HelloWeCross合约，控制台的安装和使用详见官方文档[配置及使用控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#id7)
 
@@ -99,12 +99,12 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 ```
 
-### 配置FISCO BCOS stub
+#### 配置FISCO BCOS stub
 
 完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS stub，即配置连接信息以及链上的[资源](../introduction/introduction.html#id2)。
 
 - 生成配置文件
-返回跨链路由的目录，并运行`create_bcos_stub_config.sh`脚本，在`conf`目录下生成FISCO BCOS stub的配置文件。
+返回跨链路由的目录，并运行 [create_bcos_stub_config.sh](../manual/scripts.html#fisco-bcos-stub) 脚本，在`conf`目录下生成FISCO BCOS stub的配置文件。
 
 ```bash
 cd ~/wecross/routers/127.0.0.1-8250-25500
@@ -122,11 +122,11 @@ bash create_bcos_stub_config.sh -n bcos
 生成的目录结构如下：
 
 ```bash
-├── stubs
-│   └── bcos
-│       ├── 0x5c9505d9e2c5c5c21a33187475baf5f512e02cc1.pem
-│       └── stub.toml
-
+tree conf/stubs/
+conf/stubs/
+└── bcos
+    ├── 0x5c9505d9e2c5c5c21a33187475baf5f512e02cc1.pem    	# FISCO BCOS的账户文件
+    └── stub.toml											# 链配置文件
 ```
 
 在`conf/stubs/bcos`目录下的`.pem`文件即FISCO BCOS的账户文件，已自动配置在了`stub.toml`文件中，之后只需要配置证书、群组以及资源信息。
@@ -160,7 +160,7 @@ vi conf/stubs/bcos/stub.toml
 
 在前面的步骤中，已经通过FISCO BCOS控制台部署了一个`HelloWorld`合约，地址为`0x04ae9de7bc7397379fad6220ae01529006022d1b`
 
-那么可在`stub.toml`文件中注册一条合约资源信息：
+那么可在`stub.toml`文件中注册一条合约资源信息，**并将配置中多余无用的举例删除**：
 
 ```toml 
 [[resources]]
@@ -213,7 +213,7 @@ bash stop.sh
 bash start.sh
 ```
 
-### 控制台访问跨链资源
+#### 控制台访问跨链资源
 
 - 启动控制台
 
@@ -244,7 +244,7 @@ Resources{
 }
 ```
 
-- 调用`HelloWecross`合约
+- 调用 [HelloWecross.sol](https://github.com/WeBankFinTech/WeCross/blob/release-0.2/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
 
 ``` bash
 # payment.bcos.HelloWeCross为跨链资源标识IPath
@@ -278,18 +278,18 @@ Receipt{
     errorMessage='success',
     hash='null',
     result=[
-        10086,
+        123,
         [
             1,
             2,
-            3
+            3,
+            4,
+            5
         ],
         Hello World,
         [
-            Bei Bei,
-            Jing Jing,
-            Huan Huan,
-            Ying Ying
+            Talk is cheap,
+            Show me the code
         ]
     ]
 }
