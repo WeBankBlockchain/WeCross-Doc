@@ -1,6 +1,6 @@
 ## 跨链组网
 
-如果已经体验完WeCross+区块链，接下来将教您如何搭建一个WeCross组网，实现不同的跨链代理之间的相互调用。
+如果已完成[接入区块链](./chain.md)的体验，接下来将教您如何搭建一个WeCross跨链组网，实现不同的跨链路由之间的相互调用。
 
 ```eval_rst
 .. important::
@@ -23,43 +23,27 @@ vi data
 
 ```bash
 # -f 表示以文件为输入
-# -c 指定ca证书路径，之后将基于该证书颁发各个跨链路由的节点证书
-bash build_wecross.sh -n payment -f data -c ./routers/cert
+bash build_wecross.sh -n bill -o routers-bill -f data
 
 # 成功输出如下信息
 [INFO] Create routers/127.0.0.1-8251-25501 successfully
 [INFO] Create routers/127.0.0.1-8252-25502 successfully
-[INFO] All completed. WeCross routers are generated in: routers/
+[INFO] All completed. WeCross routers are generated in: routers-bill/
 
-# routers目录下多了两个文件夹
-ls routers
-127.0.0.1-8250-25500 127.0.0.1-8252-25502 
-127.0.0.1-8251-25501 cert
+# 查看生成的内容
+ls routers-bill
+127.0.0.1-8251-25501 127.0.0.1-8252-25502 cert
 ```
 
-### 配置P2P
+### 配置stub
 
-跨链路由之间要实现互连，需要在配置P2P信息。
+两个跨链路由配置同一条FISCO BCOS链的不同合约资源。
 
-```bash 
-# 配置127.0.0.1-8250-25500
-vi ~/wecross/routers/127.0.0.1-8250-25500/conf/wecross.toml
-# 在p2p项目中设置peers
-peers = ['127.0.0.1:25501','127.0.0.1:25502']
+#### 配置127.0.0.1-8251-25501
 
-# 配置127.0.0.1-8251-25501
-vi ~/wecross/routers/127.0.0.1-8251-25501/conf/wecross.toml
-peers = ['127.0.0.1:25500','127.0.0.1:25502']
+该跨链路由配置`HelloWorld`合约。
 
-# 配置127.0.0.2-8251-25502
-vi ~/wecross/routers/127.0.0.1-8252-25502/conf/wecross.toml
-peers = ['127.0.0.1:25500','127.0.0.1:25501']
-```
-
-### 配置FISCO BCOS stub
-
-- 部署HelloWorld合约
-
+- 部署合约
 ```bash
 cd ~/fisco/console && bash start.sh
 
@@ -71,21 +55,9 @@ contract address: 0xe51eb006c96345f8f0d431f100f0bf619f6145d4
 - 配置stub.toml
 
 ```bash
-# 配置127.0.0.1-8251-25501
-cd ~/wecross/routers/127.0.0.1-8251-25501 
+cd ~/wecross/routers-bill/127.0.0.1-8251-25501 
 bash create_bcos_stub_config.sh -n bcos1
 vi conf/stubs/bcos1/stub.toml
-# 配置合约资源
-[[resources]]
-    # name must be unique
-    name = 'HelloWorld'
-    type = 'BCOS_CONTRACT'
-    contractAddress = '0xe51eb006c96345f8f0d431f100f0bf619f6145d4'
-
-# 配置127.0.0.1-8252-25502
-cd ~/wecross/routers/127.0.0.1-8252-25502 
-bash create_bcos_stub_config.sh -n bcos2
-vi conf/stubs/bcos2/stub.toml
 # 配置合约资源
 [[resources]]
     # name must be unique
@@ -95,28 +67,40 @@ vi conf/stubs/bcos2/stub.toml
 ```
 
 - 拷贝证书
+```bash
+cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8251-25501/conf/stubs/bcos1
+```
+
+
+### 配置127.0.0.1-8252-25502
+
+该跨链路由配置`HelloWeCross`合约。在[接入区块链](../chain.md##hellowecross)这一章节已完成了`HelloWeCross`合约的部署，地址为`0x04ae9de7bc7397379fad6220ae01529006022d1b`
+
+- 配置stub.toml
+```bash
+cd ~/wecross/routers-bill/127.0.0.1-8252-25502 
+bash create_bcos_stub_config.sh -n bcos2
+vi conf/stubs/bcos2/stub.toml
+# 配置合约资源
+[[resources]]
+    # name must be unique
+    name = 'HelloWorld'
+    type = 'BCOS_CONTRACT'
+    contractAddress = '0x04ae9de7bc7397379fad6220ae01529006022d1b'
+```
+
+- 拷贝证书
 
 ```bash
-# 拷贝到127.0.0.1-8251-25501
-cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers/127.0.0.1-8251-25501/conf/stubs/bcos1
-
-# 拷贝到127.0.0.1-8252-25502
-cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers/127.0.0.1-8252-25502/conf/stubs/bcos2
+cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8252-25502/conf/stubs/bcos2
 ```
 
 ### 启动跨链路由
 
 ```bash
-# 由于127.0.0.1-8250-25500更新了P2P配置，因此需要重新启动
-cd ~/wecross/routers/127.0.0.1-8250-25500
-bash stop.sh
-bash start.sh
-
-# 首次启动
 cd ~/wecross/routers/127.0.0.1-8251-25501 
 bash start.sh
 
-# 首次启动
 cd ~/wecross/routers/127.0.0.1-8250-25502 
 bash start.sh
 ```
@@ -145,8 +129,11 @@ vi conf/console.xml
 [server1]> listServers 
 {server1=127.0.0.1:8250, server2=127.0.0.1:8251, server3=127.0.0.1:8252}
 
-# 查看server1的资源列表，可以看到server1所连接的跨链路由的资源也在列表中
-[server1]> listResources 
+# 切换到server2
+[server1]> switch server2
+
+# 查看server2的资源列表，可以看到server3所连接的跨链路由的资源也在列表中
+[server2]> listResources
 Resources{
     errorCode=0,
     errorMessage='',
@@ -158,34 +145,16 @@ Resources{
             path='payment.bcos2.HelloWorld'
         },
         WeCrossResource{
-            checksum='0xdcb8e609e025c8e091d18fe18b8d66d34836bd3051a08ce615118d27e4a29ebe',
-            type='REMOTE_RESOURCE',
-            distance=1,
-            path='payment.bcos1.HelloWorld'
-        },
-        WeCrossResource{
             checksum='0xa88063c594ede65ee3c4089371a1e28482bd21d05ec1e15821c5ec7366bb0456',
             type='BCOS_CONTRACT',
             distance=0,
-            path='payment.bcos.HelloWeCross'
+            path='payment.bcos1.HelloWeCross'
         }
     ]
 }
 
-# 调用server2的资源
-[server1]> call payment.bcos1.HelloWorld String get
-Receipt{
-    errorCode=0,
-    errorMessage='success',
-    hash='null',
-    result=[
-        Hello,
-        World!
-    ]
-}
-
 # 调用server3的资源
-[server1]> call payment.bcos2.HelloWorld String get
+[server2]> call payment.bcos2.HelloWorld String get
 Receipt{
     errorCode=0,
     errorMessage='success',
@@ -197,10 +166,10 @@ Receipt{
 }
 
 # 切换server3
-[server1]> switch server3
+[server2]> switch server3
 
-# server3调用server1的资源
-[server3]> call payment.bcos.HelloWeCross Int getNumber
+# server3调用server2的资源
+[server3]> call payment.bcos1.HelloWeCross Int getNumber
 Receipt{
     errorCode=0,
     errorMessage='success',

@@ -66,7 +66,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 - 拷贝合约文件
 
 ```bash
-cp ~/wecross/routers/127.0.0.1-8250-25500/conf/stubs-sample/bcos/HelloWeCross.sol console/contracts/solidity/
+cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/stubs-sample/bcos/HelloWeCross.sol console/contracts/solidity/
 ```
 
 - 启动控制台
@@ -107,7 +107,7 @@ contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 返回跨链路由的目录，并运行 [create_bcos_stub_config.sh](../manual/scripts.html#fisco-bcos-stub) 脚本，在`conf`目录下生成FISCO BCOS stub的配置文件。
 
 ```bash
-cd ~/wecross/routers/127.0.0.1-8250-25500
+cd ~/wecross/routers-payment/127.0.0.1-8250-25500
 bash create_bcos_stub_config.sh -n bcos
 ```
 
