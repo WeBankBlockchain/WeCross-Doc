@@ -4,10 +4,10 @@
 
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
    
    config.md
    console.md
+   scripts.md
    sdk.md
    api.md

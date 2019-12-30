@@ -4,9 +4,8 @@
 
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
    
    bcos.md
    fabric.md
-   
+..    jd.md
