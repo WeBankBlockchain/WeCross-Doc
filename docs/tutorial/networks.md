@@ -205,5 +205,17 @@ Receipt{
         World!
     ]
 }
+
+# 退出控制台
+[server2]> q
 ````
+
+停止跨链路由
+
+```shell
+cd ~/wecross/routers-bill/127.0.0.1-8251-25501
+bash stop.sh
+cd ~/wecross/routers-bill/127.0.0.1-8252-25502
+bash stop.sh
+```
 
