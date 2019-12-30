@@ -115,7 +115,7 @@ WeCross提供了控制台，方便用户进行跨链开发和调试。可通过�
 
 ```shell
 cd ~/wecross/
-bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/dev/scripts/download_console.sh)
+bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/master/scripts/download_console.sh)
 ```
 
 - 配置控制台
