@@ -63,7 +63,9 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 # 配置控制台证书
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
-- 将`HelloWeCross`合约拷贝至控制台目录（用控制台部署）
+- 拷贝合约文件
+
+将`HelloWeCross`合约拷贝至控制台目录（用控制台部署）
 
 ```bash
 cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/stubs-sample/bcos/HelloWeCross.sol console/contracts/solidity/

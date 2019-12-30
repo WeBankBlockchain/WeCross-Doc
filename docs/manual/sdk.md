@@ -1,4 +1,4 @@
-# 跨链SDK
+# 跨链 SDK
 
 WeCross向外部暴露了所有的UBI接口，开发者可以通过SDK实现这些接口的快速调用。
 
@@ -18,14 +18,14 @@ WeCross向外部暴露了所有的UBI接口，开发者可以通过SDK实现这�
 
    gradle:
 ```bash
-compile ('com.webank:wecross-sdk:0.2')
+compile ('com.webank:wecross-java-sdk:1.0.0-rc1')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>com.webank</groupId>
-    <artifactId>wecross-sdk</artifactId>
-    <version>0.2</version>
+    <artifactId>wecross-java-sdk</artifactId>
+    <version>1.0.0-rc1</version>
 </dependency>
 ```
 
