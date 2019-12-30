@@ -33,6 +33,9 @@ WeCross立足于区块链行业现存挑战，致力于解决异构区块链之�
 * **IPath（Interchain Path）**
   * 跨链资源的唯一标识
   * 跨链路由根据IPath将请求路由至相应区块链上
+* **跨链网络**
+  * 多条链通过跨链路由相连，形成跨链网络
+  * 跨链网络有唯一标识，即IPath中的第一项（`payment.stub3.resource-d`的`payment`）
 
 ![](../images/framework.png)
 
