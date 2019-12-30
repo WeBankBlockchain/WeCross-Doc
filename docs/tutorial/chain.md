@@ -248,7 +248,7 @@ Resources{
 }
 ```
 
-- 调用 [HelloWecross.sol](https://github.com/WeBankFinTech/WeCross/blob/release-0.2/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
+- 调用 [HelloWecross.sol](https://github.com/WeBankFinTech/WeCross/blob/master/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
 
 ``` bash
 # payment.bcos.HelloWeCross为跨链资源标识IPath
