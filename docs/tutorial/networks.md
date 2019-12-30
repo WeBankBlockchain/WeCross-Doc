@@ -4,7 +4,7 @@
 
 ```eval_rst
 .. important::
-    - WeCross跨链路由之间采用TLS协议实现安全通讯，因此只有持有相同ca证书的跨链路由才能建立连接。
+    - WeCross跨链路由之间采用TLS协议实现安全通讯，只有持有相同ca证书的跨链路由才能建立连接。
 ```
 
 ### 构建多个WeCross跨链路由
@@ -54,11 +54,11 @@ routers-bill/
 ```bash
 cd ~/fisco/console && bash start.sh
 
-# 部署HelloWorld合约
+# 部署HelloWorld合约，请将合约地址记录下来后续步骤使用
 [group:1]> deploy HelloWorld
 contract address: 0xe51eb006c96345f8f0d431f100f0bf619f6145d4
 
-# 部署HelloWeCross合约
+# 部署HelloWeCross合约，请将合约地址记录下来后续步骤使用
 [group:1]> deploy HelloWeCross
 contract address: 0x5854394d40e60b203e3807d6218b36d4bc0f3437
 
@@ -72,7 +72,10 @@ contract address: 0x5854394d40e60b203e3807d6218b36d4bc0f3437
 cd ~/wecross/routers-bill/127.0.0.1-8251-25501 
 bash create_bcos_stub_config.sh -n bcos1
 vi conf/stubs/bcos1/stub.toml
-# 配置合约资源，删除其他资源示例
+# 配置通过哪些节点接入此链
+connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
+
+# 配置资源：HelloWorld合约（同时删除其他资源示例）
 [[resources]]
     # name must be unique
     name = 'HelloWorld'
@@ -94,7 +97,10 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8251-25501/con
 cd ~/wecross/routers-bill/127.0.0.1-8252-25502 
 bash create_bcos_stub_config.sh -n bcos2
 vi conf/stubs/bcos2/stub.toml
-# 配置合约资源，删除其他资源示例
+# 配置通过哪些节点接入此链
+connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
+
+# 配置资源：HelloWeCross合约（同时删除其他资源示例）
 [[resources]]
     # name must be unique
     name = 'HelloWeCross'
@@ -146,7 +152,7 @@ bash start.sh
 
 #### 测试请求路由功能
 
-跨链路由能够进行请求转发，将调用请求正确的路由至相应的跨链资源
+跨链路由能够进行请求转发，将调用请求正确的路由至相应的跨链资源。无论请求发至那个跨链路由，都可正确路由至相应跨链路由配置的链上资源。
 
 ```bash
 # 查看配置的所有跨链路由

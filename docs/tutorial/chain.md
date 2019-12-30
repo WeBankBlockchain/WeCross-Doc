@@ -63,7 +63,7 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 # 配置控制台证书
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
-- 拷贝合约文件
+- 将`HelloWeCross`合约拷贝至控制台目录（用控制台部署）
 
 ```bash
 cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/stubs-sample/bcos/HelloWeCross.sol console/contracts/solidity/
@@ -99,12 +99,15 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 ```
 
+将HelloWeCross的合约地址记录下来，后续步骤中使用：`contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b`
+
 #### 配置FISCO BCOS stub
 
 完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS stub，即配置连接信息以及链上的[资源](../introduction/introduction.html#id2)。
 
-- 生成配置文件
-返回跨链路由的目录，并运行 [create_bcos_stub_config.sh](../manual/scripts.html#fisco-bcos-stub) 脚本，在`conf`目录下生成FISCO BCOS stub的配置文件。
+- 生成stub配置文件
+
+切换至跨链路由的目录，用 [create_bcos_stub_config.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成FISCO BCOS stub的配置文件框架。
 
 ```bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
@@ -113,8 +116,7 @@ bash create_bcos_stub_config.sh -n bcos
 
 ```eval_rst
 .. note::
-    - -n指定区块链跨链标识，即stub的名字；同时也会在-r指定的目录下生成与 `Stub <../introduction/introduction.html#id2>`_相同名字的目录来保存配置文件。
-    详细的使用教程见 `Stubs配置脚本 <../manual/scripts.html#fisco-bcos-stub>`_。
+    - -n指定stub的名字（即此链在跨链网络中的名字），默认在跨链路由的conf/stubs目录下生成相关的配置框架。
 ```
 
 命令执行成功会输出`[INFO] Create conf/stubs/bcos/stub.toml successfully`；如果执行出错，请查看屏幕打印提示。
@@ -158,9 +160,9 @@ vi conf/stubs/bcos/stub.toml
 
 - 配置合约资源
 
-在前面的步骤中，已经通过FISCO BCOS控制台部署了一个`HelloWorld`合约，地址为`0x04ae9de7bc7397379fad6220ae01529006022d1b`
+在`stub.toml`文件中配置HelloWeCross合约资源信息，让此跨链路由能够访问此合约。**并将配置中多余无用的举例删除**。
 
-那么可在`stub.toml`文件中注册一条合约资源信息，**并将配置中多余无用的举例删除**：
+在前面的步骤中，已经通过FISCO BCOS控制台部署了一个`HelloWeCross`合约，地址为`0x04ae9de7bc7397379fad6220ae01529006022d1b`
 
 ```toml 
 [[resources]]
@@ -170,7 +172,7 @@ vi conf/stubs/bcos/stub.toml
     contractAddress = '0x04ae9de7bc7397379fad6220ae01529006022d1b'
 ```
 
-完成了上述的步骤，那么已经完成了FISCO BCOS stub的连接配置，并注册了一个合约资源，最终的`stub.toml`文件如下：
+完成了上述的步骤，那么已经完成了FISCO BCOS stub的连接配置，并注册了一个合约资源，最终的`stub.toml`文件如下。[参考此处获取更详尽的配置说明](../manual/scripts.html#fisco-bcos-stub)
 
 ```toml 
 [common]
@@ -244,7 +246,7 @@ Resources{
 }
 ```
 
-- 调用 [HelloWecross.sol](https://github.com/WeBankFinTech/WeCross/blob/master/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
+- 调用 [HelloWecross.sol](https://github.com/WeBankFinTech/WeCross/blob/release-0.2/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
 
 ``` bash
 # payment.bcos.HelloWeCross为跨链资源标识IPath
