@@ -45,4 +45,4 @@ WeCross立足于区块链行业现存挑战，致力于解决异构区块链之�
 
 - [WeCross白皮书（待发布）]()
 
-- [WeCross官网]()
+- [WeCross官网](https://fintech.webank.com/wecross)

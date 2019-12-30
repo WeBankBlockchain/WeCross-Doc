@@ -232,6 +232,8 @@ bash start.sh
 
 - 查看已有资源
 
+可查看到，[跨链网络](../introduction/introduction.html#id2)中有一个[跨链资源](../introduction/introduction.html#id2)，其[IPath](../introduction/introduction.html#id2)是`payment.bcos.HelloWeCross`
+
 ```bash
 [server1]> listResources
 Resources{
@@ -248,7 +250,9 @@ Resources{
 }
 ```
 
-- 调用 [HelloWecross.sol](https://github.com/WeBankFinTech/WeCross/blob/master/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
+- 调用 [HelloWeCross.sol](https://github.com/WeBankFinTech/WeCross/blob/master/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
+
+用[IPath](../introduction/introduction.html#id2)调用部署到链上的HelloWeCross合约
 
 ``` bash
 # payment.bcos.HelloWeCross为跨链资源标识IPath
