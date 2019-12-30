@@ -39,13 +39,13 @@ bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross/master/sc
 **方式1：命令下载**
 
 ```shell
-bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/dev/scripts/download_console.sh)
+bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/master/scripts/download_console.sh)
 ```
 
 **方式2：命令下载（源码编译模式）**
 
 ```shell
-bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/dev/scripts/download_console.sh) -s
+bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/master/scripts/download_console.sh) -s
 ```
 
 **方式3：手动下载**
