@@ -219,10 +219,10 @@ WeCross配置好之后，默认的conf目录结构如下：
 
 此问题出现于Oracle Jdk版本，本质问题是JDChain加载tool.jar失败。执行如下操作进行jar包拷贝:
 ```
-    cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer0/libs/tools.jar 
-    cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer1/libs/tools.jar 
-    cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer2/libs/tools.jar 
-    cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer3/libs/tools.jar 
+cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer0/libs/tools.jar 
+cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer1/libs/tools.jar 
+cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer2/libs/tools.jar 
+cp $JAVA_HOME/lib/tools.jar ~/jdchain/peer3/libs/tools.jar 
 ```
 
 2.   节点启动过程出现```java.lang.IllegalStateException: java.lang.IllegalStateException: Peer Node Start UP Fail !!!```错误。

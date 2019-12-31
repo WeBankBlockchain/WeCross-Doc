@@ -82,15 +82,15 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 ##### 查看docker-compose版本
 ```
-    docker-compose --version
-    docker-compose version 1.18.0, build 8dd22a9
+docker-compose --version
+docker-compose version 1.18.0, build 8dd22a9
 ```
 
 #### go安装
 ##### 安装go
 ```
-    wget https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz
-    sudo tar zxvf go1.11.5.linux-amd64.tar.gz -C /usr/local
+wget https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz
+sudo tar zxvf go1.11.5.linux-amd64.tar.gz -C /usr/local
 ```
 #####  环境变量配置
 ###### 创建文件夹和软链
@@ -115,7 +115,7 @@ export PATH=$PATH:$GOROOT/bin
 
 修改完成后,执行如下操作:
 ```
-    source /etc/profile
+source /etc/profile
 ```
 
 ###### 确认go环境安装成功
@@ -130,11 +130,11 @@ export PATH=$PATH:$GOROOT/bin
 
 运行helloworld.go文件
 ```
-    go run helloworld.go
+go run helloworld.go
 ```
 如果安装和配置成功,将输出:
 ```
-    hello world.
+hello world.
 ```
 
 请确保这一步可以正常输出，如果不能正常输出，请检查go的版本以及环境变量配置。
@@ -142,45 +142,45 @@ export PATH=$PATH:$GOROOT/bin
 #### Fabric链搭建
 ##### 目录准备
 ```
-    cd ~
-    mkdir go/src/github.com/hyperledger -p
-    cd go/src/github.com/hyperledger
+cd ~
+mkdir go/src/github.com/hyperledger -p
+cd go/src/github.com/hyperledger
 ```
 ##### 源码下载
 ```
-    git clone -b release-1.4 https://github.com/hyperledger/fabric.git
-    git clone -b release-1.4 https://github.com/hyperledger/fabric-samples.git
+git clone -b release-1.4 https://github.com/hyperledger/fabric.git
+git clone -b release-1.4 https://github.com/hyperledger/fabric-samples.git
 ```
 ##### 源码编译
 ```
-    cd ~/go/src/github.com/hyperledger/fabric
-    make release
+cd ~/go/src/github.com/hyperledger/fabric
+make release
 ```
 ##### 环境变量修改
 sudo vi /etc/profile 新增如下一行
 ```
-    export PATH=$PATH:$GOPATH/src/github.com/hyperledger/fabric/release/linux-amd64/bin
+export PATH=$PATH:$GOPATH/src/github.com/hyperledger/fabric/release/linux-amd64/bin
 ```
 修改完成后执行
 ```
-    source /etc/profile
+source /etc/profile
 ```
 ##### 节点启动
 ```
-    cd ~/go/src/github.com/hyperledger/fabric-samples/first-network
-    ./byfn.sh up
+cd ~/go/src/github.com/hyperledger/fabric-samples/first-network
+./byfn.sh up
 ```
 
 ##### 验证
 执行如下命令，进入容器
 ```
-    sudo docker exec -it cli bash
+sudo docker exec -it cli bash
 ```
 进入操作界面，执行如下命令:
 ```
-    peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
-    peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"Args":["invoke","b","a","1"]}'
-    peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
+peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
+peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"Args":["invoke","b","a","1"]}'
+peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
 ```
 
 ## Fabric stub配置
@@ -203,17 +203,17 @@ Fabric交易执行流程如下图:
 
 首先进入容器
 ```
-    sudo docker exec -it cli bash
+sudo docker exec -it cli bash
 ```
 ### CA证书路径
 
 CA证书是分用户的，如果用户为Admin,则用户私钥和证书文件的路径分别为
 ```
     #私钥文件
-    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk
+/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk
 
     #证书文件
-    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
+/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
 
 ```
 
@@ -221,10 +221,10 @@ CA证书是分用户的，如果用户为Admin,则用户私钥和证书文件的
 
 ```
     #私钥文件
-    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/*_sk
+/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/*_sk
 
     #证书文件
-    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem
+/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem
 
 ```
 
@@ -233,12 +233,11 @@ CA证书是分用户的，如果用户为Admin,则用户私钥和证书文件的
 按照上面步骤部署出来的链码有两个背书节点，路径分别为:
 
 ```
-    #peer0.org1证书
-    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+#peer0.org1证书
+/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 
-    #peer0.org2证书
-
-    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+#peer0.org2证书
+/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 
 ```
 
@@ -248,7 +247,7 @@ CA证书是分用户的，如果用户为Admin,则用户私钥和证书文件的
 按照上面步骤部署出来的链码有一个排序节点，路径为:
 
 ```
-    /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 
 ### Fabric stub配置
@@ -273,8 +272,8 @@ WeCross配置好之后，默认的conf目录结构如下：
 
 假定当前目录在conf，执行如下操作:
 ```
-    mkdir -p stubs/fabric;
-    cp stubs-sample/fabric/stub-sample.toml  stubs/fabric/stub.toml
+mkdir -p stubs/fabric;
+cp stubs-sample/fabric/stub-sample.toml  stubs/fabric/stub.toml
 ```
 
 执行上述命令之后，目录结构变成如下：
@@ -359,7 +358,7 @@ WeCross配置好之后，默认的conf目录结构如下：
 1.  启动docker提示:"dial unix /var/run/docker.sock: connect: `permission denied`"
 解决方案：将当前用户加入到docker用户组
 ```
-    sudo gpasswd -a ${USER} docker
+sudo gpasswd -a ${USER} docker
 ```
 
 
@@ -372,7 +371,7 @@ ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53d
 解决方案:获得所有和docker相关的进程，找到正在使用的设备号对应的进程，kill掉进程。
 
 ```
-    grep docker /proc/*/mountinfo | grep 14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31 | awk -F ':' '{print $1}' | awk -F'/' '{print $3}'
+grep docker /proc/*/mountinfo | grep 14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31 | awk -F ':' '{print $1}' | awk -F'/' '{print $3}'
 ```
 
 
