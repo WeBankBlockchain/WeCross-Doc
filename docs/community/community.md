@@ -8,7 +8,6 @@
 
 * FISCO BCOS
 * Fabric
-* JDChain
 
 **WeCross一直在迭代 ，想接入什么链？一起来写代码吧**
 
