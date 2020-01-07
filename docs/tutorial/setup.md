@@ -2,7 +2,7 @@
 
 本文档指导完成[**跨链路由**](../introduction/introduction.html#id2)和[**跨链控制台**](../manual/console.md)的部署。
 
-* **跨链路由**：    与区块链节点对接，并彼此互连，形成[跨链网络](../introduction/introduction.html#id2)，负责跨链请求的转发
+* **跨链路由**：    与区块链节点对接，并彼此互连，形成[跨链分区](../introduction/introduction.html#id2)，负责跨链请求的转发
 * **跨链控制台**：查询和发送交易的操作终端
 
 操作以`~/wecross/`目录下为例进行
@@ -33,7 +33,7 @@ bash ./WeCross/build_wecross.sh -n payment -o routers-payment -l 127.0.0.1:8250:
 
 ```eval_rst
 .. note::
-    - -n 指定跨链网络标识符(network id)，跨链网络通过network id进行区分，可以理解为业务名称。
+    - -n 指定跨链分区标识符(zone id)，跨链分区通过zone id进行区分，可以理解为业务名称。
     - -o 指定输出的目录，并在该目录下生成一个跨链路由。
     - -l 指定此WeCross跨链路由的ip地址，rpc端口，p2p端口。
 ```

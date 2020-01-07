@@ -12,4 +12,4 @@
    env.md
    setup.md
    chain.md
-   networks.md
+   zones.md
