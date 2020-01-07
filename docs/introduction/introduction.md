@@ -26,16 +26,16 @@ WeCross立足于区块链行业现存挑战，致力于解决异构区块链之�
 * **跨链资源（Resource）**
   * 各种区块链上内容的抽象
   * 包括：合约、资产、信道、数据表
-* **Stub**
+* **跨链适配器（Stub）**
   * 跨链路由中对接入的区块链的抽象
   * 跨链路由通过配置Stub与相应的区块链对接
   * FISCO BCOS需配置FISCO BCOS Stub、Fabric需配置Fabric Stub
 * **IPath（Interchain Path）**
   * 跨链资源的唯一标识
   * 跨链路由根据IPath将请求路由至相应区块链上
-* **跨链网络**
-  * 多条链通过跨链路由相连，形成跨链网络
-  * 跨链网络有唯一标识，即IPath中的第一项（`payment.stub3.resource-d`的`payment`）
+* **跨链分区**
+  * 多条链通过跨链路由相连，形成跨链分区
+  * 跨链分区有唯一标识，即IPath中的第一项（`payment.stub3.resource-d`的`payment`）
 
 ![](../images/framework.png)
 

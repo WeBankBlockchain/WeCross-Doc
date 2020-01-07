@@ -118,7 +118,7 @@ bash create_bcos_stub_config.sh -n bcos
 
 ```eval_rst
 .. note::
-    - -n指定stub的名字（即此链在跨链网络中的名字），默认在跨链路由的conf/stubs目录下生成相关的配置框架。
+    - -n指定stub的名字（即此链在跨链分区中的名字），默认在跨链路由的conf/stubs目录下生成相关的配置框架。
 ```
 
 命令执行成功会输出`[INFO] Create conf/stubs/bcos/stub.toml successfully`；如果执行出错，请查看屏幕打印提示。
@@ -232,7 +232,7 @@ bash start.sh
 
 - 查看已有资源
 
-可查看到，[跨链网络](../introduction/introduction.html#id2)中有一个[跨链资源](../introduction/introduction.html#id2)，其[IPath](../introduction/introduction.html#id2)是`payment.bcos.HelloWeCross`
+可查看到，[跨链分区](../introduction/introduction.html#id2)中有一个[跨链资源](../introduction/introduction.html#id2)，其[IPath](../introduction/introduction.html#id2)是`payment.bcos.HelloWeCross`
 
 ```bash
 [server1]> listResources

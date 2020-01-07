@@ -63,8 +63,8 @@ WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`stub
 跨链服务配置有五个配置项，分别是`[common]`、`[stubs]`、`[server]`、`[p2p]`以及`[test]`，各个配置项含义如下：
 
 - [common] 通用配置
-  - network：字符串；跨链网络标识符；通常一种跨链业务/应用为一个跨链网络
-  - visible：布尔；可见性；标明当前跨链网络下的资源是否对其他跨链网络可见
+  - network：字符串；跨链分区标识符；通常一种跨链业务/应用为一个跨链分区
+  - visible：布尔；可见性；标明当前跨链分区下的资源是否对其他跨链分区可见
 - [stubs] Stub配置
   - path：字符串；Stub配置的根目录；WeCross从该目录下去加载各个Stub的配置
 - [server] RPC配置

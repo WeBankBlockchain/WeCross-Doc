@@ -41,7 +41,7 @@ bash  stop.sh
 
 ```
 Usage:
-    -n  <network id>                [Required]   set network ID
+    -n  <zone id>                   [Required]   set zone ID
     -l  <ip:rpc-port:p2p-port>      [Optional]   "ip:rpc-port:p2p-port" e.g:"127.0.0.1:8250:25500"
     -f  <ip list file>              [Optional]   split by line, every line should be "ip:rpc-port:p2p-port". eg "127.0.0.1:8250:25500"
     -c  <ca dir>                    [Optional]   dir of existing ca
@@ -54,7 +54,7 @@ e.g
     bash $0 -n payment -f ipfile
 ```
 
-- **`-n`**：指定跨链网络标识
+- **`-n`**：指定跨链分区标识
 - **`-l`**：可选，指定生成一个跨链路由，与`-f`二选一，单行，如：`192.168.0.1:8250:25500`
 - **`-f`**：可选，指定生成多个跨链路由，与`-l`二选一，多行，**不可有空行**，例如：
 
