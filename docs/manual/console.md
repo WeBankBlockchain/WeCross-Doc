@@ -68,7 +68,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 ```bash
 cd ~ && mkdir -p wecross && cd wecross
 # 获取控制台
-bash <(curl -s https://raw.githubusercontent.com/WeBankFinTech/WeCross-Console/master/scripts/download_console.sh)
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
 ```
 
 执行成功后，会生成`WeCross-Console`目录，结构如下：
