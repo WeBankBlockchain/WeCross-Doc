@@ -307,17 +307,17 @@ cp stubs-sample/fabric/stub-sample.toml  stubs/fabric/stub.toml
     orgName = 'Org1'
     mspId = 'Org1MSP'
     orgUserName = 'Admin'
-    orgUserKeyFile = 'classpath:/stub/fabric/orgUserKeyFile'
-    orgUserCertFile = 'classpath:/stub/fabric/orgUserCertFile'
-    ordererTlsCaFile = 'classpath:/stub/fabric/ordererTlsCaFile'
+    orgUserKeyFile = 'classpath:/stubs/fabric/orgUserKeyFile'
+    orgUserCertFile = 'classpath:/stubs/fabric/orgUserCertFile'
+    ordererTlsCaFile = 'classpath:/stubs/fabric/ordererTlsCaFile'
     ordererAddress = 'grpcs://127.0.0.1:7050'
 
 [peers]
     [peers.org1]
-        peerTlsCaFile = 'classpath:/stub/fabric/peerOrg1CertFile'
+        peerTlsCaFile = 'classpath:/stubs/fabric/peerOrg1CertFile'
         peerAddress = 'grpcs://127.0.0.1:7051'
     [peers.org2]
-         peerTlsCaFile = 'classpath:/stub/fabric/peerOrg2CertFile'
+         peerTlsCaFile = 'classpath:/stubs/fabric/peerOrg2CertFile'
          peerAddress = 'grpcs://127.0.0.1:9051'
 
 # resources is a list
@@ -340,15 +340,15 @@ cp stubs-sample/fabric/stub-sample.toml  stubs/fabric/stub.toml
 
 ```orgUserName```:用户名称，按照上面搭出来的链可选为```Admin```或者```User1```。
 
-```orgUserKeyFile```:用户私钥文件，需要从链上拷贝，文件路径请参考[ca证书路径](./fabric.html#ca)。请拷贝文件,修改文件名为```orgUserKeyFile```并将文件拷贝到```conf/stub/fabric```目录。
+```orgUserKeyFile```:用户私钥文件，需要从链上拷贝，文件路径请参考[ca证书路径](./fabric.html#ca)。请拷贝文件,修改文件名为```orgUserKeyFile```并将文件拷贝到```conf/stubs/fabric```目录。
 
-```orgUserCertFile```:用户证书文件，需要从链上拷贝。文件路径请参考[ca证书路径](./fabric.html#ca)。请拷贝文件,修改文件名为```orgUserCertFile```并将文件拷贝到```conf/stub/fabric```目录。
+```orgUserCertFile```:用户证书文件，需要从链上拷贝。文件路径请参考[ca证书路径](./fabric.html#ca)。请拷贝文件,修改文件名为```orgUserCertFile```并将文件拷贝到```conf/stubs/fabric```目录。
 
-```ordererTlsCaFile```:排序节点证书文件，需要从链上拷贝。文件路径请参考[排序节点证书路径](./fabric.html#id27)。请拷贝文件,修改文件名为```ordererTlsCaFile```并将文件拷贝到```conf/stub/fabric```目录。
+```ordererTlsCaFile```:排序节点证书文件，需要从链上拷贝。文件路径请参考[排序节点证书路径](./fabric.html#id27)。请拷贝文件,修改文件名为```ordererTlsCaFile```并将文件拷贝到```conf/stubs/fabric```目录。
 
 ```ordererAddress```:排序节点地址，将默认的```127.0.0.1```改成真实ip。
 
-```peerTlsCaFile```:背书节点证书文件，需要从链上拷贝。文件路径请参考[背书节点证书路径](./fabric.html#id26)。请拷贝对应的两个文件,分别修改文件名为```peerOrg1CertFile```和```peerOrg2CertFile```，并将文件拷贝到```conf/stub/fabric```目录。
+```peerTlsCaFile```:背书节点证书文件，需要从链上拷贝。文件路径请参考[背书节点证书路径](./fabric.html#id26)。请拷贝对应的两个文件,分别修改文件名为```peerOrg1CertFile```和```peerOrg2CertFile```，并将文件拷贝到```conf/stubs/fabric```目录。
 
 ```peerAddress```:背书节点地址，将默认的```127.0.0.1```改成真实ip。
 
