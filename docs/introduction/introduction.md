@@ -41,6 +41,6 @@ WeCross 着眼应对区块链行业现存挑战，不局限于满足同构区块
 
 ## 更多资料
 
-- [WeCross白皮书（待发布）]()
+- [WeCross白皮书](https://mp.weixin.qq.com/s/w0APEAonFXbOoinMJipPAA)
 
 - [WeCross官网](https://fintech.webank.com/wecross)
