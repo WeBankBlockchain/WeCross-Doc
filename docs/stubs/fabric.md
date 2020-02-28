@@ -73,11 +73,31 @@ service docker start
 ```
 
 #### docker-compose安装
-##### 安装docker-compose
+##### 安装docker-compose方式1：
 ```
 sudo curl -L "https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+```
+
+```eval_rst
+.. important::
+
+   第一种方式相对简单，但是由于网络问题，安装过程中经常会断开。而且常常安装后无法使用，安装完成后输入"docker-compose --version"命令会报如下错误：
+   Cannot open self /usr/local/bin/docker-compose or archive /usr/local/bin/docker-compose.pkg
+   
+   第二种方式略微麻烦，但是安装过程比较稳定。
+
+```
+##### 安装docker-compose方式2：
+###### 安装python-pip
+```
+sudo yum -y install epel-release
+sudo yum -y install python-pip
+```
+###### 待安装完成后，执行查询版本的命令，即可安装docker-compose
+```
+sudo pip install docker-compose==1.18.0
 ```
 
 ##### 查看docker-compose版本
