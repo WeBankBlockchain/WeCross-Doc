@@ -96,8 +96,8 @@ sudo tar zxvf go1.11.5.linux-amd64.tar.gz -C /usr/local
 ###### 创建文件夹和软链
 ```
 cd ~
-mkdir /data/go
-ln -s /data/go go
+sudo mkdir /data/go
+sudo ln -s /data/go go
 ```
 
 ###### 修改环境变量
