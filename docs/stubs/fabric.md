@@ -83,22 +83,8 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```eval_rst
 .. important::
 
-   第一种方式相对简单，但是由于网络问题，安装过程中经常会断开。而且常常安装后无法使用，安装完成后输入"docker-compose --version"命令会报如下错误：
+ 若安装完成后输入"docker-compose --version"命令报如下错误，是由于网络不稳定导致下载失败，可尝试方式2进行安装。
    Cannot open self /usr/local/bin/docker-compose or archive /usr/local/bin/docker-compose.pkg
-   
-   第二种方式略微麻烦，但是安装过程比较稳定。
-
-```
-##### 安装docker-compose方式2：
-###### 安装python-pip
-```
-sudo yum -y install epel-release
-sudo yum -y install python-pip
-```
-###### 待安装完成后，执行查询版本的命令，即可安装docker-compose
-```
-sudo pip install docker-compose==1.18.0
-```
 
 ##### 查看docker-compose版本
 ```
@@ -393,5 +379,4 @@ ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53d
 ```
 grep docker /proc/*/mountinfo | grep 14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31 | awk -F ':' '{print $1}' | awk -F'/' '{print $3}'
 ```
-
 
