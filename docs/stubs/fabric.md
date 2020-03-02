@@ -80,14 +80,15 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```
 
-```eval_rst
-.. important::
 
- 若安装完成后输入"docker-compose --version"命令报如下错误，是由于网络不稳定导致下载失败，可尝试方式2进行安装。
-   Cannot open self /usr/local/bin/docker-compose or archive /usr/local/bin/docker-compose.pkg
+ 若安装完成后输入`docker-compose --version`命令报如下错误，是由于网络不稳定导致下载失败，可尝试方式2进行安装。
+
+`Cannot open self /usr/local/bin/docker-compose or archive /usr/local/bin/docker-compose.pkg`
+
 ##### 安装-docker-compose方式2：
-``` bash
-sudo pip install docker-compose==1.18.0
+
+`sudo pip install docker-compose==1.18.0`
+
 ##### 查看docker-compose版本
 ```
 docker-compose --version
