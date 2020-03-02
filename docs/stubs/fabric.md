@@ -85,7 +85,9 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
  若安装完成后输入"docker-compose --version"命令报如下错误，是由于网络不稳定导致下载失败，可尝试方式2进行安装。
    Cannot open self /usr/local/bin/docker-compose or archive /usr/local/bin/docker-compose.pkg
-
+##### 安装-docker-compose方式2：
+``` bash
+sudo pip install docker-compose==1.18.0
 ##### 查看docker-compose版本
 ```
 docker-compose --version
@@ -379,4 +381,3 @@ ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53d
 ```
 grep docker /proc/*/mountinfo | grep 14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31 | awk -F ':' '{print $1}' | awk -F'/' '{print $3}'
 ```
-
