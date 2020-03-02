@@ -117,7 +117,7 @@ sudo tar zxvf go1.11.5.linux-amd64.tar.gz -C /usr/local
 ```
 cd ~
 sudo mkdir /data/go
-sudo ln -s /data/go go
+ln -s /data/go go
 ```
 
 ###### 修改环境变量
