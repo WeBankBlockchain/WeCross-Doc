@@ -86,8 +86,9 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 `Cannot open self /usr/local/bin/docker-compose or archive /usr/local/bin/docker-compose.pkg`
 
 ##### 安装-docker-compose方式2：
-
-`sudo pip install docker-compose==1.18.0`
+```
+sudo pip install docker-compose==1.18.0
+```
 
 ##### 查看docker-compose版本
 ```
