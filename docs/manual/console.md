@@ -27,7 +27,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 
 ```eval_rst
 .. important::
-    - `call <#call>`_和 `call <#sendTransaction>`_需要传入返回值类型，多个返回值类型使用逗号分隔，不能有空格。
+    - 其中 `call <console.html#call>`_ 和 `sendTransaction <console.html#sendtransaction>`_ 需要传入返回值类型，多个返回值类型使用逗号分隔，不能有空格。
     - 目前支持的类型包括：Int(整型)，IntArray(整型数组)，String(字符串)，StringArray(字符串数组)。
     - 如果返回值为空，控制台需要传入关键字：Void。
     - 参数列表传入字面量，因此字符串需要用单引号或双引号括起来。
