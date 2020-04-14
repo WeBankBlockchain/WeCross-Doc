@@ -48,17 +48,18 @@ Usage:
     -o  <output dir>                [Optional]   default ./${router_output}/
     -z  <generate tar packet>       [Optional]   default no
     -T  <enable test mode>          [Optional]   default no. Enable test resource.
+    -p  <enable plugin>             [Optional]   enabled plugins, split by ',', e.g: BCOS2.0,Fabric1.4, default enable all plugins
+    -d  <dependencies dir>          [Optional]   dependencies dir, default './deps'
     -h  call for help
 e.g
     bash $0 -n payment -l 127.0.0.1:8250:25500
     bash $0 -n payment -f ipfile
-```
 
 - **`-n`**：指定跨链分区标识
 - **`-l`**：可选，指定生成一个跨链路由，与`-f`二选一，单行，如：`192.168.0.1:8250:25500`
 - **`-f`**：可选，指定生成多个跨链路由，与`-l`二选一，多行，**不可有空行**，例如：
 
-    ```
+```
     192.168.0.1:8250:25500
     192.168.0.1:8251:25501
     192.168.0.2:8252:25502
@@ -68,137 +69,76 @@ e.g
 * **`-o`**：可选，指定跨链路由生成目录，默认`wecross/`
 * **`-z`**：可选，若设置，则生成跨链路由的压缩包，方便拷贝至其它机器
 * **`-T`**：可选，若设置，生成的跨链路由开启测试资源
+* **`-p`**：可选，若设置，配置需要启用的插件，可以选择BCOS2.0、Fabric1.4或更多插件，默认是包括所有插件
+* **`-p`**：可选，若设置，配置插件所处的路径，避免网络下载的开销，默认是./deps
 * **`-h`**：可选，打印Usage
 
-## BCOS stub配置脚本
+## 账号管理脚本
 
-脚本`create_bcos_stub_config.sh`用于快速创建FISCO BCOS stub的配置文件。
+脚本`generate_account.sh`用于快速创建特定区块链的账号
 
-可通过-h查看帮助信息：
+可通过-h查看帮助信息
 
 ```
-Usage:
-    -n  <stub name>       [Required]    specify the name of stub
-    -r  <root dir>        [Optional]    specify the stubs root dir, default is stubs
-    -c  <conf path>       [Optional]    specify the path of conf dir, default is conf
-    -p  <password>        [Optional]    password for p12 a type of FISCO BCOS account, default is null and use pem
-    -h  call for help
-e.g
-    bash create_bcos_stub_config.sh -n bcos
-    bash create_bcos_stub_config.sh -n bcos -r stubs
-    bash create_bcos_stub_config.sh -n bcos -r stubs -c conf
-    bash create_bcos_stub_config.sh -n bcos -r stubs -c conf -p 123456
+Usage: 
+    -t <type>                           [Required] type of account, BCOS2.0 or Fabric1.4
+    -n <name>                           [Required] name of account
+    -d <dir>                            [Optional] generated target_directory, default conf/accounts/
+    -h                                  [Optional] Help
+e.g 
+    bash $0 -t BCOS2.0 -n my_bcos_account
+    bash $0 -t Fabric1.4 -n my_fabric_account
 ```
 
-- **`-n`**：指定区块链跨链标识，即stub的名字；同时也会在**`-r`**指定的目录下生成与stub相同名字的目录来保存配置文件。
-- **`-r`**： 可选，指定跨链路由的stub配置根目录，默认`stubs/`，需要和根配置文件`wecross.toml`中的`[stubs.path]`保存一致。
-- **`-c`**：可选，指定跨链路由的配置根目录，默认为与启动脚本同级的`conf/`目录，所有的配置文件都保存在该路径下。
-- **`-p`**：可选，表示使用`p12`格式的账户文件，并指定口令。默认是`pem`格式，无需口令。
+- **`-t`**：账号类型，按照插件选择，如BCOS2.0或Fabric1.4
+- **`-n`**：账号名，账号名称
+- **`-d`**：账号目录，默认生成在conf/accounts下
 
 例如：
 ```bash
-bash create_bcos_stub_config.sh -n bcos -r stubs -c conf -p 123456
+bash generate_account.sh -t BCOS2.0 -n my_bcos_account
 ```
-执行后，在`conf/stubs/`目录下生成名字为`bcos`的stub目录，之后按照[接入FISCO BCOS的指引进行配置](../stubs/bcos.md)
+
+执行后，在conf/accounts下生成了my_bcos_account的目录：
+
 ```bash
-tree conf/
-conf/
-├── stubs
-│   └── bcos
-│       ├── 0x7dfbec42690e83004687eae5d0e3738750c7c153.pem
-│       ├── 0xaa8f54cce575b4cc92f48b6138d6393b2b7d3e86.p12
-│       ├── ca.crt
-│       ├── node.crt
-│       ├── node.key
-│       ├── sdk.crt
-│       ├── sdk.key
-│       └── stub.toml
+my_bcos_account/
+├── account.key
+└── account.toml
 ```
 
-## Fabric stub配置脚本
+注意，BCOS2.0类型的账号，创建后可以直接使用，Fabric1.4类型仅创建了account.toml配置文件，用户仍需手工生成密钥和证书，放入账号目录中才可使用，详情参考Fabric插件文档。
 
-脚本`create_fabric_stub_config.sh`用于快速创建Fabric stub的配置文件。
+## 连接管理脚本
 
-可通过`-h`查看帮助信息：
+脚本`generate_connection.sh`用于快速创建特定区块链的连接
 
 ```
-Usage:
-    -n  <stub name>       [Required]    specify the name of stub
-    -r  <root dir>        [Optional]    specify the stubs root dir, default is stubs
-    -c  <conf path>       [Optional]    specify the path of conf dir, default is conf
-    -h  call for help
-e.g
-    bash create_fabric_stub_config.sh -n fabric
-    bash create_fabric_stub_config.sh -n fabric -r stubs
-    bash create_fabric_stub_config.sh -n fabric -r stubs -c conf
+Usage: 
+    -t <type>                           [Required] type of account, BCOS2.0 or Fabric1.4
+    -n <name>                           [Required] name of account
+    -d <dir>                            [Optional] generated target_directory, default conf/stubs/
+    -h                                  [Optional] Help
+e.g 
+    bash $0 -t BCOS2.0 -n my_bcos_connection
+    bash $0 -t Fabric1.4 -n my_fabric_connection
 ```
 
-- **`-r`**： 
-指定配置文件根目录，需要和配置文件`wecross.toml`中的[stubs.path]保存一致。
-
-- **`-o`**：
-指定区块链跨链标识，即stub的名字；同时也会生成相同名字的目录来保存配置文件。
-- **`-d`**：
-指定加载配置文件时的`classpath`路径，所有的配置文件都保存在该路径下，默认为与启动脚本同级的`conf`目录。
-- **`-h`**：可选，打印Usage
-
+- **`-t`**：连接类型，按照插件选择，如BCOS2.0或Fabric1.4
+- **`-n`**：连接名，账号名称
+- **`-d`**：连接配置目录，默认生成在conf/stubs/下
 
 例如：
 ```bash
-bash create_fabric_stub_config -r stubs -o fabric -d conf
+bash generate_connection.sh -t BCOS2.0 -n my_bcos_connection
 ```
 
-执行结果的目录结构如下:
 ```bash
-.
-├── conf
-│   └── stubs
-│       └── fabric
-│           └── stub.toml
+my_bcos_connection/
+└── stub.toml
 ```
 
-<!--
-
-## 创建JDChain stub配置文件脚本
-
-脚本`create_jdchain_stub_config.sh`用于快速创建JDChain stub的配置文件。
-
-可通过-h查看帮助信息：
-
-```
-Usage:
-    -r  <root dir>        [Required]    specify the stubs root dir
-    -o  <stub name>       [Required]    specify the name of stub
-    -d  <conf path>       [Required]    specify the path of conf dir
-    -h  call for help
-e.g
-    bash create_jdchain_stub_config.sh -r stubs -o jd -d conf
-```
-
-- **`-r`**： 
-指定配置文件根目录，需要和配置文件`wecross.toml`中的[stubs.path]保存一致。
-
-- **`-o`**：
-指定区块链跨链标识，即stub的名字；同时也会生成相同名字的目录来保存配置文件。
-- **`-d`**：
-指定加载配置文件时的`classpath`路径，所有的配置文件都保存在该路径下，默认为与启动脚本同级的`conf`目录。
-- **`-h`**：可选，打印Usage
-
-
-例如：
-```bash
-bash create_jdchain_stub_config.sh -r stubs -o jd -d conf
-```
-
-执行结果的目录结构如下:
-```bash
-├── conf
-│   └── stubs
-│       └── jd
-│           └── stub.toml
-```
-
--->
+注意，连接管理脚本仅生成连接的配置模板，具体连接到哪些区块链节点，使用什么证书，仍需用户根据模板手工配置才可使用，详情参考各插件的文档。
 
 ## 创建P2P证书脚本
 

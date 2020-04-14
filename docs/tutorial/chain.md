@@ -103,37 +103,34 @@ contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 
 将HelloWeCross的合约地址记录下来，后续步骤中使用：`contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b`
 
-#### 配置FISCO BCOS stub
+#### 配置FISCO BCOS Connection
 
-完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS stub，即配置连接信息以及链上的[资源](../introduction/introduction.html#id2)。
+完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS connection，即配置连接信息以及链上的[资源](../introduction/introduction.html#id2)。
 
 - 生成stub配置文件
 
-切换至跨链路由的目录，用 [create_bcos_stub_config.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成FISCO BCOS stub的配置文件框架。
+切换至跨链路由的目录，用 [generate_connection.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成FISCO BCOS connection的配置文件框架。
 
 ```bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
-bash create_bcos_stub_config.sh -n bcos
+bash generate_connection.sh -t BCOS2.0 -n bcos
 ```
 
 ```eval_rst
 .. note::
-    - -n指定stub的名字（即此链在跨链分区中的名字），默认在跨链路由的conf/stubs目录下生成相关的配置框架。
+    - -n指定connection的名字（即此链在跨链分区中的名字），默认在跨链路由的conf/stubs目录下生成相关的配置框架。
 ```
 
-命令执行成功会输出`[INFO] Create conf/stubs/bcos/stub.toml successfully`；如果执行出错，请查看屏幕打印提示。
+命令执行成功会输出`operator: connection type: BCOS2.0 path: conf/stubs//bcos`；如果执行出错，请查看屏幕打印提示。
 
 生成的目录结构如下：
 
 ```bash
-tree conf/stubs/
-conf/stubs/
-└── bcos
-    ├── 0x5c9505d9e2c5c5c21a33187475baf5f512e02cc1.pem    	# FISCO BCOS的账户文件
-    └── stub.toml											# 链配置文件
+my_bcos_connection/
+└── stub.toml                                               # 连接配置文件
 ```
 
-在`conf/stubs/bcos`目录下的`.pem`文件即FISCO BCOS的账户文件，已自动配置在了`stub.toml`文件中，之后只需要配置证书、群组以及资源信息。
+之后只需要配置证书、群组以及资源信息。
 
 - 配置证书
 
@@ -176,31 +173,25 @@ vi conf/stubs/bcos/stub.toml
 
 完成了上述的步骤，那么已经完成了FISCO BCOS stub的连接配置，并注册了一个合约资源，最终的`stub.toml`文件如下。[参考此处获取更详尽的配置说明](../manual/scripts.html#fisco-bcos-stub)
 
-```toml 
+```toml
 [common]
-    stub = 'bcos' # stub must be same with directory name
-    type = 'BCOS'
+    type = 'BCOS2.0' # BCOS
 
-[smCrypto]
-    # boolean
-    enable = false
-
-[account]
-    accountFile = 'classpath:/stubs/bcos/0x0ee5b8ee4af461cac320853aebb7a68d3d4858b4.pem'
-    password = ''  # if you choose .p12, then password is required
-
+[chain]
+    groupId = 1 # default 1
+    chainId = 1 # default 1
+    enableGM = false # default false
 
 [channelService]
-    timeout = 60000  # millisecond
     caCert = 'classpath:/stubs/bcos/ca.crt'
     sslCert = 'classpath:/stubs/bcos/sdk.crt'
     sslKey = 'classpath:/stubs/bcos/sdk.key'
-    groupId = 1
+    timeout = 300000  # ms, default 60000ms
     connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
 
 # resources is a list
 [[resources]]
-    # name must be unique
+    # name cannot be repeated
     name = 'HelloWeCross'
     type = 'BCOS_CONTRACT'
     contractAddress = '0x04ae9de7bc7397379fad6220ae01529006022d1b'
