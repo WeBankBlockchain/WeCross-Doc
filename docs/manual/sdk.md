@@ -1,6 +1,6 @@
 # 跨链SDK
 
-WeCross向外部暴露了所有的UBI接口，开发者可以通过SDK实现这些接口的快速调用。
+WeCross router向外部暴露了所有的UBI接口，开发者可以通过SDK实现这些接口的快速调用。
 
 ## 环境要求
 
@@ -18,29 +18,34 @@ WeCross向外部暴露了所有的UBI接口，开发者可以通过SDK实现这�
 
    gradle:
 ```bash
-compile ('com.webank:wecross-java-sdk:1.0.0-rc1')
+compile ('com.webank:wecross-java-sdk:1.0.0-rc2')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>com.webank</groupId>
     <artifactId>wecross-java-sdk</artifactId>
-    <version>1.0.0-rc1</version>
+    <version>1.0.0-rc2</version>
 </dependency>
 ```
 
 ## 使用方法
 
-### 调用SDK的[JSON-RPC API](./api.html)
+### 调用[WeCross SDK API](./api.html)
 示例代码如下：
 ```java
 
-    // 使用IP和端口初始化WeCrossService
-    WeCrossService weCrossService = new WeCrossRPCService("127.0.0.1:8250");
+    WeCrossRPCService weCrossRPCService = new WeCrossRPCService();
 
     // 初始化WeCrossRPC
-    WeCrossRPC weCrossRPC = WeCrossRPC.init(weCrossService);
+    WeCrossRPC weCrossRPC = WeCrossRPCFactory.build(weCrossRPCService);
 
     // 调用RPC接口，send表示同步调用。
-    Response response = weCrossRPC.status("payment.bcoschain.HelloWorldContract").send();
+    Response response = weCrossRPC.status("payment.bcos.hello").send();
+
+    // 初始化跨链资源
+    Resource resource = ResourceFactory.build(weCrossRPC, "payment.bcos.hello" "bcos_default");
+
+    // 跨链资源调用
+    String[] result = resource.sendTransaction("set", "hello", "wecross");
 ```
