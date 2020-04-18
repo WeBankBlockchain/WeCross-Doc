@@ -135,7 +135,7 @@ bash generate_connection.sh -t BCOS2.0 -n my_bcos_connection
 
 ```bash
 my_bcos_connection/
-└── stub.toml
+└── chain.toml
 ```
 
 注意，连接管理脚本仅生成连接的配置模板，具体连接到哪些区块链节点，使用什么证书，仍需用户根据模板手工配置才可使用，详情参考各插件的文档。
