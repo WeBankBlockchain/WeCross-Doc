@@ -6,7 +6,7 @@
 
 ## 准备工作
 
-要完成资产互换，需要在各自链上部署资产合约以及哈希时间锁合约，然后通过WeCross[控制台]()创建跨链转账合同，router会根据合同信息自动完成跨链转账。
+要完成资产互换，需要在各自链上部署资产合约以及哈希时间锁合约，然后通过WeCross[控制台]()创建跨链转账提案，router会根据提案信息自动完成跨链转账。
 
 * 部署WeCross和控制台
 - 以[组网方式]()搭建两个router
@@ -63,7 +63,7 @@ call BACHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 init ["0x1796f3f195697c3
 * 拷贝链码
 ```bash
 # 获取docker容器id
-`sudo docker ps -a|grep cli`
+sudo docker ps -a|grep cli
 0523418f889d  hyperledger/fabric-tools:latest
 # 假设当前位于router根目录, 将链码拷贝到Fabric的chaincode目录下
  sudo docker cp conf/stubs-sample/fabric/ledger 0523418f889d:/opt/gopath/src/github.com/chaincode/ledger
@@ -121,9 +121,9 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["getTask"]}'
 ```toml
 [[htlc]]
     selfPath = 'payment.bcos.htlc' #本地配置的哈希时间锁资源路径
-    account1 = 'bcos_default'   #确保已在router的accounts目录配置了bcos_default账户
+    account1 = 'bcos_default_account'   #确保已在router的accounts目录配置了bcos_default_account账户
     counterpartyPath = 'payment.fabric.htlc' #对手方的哈希时间锁资源路径
-    account2 = 'fabric_default' #确保已在router的accounts目录配置了fabric_default账户
+    account2 = 'fabric_default_account' #确保已在router的accounts目录配置了fabric_default_account账户
 ```
 
 * 配置Hyperledger Fabric端router
@@ -143,14 +143,14 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["getTask"]}'
 ```toml
 [[htlc]]
     selfPath= 'payment.fabric.htlc' #对手方的哈希时间锁资源路径
-    account1 = 'fabric_default' #确保已在router的accounts目录配置了fabric_default账户
+    account1 = 'fabric_default_account' #确保已在router的accounts目录配置了fabric_default_account账户
     counterpartyPath = 'payment.bcos.htlc' #本地配置的哈希时间锁资源路径
-    account2 = 'bcos_default'   #确保已在router的accounts目录配置了bcos_default账户
+    account2 = 'bcos_default_account'   #确保已在router的accounts目录配置了bcos_default_account账户
 ```
 
 * 配置发送者账户
 
-两个router需要在accounts目录下配置发送者的账户，因为跨链合同只能有资金的转出者创建。
+两个router需要在accounts目录下配置发送者的账户，因为跨链提案只能有资金的转出者创建。
 
 FISCO BCOS用户需要将bactool/dist/conf目录下的私钥文件配置到router端的accounts目录，并假设命名为bcos。
 
@@ -183,9 +183,9 @@ bash stop.sh && bash start.sh
 
 **注**：时间戳需要满足条件`t0 > t1 + 300 > now + 300`
 
-* 创建跨链合同
+* 创建跨链转账提案
 
-通过WeCross控制台创建跨链转账合同，命令为`newContract`，参数包括：`path`, `account`（发起方账户名）, `hash`，`secret`, `role`(bool, true代表创建者是发起方)，`sender0`，`receiver0`，`amount0`，`timelock0`，`sender1`，`receiver1`，`amount1`，`timelock1`。
+通过WeCross控制台创建跨链转账提案，命令为`newHTLCTransferProposal`，参数包括：`path`, `account`（发起方账户名）, `hash`，`secret`, `role`(bool, true代表创建者是发起方)，`sender0`，`receiver0`，`amount0`，`timelock0`，`sender1`，`receiver1`，`amount1`，`timelock1`。
 
 **注**：其中下标为0的参数是发起方信息。
 
@@ -196,16 +196,16 @@ bash stop.sh && bash start.sh
 bash start.sh
 ```
 
-- FISCO BCOS用户（发起方）创建转账合同
+- FISCO BCOS用户（发起方）创建转账提案
 
 ```shell
-newContract payment.bcos.htlc bcos edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f 049db09dd9cf6fcf69486512c1498a1f6ea11d33b271aaad1893cd590c16542a true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
+newHTLCTransferProposal payment.bcos.htlc bcos edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f 049db09dd9cf6fcf69486512c1498a1f6ea11d33b271aaad1893cd590c16542a true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 ```
 
-- Hyperledger Fabric用户（参与方）创建转账合同
+- Hyperledger Fabric用户（参与方）创建转账提案
 
 ```shell
-newContract payment.fabric.htlc fabric edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
+newHTLCTransferProposal payment.fabric.htlc fabric edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 ```
 **注**：参与方`secret`传入null，`tool`传入false。
 

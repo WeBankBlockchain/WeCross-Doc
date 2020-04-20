@@ -121,7 +121,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
      
 #### java示例
 ```java
-    ResourceDetailResponse response = weCrossRPC.detail("payment.bcos.hello").send();
+    ResourceDetailResponse response = weCrossRPC.detail("payment.bcos.HelloWeCross").send();
 ```
 
 ### call(无参数)
@@ -144,7 +144,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     TransactionResponse transactionResponse =
         weCrossRPC
             .call(
-                "payment.bcos.hello","get")
+                "payment.bcos.HelloWeCross","get")
             .send();
 ```
 
@@ -169,7 +169,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     TransactionResponse transactionResponse =
         weCrossRPC
             .call(
-                "payment.bcos.hello","get","key")
+                "payment.bcos.HelloWeCross","get","key")
             .send();
 ```
 
@@ -193,7 +193,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     TransactionResponse transactionResponse =
         weCrossRPC
             .sendTransaction(
-                "payment.bcos.hello","set")
+                "payment.bcos.HelloWeCross","set")
             .send();
 ```
 
@@ -218,7 +218,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     TransactionResponse transactionResponse =
         weCrossRPC
             .call(
-                "payment.bcos.hello","set","value")
+                "payment.bcos.HelloWeCross","set","value")
             .send();
 ```
 

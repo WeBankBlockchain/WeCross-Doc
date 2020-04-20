@@ -27,7 +27,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 - sendTransaction(发交易)): [sendTransaction](#sendtransaction)
 
 * 跨链转账
-- newContract(创建转账合同): [newContract](#newContract)
+- newHTLCTransferProposal(创建转账提案): [newHTLCTransferProposal](#newHTLCTransferProposal)
 
 * 状态查询
 - detail(查看资源详情): [detail](#detail)
@@ -137,9 +137,11 @@ call                               Call constant method of smart contract.
 sendTransaction                    Call non-constant method of smart contract.
 genTimelock                        Generate two valid timelocks.
 genSecretAndHash                   Generate a secret and its hash.
-newContract                        Create a htlc transfer contract.
+newHTLCTransferProposal            Create a htlc transfer agreement.
+checkTransferStatus                Check htlc transfer status by hash.
 WeCross.getResource                Init resource by path and account name, and assign it to a custom variable.
 [resource].[command]               Equal to: command [path] [account name].
+
 ---------------------------------------------------------------------------------------------
 ```
 **注：**                                       
@@ -184,7 +186,7 @@ Usage: detail [path]
 ```bash
 [WeCross]> listLocalResources
 path: payment.bcos.htlc, type: BCOS2.0, distance: 0
-path: payment.bcos.hello, type: BCOS2.0, distance: 0
+path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 ```
 
 **listResources**
@@ -195,7 +197,7 @@ path: payment.bcos.hello, type: BCOS2.0, distance: 0
 path: payment.bcos.htlc, type: BCOS2.0, distance: 0
 path: payment.fabric.ledger, type: Fabric1.4, distance: 1
 path: payment.fabric.htlc, type: Fabric1.4, distance: 1
-path: payment.bcos.hello, type: BCOS2.0, distance: 0
+path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 ```
 
 **status**
@@ -205,7 +207,7 @@ path: payment.bcos.hello, type: BCOS2.0, distance: 0
 - path：跨链资源标识。    
 
 ```bash
-[WeCross]> status payment.bcos.hello
+[WeCross]> status payment.bcos.HelloWeCross
 exists
 ```
 **detail**
@@ -215,15 +217,15 @@ exists
 - path：跨链资源标识。        
 
 ```bash
-[WeCross]> detail payment.bcos.hello
+[WeCross]> detail payment.bcos.HelloWeCross
 ResourceDetail{
- path='payment.bcos.hello',
+ path='payment.bcos.HelloWeCross',
  distance=0',
  stubType='BCOS2.0',
  properties={
   BCOS_PROPERTY_CHAIN_ID=1,
   BCOS_PROPERTY_GROUP_ID=1,
-  hello=0x6215f04619eb0f6d40c7d15c8efc025751fbce85
+  HelloWeCross=0x6215f04619eb0f6d40c7d15c8efc025751fbce85
  },
  checksum='0x8c72de0e0d4a5e74afcdaed1fa6322c15a7cebfddb893df0339af7c5441f05fe'
 }
@@ -234,12 +236,12 @@ ResourceDetail{
 
 参数：   
 - path：跨链资源标识。   
-- accountName：返回值类型列表。
+- accountName：交易签名账户。
 - method：合约方法名。
 - args：参数列表。
 
 ```bash
-[WeCross]> call payment.bcos.hello bcos_default get
+[WeCross]> call payment.bcos.HelloWeCross bcos_default get
 Result: [Talk is cheap, Show me the code]
 ```
 
@@ -248,12 +250,12 @@ Result: [Talk is cheap, Show me the code]
 
 参数：   
 - path：跨链资源标识。   
-- accountName：返回值类型列表。
+- accountName：交易签名账户。
 - method：合约方法名。
 - args：参数列表。
 
 ```bash
-[WeCross]> sendTransaction payment.bcos.hello bcos_default set hello wecross
+[WeCross]> sendTransaction payment.bcos.HelloWeCross bcos_default set hello wecross
 Txhash  : 0x66f94d387df2b16bea26e6bcf037c23f0f13db28dc4734588de2d57a97051c54
 BlockNum: 2219
 Result  : [hello, wecross]
@@ -280,15 +282,15 @@ secret: afd1c0f9c2f8acc2c1ed839ef506e8e0d0b4636644a889f5aa8e65360420d2a9
 hash  : 66ebd11ec6cc289aebe8c0e24555b1e58a5191410043519960d26027f749c54f
 ```
 
-**newContract**
-新建一个跨链转账合同，该命令由两条链的资金转出方分别执行。跨链转账基于哈希时间锁合约实现。
+**newHTLCTransferProposal**
+新建一个基于哈希时间锁合约的跨链转账提案，该命令由两条链的资金转出方分别执行。
 
 参数：   
 - path：跨链转账资源标识。   
 - accountName：返回值类型列表。
-- args：合同信息，包括两条链的转账信息。
-    - hash： 唯一标识，合同号，
-    - secret： 合同号的哈希原像
+- args：提案信息，包括两条链的转账信息。
+    - hash： 唯一标识，提案号，
+    - secret： 提案号的哈希原像
     - role： 身份，发起方-true，参与方-false。发起方需要传入secret，参与方secret传null。
     - sender0：发起方的资金转出者
     - receiver0：发起方的资金接收者
@@ -300,11 +302,25 @@ hash  : 66ebd11ec6cc289aebe8c0e24555b1e58a5191410043519960d26027f749c54f
     - timelock1：参与方的超时时间，小于发起方的超时时间
 
 ```bash
-[WeCross]> newContract payment.bcos.htlc bcos 88b6cea9b5ece573c6c35cb3f1a2237bf380dfbbf9155b82d5816344cdac0185 null false Admin@org1.example.com User1@org1.example.com 200 2000010000 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf  100 2000000000
+[WeCross]> newHTLCTransferProposal payment.bcos.htlc bcos_sender 88b6cea9b5ece573c6c35cb3f1a2237bf380dfbbf9155b82d5816344cdac0185 null false Admin@org1.example.com User1@org1.example.com 200 2000010000 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf  100 2000000000
 
 Txhash: 0x244d302382d03985eebcc1f7d95d0d4eef7ff2b3d528fdf7c93effa94175e921
 BlockNum: 2222
-Result: [success]
+Result: [create a htlc transfer proposal successfully]
+```
+
+**checkTransferStatus**
+根据提案号（Hash）查询htlc转账状态。
+
+参数：   
+- path：跨链资源标识。   
+- accountName：交易签名账户。
+- method：合约方法名。
+- hash：转账提案号。
+
+```bash
+[WeCross]> checkTransferStatus payment.bcos.htlc bcos_sender dcbdf73ee6fdbe6672142c7776c2d21ff7acc6f0d61975e83c3b396a364bee93
+status: succeeded!
 ```
 
 
@@ -316,10 +332,10 @@ WeCross控制台提供了一个资源类，通过方法`getResource`来初始化
 
 ```bash
 # myResource 是自定义的变量名
-[WeCross]> myResource = WeCross.getResource payment.bcos.hello bcos_default
+[WeCross]> myResource = WeCross.getResource payment.bcos.HelloWeCross bcos_default
 
 # 还可以将跨链资源标识赋值给变量，通过变量名来初始化一个跨链资源实例
-[WeCross]> path = payment.bcos.hello
+[WeCross]> path = payment.bcos.HelloWeCross
 
 [WeCross]> myResource = WeCross.getResource path bcos_default
 ```
@@ -344,13 +360,13 @@ exists
 ```bash
 [WeCross]> myResource.detail
 ResourceDetail{
- path='payment.bcos.hello',
+ path='payment.bcos.HelloWeCross',
  distance=0',
  stubType='BCOS2.0',
  properties={
   BCOS_PROPERTY_CHAIN_ID=1,
   BCOS_PROPERTY_GROUP_ID=1,
-  hello=0x9bb68f32a63e70a4951d109f9566170f26d4bd46
+  HelloWeCross=0x9bb68f32a63e70a4951d109f9566170f26d4bd46
  },
  checksum='0x888d067b77cbb04e299e675ee4b925fdfd60405241ec241e845b7e41692d53b1'
 }

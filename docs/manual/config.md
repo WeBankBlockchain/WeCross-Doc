@@ -38,7 +38,7 @@ WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`chai
 
 ```toml
 [common]
-    network = 'payment'
+    zone = 'payment'
     visible = true
 
 [chains]
@@ -56,8 +56,12 @@ WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`chai
     sslKey = 'classpath:p2p/node.key'
     peers = ['127.0.0.1:25501','127.0.0.1:25502']
 
-[test]
-    enableTestResource = false
+#[[htlc]]
+#    selfPath = 'payment.bcos.htlc'
+#    account1 = 'bcos_default_account'
+#    counterpartyPath = 'payment.fabric.htlc'
+#    account2 = 'fabric_default_account'
+
 ```
 
 跨链服务配置有五个配置项，分别是`[common]`、`[chains]`、`[server]`、`[p2p]`以及`[test]`，各个配置项含义如下：
@@ -75,10 +79,13 @@ WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`chai
   - listenPort ：整型；监听端口；WeCross节点之间的消息端口
   - caCert ：字符串；根证书路径；拥有相同根证书的WeCross节点才能互相通讯
   - sslCert ：字符串；节点证书路径；WeCross节点的证书
-  - slKey ：字符串；节点私钥路径；WeCross节点的私钥
+  - sslKey ：字符串；节点私钥路径；WeCross节点的私钥
   - peers：字符串数组；peer列表；需要互相连接的WeCross节点列表
-- [test] 测试配置
-  - enableTestResource：布尔；测试资源开关；如果开启，那么即使没有配置Stub的资源信息，也可以根据测试资源体验WeCross的部分功能。
+- [htlc] htlc配置(可选)
+  - selfPath：本地配置的htlc合约资源路径
+  - account1：可调用本地配置的htlc合约的账户
+  - counterpartyPath：本地配置的htlc合约的对手方合约路径
+  - account2：可调用对手方htlc合约的账户
 
 **注：**  
 
@@ -100,31 +107,27 @@ WeCross启动后会在`wecross.toml`中所指定的chains的根目录下去遍�
 
 ```toml
 [common]
-    name = 'bcos' # name must be same with directory name
-    type = 'BCOS'
+    name = 'bcos' # stub must be same with directory name
+    type = 'BCOS2.0' # BCOS
 
-[smCrypto]
-    # boolean
-    enable = false
+[chain]
+    groupId = 1 # default 1
+    chainId = 1 # default 1
+    enableGM = false # default false
 
 [channelService]
-    timeout = 60000  # millisecond
-    caCert = 'classpath:/stubs/bcos/ca.crt'
-    sslCert = 'classpath:/stubs/bcos/sdk.crt'
-    sslKey = 'classpath:/stubs/bcos/sdk.key'
-    groupId = 1
+    caCert = 'ca.crt'
+    sslCert = 'sdk.crt'
+    sslKey = 'sdk.key'
+    timeout = 5000  # ms, default 60000ms
     connectionsStr = ['127.0.0.1:20200']
 
 # resources is a list
 [[resources]]
     # name cannot be repeated
-    name = 'HelloWorldContract'
-    type = 'BCOS_CONTRACT'
-    contractAddress = '0x8827cca7f0f38b861b62dae6d711efe92a1e3602'
-[[resources]]
-    name = 'FirstTomlContract'
-    type = 'BCOS_CONTRACT'
-    contractAddress = '0x584ecb848dd84499639fbe2581bfb8a8774b485c'
+    name = 'HelloWeCross'
+    type = 'BCOS_CONTRACT' # BCOS_CONTRACT or BCOS_SM_CONTRACT
+    contractAddress = '0xdd02687ee3b20608f10d2794d5cd2e1133dad204'
 ```
 
 配置方法详见[FISCO BCOS Stub配置](../stubs/bcos.html#fisco-bcos-stub)
@@ -136,41 +139,33 @@ WeCross启动后会在`wecross.toml`中所指定的chains的根目录下去遍�
 ```toml
 [common]
     name = 'fabric'
-    type = 'FABRIC'
+    type = 'Fabric1.4'
 
-# fabricServices is a list
 [fabricServices]
     channelName = 'mychannel'
     orgName = 'Org1'
     mspId = 'Org1MSP'
-    orgUserName = 'Admin'
-    orgUserKeyFile = 'classpath:/stub/fabric/orgUserKeyFile'
-    orgUserCertFile = 'classpath:/stub/fabric/orgUserCertFile'
-    ordererTlsCaFile = 'classpath:/stub/fabric/ordererTlsCaFile'
-    ordererAddress = 'grpcs://127.0.0.1:7050'
+    orgUserName = 'fabric_admin'
+    orgUserAccountPath = 'classpath:accounts/fabric_admin'
+    ordererTlsCaFile = 'orderer-tlsca.crt'
+    ordererAddress = 'grpcs://localhost:7050'
 
 [peers]
     [peers.org1]
-        peerTlsCaFile = 'classpath:/stub/fabric/peerOrg1CertFile'
-        peerAddress = 'grpcs://127.0.0.1:7051'
+        peerTlsCaFile = 'org1-tlsca.crt'
+        peerAddress = 'grpcs://localhost:7051'
     [peers.org2]
-         peerTlsCaFile = 'classpath:/stub/fabric/peerOrg2CertFile'
-         peerAddress = 'grpcs://127.0.0.1:9051'
+         peerTlsCaFile = 'org2-tlsca.crt'
+         peerAddress = 'grpcs://localhost:9051'
 
 # resources is a list
 [[resources]]
     # name cannot be repeated
-    name = 'HelloWeCross'
+    name = 'ledger'
     type = 'FABRIC_CONTRACT'
-    chainCodeName = 'mycc'
+    chainCodeName = 'ledgerSample'
     chainLanguage = "go"
-    peers=['org1','org2']
-[[resources]]
-    name = 'HelloWorld'
-    type = 'FABRIC_CONTRACT'
-    chainCodeName = 'mygg'
-    chainLanguage = "go"
-    peers=['org1','org2']
+    peers=['org1']
 ```
 
 配置方法详见[Fabric Stub配置](../stubs/fabric.html#fabric-stub)
