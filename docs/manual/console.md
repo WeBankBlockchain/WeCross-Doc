@@ -282,8 +282,8 @@ secret: afd1c0f9c2f8acc2c1ed839ef506e8e0d0b4636644a889f5aa8e65360420d2a9
 hash  : 66ebd11ec6cc289aebe8c0e24555b1e58a5191410043519960d26027f749c54f
 ```
 
-**newContract**
-新建一个跨链转账合同，该命令由两条链的资金转出方分别执行。跨链转账基于哈希时间锁合约实现。
+**newHTLCTransferProposal**
+新建一个基于哈希时间锁合约的跨链转账提案，该命令由两条链的资金转出方分别执行。
 
 参数：   
 - path：跨链转账资源标识。   
