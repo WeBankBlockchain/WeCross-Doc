@@ -68,7 +68,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 将`HelloWeCross`合约拷贝至控制台目录（用控制台部署）
 
 ```bash
-cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/stubs-sample/bcos/HelloWeCross.sol console/contracts/solidity/
+cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains-sample/bcos/HelloWeCross.sol console/contracts/solidity/
 ```
 
 - 启动控制台
@@ -127,7 +127,7 @@ bash generate_connection.sh -t BCOS2.0 -n bcos
 
 ```bash
 my_bcos_connection/
-└── stub.toml                                               # 连接配置文件
+└── stub.toml          # 连接配置文件
 ```
 
 之后只需要配置证书、群组以及资源信息。
@@ -150,9 +150,9 @@ vi conf/stubs/bcos/stub.toml
 ```toml
 [channelService]
     timeout = 60000  # millisecond
-    caCert = 'classpath:/stubs/bcos/ca.crt'
-    sslCert = 'classpath:/stubs/bcos/sdk.crt'
-    sslKey = 'classpath:/stubs/bcos/sdk.key'
+    caCert = 'ca.crt'
+    sslCert = 'sdk.crt'
+    sslKey = 'sdk.key'
     groupId = 1
     connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
 ```
@@ -175,6 +175,7 @@ vi conf/stubs/bcos/stub.toml
 
 ```toml
 [common]
+    name = 'bcos' # stub must be same with directory name
     type = 'BCOS2.0' # BCOS
 
 [chain]
@@ -183,9 +184,9 @@ vi conf/stubs/bcos/stub.toml
     enableGM = false # default false
 
 [channelService]
-    caCert = 'classpath:/stubs/bcos/ca.crt'
-    sslCert = 'classpath:/stubs/bcos/sdk.crt'
-    sslKey = 'classpath:/stubs/bcos/sdk.key'
+    caCert = 'ca.crt'
+    sslCert = 'sdk.crt'
+    sslKey = 'sdk.key'
     timeout = 300000  # ms, default 60000ms
     connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
 
@@ -227,18 +228,7 @@ bash start.sh
 
 ```bash
 [server1]> listResources
-Resources{
-    errorCode=0,
-    errorMessage='',
-    resourceList=[
-        WeCrossResource{
-            checksum='0xee1892309d5367c1c3bf5e9d76f312b4134b3209d88048302950bf0dc9395a85',
-            type='BCOS_CONTRACT',
-            distance=0,
-            path='payment.bcos.HelloWeCross'
-        }
-    ]
-}
+path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 ```
 
 - 调用 [HelloWeCross.sol](https://github.com/WeBankFinTech/WeCross/blob/master/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
@@ -246,52 +236,16 @@ Resources{
 用[IPath](../introduction/introduction.html#id2)调用部署到链上的HelloWeCross合约
 
 ``` bash
-# payment.bcos.HelloWeCross为跨链资源标识IPath
-# String为返回值类型，多个返回值类型用逗号隔开，不能有空格
-# getMessage为合约中的方法名
-[server1]> call payment.bcos.HelloWeCross String getMessage
-Receipt{
-    errorCode=0,
-    errorMessage='success',
-    hash='null',
-    result=[
-        Hello WeCross
-    ]
-}
+# payment.bcos.HelloWeCross为跨链资源标识
+[server1]> call payment.bcos.HelloWeCross bcos_user1 get
+Result: [Talk is cheap, Show me the code]
 
 # 方法名后面是参数列表，字符串需要有单引号或者双引号
-[server1]> sendTransaction payment.bcos.HelloWeCross Int,String setNumAndMsg 123 "Hello World"
-Receipt{
-    errorCode=0,
-    errorMessage='null',
-    hash='0x1905f928b980209288280c071ff3574bacc23bbc49538f24325ac07db20133b5',
-    result=[
-        123,
-        Hello World
-    ]
-}
-
-[server1]> call payment.bcos.HelloWeCross Int,IntArray,String,StringArray getAll
-Receipt{
-    errorCode=0,
-    errorMessage='success',
-    hash='null',
-    result=[
-        123,
-        [
-            1,
-            2,
-            3,
-            4,
-            5
-        ],
-        Hello World,
-        [
-            Talk is cheap,
-            Show me the code
-        ]
-    ]
-}
+[WeCross]> sendTransaction payment.bcos.HelloWeCross bcos_user1 set hello wecross
+Txhash  : 0x66f94d387df2b16bea26e6bcf037c23f0f13db28dc4734588de2d57a97051c54
+BlockNum: 2219
+Result  : [hello, wecross]
+```
 
 # 退出控制台
 [server1]> q
