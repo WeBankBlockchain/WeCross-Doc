@@ -68,6 +68,14 @@ routers-payment/127.0.0.1-8250-25500/
 └── stop.sh                 # 停止脚本
 ```
 
+### 配置账户
+用户的账户统一配置在router，可根据脚本生成相应链的账户。
+
+```bash
+cd ~/wecross/routers-payment/127.0.0.1-8250-25500/
+bash add_account.sh -t BCOS2.0 -n bcos_user1 -d conf/accounts
+```
+
 ### 启动跨链路由
 
 * 启动服务
@@ -123,12 +131,16 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 
 ```bash
 cd ./WeCross-Console/
-cp conf/console-sample.xml conf/console.xml  # 配置控制台连接的跨链路由地址，此处采用默认配置
+cp conf/application-sample.toml conf/application.toml  # 配置控制台连接的跨链路由地址，此处采用默认配置
+# 拷贝TLS证书
+cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ssl.crt ~/wecross/WeCross-Console/conf
+cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ssl.key ~/wecross/WeCross-Console/conf
+cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ca.crt ~/wecross/WeCross-Console/conf
 ```
 
 ```eval_rst
 .. important::
-    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/console.xml，详见 `控制台配置 <../manual/console.html#id11>`_。
+    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/application.toml，详见 `控制台配置 <../manual/application.toml#id11>`_。
 ```
 
 - 启动控制台
@@ -149,9 +161,9 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 - 测试功能
 
 ```bash
-# 查看此控制台已连接上的跨链路由
-[server1]> currentServer
-[server1, 127.0.0.1:8250]
+# 查看router当前支持的stub类型
+[WeCross]> supportedStubs
+[BCOS2.0, GM_BCOS2.0, Fabric1.4]
 
 # 退出控制台
 [server1]> q
