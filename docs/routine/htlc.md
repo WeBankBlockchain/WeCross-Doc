@@ -1,4 +1,4 @@
-# 哈希时间锁合约
+# 哈希时间锁定
 
 哈希时间锁合约（hash time lock contract，htlc）能够实现两条异构链之间资产的原子交换。WeCross提供了Solidity版和Golang版版本的htlc基类合约，基于htlc基类合约可以轻松开发适用于不同资产类型的htlc应用合约。本章节以FISCO BCOS的BAC001资产和Hyperledger Fabric的ledgerSample为例，演示如何实现两条异构链的资产互换。
 
