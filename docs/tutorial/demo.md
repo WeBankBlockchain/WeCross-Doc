@@ -25,14 +25,14 @@ bash build.sh # 耗时10分钟左右
 Start console? [Y/n]
 ```
 
-## 操作
+### 访问跨链资源
 
 **查看资源**
 
 进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有两个资源
 
 * payment.bcos.HelloWeCross
-  * 对应于**FISCO BCOS**链上的[HelloWorld.sol](https://github.com/FISCO-BCOS/console/blob/master/contracts/solidity/HelloWorld.sol)合约
+  * 对应于**FISCO BCOS**链上的[HelloWeCross.sol](https://github.com/WeBankFinTech/WeCross/tree/release-rc2/src/main/resources/chains-sample/bcos/HelloWeCross.sol)合约
 * payment.fabric.abac
   * 对应于**Fabric**网络上的[abac.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/abac/go/abac.go)合约
 
@@ -68,8 +68,6 @@ path: payment.fabric.abac, type: Fabric1.4, distance: 1
 ]
 ```
 
-
-
 **操作资源：payment.bcos.HelloWeCross**
 
 读资源：`call path 账户名 接口名 （参数列表）`
@@ -78,7 +76,7 @@ path: payment.fabric.abac, type: Fabric1.4, distance: 1
 
 ``` groovy
 [WeCross]> call payment.bcos.HelloWeCross bcos_user1 get
-Result: [] // 查询为空，未set任何数据
+Result: [Talk is cheap, Show me the code]
 ```
 
 写资源：`sendTransaction path 返回值类型列表 接口名 （参数列表）`
@@ -133,7 +131,7 @@ bash htlc_config.sh
 
 跨链转账涉及两条链、两个用户、四个账户，两条链上的资产转出者各自通过WeCross控制台创建一个[转账提案](../routine/htlc.html)，之后router会自动完成跨链转账。
 
-* 创建转账提案
+**创建转账提案**
 - BCOS链的资产转出者操作步骤
 
 ```shell
@@ -141,7 +139,7 @@ bash htlc_config.sh
 cd WeCross-Console
 bash start.sh
 [WeCross]> newHTLCTransferProposal payment.bcos.htlc bcos_sender bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
-
+# 输出
 Txhash: a0c48eb7d1ca3a01ddf3563aeb6a1829f23dd0d778e7de2ce22406d1e84ba00f
 BlockNum: 56
 Result: create a htlc transfer proposal successfully
@@ -154,13 +152,13 @@ Result: create a htlc transfer proposal successfully
 cd WeCross-Console-8251
 bash start.sh
 [WeCross]> newHTLCTransferProposal payment.fabric.htlc fabric_admin bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
-
+# 输出
 Txhash: 0x40ae8e2e284de813f8b071e0261e627ddc4d91e365e63f222638db9b1a70d05a
 BlockNum: 123
 Result: create a htlc transfer proposal successfully
 ```
 
-* 查询转账结果
+**查询转账结果**
 
 当两个资产转出者都创建完提案后，router开始执行调度，并完成跨链转账。一次跨链转账存在5-25s的交易时延，主要取决于两条链的TPS和机器的软硬件性能。可在各自的WeCross控制台查询资产是否到账。
 
