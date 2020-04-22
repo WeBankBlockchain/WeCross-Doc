@@ -15,6 +15,7 @@ WeCross 是由微众银行自主研发并完全开源的分布式商业区块链
    docs/tutorial/index.rst
    docs/manual/index.rst
    docs/stubs/index.rst
+   docs/routine/index.rst
    docs/scenarios/index.rst
    docs/faq/faq.md
    docs/community/community.md
