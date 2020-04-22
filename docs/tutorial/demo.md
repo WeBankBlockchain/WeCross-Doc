@@ -1,3 +1,5 @@
+# 快速体验
+
 本demo将搭建一个WeCross跨连网络，连接FISCO BCOS和Fabric区块链。并通过WeCross控制台，对不同的链上资源进行操作。以理解WeCross的原理。
 
 ## 搭建Demo
@@ -25,7 +27,7 @@ bash build.sh # 耗时10分钟左右
 Start console? [Y/n]
 ```
 
-### 访问跨链资源
+## 操作跨链资源
 
 **查看资源**
 
@@ -120,7 +122,7 @@ Result: [80] // 再次query，a的值变成80
 
 WeCross Console是基于WeCross Java SDK开发的跨连应用。在跨连网络搭建后，可基于WeCross Java SDK开发更多的跨连应用，通过统一的接口对各种链上的资源进行操作。
 
-### 跨链转账
+## 跨链转账
 
 WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示。可通过脚本`htlc_config.sh`完成相关配置，并体验跨链转账。
 
