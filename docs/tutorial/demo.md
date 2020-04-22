@@ -2,7 +2,7 @@
 
 ## 搭建Demo
 
-``` bash
+```bash
 bash build.sh # 耗时10分钟左右
 ```
 
@@ -36,7 +36,7 @@ Start console? [Y/n]
 * payment.fabric.abac
   * 对应于**Fabric**网络上的[abac.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/abac/go/abac.go)合约
 
-``` groovy
+```bash
 [WeCross]> listResources
 path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 path: payment.fabric.abac, type: Fabric1.4, distance: 1
@@ -46,7 +46,7 @@ path: payment.fabric.abac, type: Fabric1.4, distance: 1
 
 用`listAccounts`命令查看WeCross Router上已存在的账户，操作资源时用相应账户进行操作
 
-``` groovy
+```bash
 [WeCross]> listAccounts
 [
  {
@@ -74,7 +74,7 @@ path: payment.fabric.abac, type: Fabric1.4, distance: 1
 
 > 调用HelloWeCross合约中的get接口
 
-``` groovy
+```bash
 [WeCross]> call payment.bcos.HelloWeCross bcos_user1 get
 Result: [Talk is cheap, Show me the code]
 ```
@@ -83,7 +83,7 @@ Result: [Talk is cheap, Show me the code]
 
 > 调用HelloWeCross合约中的set接口
 
-``` groovy
+```bash
 [WeCross]> sendTransaction payment.bcos.HelloWeCross bcos_user1 set Tom
 Txhash  : 0x21a412a1eb5239f2da9d40d09d11ce0107a5d82d113f1ecb315f2aa5bd3cc0cd
 BlockNum: 2
@@ -99,7 +99,7 @@ Result: [Tom] // 再次get，Tom已set
 
 > 调用abac合约中的query接口
 
-``` groovy
+```bash
 [WeCross]> call payment.fabric.abac fabric_user1 query a
 Result: [90] // 初次query，a的值为90
 ```
@@ -108,7 +108,7 @@ Result: [90] // 初次query，a的值为90
 
 > 调用abac合约中的invoke接口
 
-``` groovy
+```bash
 [WeCross]> sendTransaction payment.fabric.abac fabric_user1 invoke a b 10
 Txhash  : db44b064c54d4dc97f01cdcd013cae219f7849c329f38ee102853344d8f0004d
 BlockNum: 5
@@ -122,9 +122,11 @@ WeCross Console是基于WeCross Java SDK开发的跨连应用。在跨连网络�
 
 ### 跨链转账
 
-WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之间资产的原子互换。可通过脚本`htlc_config.sh`完成相关配置，并体验跨链转账。
+WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示。可通过脚本`htlc_config.sh`完成相关配置，并体验跨链转账。
 
-```shell
+![](../images/htlc_sample.png)
+
+```bash
 # 请确保demo已搭建完毕，并在demo根目录执行
 bash htlc_config.sh
 ```
@@ -134,7 +136,7 @@ bash htlc_config.sh
 **创建转账提案**
 - BCOS链的资产转出者操作步骤
 
-```shell
+```bash
 # 假设当前在demo根目录
 cd WeCross-Console
 bash start.sh
@@ -147,7 +149,7 @@ Result: create a htlc transfer proposal successfully
 
 - Hyperledger Fabric链的资产转出者操作步骤
 
-```shell
+```bash
 # 在demo目录新打开一个终端
 cd WeCross-Console-8251
 bash start.sh
@@ -163,13 +165,13 @@ Result: create a htlc transfer proposal successfully
 当两个资产转出者都创建完提案后，router开始执行调度，并完成跨链转账。一次跨链转账存在5-25s的交易时延，主要取决于两条链的TPS和机器的软硬件性能。可在各自的WeCross控制台查询资产是否到账。
 
 - 查询BCOS链上资产接收者余额
-```shell
+```bash
 [WeCross]> call payment.bcos.htlc bcos_sender balanceOf 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
 Result: [700]
 ```
 
 - 查询Hyperledger Fabric链上资产接收者余额
-```shell
+```bash
 [WeCross]>  call payment.fabric.htlc fabric_admin balanceOf User1@org1.example.com
 Result: [500]
 ```

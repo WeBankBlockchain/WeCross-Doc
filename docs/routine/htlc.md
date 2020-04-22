@@ -16,7 +16,7 @@
 ### FISCO BCOS前期准备
 
 * 部署合约
-- 将`conf/stubs-sample/bcos/htlc`目录下的BAC001.sol、HTLC.sol以及BACHTLC.sol文件拷贝至BCOS控制台的`contracts/solidity`
+- 将`conf/chains-sample/bcos/htlc`目录下的BAC001.sol、HTLC.sol以及BACHTLC.sol文件拷贝至BCOS控制台的`contracts/solidity`
 
 - 部署BACHTLC.sol
 ```shell
@@ -66,8 +66,8 @@ call BACHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 init ["0x1796f3f195697c3
 sudo docker ps -a|grep cli
 0523418f889d  hyperledger/fabric-tools:latest
 # 假设当前位于router根目录, 将链码拷贝到Fabric的chaincode目录下
- sudo docker cp conf/stubs-sample/fabric/ledger 0523418f889d:/opt/gopath/src/github.com/chaincode/ledger
- sudo docker cp conf/stubs-sample/fabric/htlc 0523418f889d:/opt/gopath/src/github.com/chaincode/htlc
+ sudo docker cp conf/chains-sample/fabric/ledger 0523418f889d:/opt/gopath/src/github.com/chaincode/ledger
+ sudo docker cp conf/chains-sample/fabric/htlc 0523418f889d:/opt/gopath/src/github.com/chaincode/htlc
 ```
 
 * 部署资产合约
@@ -102,11 +102,11 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["getTask"]}'
 # 输出应该为null
 ```
 
-### router配置哈希时间锁资源
+## 哈希时间锁配置
 
-* 配置FISCO BCOS端router
+**配置FISCO BCOS端router**
 
-- 在conf/stubs/bcos/stub.toml文件中配置htlc资源
+- 在conf/chains/bcos/stub.toml文件中配置htlc资源
 
 ```toml
 [[resources]]
@@ -126,7 +126,7 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["getTask"]}'
     account2 = 'fabric_default_account' #确保已在router的accounts目录配置了fabric_default_account账户
 ```
 
-* 配置Hyperledger Fabric端router
+**配置Hyperledger Fabric端router**
 
 ```toml
 [[resources]]
@@ -148,44 +148,48 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["getTask"]}'
     account2 = 'bcos_default_account'   #确保已在router的accounts目录配置了bcos_default_account账户
 ```
 
-* 配置发送者账户
+**配置发送者账户**
 
-两个router需要在accounts目录下配置发送者的账户，因为跨链提案只能有资金的转出者创建。
+两个router需要在accounts目录下配置发送者的账户，因为跨链提案只能由资产的转出者创建。
 
-FISCO BCOS用户需要将bactool/dist/conf目录下的私钥文件配置到router端的accounts目录，并假设命名为bcos。
+FISCO BCOS用户需要将bactool/dist/conf目录下的私钥文件配置到router端的accounts目录，并假设命名为bcos，配置方法详见[BCOS账户配置](https://wecross.readthedocs.io/zh_CN/release-rc2/docs/stubs/bcos.html#id5)。
 
-Hyperledger Fabric用户需要将admin账户配置到router端的accounts目录，并假设命名为fabric。
+Hyperledger Fabric用户需要将admin账户配置到router端的accounts目录，并假设命名为fabric，配置方法详见[Fabric账户配置](https://wecross.readthedocs.io/zh_CN/release-rc2/docs/stubs/fabric.html#id5)。
 
+**重启两个router**
 
-* 重启两个router
 ```shell
 bash stop.sh && bash start.sh
 ```
 
-### 发起跨链转账
+## 发起跨链转账
 
-假设有一个线下过程，发起方是FISCO BCOS的用户，选择一个secret，计算sha256(secret)得到hash，然后和Hyperledger Fabric的用户协商好各自转账的金额，账户，以及时间戳。
+假设跨链转账发起方是FISCO BCOS的用户，发起方选择一个`secret`，计算
+$$
+hash = sha256(secret)
+$$
+得到`hash`，然后和Hyperledger Fabric的用户即参与方协商好各自转账的金额、账户以及时间戳。
 
-* 协商内容
+**协商内容**
 
 - FISCO BCOS的两个账户：
-    - sender：0x55f934bcbe1e9aef8337f5551142a442fdde781c（和bactool初始化时返回的owner地址保持一致）
-    - receiver：0x2b5ad5c4795c026514f8317c7a215e218dccd6cf（receiver随便一个合法地址就行）
+    - 资产转出者：0x55f934bcbe1e9aef8337f5551142a442fdde781c（和bactool初始化时返回的owner地址保持一致）
+    - 资产接收者：0x2b5ad5c4795c026514f8317c7a215e218dccd6cf（随便一个合法地址就行）
 - FISCO BCOS转账金额：700
 - Hyperledger Fabric的两个账户：
-    - sender：Admin@org1.example.com （admin账户名）
-    - receiver：User1@org1.example.com
+    - 资产转出者：Admin@org1.example.com （admin账户）
+    - 资产接收者：User1@org1.example.com
 - Hyperledger Fabric转账金额500
-- hash: 2afe76d15f32c37e9f219ffd0a8fcefc76d850fa9b0e0e603cbd64a2f4aa670d
-- secret: e7d5c31dcc6acae547bb0d84c2af05413994c92599bff89c4abd72866f6ac5c6（协商时只有发起方知道）
-- 时间戳t0，发起方的超时时间，单位s
-- 时间戳t1, 参与方的超时时间，单位s
+- 哈希: 2afe76d15f32c37e9f219ffd0a8fcefc76d850fa9b0e0e603cbd64a2f4aa670d
+- 哈希原像: e7d5c31dcc6acae547bb0d84c2af05413994c92599bff89c4abd72866f6ac5c6（协商时只有发起方知道）
+- 时间戳t0：发起方的超时时间，单位s
+- 时间戳t1： 参与方的超时时间，单位s
 
 **注**：时间戳需要满足条件`t0 > t1 + 300 > now + 300`
 
-* 创建跨链转账提案
+**创建跨链转账提案**
 
-通过WeCross控制台创建跨链转账提案，命令为`newHTLCTransferProposal`，参数包括：`path`, `account`（发起方账户名）, `hash`，`secret`, `role`(bool, true代表创建者是发起方)，`sender0`，`receiver0`，`amount0`，`timelock0`，`sender1`，`receiver1`，`amount1`，`timelock1`。
+两条链的**资产转出者**通过WeCross控制台创建跨链转账提案，将协商的转账信息写入各自的区块链，命令为`newHTLCTransferProposal`，参数包括：`path`, `account`（资产转出者账户名）, `hash`，`secret`， `role`，`sender0`，`receiver0`，`amount0`，`timelock0`，`sender1`，`receiver1`，`amount1`，`timelock1`。
 
 **注**：其中下标为0的参数是发起方信息。
 
@@ -207,9 +211,9 @@ newHTLCTransferProposal payment.bcos.htlc bcos edafd70a27887b361174ba5b831777c76
 ```shell
 newHTLCTransferProposal payment.fabric.htlc fabric edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 ```
-**注**：参与方`secret`传入null，`tool`传入false。
+**注**：发起方`secret`传入哈希原像，`role`传入true；参与方`secret`传入null，`role`传入false。
 
-* 结果确认
+**结果确认**
 
 哈希时间锁合约提供了查询余额的接口，可通过WeCross控制台调用，查看两方的接收者是否到账。
 

@@ -253,7 +253,7 @@ Result  : [hello, wecross]
 
 停止跨链路由
 
-``` shell
+``` bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
 bash stop.sh
 ```
