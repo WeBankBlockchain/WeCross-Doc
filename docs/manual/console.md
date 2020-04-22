@@ -160,7 +160,7 @@ Usage: detail [path]
 
 ```bash
 [WeCross]> supportedStubs
-[BCOS2.0, Fabric1.4]
+[BCOS2.0, GM_BCOS2.0, Fabric1.4]
 ```
 
 **listAccounts**
@@ -171,7 +171,7 @@ Usage: detail [path]
 [
  {
   name=fabric_default,
-  type=FABRIC_ACCOUNT
+  type=Fabric1.4
  },
  {
   name=bcos_default,

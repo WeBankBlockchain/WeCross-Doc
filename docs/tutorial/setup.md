@@ -170,4 +170,3 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```
 
 更多控制台命令及含义详见[控制台命令](../manual/console.html#id13)。
-
