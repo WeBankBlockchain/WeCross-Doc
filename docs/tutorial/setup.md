@@ -8,7 +8,7 @@
 
 操作以`~/wecross/`目录下为例进行
 
-``` shell
+``` bash
 mkdir -p ~/wecross/ && cd ~/wecross/
 ```
 
@@ -20,7 +20,7 @@ mkdir -p ~/wecross/ && cd ~/wecross/
 
 WeCross中包含了生成跨链路由的工具，执行以下命令进行下载（提供[三种下载方式](../version/download.html#wecross)，可根据网络环境选择合适的方式进行下载），程序下载至当前目录`WeCross/`中。
 
-```shell
+```bash
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh)
 ```
 
@@ -93,7 +93,7 @@ WeCross start successfully
 ```
 如果启动失败，检查`8250, 25500`端口是否被占用
 
-``` shell
+``` bash
 netstat -napl | grep 8250
 netstat -napl | grep 25500
 ```
@@ -122,7 +122,7 @@ WeCross提供了控制台，方便用户进行跨链开发和调试。可通过�
 
 执行如下命令进行下载（提供[三种下载方式](../version/download.html#id2)，可根据网络环境选择合适的方式进行下载），下载后在执行命令的目录下生成`WeCross-Console`目录。
 
-```shell
+```bash
 cd ~/wecross/
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
 ```
