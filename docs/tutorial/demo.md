@@ -124,16 +124,18 @@ WeCross Console是基于WeCross Java SDK开发的跨连应用。在跨连网络�
 
 ## 跨链转账
 
-WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示。可通过脚本`htlc_config.sh`完成相关配置，并体验跨链转账。
+WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示:
 
 ![](../images/htlc_sample.png)
+
+可通过脚本`htlc_config.sh`完成相关配置，并体验跨链转账。
 
 ```bash
 # 请确保demo已搭建完毕，并在demo根目录执行
 bash htlc_config.sh
 ```
 
-跨链转账涉及两条链、两个用户、四个账户，两条链上的资产转出者各自通过WeCross控制台创建一个[转账提案](../routine/htlc.html)，之后router会自动完成跨链转账。
+跨链转账涉及两条链、两个用户、四个账户，两条链上的资产转出者各自通过WeCross控制台创建一个[转账提案](../routine/htlc.html#id4)，之后router会自动完成跨链转账。
 
 **创建转账提案**
 - BCOS链的资产转出者操作步骤
@@ -149,7 +151,7 @@ BlockNum: 56
 Result: create a htlc transfer proposal successfully
 ```
 
-- Hyperledger Fabric链的资产转出者操作步骤
+- Fabric链的资产转出者操作步骤
 
 ```bash
 # 在demo目录新打开一个终端
