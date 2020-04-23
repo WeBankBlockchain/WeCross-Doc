@@ -1,11 +1,15 @@
 # 快速体验
 
-本demo将搭建一个WeCross跨连网络，连接FISCO BCOS和Fabric区块链。并通过WeCross控制台，对不同的链上资源进行操作。以理解WeCross的原理。
+本demo将搭建一个WeCross跨连网络，连接FISCO BCOS和Hyperledger Fabric区块链。并通过WeCross控制台，对不同的链上资源进行操作。以理解WeCross的原理。
 
 ## 搭建Demo
 
 ```bash
-bash build.sh # 耗时10分钟左右
+# 耗时10-30分钟左右
+# mac用户
+bash build.sh 
+# ubuntu或者centOS用户启用docker需要管理员权限
+sudo ./build.sh
 ```
 
 部署成功！能看到demo网络的架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
@@ -131,8 +135,11 @@ WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之�
 可通过脚本`htlc_config.sh`完成相关配置，并体验跨链转账。
 
 ```bash
-# 请确保demo已搭建完毕，并在demo根目录执行
+# 请确保demo已搭建完毕，并在demo根目录执行，耗时5分钟左右
+# mac用户
 bash htlc_config.sh
+# ubuntu或者centOS用户启用docker需要管理员权限
+sudo ./htlc_config.sh
 ```
 
 跨链转账涉及两条链、两个用户、四个账户，两条链上的资产转出者各自通过WeCross控制台创建一个[转账提案](../routine/htlc.html#id4)，之后router会自动完成跨链转账。
@@ -147,7 +154,7 @@ bash start.sh
 [WeCross]> newHTLCTransferProposal payment.bcos.htlc bcos_sender bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 # 输出
 Txhash: a0c48eb7d1ca3a01ddf3563aeb6a1829f23dd0d778e7de2ce22406d1e84ba00f
-BlockNum: 56
+BlockNum: 6
 Result: create a htlc transfer proposal successfully
 ```
 
@@ -160,7 +167,7 @@ bash start.sh
 [WeCross]> newHTLCTransferProposal payment.fabric.htlc fabric_admin bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 # 输出
 Txhash: 0x40ae8e2e284de813f8b071e0261e627ddc4d91e365e63f222638db9b1a70d05a
-BlockNum: 123
+BlockNum: 7
 Result: create a htlc transfer proposal successfully
 ```
 
