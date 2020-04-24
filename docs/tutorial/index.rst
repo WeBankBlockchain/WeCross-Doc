@@ -11,6 +11,4 @@
    
    env.md
    demo.md
-   setup.md
-   chain.md
-   zones.md
+   networks.md

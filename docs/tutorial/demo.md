@@ -2,14 +2,12 @@
 
 本demo将搭建一个WeCross跨连网络，连接FISCO BCOS和Hyperledger Fabric区块链。并通过WeCross控制台，对不同的链上资源进行操作。以理解WeCross的原理。
 
+![](../images/tutorial/demo.png)
+
 ## 搭建Demo
 
 ```bash
-# 耗时10-30分钟左右
-# mac用户
-bash build.sh 
-# ubuntu或者centOS用户启用docker需要管理员权限
-sudo ./build.sh
+bash build.sh # 耗时10-30分钟左右
 ```
 
 部署成功！能看到demo网络的架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
@@ -19,15 +17,15 @@ sudo ./build.sh
 
       FISCO BCOS                    Fabric
      (4node pbft)              (first-network)
-   (HelloWorld.sol)               (abac.go)
+   (HelloWeCross.sol)             (abac.go)
           |                           |
           |                           |
     WeCross Router <----------> WeCross Router
 (127.0.0.1-8250-25500)      (127.0.0.1-8251-25501)
-           |
-           |
+           | 
+           | 
     WeCross Console
-
+    
 Start console? [Y/n]
 ```
 
@@ -130,7 +128,7 @@ WeCross Console是基于WeCross Java SDK开发的跨连应用。在跨连网络�
 
 WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示:
 
-![](../images/htlc_sample.png)
+![](../images/tutorial/htlc_sample.png)
 
 可通过脚本`htlc_config.sh`完成相关配置，并体验跨链转账。
 

@@ -7,5 +7,6 @@
    :maxdepth: 1
    
    v1.0.0-rc1.md
+   v1.0.0-rc2.md
    download.md
    

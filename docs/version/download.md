@@ -13,12 +13,16 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 **方式2：命令下载（源码编译模式）**
 
 ``` shell
+# 默认下载master分支
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh) -s
+
+# 下载特定分支
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh) -s -b release-rc2
 ```
 
 **方式3：手动下载**
 
-* 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross/releases/download//v1.0.0-rc1/WeCross.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross/releases/download//v1.0.0-rc1/WeCross.tar.gz.md5)
+* 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross/releases/download//v1.0.0-rc2/WeCross.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross/releases/download//v1.0.0-rc2/WeCross.tar.gz.md5)
 
 * [github release](https://github.com/WeBankFinTech/WeCross/releases)（下载最新版本的 `WeCross.tar.gz`）
 
@@ -45,12 +49,16 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 **方式2：命令下载（源码编译模式）**
 
 ```shell
+# 默认下载master分支
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh) -s
+
+# 下载特定分支
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh) -s -b release-rc2
 ```
 
 **方式3：手动下载**
 
-- 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc1/WeCross-Console.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc1/WeCross-Console.tar.gz.md5)
+- 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc2/WeCross-Console.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc2/WeCross-Console.tar.gz.md5)
 
 - [github release](https://github.com/WeBankFinTech/WeCross-Console/releases)（下载最新版本的 `WeCross-Console.tar.gz`）
 
