@@ -70,10 +70,10 @@ contract address: 0x5854394d40e60b203e3807d6218b36d4bc0f3437
 
 ```bash
 cd ~/wecross/routers-bill/127.0.0.1-8251-25501 
-bash create_bcos_stub_config.sh -n bcos1
-vi conf/stubs/bcos1/stub.toml
-# 配置通过哪些节点接入此链
-connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
+bash add_chain.sh -t BCOS2.0 -n bcos1
+vi conf/chains/bcos1/stub.toml
+# 配置哪些节点接入此链
+connectionsStr = ['127.0.0.1:20201']
 
 # 配置资源：HelloWorld合约（同时删除其他资源示例）
 [[resources]]
@@ -85,7 +85,14 @@ connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0
 
 - 拷贝证书
 ```bash
-cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8251-25501/conf/stubs/bcos1
+cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8251-25501/conf/chains/bcos1
+```
+
+- 配置账户
+
+```bash
+cd ~/wecross/routers-bill/127.0.0.1-8251-25501
+bash add_account.sh -t BCOS2.0 -n bcos_user1 -d conf/accounts
 ```
 
 #### 配置127.0.0.1-8252-25502
@@ -95,10 +102,10 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8251-25501/con
 - 配置stub.toml
 ```bash
 cd ~/wecross/routers-bill/127.0.0.1-8252-25502 
-bash create_bcos_stub_config.sh -n bcos2
-vi conf/stubs/bcos2/stub.toml
-# 配置通过哪些节点接入此链
-connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
+bash add_chain.sh -t BCOS2.0 -n bcos2
+vi conf/chains/bcos2/stub.toml
+# 配置哪些节点接入此链
+connectionsStr = ['127.0.0.1:20202']
 
 # 配置资源：HelloWeCross合约（同时删除其他资源示例）
 [[resources]]
@@ -111,7 +118,7 @@ connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0
 - 拷贝证书
 
 ```bash
-cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8252-25502/conf/stubs/bcos2
+cp ~/fisco/nodes/127.0.0.1/sdk/* ~/wecross/routers-bill/127.0.0.1-8252-25502/conf/chains/bcos2
 ```
 
 #### 启动跨链路由
@@ -128,83 +135,46 @@ bash start.sh
 
 用控制台调用跨链资源，请求发到任意的跨链路由上，都可访问到跨链分区中的任意资源。
 
+#### 拷贝控制台
+
+为新的跨链路由拷贝一个控制台。
+```bash
+cd ~/wecross
+cp -r WeCross-Console routers-bill/console-8251
+```
+
 #### 配置跨链控制台
 
-在控制台配置文件中增加新的跨链路由的信息。
-
 ```bash
-cd ~/wecross/WeCross-Console
-vi conf/console.xml 
-# 配置map信息
-<map>
-    <entry key="server1" value="127.0.0.1:8251"/>
-    <entry key="server2" value="127.0.0.1:8252"/>
-</map>
-
+# 配置console-8251
+cp -f routers-bill/127.0.0.1-8251-25501/conf/*.crt console-8251/conf
+cp -f routers-bill/127.0.0.1-8251-25501/conf/*.key console-8251/conf
+vi console-8251/conf/application.toml
+# 更新server
+[connection]
+    server =  '127.0.0.1:8251'
 ```
 
 #### 启动跨链控制台
 
 ``` bash
-cd ~/wecross/WeCross-Console
+cd ~/wecross/routers-bill/console-8251
 bash start.sh
 ```
 
-#### 测试请求路由功能
+#### 跨路由访问资源
 
 跨链路由能够进行请求转发，将调用请求正确地路由至相应的跨链资源。无论请求发至哪个跨链路由，都可正确路由至相应跨链路由配置的链上资源。
 
 ```bash
-# 查看配置的所有跨链路由
-[server1]> listServers 
-{server1=127.0.0.1:8251, server2=127.0.0.1:8252}
+# 查看资源列表，可以看到路由127.0.0.1-8252-25502的资源
+[WeCross]> listResources
+path: bill.bcos1.HelloWorld, type: BCOS2.0, distance: 0
+path: bill.bcos2.HelloWeCross, type: BCOS2.0, distance: 1
 
-# 查看server1的资源列表，可以看到server2所连接的跨链路由的资源（bill.bcos2.HelloWeCross）也在列表中
-[server1]> listResources
-Resources{
-    errorCode=0,
-    errorMessage='',
-    resourceList=[
-        WeCrossResource{
-            checksum='0x7027331008fe69a87ec703a006461a14a652f5380071c8868cc08d3c7247d608',
-            type='REMOTE_RESOURCE',
-            distance=1,
-            path='bill.bcos2.HelloWeCross'
-        },
-        WeCrossResource{
-            checksum='0x3d58f2c92c9894abbcff5192c78f9ea823c39b089c44f976bb53e63d9285b0b0',
-            type='BCOS_CONTRACT',
-            distance=0,
-            path='bill.bcos1.HelloWorld'
-        }
-    ]
-}
-
-# 在server1中调用server2连接的资源
-[server1]> call bill.bcos2.HelloWeCross Int getNumber
-Receipt{
-    errorCode=0,
-    errorMessage='success',
-    hash='null',
-    result=[
-        2019
-    ]
-}
-
-# 切换server2
-[server1]> switch server2
-
-# server2调用server1的资源
-[server2]> call bill.bcos1.HelloWorld String get
-Receipt{
-    errorCode=0,
-    errorMessage='success',
-    hash='null',
-    result=[
-        Hello,
-        World!
-    ]
-}
+# 调用127.0.0.1-8252-25502的资源
+[server1]> call bill.bcos2.HelloWeCross bcos_user1 get
+Result: [Talk is cheap, Show me the code]
 
 # 退出控制台
 [server2]> q
@@ -218,4 +188,3 @@ bash stop.sh
 cd ~/wecross/routers-bill/127.0.0.1-8252-25502
 bash stop.sh
 ```
-

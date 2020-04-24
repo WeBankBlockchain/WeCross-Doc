@@ -17,7 +17,7 @@ FISCO BCOS官方提供了一键搭链的教程，详见[单群组FISCO BCOS联�
 cd ~ && mkdir -p fisco && cd fisco
 
 # 下载build_chain.sh脚本
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh && chmod u+x build_chain.sh
 
 # 搭建单群组4节点联盟链
 # 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
@@ -46,7 +46,7 @@ node3 start successfully
 
 通过FISCO BCOS控制台部署HelloWeCross合约，控制台的安装和使用详见官方文档[配置及使用控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#id7)
 
-`HelloWeCross.sol`位于`~/wecross/routers-payment/127.0.0.1-8250-25500/conf/stubs-sample/bcos/`
+`HelloWeCross.sol`位于`~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains-sample/bcos/`
 
 控制台安装配置完后启动并部署`HelloWeCross.sol`，返回的合约地址在之后的WeCross配置中需要用到。详细步骤如下：
 
@@ -103,58 +103,58 @@ contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b
 
 将HelloWeCross的合约地址记录下来，后续步骤中使用：`contract address: 0x04ae9de7bc7397379fad6220ae01529006022d1b`
 
-#### 配置FISCO BCOS Connection
+#### 配置FISCO BCOS chain
 
-完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS connection，即配置连接信息以及链上的[资源](../introduction/introduction.html#id2)。
+完成了FISCO BCOS的搭建以及合约的部署，要完成WeCross和FISCO BCOS的交互，需要配置FISCO BCOS chain[资源](../introduction/introduction.html#id2)。
 
 - 生成stub配置文件
 
-切换至跨链路由的目录，用 [generate_connection.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成FISCO BCOS connection的配置文件框架。
+切换至跨链路由的目录，用 [add_chain.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成FISCO BCOS chain的配置文件框架。
 
 ```bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
-bash generate_connection.sh -t BCOS2.0 -n bcos
+bash add_chain.sh -t BCOS2.0 -n bcos
 ```
 
 ```eval_rst
 .. note::
-    - -n指定connection的名字（即此链在跨链分区中的名字），默认在跨链路由的conf/stubs目录下生成相关的配置框架。
+    - -n指定chain的名字（即此链在跨链分区中的名字），默认在跨链路由的conf/chains目录下生成相关的配置框架。
 ```
 
-命令执行成功会输出`operator: connection type: BCOS2.0 path: conf/stubs//bcos`；如果执行出错，请查看屏幕打印提示。
+命令执行成功会输出`operator: chain type: BCOS2.0 path: conf/chains/bcos`；如果执行出错，请查看屏幕打印提示。
 
 生成的目录结构如下：
 
 ```bash
-my_bcos_connection/
-└── stub.toml          # 连接配置文件
+$ tree conf/chains/bcos
+conf/chains/bcos
+└── stub.toml          # chain配置文件
 ```
 
 之后只需要配置证书、群组以及资源信息。
 
 - 配置证书
 
-将FISCO BCOS节点的证书目录`127.0.0.1/sdk`下的`ca.crt, sdk.key, sdk.crt`文件拷贝到`conf/stubs/bcos`目录下。
+将FISCO BCOS节点的证书目录`127.0.0.1/sdk`下的`ca.crt, sdk.key, sdk.crt`文件拷贝到`conf/chains/bcos`目录下。
 
 ```bash
-cp ~/fisco/nodes/127.0.0.1/sdk/* conf/stubs/bcos/
+cp ~/fisco/nodes/127.0.0.1/sdk/* conf/chains/bcos/
 ```
 
 - 配置群组
 
 ```bash
-vi conf/stubs/bcos/stub.toml
+vi conf/chains/bcos/stub.toml
 ```
 
 如果搭FISCO BCOS链采用的都是默认配置，那么将会得到一条单群组四节点的链，群组ID为1，各个节点的channel端口分别为`20200, 20201, 20202, 20203`，则配置如下：
 ```toml
 [channelService]
-    timeout = 60000  # millisecond
     caCert = 'ca.crt'
     sslCert = 'sdk.crt'
     sslKey = 'sdk.key'
-    groupId = 1
-    connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
+    timeout = 300000  # ms, default 60000ms
+    connectionsStr = ['127.0.0.1:20200']
 ```
 
 - 配置合约资源
@@ -175,20 +175,19 @@ vi conf/stubs/bcos/stub.toml
 
 ```toml
 [common]
-    name = 'bcos' # stub must be same with directory name
+    name = 'bcos'
     type = 'BCOS2.0' # BCOS
 
 [chain]
     groupId = 1 # default 1
     chainId = 1 # default 1
-    enableGM = false # default false
 
 [channelService]
     caCert = 'ca.crt'
     sslCert = 'sdk.crt'
     sslKey = 'sdk.key'
     timeout = 300000  # ms, default 60000ms
-    connectionsStr = ['127.0.0.1:20200','127.0.0.1:20201','127.0.0.1:20202','127.0.0.1:20203']
+    connectionsStr = ['127.0.0.1:20200']
 
 # resources is a list
 [[resources]]
@@ -231,7 +230,7 @@ bash start.sh
 path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 ```
 
-- 调用 [HelloWeCross.sol](https://github.com/WeBankFinTech/WeCross/blob/master/src/main/resources/stubs-sample/bcos/HelloWeCross.sol) 合约
+- 调用 [HelloWeCross.sol](https://github.com/WeBankFinTech/WeCross/blob/master/src/main/resources/chains-sample/bcos/HelloWeCross.sol) 合约
 
 用[path](../introduction/introduction.html#id2)调用部署到链上的HelloWeCross合约
 
@@ -257,4 +256,3 @@ Result  : [hello, wecross]
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
 bash stop.sh
 ```
-

@@ -21,7 +21,7 @@ mkdir -p ~/wecross/ && cd ~/wecross/
 WeCross中包含了生成跨链路由的工具，执行以下命令进行下载（提供[三种下载方式](../version/download.html#wecross)，可根据网络环境选择合适的方式进行下载），程序下载至当前目录`WeCross/`中。
 
 ```bash
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh)
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross_rc2.sh) -s -b release-rc2
 ```
 
 ### 生成跨链路由
@@ -51,21 +51,29 @@ bash ./WeCross/build_wecross.sh -n payment -o routers-payment -l 127.0.0.1:8250:
 # 已屏蔽lib目录，该目录存放所有依赖的jar包
 tree routers-payment/127.0.0.1-8250-25500/ -I "lib"
 routers-payment/127.0.0.1-8250-25500/
+├── add_account.sh    # 账户生成脚本
+├── add_chain.sh      # 区块链配置文件创建脚本
 ├── apps
-│   └── WeCross.jar         # WeCross路由jar包
+│   └── WeCross.jar   # WeCross路由jar包
 ├── build_wecross.sh
-├── conf                    # 配置文件目录
-│   ├── application.properties	
-│   ├── log4j2.xml 
-│   ├── p2p                 # p2p证书目录
-│   │   ├── ca.crt          # 根证书
-│   │   ├── node.crt        # 跨链路由证书
-│   │   ├── node.key        # 跨链路由私钥
-│   │   └── node.nodeid     # 跨链路由nodeid
-│   ├── stubs               # stub配置目录，要接入不同的链，在此目录下进行配置
-│   └── wecross.toml        # 根配置
-├── start.sh                # 启动脚本
-└── stop.sh                 # 停止脚本
+├── conf              # 配置文件目录
+│   ├── accounts      # 账户配置目录
+│   ├── application.properties 
+│   ├── chains        # 区块链配置目录，要接入不同的链，在此目录下进行配置
+│   ├── log4j2.xml    
+│   ├── ca.crt        # 根证书
+│   ├── ssl.crt       # 跨链路由证书
+│   ├── ssl.key       # 跨链路由私钥
+│   ├── node.nodeid   # 跨链路由nodeid
+│   └── wecross.toml
+├── create_cert.sh    # 证书生成脚本
+├── download_wecross.sh
+├── plugin            # 插件目录
+│   ├── bcos-stub-gm.jar
+│   ├── bcos-stub.jar
+│   └── fabric-stub.jar
+├── start.sh          # 启动脚本
+└── stop.sh           # 停止脚本
 ```
 
 ### 配置账户
@@ -104,16 +112,6 @@ netstat -napl | grep 25500
 cat logs/error.log
 ```
 
-* 检查服务
-
-调用服务的test接口，检查服务是否启动
-``` bash
-curl http://127.0.0.1:8250/test && echo
-
-# 如果输出如下内容，说明跨链路由服务已完全启动
-OK！
-```
-
 ## 部署WeCross控制台
 
 WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本`build_console.sh`搭建一个WeCross控制台。
@@ -124,18 +122,18 @@ WeCross提供了控制台，方便用户进行跨链开发和调试。可通过�
 
 ```bash
 cd ~/wecross/
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console-rc2.sh) -s -b release-rc2
 ```
 
 - 配置控制台
 
 ```bash
-cd ./WeCross-Console/
+cd WeCross-Console
 cp conf/application-sample.toml conf/application.toml  # 配置控制台连接的跨链路由地址，此处采用默认配置
 # 拷贝TLS证书
-cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ssl.crt ~/wecross/WeCross-Console/conf
-cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ssl.key ~/wecross/WeCross-Console/conf
-cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ca.crt ~/wecross/WeCross-Console/conf
+cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ssl.crt conf
+cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ssl.key conf
+cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/ca.crt  conf
 ```
 
 ```eval_rst
@@ -153,7 +151,7 @@ bash start.sh
 
 ```bash
 =================================================================================
-Welcome to WeCross console(v1.0.0-rc1)!
+Welcome to WeCross console(v1.0.0-rc2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =================================================================================
 ```
