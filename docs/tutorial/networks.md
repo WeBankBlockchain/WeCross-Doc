@@ -321,8 +321,9 @@ contract address: 0x19a70c01e801d3cac241de5f11686e3aa01e463b
 mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
 
 # 下载Fabric链demo搭建脚本
-xxxxxx 
-xxxxxx
+curl -LO https://github.com/WeBankFinTech/WeCross/releases/download/resources/demo.tar.gz
+tar -zxvf demo.tar.gz
+cp demo/fabric/* ./
 
 # 搭建
 bash build.sh # 若出错，执行 bash clear.sh 后重新 bash build.sh
