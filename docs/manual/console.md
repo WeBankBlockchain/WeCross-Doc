@@ -2,7 +2,6 @@
 
 [控制台](https://github.com/WeBankFinTech/WeCross-Console)是WeCross重要的交互式客户端工具，它通过[WeCross-Java-SDK](./sdk.html)与WeCross 跨链代理建立连接，实现对跨链资源的读写访问请求。控制台拥有丰富的命令，包括获取跨链资源列表，查询资源状态，以及所有的JSON-RPC接口命令。
 
-
 ### 控制台命令
 
 控制台命令可分为两类，普通命令和交互式命令。
@@ -22,17 +21,18 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 
 #### 普通命令
 
-* 合约调用
-- call(不发交易): [call](#call)
-- sendTransaction(发交易)): [sendTransaction](#sendtransaction)
+* 状态查询
+  * [listResources](#listResources)：查看资源列表
+  * [detail](#detail)：查看资源详情
+  * [listAccounts](#listAccounts)：查看账户列表
+  * [supportedStubs](#supportedStubs)：查看连接的router支持接入的链类型
+
+* 资源调用
+  * [call](#call)：调用链上资源，用于查询，不触发出块
+  * [sendTransaction](#sendtransaction)：发交易，用于改变链上资源，触发出块
 
 * 跨链转账
-- newHTLCTransferProposal(创建转账提案): [newHTLCTransferProposal](#newHTLCTransferProposal)
-
-* 状态查询
-- detail(查看资源详情): [detail](#detail)
-- listResources(查看资源列表): [listResources](#listResources)
-- listAccounts(查看账户列表): [call](#listAccounts)
+  * [newHTLCTransferProposal](#newHTLCTransferProposal)：创建转账提案
 
 #### 交互式命令
 
@@ -45,10 +45,10 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 - `Ctrl+R`：搜索输入的历史命令
 - &uarr;：  向前浏览历史命令
 - &darr;：  向后浏览历史命令
-- `table`： 自动补全，支持命令、变量名、资源名以及其它固定参数的补全
-
+- `tab`： 自动补全，支持命令、变量名、资源名以及其它固定参数的补全
 
 ### 控制台响应
+
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
@@ -89,13 +89,25 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 
 #### 配置控制台
 
-配置前需要将`application-sample.toml`拷贝成`application.toml`，再配置`console.toml`文件。
+控制台配置文件为 `conf/application-toml`，启动控制台前需配置
 
-控制台需要配置router的连接信息，包括router地址以及TLS证书，控制台的证书和私钥可以从router端拷贝。
+``` bash
+cd ~/wecross/WeCross-Console
+# 拷贝配置sample
+cp conf/application-sample.toml conf/application.toml
+
+# 拷贝连接router所需的TLS证书，从生成的routers-payment/cert/sdk目录下拷贝
+cp ~/wecross/routers-payment/cert/sdk/* conf/ # 包含：ca.crt、node.nodeid、ssl.crt、ssl.key
+
+# 配置
+vim conf/application.toml
+```
+
+配置与控制台r与某个router的连接
 
 ``` toml
 [connection]
-    server =  '127.0.0.1:8250'
+    server =  '127.0.0.1:8250' # 对应router的ip和rpc端口
     sslKey = 'classpath:ssl.key'
     sslCert = 'classpath:ssl.crt'
     caCert = 'classpath:ca.crt'
@@ -103,7 +115,7 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 
 #### 启动控制台
 
-在WeCross服务已经开启的情况下，启动控制台：
+在WeCross已经开启的情况下，启动控制台
 
 ```bash
 cd ~/wecross/WeCross-Console
@@ -170,12 +182,24 @@ Usage: detail [path]
 [WeCross]> listAccounts
 [
  {
-  name=fabric_default,
+  name=fabric_user1,
   type=Fabric1.4
  },
  {
-  name=bcos_default,
+  name=bcos_sender,
   type=BCOS2.0
+ },
+ {
+  name=bcos_user1,
+  type=BCOS2.0
+ },
+ {
+  name=bcos_default_account,
+  type=BCOS2.0
+ },
+ {
+  name=fabric_default_account,
+  type=Fabric1.4
  }
 ]
 ```
@@ -195,9 +219,9 @@ path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 ```bash
 [WeCross]> listResources
 path: payment.bcos.htlc, type: BCOS2.0, distance: 0
-path: payment.fabric.ledger, type: Fabric1.4, distance: 1
-path: payment.fabric.htlc, type: Fabric1.4, distance: 1
 path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
+path: payment.fabric.htlc, type: Fabric1.4, distance: 1
+path: payment.fabric.abac, type: Fabric1.4, distance: 1
 ```
 
 **status**
@@ -225,9 +249,23 @@ ResourceDetail{
  properties={
   BCOS_PROPERTY_CHAIN_ID=1,
   BCOS_PROPERTY_GROUP_ID=1,
-  HelloWeCross=0x6215f04619eb0f6d40c7d15c8efc025751fbce85
+  HelloWeCross=0x708133d132372727ce3848a16d47ab4daf77698c
  },
- checksum='0x8c72de0e0d4a5e74afcdaed1fa6322c15a7cebfddb893df0339af7c5441f05fe'
+ checksum='0xb452f3d12c91b6cd93e083a518d2ea2cffbcf3d8b971221a5224f07a3be5e41a'
+}
+
+[WeCross]> detail payment.fabric.abac
+ResourceDetail{
+ path='payment.fabric.abac',
+ distance=1',
+ stubType='Fabric1.4',
+ properties={
+  PROPOSAL_WAIT_TIME=120000,
+  CHAINCODE_TYPE=GO_LANG,
+  CHANNEL_NAME=mychannel,
+  CHAINCODE_NAME=mycc
+ },
+ checksum='c77f0ac3ead48d106d357ffe0725b9761bd55d3e27edd8ce669ad8b470a27bc8'
 }
 ```
 
@@ -236,12 +274,12 @@ ResourceDetail{
 
 参数：   
 - path：跨链资源标识。   
-- accountName：交易签名账户。
+- accountName：交易签名账户，router上配置的账户名（`listAccounts`命令可查询）。
 - method：合约方法名。
 - args：参数列表。
 
 ```bash
-[WeCross]> call payment.bcos.HelloWeCross bcos_default get
+[WeCross]> call payment.bcos.HelloWeCross bcos_user1 get
 Result: [Talk is cheap, Show me the code]
 ```
 
@@ -250,12 +288,12 @@ Result: [Talk is cheap, Show me the code]
 
 参数：   
 - path：跨链资源标识。   
-- accountName：交易签名账户。
+- accountName：交易签名账户，router上配置的账户名。
 - method：合约方法名。
 - args：参数列表。
 
 ```bash
-[WeCross]> sendTransaction payment.bcos.HelloWeCross bcos_default set hello wecross
+[WeCross]> sendTransaction payment.bcos.HelloWeCross bcos_user1 set hello wecross
 Txhash  : 0x66f94d387df2b16bea26e6bcf037c23f0f13db28dc4734588de2d57a97051c54
 BlockNum: 2219
 Result  : [hello, wecross]
@@ -287,17 +325,17 @@ hash  : 66ebd11ec6cc289aebe8c0e24555b1e58a5191410043519960d26027f749c54f
 
 参数：   
 - path：跨链转账资源标识。   
-- accountName：返回值类型列表。
+- accountName：资产转出者在router上配置的账户名。
 - args：提案信息，包括两条链的转账信息。
     - hash： 唯一标识，提案号，
     - secret： 提案号的哈希原像
     - role： 身份，发起方-true，参与方-false。发起方需要传入secret，参与方secret传null。
-    - sender0：发起方的资金转出者
-    - receiver0：发起方的资金接收者
+    - sender0：发起方的资金转出者在对应链上的地址
+    - receiver0：发起方的资金接收者在对应链上的地址
     - amount0：发起方的转出金额
     - timelock0：发起方的超时时间
-    - sender1：参与方的资金转出者
-    - receiver1：参与方的资金接收者
+    - sender1：参与方的资金转出者在对应链上的地址
+    - receiver1：参与方的资金接收者在对应链上的地址
     - amount1：参与方的转出金额
     - timelock1：参与方的超时时间，小于发起方的超时时间
 
@@ -314,7 +352,7 @@ Result: [create a htlc transfer proposal successfully]
 
 参数：   
 - path：跨链资源标识。   
-- accountName：交易签名账户。
+- accountName：交易签名账户，router上配置的账户名。
 - method：合约方法名。
 - hash：转账提案号。
 
@@ -332,25 +370,26 @@ WeCross控制台提供了一个资源类，通过方法`getResource`来初始化
 
 ```bash
 # myResource 是自定义的变量名
-[WeCross]> myResource = WeCross.getResource payment.bcos.HelloWeCross bcos_default
+[WeCross]> myResource = WeCross.getResource payment.bcos.HelloWeCross bcos_user1
 
 # 还可以将跨链资源标识赋值给变量，通过变量名来初始化一个跨链资源实例
 [WeCross]> path = payment.bcos.HelloWeCross
 
-[WeCross]> myResource = WeCross.getResource path bcos_default
+[WeCross]> myResource = WeCross.getResource path bcos_user1
 ```
 
 **[resource].[command]**
 当初始化一个跨链资源实例后，就可以通过`.command`的方式，调用跨链资源的UBI接口。
 
 ```bash
-# 输入变量名，通过table键可以看到能够访问的所有命令
+# 输入变量名，通过tab键可以看到能够访问的所有命令
 [WeCross]> myResource.
 myResource.call              myResource.status
 myResource.detail            myResource.sendTransaction
 ```
 
 **status**
+
 ```bash
 [WeCross]> myResource.status
 exists
@@ -373,12 +412,14 @@ ResourceDetail{
 ```
 
 **call**
+
 ```
 [WeCross]> myResource.call get
 Result: [hello, wecross]
 ```
 
 **sendTransaction**
+
 ```bash
 [WeCross]> myResource.sendTransaction set hello world
 Txhash  : 0x616a55a7817f843d81f8c7b65449963fc2b7a07398b853829bf85b2e1261516f
