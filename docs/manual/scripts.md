@@ -45,7 +45,7 @@ Usage:
     -l  <ip:rpc-port:p2p-port>      [Optional]   "ip:rpc-port:p2p-port" e.g:"127.0.0.1:8250:25500"
     -f  <ip list file>              [Optional]   split by line, every line should be "ip:rpc-port:p2p-port". eg "127.0.0.1:8250:25500"
     -c  <ca dir>                    [Optional]   dir of existing ca
-    -o  <output dir>                [Optional]   default .//home/jimmyshi/demo/demo/WeCross/routers/
+    -o  <output dir>                [Optional]   default <your pwd>
     -z  <generate tar packet>       [Optional]   default no
     -T  <enable test mode>          [Optional]   default no. Enable test resource.
     -d  <dependencies dir>          [Optional]   dependencies dir, default './deps'
