@@ -5,6 +5,7 @@ WeCross BCOS stub 是 WeCross Router的插件，让Router具备接入FISCO-BCOS�
 * 插件编译
 * 插件配置
 * 账户配置
+* 跨链合约
 
 ```eval_rst
 .. important::
@@ -79,8 +80,13 @@ stub插件的配置文件`stub.toml`格式以及字段含义
 # [[resources]] 资源列表
 [[resources]]
     name = 'htlc'           # 资源名称
-    type = 'BCOS_CONTRACT'  # 资源类型，BCOS_CONTRACT or BCOS_SM_CONTRACT
+    type = 'BCOS_CONTRACT'  # 资源类型，BCOS_CONTRACT
     contractAddress = '0x7540601cce8b0802980f9ebf7aeee22bb4d73c22'  # 合约地址
+```
+
+```eval_rst
+.. important::
+    - BCOS Stub当前只支持合约类型的资源
 ```
 
 ## 账户配置
@@ -112,8 +118,44 @@ conf/accounts/
 - `accountFile`: 私钥文件
 - `password`: p12文件密码，pem文件时忽略
 
+## 跨链合约
+BCOS Stub的跨链合约接口需要满足下面格式：
+```shell
+function funcName(string[] params) qualifier public returns(string[])
+或者
+function funcName() qualifier public returns(string[])
+```
+
+`HelloWeCross`合约示例:
+```solidity
+pragma solidity ^0.4.24;
+pragma experimental ABIEncoderV2;
+
+contract HelloWeCross {
+    string[] ss = ["Talk is cheap", "Show me the code"];
+
+    function set(string[] memory _ss) public returns (string[] memory) {
+        ss = _ss;
+        return ss;
+    }
+
+    function getAndClear() public constant returns(string[] memory) {
+        string[] memory _ss = ss;
+        ss.length = 0;
+        return _ss;
+    }
+
+    function get() public constant returns(string[] memory) {
+        return ss;
+    }
+}
+```
+
 ## 参考链接
 [WeCross-BCOS-stub](https://github.com/WeBankFinTech/WeCross-BCOS-stub)  
+
 [FISCO BCOS 环境搭建参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)
+
 [FISCO-BCOS JavaSDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html)
+
 [FISCO-BCOS Console文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html)
