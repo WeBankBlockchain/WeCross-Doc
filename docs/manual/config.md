@@ -49,6 +49,7 @@ WeCross Router 的配置位于`conf`目录下，分为：
     sslCert = 'classpath:ssl.crt'
     sslKey = 'classpath:ssl.key'
     peers = ['127.0.0.1:25501']
+    threadNum = 500
 
 
 #[[htlc]]
@@ -79,6 +80,7 @@ WeCross Router 的配置位于`conf`目录下，分为：
   - sslCert ：字符串；WeCross Router证书路径
   - sslKey ：字符串；WeCross Router私钥路径
   - peers：字符串数组；peer列表；需要互相连接的WeCross Router列表
+  - threadNum：p2p线程数，默认500
 - [htlc] htlc配置(可选)
   - selfPath：本地配置的htlc合约资源路径
   - account1：可调用本地配置的htlc合约的账户

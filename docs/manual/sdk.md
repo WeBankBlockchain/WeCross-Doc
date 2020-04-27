@@ -31,21 +31,25 @@ compile ('com.webank:wecross-java-sdk:1.0.0-rc2')
 
 ## 使用方法
 
-### 调用[WeCross SDK API](./api.html)
 示例代码如下：
 ```java
-
+try {
+    // 初始化 Service
     WeCrossRPCService weCrossRPCService = new WeCrossRPCService();
 
-    // 初始化WeCrossRPC
+    // 初始化Resource
     WeCrossRPC weCrossRPC = WeCrossRPCFactory.build(weCrossRPCService);
+    Resource resource = ResourceFactory.build(weCrossRPC, "payment.bcos.HelloWecross", "bcos_user1"); // RPC服务，资源的path，用哪个账户名操作此resource
 
-    // 调用RPC接口，send表示同步调用。
-    Response response = weCrossRPC.status("payment.bcos.hello").send();
+    // 用初始化好的resource进行调用
+    String[] callRet = resource.call("get");   // call 接口函数名 参数列表
+    System.out.println((Arrays.toString(callRet)));
 
-    // 初始化跨链资源
-    Resource resource = ResourceFactory.build(weCrossRPC, "payment.bcos.hello" "bcos_default");
+    // 用初始化好的resource进行调用
+    String[] sendTransactionRet = resource.sendTransaction("set", "Tom"); // sendTransaction 接口函数名 参数列表
+    System.out.println((Arrays.toString(sendTransactionRet)));
 
-    // 跨链资源调用
-    String[] result = resource.sendTransaction("set", "hello", "wecross");
+} catch (WeCrossSDKException e) {
+    System.out.println("Error: " + e);
+}
 ```
