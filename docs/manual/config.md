@@ -1,40 +1,31 @@
 ## 配置文件
-WeCross通过配置文件管理[Stub](../introduction/introduction.html#id2)以及每个Stub中的[跨链资源](../introduction/introduction.html#id2)，启动时首先加载配置文件，根据配置去初始化各个Stub以及相应的资源，如果配置出错，则启动失败。
-
-```eval_rst
-.. note::
-    - Toml是一种语义化配置文件格式，可以无二义性地转换为一个哈希表，支持多层级配置，无缩进和空格要求，配置容错率高。
-```
+本节描述WeCross Router的配置。
 
 ### 配置结构
 
-WeCross的配置分为跨链服务配置和链配置两级。
+WeCross Router 的配置位于`conf`目录下，分为：
 
-- 跨链服务配置：P2P、RPC等和WeCross服务相关的必要信息。
+- 主配置（`wecross.toml`）：配置Router连接等信息
 
-- 链配置：与区块链建连信息和链上资源信息。
+- 链配置（`chains/<chain_name>/stub.toml`）：配置连接至对应区块链、链上资源
 
-如果链配置缺省，WeCross仍能启动成功，只是不能提供任何跨链服务。
-
-WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`chain.toml`，配置的目录结构如下：
+配置的目录结构如下：
 
 ``` bash
-# 这是conf目录下标准的配置结构，表示配置了两条链，分别叫bcos和fabric
+# 这是conf目录下标准的配置结构，Router配置连接了两条链，分别叫bcos和fabric
 .
 ├── log4j2.xml   // 日志配置文件，无需更改
 ├── chains         
 │   ├── bcos
-│   │   └── chain.toml
+│   │   └── stub.toml
 │   └── fabric
-│       └── chain.toml
+│       └── stub.toml
 └── wecross.toml
 ```
 
-### 跨链服务配置
+### 主配置
 
-配置示例文件`wecross-sample.toml`位于`conf`目录，使用前需拷贝成指定文件名`wecross.toml`。
-
-配置示例如下：
+主配置为 `conf/wecross.toml`，配置示例如下：
 
 ```toml
 [common]
@@ -44,17 +35,21 @@ WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`chai
 [chains]
     path = 'classpath:chains'
 
-[server]
+[rpc] # rpc ip & port
     address = '127.0.0.1'
     port = 8250
+    caCert = 'classpath:ca.crt'
+    sslCert = 'classpath:ssl.crt'
+    sslKey = 'classpath:ssl.key'
 
 [p2p]
     listenIP = '0.0.0.0'
     listenPort = 25500
-    caCert = 'classpath:p2p/ca.crt'
-    sslCert = 'classpath:p2p/node.crt'
-    sslKey = 'classpath:p2p/node.key'
-    peers = ['127.0.0.1:25501','127.0.0.1:25502']
+    caCert = 'classpath:ca.crt'
+    sslCert = 'classpath:ssl.crt'
+    sslKey = 'classpath:ssl.key'
+    peers = ['127.0.0.1:25501']
+
 
 #[[htlc]]
 #    selfPath = 'payment.bcos.htlc'
@@ -64,7 +59,7 @@ WeCross跨链服务配置文件名为`wecross.toml`，链配置文件名为`chai
 
 ```
 
-跨链服务配置有五个配置项，分别是`[common]`、`[chains]`、`[server]`、`[p2p]`以及`[test]`，各个配置项含义如下：
+跨链服务配置有五个配置项，分别是`[common]`、`[chains]`、`[rpc]`、`[p2p]`以及`[test]`，各个配置项含义如下：
 
 - [common] 通用配置
   - network：字符串；跨链分区标识符；通常一种跨链业务/应用为一个跨链分区

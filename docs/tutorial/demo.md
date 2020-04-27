@@ -7,6 +7,14 @@
 ## 搭建Demo
 
 ```bash
+# 下载
+curl -LO https://github.com/WeBankFinTech/WeCross/releases/download/resources/demo.tar.gz
+
+# 解压
+tar -zxvf demo.tar.gz
+cd demo
+
+# 搭建
 bash build.sh # 耗时10-30分钟左右
 ```
 
@@ -143,24 +151,30 @@ sudo ./htlc_config.sh
 跨链转账涉及两条链、两个用户、四个账户，两条链上的资产转出者各自通过WeCross控制台创建一个[转账提案](../routine/htlc.html#id4)，之后router会自动完成跨链转账。
 
 **创建转账提案**
-- BCOS链的资产转出者操作步骤
+
+跨链转账需在跨链的两端都提交转账提案，提交后，router自动实现跨链转账
+
+- 资产转出者提交提案（BCOS提交转账提案）
+
+BCOS侧是router-8250，启动与其连接的控制台
 
 ```bash
-# 假设当前在demo根目录
-cd WeCross-Console
+cd ~/demo/WeCross-Console
 bash start.sh
 [WeCross]> newHTLCTransferProposal payment.bcos.htlc bcos_sender bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 # 输出
 Txhash: a0c48eb7d1ca3a01ddf3563aeb6a1829f23dd0d778e7de2ce22406d1e84ba00f
 BlockNum: 6
 Result: create a htlc transfer proposal successfully
+[WeCross]> quit # 退出当前控制台
 ```
 
-- Fabric链的资产转出者操作步骤
+- 资产转出者提交提案（Fabric侧提交转账提案）
+
+Fabric侧是router-8251，启动与其连接的控制台
 
 ```bash
-# 在demo目录新打开一个终端
-cd WeCross-Console-8251
+cd ~/demo/WeCross-Console-8251
 bash start.sh
 [WeCross]> newHTLCTransferProposal payment.fabric.htlc fabric_admin bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 # 输出
@@ -169,18 +183,29 @@ BlockNum: 7
 Result: create a htlc transfer proposal successfully
 ```
 
+**跨链资产转移**
+
+当两个资产转出者都创建完提案后，router开始执行调度，并完成跨链转账。一次跨链转账存在5-25s的交易时延，主要取决于两条链的TPS和机器的软硬件性能。
+
 **查询转账结果**
 
-当两个资产转出者都创建完提案后，router开始执行调度，并完成跨链转账。一次跨链转账存在5-25s的交易时延，主要取决于两条链的TPS和机器的软硬件性能。可在各自的WeCross控制台查询资产是否到账。
+在各自的WeCross控制台查询资产是否到账。
 
 - 查询BCOS链上资产接收者余额
+
 ```bash
+cd ~/demo/WeCross-Console
+bash start.sh
+
 [WeCross]> call payment.bcos.htlc bcos_sender balanceOf 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
 Result: [700]
 ```
 
 - 查询Hyperledger Fabric链上资产接收者余额
 ```bash
+cd ~/demo/WeCross-Console-8251
+bash start.sh
+
 [WeCross]>  call payment.fabric.htlc fabric_admin balanceOf User1@org1.example.com
 Result: [500]
 ```
