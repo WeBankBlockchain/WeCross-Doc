@@ -132,7 +132,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 以下所有跨链资源相关命令的执行结果以实际配置为准，此处只是示例。
 
-**help**
+##### help
 输入help或者h，查看控制台所有的命令。
 
 ```bash
@@ -157,6 +157,7 @@ WeCross.getResource                Init resource by path and account name, and a
 ---------------------------------------------------------------------------------------------
 ```
 **注：**                                       
+
 - help显示每条命令的含义是：命令 命令功能描述                   
 - 查看具体命令的使用介绍说明，输入命令 -h或\--help查看。例如：   
 
@@ -167,7 +168,7 @@ Get the resource information
 Usage: detail [path]
 ---------------------------------------------------------------------------------------------
 ```
-**supportedStubs**
+##### supportedStubs
 显示router当前支持的插件列表。
 
 ```bash
@@ -175,7 +176,7 @@ Usage: detail [path]
 [BCOS2.0, GM_BCOS2.0, Fabric1.4]
 ```
 
-**listAccounts**
+##### listAccounts
 显示所有已配置的账户列表。
 
 ```bash
@@ -204,7 +205,7 @@ Usage: detail [path]
 ]
 ```
 
-**listLocalResources**
+##### listLocalResources
 显示router配置的跨链资源。
 
 ```bash
@@ -213,7 +214,7 @@ path: payment.bcos.htlc, type: BCOS2.0, distance: 0
 path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 ```
 
-**listResources**
+##### listResources
 查看WeCross跨链代理本地配置的跨链资源和所有的远程资源。
 
 ```bash
@@ -224,7 +225,7 @@ path: payment.fabric.htlc, type: Fabric1.4, distance: 1
 path: payment.fabric.abac, type: Fabric1.4, distance: 1
 ```
 
-**status**
+##### status
 查看跨链资源的状态，即是否存在于连接的router中。
 
 参数：     
@@ -234,7 +235,8 @@ path: payment.fabric.abac, type: Fabric1.4, distance: 1
 [WeCross]> status payment.bcos.HelloWeCross
 exists
 ```
-**detail**
+##### detail
+
 查看跨链资源的详细信息。
 
 参数：   
@@ -269,7 +271,7 @@ ResourceDetail{
 }
 ```
 
-**call**
+##### call
 调用智能合约的方法，不涉及状态的更改，不发交易。
 
 参数：   
@@ -283,7 +285,7 @@ ResourceDetail{
 Result: [Talk is cheap, Show me the code]
 ```
 
-**sendTransaction**
+##### sendTransaction
 调用智能合约的方法，会更改链上状态，需要发交易。
 
 参数：   
@@ -299,7 +301,7 @@ BlockNum: 2219
 Result  : [hello, wecross]
 ```
 
-**genTimelock**
+##### genTimelock
 跨链转账辅助命令，根据时间差生成两个合法的时间戳。
 
 参数：   
@@ -311,7 +313,7 @@ timelock0: 1586917289
 timelock1: 1586916989
 ```
 
-**genSecretAndHash**
+##### genSecretAndHash
 跨链转账辅助命令，生成一个秘密和它的哈希。
 
 ```bash
@@ -320,7 +322,7 @@ secret: afd1c0f9c2f8acc2c1ed839ef506e8e0d0b4636644a889f5aa8e65360420d2a9
 hash  : 66ebd11ec6cc289aebe8c0e24555b1e58a5191410043519960d26027f749c54f
 ```
 
-**newHTLCTransferProposal**
+##### newHTLCTransferProposal
 新建一个基于哈希时间锁合约的跨链转账提案，该命令由两条链的资金转出方分别执行。
 
 参数：   
@@ -347,7 +349,7 @@ BlockNum: 2222
 Result: [create a htlc transfer proposal successfully]
 ```
 
-**checkTransferStatus**
+##### checkTransferStatus
 根据提案号（Hash）查询htlc转账状态。
 
 参数：   
@@ -364,7 +366,7 @@ status: succeeded!
 
 ### 交互式命令
 
-**WeCross.getResource**
+##### WeCross.getResource
 WeCross控制台提供了一个资源类，通过方法`getResource`来初始化一个跨链资源实例，并且赋值给一个变量。
 这样调用同一个跨链资源的不同UBI接口时，不再需要每次都输入跨链资源标识。
 
@@ -378,7 +380,7 @@ WeCross控制台提供了一个资源类，通过方法`getResource`来初始化
 [WeCross]> myResource = WeCross.getResource path bcos_user1
 ```
 
-**[resource].[command]**
+##### [resource].[command]
 当初始化一个跨链资源实例后，就可以通过`.command`的方式，调用跨链资源的UBI接口。
 
 ```bash
@@ -388,14 +390,15 @@ myResource.call              myResource.status
 myResource.detail            myResource.sendTransaction
 ```
 
-**status**
+##### status
 
 ```bash
 [WeCross]> myResource.status
 exists
 ```
 
-**detail**
+##### detail
+
 ```bash
 [WeCross]> myResource.detail
 ResourceDetail{
@@ -411,14 +414,14 @@ ResourceDetail{
 }
 ```
 
-**call**
+##### call
 
 ```
 [WeCross]> myResource.call get
 Result: [hello, wecross]
 ```
 
-**sendTransaction**
+##### sendTransaction
 
 ```bash
 [WeCross]> myResource.sendTransaction set hello world

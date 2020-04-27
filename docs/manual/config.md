@@ -62,18 +62,18 @@ WeCross Router 的配置位于`conf`目录下，分为：
 
 跨链服务配置有五个配置项，分别是`[common]`、`[chains]`、`[rpc]`、`[p2p]`以及`[test]`，各个配置项含义如下：
 
-- [common] 通用配置
+- `[common] `通用配置
   - zone：字符串；跨链分区标识符；通常一种跨链业务/应用为一个跨链分区
   - visible：布尔；可见性；标明当前跨链分区下的资源是否对其他跨链分区可见
-- [chains] 链配置
+- `[chains]` 链配置
   - path：字符串；链配置的根目录；WeCross从该目录下去加载各个链的配置
-- [rpc] RPC配置
+- `[rpc] `RPC配置
   - address：字符串；RPC服务监听地址，通常设置为本机IP地址
   - port：整型；WeCross Router的RPC端口；WeCross Java SDK调用Router的端口
   - caCert ：字符串；WeCross Router根证书路径
   - sslCert ：字符串；WeCross Router证书路径
   - sslKey ：字符串；WeCross Router私钥路径
-- [p2p] 组网配置
+- `[p2p]` 组网配置
   - listenIP：字符串；P2P服务监听地址；一般为'0.0.0.0'
   - listenPort ：整型；P2P服务监听端口；WeCross Router之间交换消息的端口
   - caCert ：字符串；WeCross Router根证书路径
@@ -81,7 +81,7 @@ WeCross Router 的配置位于`conf`目录下，分为：
   - sslKey ：字符串；WeCross Router私钥路径
   - peers：字符串数组；peer列表；需要互相连接的WeCross Router列表
   - threadNum：p2p线程数，默认500
-- [htlc] htlc配置(可选)
+- `[htlc] `htlc配置(可选)
   - selfPath：本地配置的htlc合约资源路径
   - account1：可调用本地配置的htlc合约的账户
   - counterpartyPath：本地配置的htlc合约的对手方合约路径
