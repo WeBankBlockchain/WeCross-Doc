@@ -130,10 +130,7 @@ WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之�
 
 ```bash
 # 请确保demo已搭建完毕，并在demo根目录执行，耗时5分钟左右
-# mac用户
 bash htlc_config.sh
-# ubuntu或者centOS用户启用docker需要管理员权限
-sudo ./htlc_config.sh
 ```
 
 跨链转账涉及两条链、两个用户、四个账户，两条链上的资产转出者各自通过WeCross控制台创建一个[转账提案](../routine/htlc.html#id4)，之后router会自动完成跨链转账。
