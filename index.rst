@@ -16,6 +16,7 @@ WeCross
    docs/tutorial/index.rst
    docs/manual/index.rst
    docs/stubs/index.rst
+   docs/dev/index.rst
    docs/routine/index.rst
    docs/scenarios/index.rst
    docs/faq/faq.md
