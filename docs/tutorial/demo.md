@@ -52,6 +52,7 @@ Start console? [Y/n]
 [WeCross]> listResources
 path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 path: payment.fabric.abac, type: Fabric1.4, distance: 1
+total: 2
 ```
 
 **查看账户**
@@ -60,24 +61,11 @@ path: payment.fabric.abac, type: Fabric1.4, distance: 1
 
 ```bash
 [WeCross]> listAccounts
-[
- {
-  name=fabric_user1,
-  type=Fabric1.4
- },
- {
-  name=bcos_user1,
-  type=BCOS2.0
- },
- {
-  name=bcos_default_account,
-  type=BCOS2.0
- },
- {
-  name=fabric_default_account,
-  type=Fabric1.4
- }
-]
+name: fabric_user1, type: Fabric1.4
+name: fabric_default_account, type: Fabric1.4
+name: bcos_user1, type: BCOS2.0
+name: bcos_default_account, type: BCOS2.0
+total: 4
 ```
 
 **操作资源：payment.bcos.HelloWeCross**
@@ -161,6 +149,10 @@ BCOS侧是router-8250，启动与其连接的控制台
 ```bash
 cd ~/demo/WeCross-Console
 bash start.sh
+# 先查看接收方余额
+[WeCross]> call payment.bcos.htlc bcos_sender balanceOf 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
+Result: [0]
+# 创建转账提案
 [WeCross]> newHTLCTransferProposal payment.bcos.htlc bcos_sender bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 # 输出
 Txhash: a0c48eb7d1ca3a01ddf3563aeb6a1829f23dd0d778e7de2ce22406d1e84ba00f
@@ -176,6 +168,10 @@ Fabric侧是router-8251，启动与其连接的控制台
 ```bash
 cd ~/demo/WeCross-Console-8251
 bash start.sh
+# 先查看接收方余额
+[WeCross]>  call payment.fabric.htlc fabric_admin balanceOf User1@org1.example.com
+Result: [0]
+# 创建转账提案
 [WeCross]> newHTLCTransferProposal payment.fabric.htlc fabric_admin bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 # 输出
 Txhash: 0x40ae8e2e284de813f8b071e0261e627ddc4d91e365e63f222638db9b1a70d05a

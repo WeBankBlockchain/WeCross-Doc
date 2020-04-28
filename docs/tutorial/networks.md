@@ -741,6 +741,7 @@ bash start.sh
 [WeCross]> listResources
 path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 path: payment.fabric.abac, type: Fabric1.4, distance: 1
+total: 2
 ```
 
 **查看账户**
@@ -749,16 +750,9 @@ path: payment.fabric.abac, type: Fabric1.4, distance: 1
 
 ```bash
 [WeCross]> listAccounts
-[
- {
-  name=fabric_user1,
-  type=Fabric1.4
- },
- {
-  name=bcos_user1,
-  type=BCOS2.0
- }
-]
+name: fabric_user1, type: Fabric1.4
+name: bcos_user1, type: BCOS2.0
+total: 2
 ```
 
 **操作资源：payment.bcos.HelloWeCross**

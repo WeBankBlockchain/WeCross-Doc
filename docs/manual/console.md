@@ -180,29 +180,12 @@ Usage: detail [path]
 显示所有已配置的账户列表。
 
 ```bash
-[WeCross]> listAccounts
-[
- {
-  name=fabric_user1,
-  type=Fabric1.4
- },
- {
-  name=bcos_sender,
-  type=BCOS2.0
- },
- {
-  name=bcos_user1,
-  type=BCOS2.0
- },
- {
-  name=bcos_default_account,
-  type=BCOS2.0
- },
- {
-  name=fabric_default_account,
-  type=Fabric1.4
- }
-]
+name: fabric_user1, type: Fabric1.4
+name: fabric_default_account, type: Fabric1.4
+name: bcos_user1, type: BCOS2.0
+name: bcos_sender, type: BCOS2.0
+name: bcos_default_account, type: BCOS2.0
+total: 5
 ```
 
 ##### listLocalResources
@@ -212,6 +195,7 @@ Usage: detail [path]
 [WeCross]> listLocalResources
 path: payment.bcos.htlc, type: BCOS2.0, distance: 0
 path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
+total: 2
 ```
 
 ##### listResources
@@ -223,6 +207,7 @@ path: payment.bcos.htlc, type: BCOS2.0, distance: 0
 path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
 path: payment.fabric.htlc, type: Fabric1.4, distance: 1
 path: payment.fabric.abac, type: Fabric1.4, distance: 1
+total: 4
 ```
 
 ##### status
