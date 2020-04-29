@@ -1,6 +1,6 @@
 # 接入 FISCO BCOS 2.0
 
-WeCross BCOS stub 是 WeCross Router的插件，让Router具备接入FISCO-BCOS的能力。关于该插件包含下列方面内容：
+WeCross BCOS2 Stub 是 WeCross Router的插件，让Router具备接入FISCO-BCOS 2.0的能力。关于该插件包含下列方面内容：
 
 * 插件编译
 * 插件配置
@@ -15,27 +15,27 @@ WeCross BCOS stub 是 WeCross Router的插件，让Router具备接入FISCO-BCOS�
 ## 插件编译
 
 ```shell
-git clone https://github.com/WeBankFinTech/WeCross-BCOS-stub.git
-cd WeCross-BCOS-stub
+git clone https://github.com/WeBankFinTech/WeCross-BCOS2-Stub.git
+cd WeCross-BCOS2-Stub
 bash gradlew build -x test
 ```
 
-WeCross-BCOS-stub编译生成两个插件 
+WeCross-BCOS2-Stub编译生成两个插件 
 - 国密插件
 - 非国密插件
   
 ```shell
 dist/apps
-├── bcos-stub-gm.jar    # 国密插件
-└── bcos-stub.jar       # 非国密插件
+├── bcos2-stub-gm-xxxx.jar    # 国密插件
+└── bcos2-stub-xxxx.jar       # 非国密插件
 ```
 
 ## 插件安装
 WeCross Router的stub插件需要放入`plugin`目录，在生成router时，已经默认安装FISCO-BCOS stub：
 ```shell
 plugin/
-|-- bcos-stub-gm.jar    # 国密插件
-|-- bcos-stub.jar       # 非国密插件
+|-- bcos2-stub-gm-xxxx.jar    # 国密插件
+|-- bcos2-stub-xxxx.jar       # 非国密插件
 `-- fabric-stub.jar
 ```
 
@@ -86,11 +86,11 @@ stub插件的配置文件`stub.toml`格式以及字段含义
 
 ```eval_rst
 .. important::
-    - BCOS Stub当前只支持合约类型的资源
+    - BCOS2 Stub当前只支持合约类型的资源
 ```
 
 ## 账户配置
-WeCross中账户用于交易签名，BCOS stub支持`pem`和`p12`两种格式文件。
+WeCross中账户用于交易签名，BCOS2 Stub支持`pem`和`p12`两种格式文件。
 
 ### 配置路径
 WeCross Router账户配置位于`conf/accounts/`目录。每个账户使用单独目录配置，使用账户名称作为子目录名称，每个目录包含`account.toml`配置文件以及配置文件中配置的私钥文件，私钥文件可以为`pem`或者`p12`格式。  
@@ -119,7 +119,7 @@ conf/accounts/
 - `password`: p12文件密码，pem文件时忽略
 
 ## 跨链合约
-BCOS Stub的跨链合约接口需要满足下面格式：
+BCOS2 Stub的跨链合约接口需要满足下面格式：
 ```shell
 function funcName(string[] params) qualifier public returns(string[])
 或者
@@ -152,7 +152,7 @@ contract HelloWeCross {
 ```
 
 ## 参考链接
-[WeCross-BCOS-stub](https://github.com/WeBankFinTech/WeCross-BCOS-stub)  
+[WeCross-BCOS2-Stub](https://github.com/WeBankFinTech/WeCross-BCOS2-Stub)  
 
 [FISCO BCOS 环境搭建参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)
 
