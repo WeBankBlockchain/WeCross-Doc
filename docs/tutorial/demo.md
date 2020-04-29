@@ -6,15 +6,17 @@
 
 ## 搭建Demo
 
+下载demo。若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
+
+``` bash
+cd ~
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) -t resources # 下载，生成demo文件夹
+```
+
+搭建
+
 ```bash
-# 下载
-curl -LO https://github.com/WeBankFinTech/WeCross/releases/download/resources/demo.tar.gz
-
-# 解压
-tar -zxvf demo.tar.gz
 cd demo
-
-# 搭建
 bash build.sh # 耗时10-30分钟左右
 ```
 

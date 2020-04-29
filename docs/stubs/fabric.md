@@ -15,7 +15,7 @@ WeCross Fabric Stub 是 WeCross Router的插件，让Router具备接入Fabric 1.
 ``` bash
 tree plugin
 plugin/
-└── fabric-stub-XXXXX.jar
+└── fabric1-stub-XXXXX.jar
 ```
 
 ### 手动安装
@@ -23,13 +23,15 @@ plugin/
 下载插件
 
 ``` bash
-curl -LO XXXX fabric-stub-XXXXX.jar
+git clone https://github.com/WeBankFinTech/WeCross-Fabric1-Stub.git
+cd WeCross-Fabric1-Stub
+bash gradlew assemble # 在 dist/apps/下生成fabric1-stub-XXXXX.jar
 ```
 
 安装插件
 
 ``` bash
-mv fabric-stub-XXXXX.jar router/plugin/
+cp dist/apps/fabric1-stub-XXXXX.jar ~/wecross/routers-payment/127.0.0.1-8250-25500/plugin/
 ```
 
 **注：若router中配置了两个相同的插件，插件冲突，会导致启动失败。**
@@ -200,7 +202,7 @@ vim stub.toml
 
 ``` toml
 [common]
-    stub = 'fabric'				# 此 stub 名字，对应ipath中的{zone}/{stub}/{resource}的stub
+    name = 'fabric'				# 指定的连接的链的名字，对应path中的{zone}/{chain}/{resource}的chain
     type = 'Fabric1.4'			# 采用插件的名字
 ```
 
@@ -231,7 +233,7 @@ vim stub.toml
 # resources is a list
 [[resources]]
     # name cannot be repeated
-    name = 'HelloWeCross'		# 资源名，对应ipath中的{zone}/{stub}/{resource}中的resource
+    name = 'HelloWeCross'		# 资源名，对应path中的{zone}/{chain}/{resource}中的resource
     type = 'FABRIC_CONTRACT'	# 合约类型，默认即可
     chainCodeName = 'mycc'		# chaincode名字
     chainLanguage = "go"		# chaincode编程语言
