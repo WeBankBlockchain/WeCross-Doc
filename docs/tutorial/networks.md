@@ -315,14 +315,13 @@ contract address: 0x19a70c01e801d3cac241de5f11686e3aa01e463b
 
 #### 搭建Fabric链
 
-为方便Fabric链的搭建，WeCross提供了Fabric链的demo搭建脚本。
+为方便Fabric链的搭建，WeCross提供了Fabric链的demo搭建脚本。若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
 
 ``` bash
 mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
 
 # 下载Fabric链demo搭建脚本
-curl -LO https://github.com/WeBankFinTech/WeCross/releases/download/resources/demo.tar.gz
-tar -zxvf demo.tar.gz
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) -t resources # 下载，生成demo文件夹
 cp demo/fabric/* ./
 
 # 搭建

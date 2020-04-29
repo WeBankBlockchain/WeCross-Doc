@@ -70,3 +70,29 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 
 下载后，目录下包含`WeCross-Console/`文件夹。
 
+<hr>
+
+### 下载WeCross Demo
+
+同样提供两种方式，根据网络环境选择合适的方式进行下载。
+
+**方式1：命令下载**
+
+```shell
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
+```
+
+**方式2：手动下载**
+
+- 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc2/demo.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc2/demo.tar.gz.md5)
+
+- [github release](https://github.com/WeBankFinTech/WeCross/releases)（下载最新release下的`demo.tar.gz`）
+
+  手动下载解压
+
+  ```shell
+  tar -zxvf demo.tar.gz
+  ```
+
+下载后，目录下包含`demo/`文件夹。
+
