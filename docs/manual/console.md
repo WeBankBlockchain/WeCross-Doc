@@ -22,17 +22,17 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 #### 普通命令
 
 * 状态查询
-  * [listResources](#listResources)：查看资源列表
+  * [listResources](#listresources)：查看资源列表
   * [detail](#detail)：查看资源详情
-  * [listAccounts](#listAccounts)：查看账户列表
-  * [supportedStubs](#supportedStubs)：查看连接的router支持接入的链类型
+  * [listAccounts](#listaccounts)：查看账户列表
+  * [supportedStubs](#supportedstubs)：查看连接的router支持接入的链类型
 
 * 资源调用
   * [call](#call)：调用链上资源，用于查询，不触发出块
   * [sendTransaction](#sendtransaction)：发交易，用于改变链上资源，触发出块
 
 * 跨链转账
-  * [newHTLCTransferProposal](#newHTLCTransferProposal)：创建转账提案
+  * [newHTLCTransferProposal](#newhtlctransferproposal)：创建转账提案
 
 #### 交互式命令
 
@@ -52,14 +52,14 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
-- **状态码:** 控制台的命令调用JSON-RPC接口时，状态码[参考这里](./api.html#rpc)。
+- **状态码:** 控制台的命令调用JSON-RPC接口时，状态码[参考这里](./api.html#id61)。
 
 
 ### 控制台配置与运行
 
 ```eval_rst
 .. important::
-    前置条件：部署WeCross请参考 `快速部署 <../tutorial/setup.html>`_。
+    前置条件：部署WeCross请参考 `快速部署 <../tutorial/networks.html#wecross-router>`_。
 ```
 
 #### 获取控制台

@@ -9,7 +9,7 @@ WeCross router向外部暴露了所有的UBI接口，开发者可以通过SDK实
     - java版本
      要求 `JDK8或以上 <https://openjdk.java.net/>`_
     - WeCross服务部署
-     参考 `WeCross快速入门 <../tutorial/setup.html>`_
+     参考 `部署指南 <../tutorial/networks.html#id2>`_
 ```
 
 ## Java应用引入SDK
