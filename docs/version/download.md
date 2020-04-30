@@ -79,7 +79,7 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 **方式1：命令下载**
 
 ```shell
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh)
 ```
 
 **方式2：手动下载**

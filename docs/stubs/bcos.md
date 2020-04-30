@@ -52,7 +52,7 @@ stub插件的配置文件为`stub.toml`，作用：
 
 ### 配置路径
 ```
-conf/stubs/bcos/
+conf/chains/bcos/
 |-- ca.crt
 |-- sdk.crt
 |-- sdk.key

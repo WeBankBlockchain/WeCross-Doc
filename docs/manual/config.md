@@ -6,8 +6,8 @@
 WeCross Router 的配置位于`conf`目录下，分为：
 
 - 主配置（`wecross.toml`）：配置Router连接等信息
-
 - 链配置（`chains/<chain_name>/stub.toml`）：配置连接至对应区块链、链上资源
+- 账户配置（`accounts/<account_name>/account.toml`）：配置可用于发交易账户的公私钥等信息
 
 配置的目录结构如下：
 
@@ -15,12 +15,17 @@ WeCross Router 的配置位于`conf`目录下，分为：
 # 这是conf目录下标准的配置结构，Router配置连接了两条链，分别叫bcos和fabric
 .
 ├── log4j2.xml   // 日志配置文件，无需更改
+├── accounts
+│   ├── bcos_user1
+│   │   └── account.toml  // 账户配置
+│   └── fabric_user1
+│       └── account.toml  // 账户配置
 ├── chains         
 │   ├── bcos
-│   │   └── stub.toml
+│   │   └── stub.toml	  // 链配置
 │   └── fabric
-│       └── stub.toml
-└── wecross.toml
+│       └── stub.toml     // 链配置
+└── wecross.toml		  // 主配置
 ```
 
 ### 主配置
@@ -105,6 +110,26 @@ WeCross Router 的配置位于`conf`目录下，分为：
 WeCross启动后会在`wecross.toml`中所指定的`chains`的根目录下去遍历所有的一级目录，目录名即为chain的名字，不同的目录代表不同的链，然后尝试读取每个目录下的`stub.toml`文件。
 
 目前WeCross支持的Stub类型包括：[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)和[Fabric](https://github.com/hyperledger/fabric)。
+
+#### FISCO BCOS
+
+请参考：[《接入FISCO BCOS 2.0》](../stubs/bcos.md)
+
+#### Fabric
+
+请参考：[《接入Fabric 1.4》](../stubs/bcos.md)
+
+### 账户配置
+
+在Router中配置账户，与链进行交互。配置操作包括：
+
+* 指定账户名（`accounts/<account_name>/account.toml`下，通过目录名`<account_name>`指定账户名）
+* 指定账户类型（用于BCOS、Fabric等，在`account.toml`中配置）
+* 指定账户其它信息（密钥等，在`account.toml`中配置）
+
+WeCross启动后会在`accounts`的根目录下去遍历所有的一级目录，目录名即为账户的名字，不同的目录代表不同的链，然后尝试读取每个目录下的`account.toml`文件。
+
+配置不同类型的账户，与不同类型的链进行操作。目前WeCross支持的类型包括：[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)和[Fabric](https://github.com/hyperledger/fabric)。
 
 #### FISCO BCOS
 
