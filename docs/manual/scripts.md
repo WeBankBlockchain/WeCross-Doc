@@ -98,9 +98,9 @@ Usage:
 
 ## 添加新接入链脚本
 
-**add_connection.sh**
+**add_chains.sh**
 
-脚本`add_connection.sh`用于在router中创建特定区块链的连接配置
+脚本`add_chains.sh`用于在router中创建特定区块链的连接配置
 
 ```
 Usage: 
@@ -112,7 +112,7 @@ Usage:
 
 - **`-t`**：连接类型，按照插件选择，如BCOS2.0或Fabric1.4
 - **`-n`**：连接名，账户名称
-- **`-d`**：连接配置目录，默认生成在conf/stubs/下
+- **`-d`**：连接配置目录，默认生成在conf/chains/下
 
 不同的链有不同的操作方法，具体操作请查看（操作后，请重启router，让router重启加载配置）：
 

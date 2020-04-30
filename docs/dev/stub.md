@@ -229,11 +229,11 @@ Connection由StubFactory对象`newConnection`接口创建，解析配置生成Co
   * SDK配置：初始化JavaSDK，与区块链交互  
   * 资源列表：区块链可以访问的资源列表
   
-插件配置默认位于`stubs/`目录，可以配置多个stub，每个stub位于单独的子目录。
+插件配置默认位于`chains/`目录，可以配置多个stub，每个stub位于单独的子目录。
 
 ```shell
-# 目录结构, conf/stubs/stub名称/
-conf/stubs/
+# 目录结构, conf/chains/stub名称/
+conf/chains/
         └── bcos # stub名称: bcos
             └── stub.toml # stub.toml配置文件
             # 其他文件列表，比如：证书文件
