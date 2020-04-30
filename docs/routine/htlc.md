@@ -6,16 +6,16 @@
 
 ## 准备工作
 
-要完成资产互换，需要在各自链上部署资产合约以及哈希时间锁合约，然后通过WeCross[控制台]()创建跨链转账提案，router会根据提案信息自动完成跨链转账。
+要完成资产互换，需要在各自链上部署资产合约以及哈希时间锁合约，然后通过WeCross[控制台](../manual/console.html#newhtlctransferproposal)创建跨链转账提案，router会根据提案信息自动完成跨链转账。
 
-* 部署WeCross和控制台
-- 以[组网方式]()搭建两个router
-- 搭建两个WeCross[控制台]()，分别连接两个router
+**部署WeCross和控制台**
+- 以[组网方式](../tutorial/networks.html)搭建两个router
+- 搭建两个WeCross[控制台](../tutorial/networks.html#id5)，分别连接两个router
 
 
 ### FISCO BCOS前期准备
 
-* 部署合约
+**部署合约**
 - 将`conf/chains-sample/bcos/htlc`目录下的BAC001.sol、HTLC.sol以及BACHTLC.sol文件拷贝至BCOS控制台的`contracts/solidity`
 
 - 部署BACHTLC.sol
@@ -24,7 +24,7 @@
 contract address: 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1
 ```
 
-* 发行资产
+**发行资产**
 
 可借助bac工具完成资产的发现和转账授权。
 
@@ -40,41 +40,51 @@ assetAddress: 0x1796f3f195697c38bedaaaa27e424d05f359ca0f
 owner: 0x55f934bcbe1e9aef8337f5551142a442fdde781c
 ```
 
-* 资产授权
+**资产授权**
 要完成跨链转账，资产拥有者需要将资产的转移权授权给哈希时间锁合约
 
 ```shell
-# 参数：资产地址，被授权者地址，授权金额
+# approve [BAC资产地址]，[被授权者地址]（此处为自己的哈希时间锁合约地址），[授权金额]
 java -cp 'apps/*:lib/*:conf' Application approve 0x1796f3f195697c38bedaaaa27e424d05f359ca0f 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 1000000
 # 成功输出如下
 approve successfully
 amount: 1000000
 ```
 
-* 哈希时间锁合约初始化
+**哈希时间锁合约初始化**
 需要将资产合约的地址和对手方的哈希时间锁合约地址保存到自己的哈希时间锁合约。
 ```shell
 # 在FISCO BCOS控制台执行，此处约定Fabric的合约名为fabric_htlc，之后将以该名称安装和初始化链码
 call BACHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 init ["0x1796f3f195697c38bedaaaa27e424d05f359ca0f","fabric_htlc"]
+
+# 查看owner余额，检查是否初始化成功
+call BACHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 balanceOf ["0x55f934bcbe1e9aef8337f5551142a442fdde781c"]
+[100000000]
+```
+
+```eval_rst
+.. important::
+    - 初始化只能进行一次，所以在执行命令前务必确保相关参数都是正确的。
+    - 如果初始化时传参有误，只能重新部署哈希时间锁合约，并重新做资产授权。
 ```
 
 ### Hyperledger Fabric前期准备
 
-* 拷贝链码
+**拷贝链码**
 ```bash
 # 获取docker容器id
-sudo docker ps -a|grep cli
+docker ps -a|grep cli
 0523418f889d  hyperledger/fabric-tools:latest
 # 假设当前位于router根目录, 将链码拷贝到Fabric的chaincode目录下
- sudo docker cp conf/chains-sample/fabric/ledger 0523418f889d:/opt/gopath/src/github.com/chaincode/ledger
- sudo docker cp conf/chains-sample/fabric/htlc 0523418f889d:/opt/gopath/src/github.com/chaincode/htlc
+docker cp conf/chains-sample/fabric/ledger 0523418f889d:/opt/gopath/src/github.com/chaincode/ledger
+docker cp conf/chains-sample/fabric/htlc 0523418f889d:/opt/gopath/src/github.com/chaincode/htlc
 ```
 
-* 部署资产合约
+**部署资产合约**
 ```shell
 # 启动容器
-sudo docker exec -it cli bash
-# 安装链码，命名为ledgerSample
+docker exec -it cli bash
+# 安装链码，-n指定名字，此处命名为ledgerSample
 peer chaincode install -n ledgerSample -v 1.0 -p github.com/chaincode/ledger/
 # 初始化
 peer chaincode instantiate -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n ledgerSample -l golang -v 1.0 -c '{"Args":["init","HTLCoin","htc","100000000"]}' -P 'OR ('\''Org1MSP.peer'\'','\''Org2MSP.peer'\'')'
@@ -83,26 +93,28 @@ peer chaincode query -C mychannel -n ledgerSample -c '{"Args":["balanceOf","Admi
 # 输出应该为100000000
 ```
 
-* 资产授权
+**资产授权**
 ledgerSample合约通过创建一个托管账户实现资产的授权。
 
 ```shell
-# 该命令默认使用admin账户发交易
+# 该命令默认使用admin账户发交易，即admin账户完成了一次授权
 peer chaincode invoke -C mychannel -n ledgerSample -c '{"Args":["createEscrowAccount","1000000"]}' -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem 
 ```
 
-* 部署哈希时间锁合约
+**部署哈希时间锁合约**
 ```shell
 # 安装链码
 peer chaincode install -n fabric_htlc -v 1.0 -p github.com/chaincode/htlc/
-# 初始化，需要制定对方资产合约名和对手方的哈希时间锁合约地址
+# 初始化，需要指定己方资产合约名和对手方的哈希时间锁合约地址
+# init [己方资产合约名] [channel] [对手方哈希时间锁合约地址]
 peer chaincode instantiate -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n fabric_htlc -l golang -v 1.0 -c '{"Args":["init","ledgerSample","mychannel","0xc25825d8c0c9819e1302b1cd0019d3228686b2b1"]}'
-# 查看当前任务
-peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["getTask"]}'
-# 输出应该为null
+
+# 查看admin余额，检查是否初始化成功
+peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["balanceOf","Admin@org1.example.com"]}'
+# 输出应该为99000000，因为有一部资产已经转到了托管账户。
 ```
 
-## 哈希时间锁配置
+## 哈希时间锁合约配置
 
 **配置FISCO BCOS端router**
 
@@ -124,6 +136,11 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["getTask"]}'
     account1 = 'bcos_default_account'   #确保已在router的accounts目录配置了bcos_default_account账户
     counterpartyPath = 'payment.fabric.htlc' #对手方的哈希时间锁资源路径
     account2 = 'fabric_default_account' #确保已在router的accounts目录配置了fabric_default_account账户
+```
+
+```eval_rst
+.. important::
+    - 务必要在根配置文件中配置己方和对手方的哈希时间锁合约的资源路径，以及能访问这两个资源的账户。
 ```
 
 **配置Hyperledger Fabric端router**
@@ -185,13 +202,20 @@ $$
 - 时间戳t0：发起方的超时时间，单位s
 - 时间戳t1： 参与方的超时时间，单位s
 
-**注**：时间戳需要满足条件`t0 > t1 + 300 > now + 300`
+```eval_rst
+.. note::
+    - 哈希原像和哈希可通过控制台命令 `genSecretAndHash <../manual/console.html#gensecretandhash>`_ 生成。
+    - 两个时间戳可通过控制台命令 `genTimelock <../manual/console.html#gentimelock>`_ 生成。
+    - 时间戳需要满足条件：t0 > t1 + 300 > now + 300
+```
 
 **创建跨链转账提案**
 
 两条链的**资产转出者**通过WeCross控制台创建跨链转账提案，将协商的转账信息写入各自的区块链，命令为`newHTLCTransferProposal`，参数包括：`path`, `account`（资产转出者账户名）, `hash`，`secret`， `role`，`sender0`，`receiver0`，`amount0`，`timelock0`，`sender1`，`receiver1`，`amount1`，`timelock1`。
 
-**注**：其中下标为0的参数是发起方信息。
+**注**：
+    - 其中下标为0的参数是发起方信息。
+    - 发起方`secret`传入哈希原像，`role`传入true；参与方`secret`传入null，`role`传入false。
 
 - 启动控制台
 
@@ -211,7 +235,6 @@ newHTLCTransferProposal payment.bcos.htlc bcos edafd70a27887b361174ba5b831777c76
 ```shell
 newHTLCTransferProposal payment.fabric.htlc fabric edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 ```
-**注**：发起方`secret`传入哈希原像，`role`传入true；参与方`secret`传入null，`role`传入false。
 
 **结果确认**
 
