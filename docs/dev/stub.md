@@ -36,10 +36,10 @@ Gradle配置参考: [WeCross-BCOS-Stub build.gradle](https://github.com/WeBankFi
 
 ### 核心组件
 `Stub`插件需要实现的组件接口：
-- StubFactory
-- Account
-- Connection
-- Driver
+- StubFactory: 创建其他组件
+- Account: 账户，用于交易签名
+- Connection: 与区块链交互
+- Driver: 区块链数据的编解码
   
 #### StubFactory  
 StubFactory功能
@@ -404,9 +404,8 @@ public interface Driver {
             private String receiptRoot;
         }
         ```
-- call
-- sendTransaction
-  `sendTransaction`与`call`接口类似，后者用于查询状态，前者发送交易，修改区块链状态
+- call、sendTransaction
+  `call`与`sendTransaction`接口类似，前者用于查询状态，后者发送交易，修改区块链状态
   * 参数列表
     * TransactionContext<TransactionRequest> request: 请求上下文，获取构造交易需要的数据，构造交易
     * Connection connection: Connection对象，发送请求
@@ -458,7 +457,7 @@ public interface Driver {
         }
         ```
 - getVerifiedTransaction
-  验证交易是否合法，并且返回交易的请求与返回参数，验证交易与sendTransaction的方式保持一致。
+  根据哈希和块高查询交易并校验交易，返回交易的请求与返回对象，校验交易方式与sendTransaction接口校验交易方式保持一致。
   * 参数列表
     * String transactionHash: 交易hash
     * long blockNumber: 交易所在区块高度
@@ -474,16 +473,16 @@ public interface Driver {
             private String transactionHash;
             /** 交易调用的合约地址 */
             private String realAddress;
-            /** 交易请求对象 */
+            /** 交易请求参数 */
             private TransactionRequest transactionRequest;
-            /** 交易返回对象 */
+            /** 交易返回 */
             private TransactionResponse transactionResponse;
         }
         ```
 
 BCOS示例  
 
-这里给个完整的BCOSStub发送交易的处理流程，说明Driver与Connection的协作，以及在BCOS中如何进行交易验证。
+这里给个完整的BCOS Stub发送交易的处理流程，说明Driver与Connection的协作，以及在BCOS中如何进行交易验证。
 
 - BCOSDriver
 ```Java
