@@ -8,8 +8,6 @@ WeCross Fabric Stub 是 WeCross Router的插件，让Router具备接入Fabric 1.
 
 ## 插件安装
 
-### 自动安装
-
 在生成router时，默认安装Fabric 1.4插件，安装目录为router下的`plugin`目录：
 
 ``` bash
@@ -19,9 +17,11 @@ plugin/
 └── fabric1-stub-XXXXX.jar
 ```
 
+用户如有特殊需求，可以自行编译，替换`plugin`目录下的插件。
+
 ### 手动安装
 
-下载插件
+**下载编译**
 
 ``` bash
 git clone https://github.com/WeBankFinTech/WeCross-Fabric1-Stub.git
@@ -29,13 +29,13 @@ cd WeCross-Fabric1-Stub
 bash gradlew assemble # 在 dist/apps/下生成fabric1-stub-XXXXX.jar
 ```
 
-安装插件
+**安装插件**
 
 ``` bash
 cp dist/apps/fabric1-stub-XXXXX.jar ~/wecross/routers-payment/127.0.0.1-8250-25500/plugin/
 ```
 
-**注：若router中配置了两个相同的插件，插件冲突，会导致启动失败。**
+**注：若router中配置了两个相同的插件，插件冲突，会导致router启动失败。**
 
 
 
@@ -125,7 +125,7 @@ vim conf/accounts/<account_name>/account.toml
 
 
 
-## 接入配置
+## 插件配置
 
 在router中配置需接入的链，访问链上资源。
 
