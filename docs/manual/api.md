@@ -256,7 +256,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 返回值   
 - `bool` - 资源状态
-     
+  
 #### java示例
 ```java
     bool status = resource.isActive();
@@ -270,7 +270,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 返回值   
 - `ResourceDetail` - 资源详情
-     
+  
 #### java示例
 ```java
     ResourceDetail detail = resource.detail();
@@ -302,7 +302,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 返回值   
 - `String[]` - 调用结果
-     
+  
 #### java示例
 ```java
     String[] result = resource.call("get");
@@ -317,7 +317,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 返回值   
 - `String[]` - 调用结果
-     
+  
 #### java示例
 ```java
     String[] result = resource.call("get", "key");
@@ -349,7 +349,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 返回值   
 - `String[]` - 调用结果
-     
+  
 #### java示例
 ```java
     String[] result = resource.sendTransaction("set");
@@ -364,7 +364,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 返回值   
 - `String[]` - 调用结果
-     
+  
 #### java示例
 ```java
     String[] result = resource.sendTransaction("set", "value");
@@ -382,9 +382,10 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 | code     | 含义            |
 | :------- | :------------- |
 | 0        | 执行成功        |
-| 100     | 内部错误        |
-| 201     | 版本错误        |
-| 202     | 资源标识错误     |
-| 203     | 资源不存在      |
-| 205     | 请求解码错误     |
-| 301     | htlc错误      |
+| 10100   | 内部错误        |
+| 10201   | 版本错误        |
+| 10202   | 资源标识错误     |
+| 10203   | 资源不存在      |
+| 10205   | 请求解码错误     |
+| 10301   | htlc错误      |
+| 20000 | 内部错误，结合message查看错误原因 |
