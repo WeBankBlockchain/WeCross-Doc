@@ -48,7 +48,6 @@ Usage:
     -o  <output dir>                [Optional]   default <your pwd>
     -z  <generate tar packet>       [Optional]   default no
     -T  <enable test mode>          [Optional]   default no. Enable test resource.
-    -d  <dependencies dir>          [Optional]   dependencies dir, default './deps'
     -h  call for help
 e.g
     bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500
@@ -66,6 +65,7 @@ e.g
     192.168.0.3:8253:25503
     192.168.0.4:8254:25504 
 ```
+* **`-c`**：可选，指定跨链路由基于某个路径下的ca证书生成
 * **`-o`**：可选，指定跨链路由生成目录，默认`wecross/`
 * **`-z`**：可选，若设置，则生成跨链路由的压缩包，方便拷贝至其它机器
 * **`-T`**：可选，若设置，生成的跨链路由开启测试资源
