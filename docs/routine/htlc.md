@@ -169,9 +169,9 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["balanceOf","Admin
 
 两个router需要在accounts目录下配置发送者的账户，因为跨链提案只能由资产的转出者创建。
 
-FISCO BCOS用户需要将bactool/dist/conf目录下的私钥文件配置到router端的accounts目录，并假设命名为bcos，配置方法详见[BCOS账户配置](https://wecross.readthedocs.io/zh_CN/release-rc2/docs/stubs/bcos.html#id5)。
+FISCO BCOS用户需要将bactool/dist/conf目录下的私钥文件配置到router端的accounts目录，并假设命名为bcos，配置方法详见[BCOS账户配置](../stubs/bcos.html#id5)。
 
-Hyperledger Fabric用户需要将admin账户配置到router端的accounts目录，并假设命名为fabric，配置方法详见[Fabric账户配置](https://wecross.readthedocs.io/zh_CN/release-rc2/docs/stubs/fabric.html#id5)。
+Hyperledger Fabric用户需要将admin账户配置到router端的accounts目录，并假设命名为fabric，配置方法详见[Fabric账户配置](../stubs/fabric.html#id5)。
 
 **重启两个router**
 

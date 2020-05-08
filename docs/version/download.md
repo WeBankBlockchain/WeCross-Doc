@@ -16,8 +16,8 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 # 默认下载master分支
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh) -s
 
-# 下载特定分支
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh) -s -b release-rc2
+# 下载特定版本下的
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh) -s -t v1.0.0-rc2
 ```
 
 **方式3：手动下载**
@@ -52,8 +52,8 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 # 默认下载master分支
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh) -s
 
-# 下载特定分支
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh) -s -b release-rc2
+# 下载特定版本下的控制台
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh) -s -t v1.0.0-rc2
 ```
 
 **方式3：手动下载**
@@ -79,12 +79,16 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 **方式1：命令下载**
 
 ```shell
+# 下载最新demo
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh)
+
+# 下载特定版本下的demo
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) -t v1.0.0-rc2
 ```
 
 **方式2：手动下载**
 
-- 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc2/demo.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc2/demo.tar.gz.md5)
+- 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross/releases/download/v1.0.0-rc2/demo.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross/releases/download/v1.0.0-rc2/demo.tar.gz.md5)
 
 - [github release](https://github.com/WeBankFinTech/WeCross/releases)（下载最新release下的`demo.tar.gz`）
 

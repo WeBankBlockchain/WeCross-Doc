@@ -6,4 +6,6 @@
 .. toctree::
    :maxdepth: 1
    
+   sdk.md
+   api.md
    stub.md
