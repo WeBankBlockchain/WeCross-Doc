@@ -89,7 +89,7 @@ cp dist/apps/* ~/wecross/routers-payment/127.0.0.1-8250-25500/plugin/
 
 **注：若router中配置了两个相同的插件，插件冲突，会导致router启动失败。**
 
-[WeCross快速部署](https://wecross.readthedocs.io/zh_CN/release-rc2/docs/tutorial/setup.html)
+[WeCross快速部署](../tutorial/networks.md)
 
 ## 账户配置
 

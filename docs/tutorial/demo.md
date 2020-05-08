@@ -10,7 +10,7 @@
 
 ``` bash
 cd ~
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) -t resources # 下载，生成demo文件夹
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) # 下载，生成demo文件夹
 ```
 
 搭建
@@ -28,8 +28,8 @@ bash build.sh # 耗时10-30分钟左右
       FISCO BCOS                    Fabric
      (4node pbft)              (first-network)
    (HelloWeCross.sol)             (abac.go)
-          |                           |
-          |                           |
+           |                          |
+           |                          |
     WeCross Router <----------> WeCross Router
 (127.0.0.1-8250-25500)      (127.0.0.1-8251-25501)
            | 
@@ -46,7 +46,7 @@ Start console? [Y/n]
 进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有两个资源
 
 * payment.bcos.HelloWeCross
-  * 对应于**FISCO BCOS**链上的[HelloWeCross.sol](https://github.com/WeBankFinTech/WeCross/tree/release-rc2/src/main/resources/chains-sample/bcos/HelloWeCross.sol)合约
+  * 对应于**FISCO BCOS**链上的[HelloWeCross.sol](../stubs/bcos.html#id1)合约
 * payment.fabric.abac
   * 对应于**Fabric**网络上的[abac.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/abac/go/abac.go)合约
 

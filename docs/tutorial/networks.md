@@ -28,7 +28,7 @@ mkdir -p ~/wecross/ && cd ~/wecross/
 WeCross中包含了生成跨链路由的工具，执行以下命令进行下载（提供[三种下载方式](../version/download.html#wecross)，可根据网络环境选择合适的方式进行下载），程序下载至当前目录`WeCross/`中。
 
 ```bash
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross_rc2.sh) -s -b release-rc2
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh)
 ```
 
 #### 生成跨链路由
@@ -143,7 +143,7 @@ WeCross提供了控制台，方便用户进行跨链开发和调试。可通过�
 
 ```bash
 cd ~/wecross/
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console-rc2.sh) -s -b release-rc2
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
 ```
 
 **配置控制台**
@@ -732,7 +732,7 @@ bash start.sh
 进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有两个资源
 
 * payment.bcos.HelloWeCross
-  * 对应于**FISCO BCOS**链上的[HelloWeCross.sol](https://github.com/WeBankFinTech/WeCross/tree/release-rc2/src/main/resources/chains-sample/bcos/HelloWeCross.sol)合约
+  * 对应于**FISCO BCOS**链上的[HelloWeCross.sol](../stubs/bcos.html#id1)合约
 * payment.fabric.abac
   * 对应于**Fabric**网络上的[abac.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/abac/go/abac.go)合约
 
