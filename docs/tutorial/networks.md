@@ -1,6 +1,6 @@
 # 手动组网
 
-本文档介绍以手动的方式，一步步搭建一个与[快速体验](./demo.md)中相同的跨链网络。
+本文档介绍以手动的方式，一步步搭建一个与[Demo](./demo.md)相同的跨链网络。
 
 ![](../images/tutorial/demo.png)
 
@@ -28,24 +28,25 @@ mkdir -p ~/wecross/ && cd ~/wecross/
 WeCross中包含了生成跨链路由的工具，执行以下命令进行下载（提供[三种下载方式](../version/download.html#wecross)，可根据网络环境选择合适的方式进行下载），程序下载至当前目录`WeCross/`中。
 
 ```bash
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh)
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross-rc2.sh) -s -b release-rc2
 ```
 
 #### 生成跨链路由
 
+本例将构建两个跨链路由。首先创建一个`ipfile`配置文件，将需要构建的两个跨链路由信息（`ip:rpc_port:p2p_port`）按行分隔，保存到文件中。
+
+**注**：请确保机器的`8250`，`8251`, `25500`，`25501`端口没有被占用。
+
 ```bash
 cd ~/wecross
 vim ipfile
-```
 
-本举例中将构造两个跨链路由，构建一个ipfile文件，将需要构建的两个跨链路由信息内容保存到文件中（按行区分：`ip地址:rpc端口:p2p端口`）。请确保机器的`8250`，`8251`, `25500`，`25501`端口没有被占用。
-
-```text
+# 在文件中键入以下内容
 127.0.0.1:8250:25500
 127.0.0.1:8251:25501
 ```
 
-用WeCross中的 [build_wecross.sh](../manual/scripts.html#wecross)生成两个跨链路由。
+生成好`ipfile`文件后，使用脚本[build_wecross.sh](../manual/scripts.html#wecross)生成两个跨链路由。
 
 ```bash
 # -f 表示以文件为输入
@@ -61,10 +62,10 @@ bash ./WeCross/build_wecross.sh -n payment -o routers-payment -f ipfile
 .. note::
     - -n 指定跨链分区标识符(zone id)，跨链分区通过zone id进行区分，可以理解为业务名称。
     - -o 指定输出的目录，并在该目录下生成一个跨链路由。
-    - -f 指定需要生成的WeCross跨链路由的列表，包括ip地址，rpc端口，p2p端口，生成后的router自动配置相连
+    - -f 指定需要生成的WeCross跨链路由的列表，包括ip地址，rpc端口，p2p端口，生成后的router已完成互联配置。
 ```
 
-在routers-payment目录下生成了两个跨链路由
+在routers-payment目录下生成了两个跨链路由。
 
 ``` bash
 tree routers-payment/ -L 1
@@ -117,14 +118,14 @@ cd ~/wecross/routers-payment/127.0.0.1-8251-25501/
 bash start.sh   # 停止: bash stop.sh
 ```
 
-成功
+启动成功，输出如下：
 
 ```
 WeCross booting up .........
 WeCross start successfully
 ```
 
-如果启动失败，检查`8250, 25500`端口是否被占用
+如果启动失败，检查`8250, 25500`端口是否被占用。
 
 ``` bash
 netstat -napl | grep 8250
@@ -135,11 +136,11 @@ netstat -napl | grep 25501
 
 ### 部署WeCross控制台
 
-WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本`build_console.sh`搭建一个WeCross控制台。
+WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本`build_console.sh`搭建控制台。
 
 **下载WeCross控制台**
 
-执行如下命令进行下载（提供[三种下载方式](../version/download.html#id2)，可根据网络环境选择合适的方式进行下载），下载后在执行命令的目录下生成`WeCross-Console`目录。
+执行如下命令进行下载（提供[三种下载方式](../version/download.html#id2)，可根据网络环境选择合适的方式进行下载），下载完成后在当前目录下生成`WeCross-Console`目录。
 
 ```bash
 cd ~/wecross/
@@ -152,8 +153,8 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 cd ~/wecross/WeCross-Console
 # 拷贝连接router所需的TLS证书，从生成的routers-payment/cert/sdk目录下拷贝
 cp ~/wecross/routers-payment/cert/sdk/* conf/ # 包含：ca.crt、node.nodeid、ssl.crt、ssl.key
-# 配置控制台
-cp conf/application-sample.toml conf/application.toml  # 配置控制台连接的跨链路由地址，此处采用默认配置，默认连接至本地8250端口，即router的RPC端口
+# 拷贝配置文件，并配置跨链路由RPC服务地址以及端口。此处采用默认配置，默认连接至本地8250端口。
+cp conf/application-sample.toml conf/application.toml
 ```
 
 ```eval_rst
@@ -204,8 +205,6 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 #### 搭建BCOS链
 
-若已有搭建好的FISCO BCOS链，请跳过此部分，直接进入部署HelloWeCross合约部分。
-
 FISCO BCOS官方提供了一键搭链的教程，详见[单群组FISCO BCOS联盟链的搭建](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)
 
 详细步骤如下：
@@ -246,11 +245,11 @@ node3 start successfully
 
 #### 部署HelloWeCross合约
 
-通过FISCO BCOS控制台部署HelloWeCross合约，控制台的安装和使用详见官方文档[配置及使用控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#id7)
+通过FISCO BCOS控制台部署`HelloWeCross`合约，控制台的安装和使用详见官方文档[配置及使用控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#id7)
 
-`HelloWeCross.sol`位于`~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains-sample/bcos/`
+`HelloWeCros`合约位于`~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains-sample/bcos/`
 
-控制台安装配置完后启动并部署`HelloWeCross.sol`，返回的合约地址在之后的WeCross配置中需要用到。详细步骤如下：
+控制台安装配置完后启动并部署`HelloWeCross.sol`，详细步骤如下：
 
 - 安装控制台
 
@@ -269,7 +268,7 @@ cp ~/wecross/bcos/nodes/127.0.0.1/sdk/* console/conf/
 
 - 拷贝合约文件
 
-将`HelloWeCross`合约拷贝至控制台目录（用FISCO BCOS的控制台部署）
+将`HelloWeCross`合约拷贝至FISCO BCOS控制台目录。
 
 ```bash
 cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains-sample/bcos/HelloWeCross.sol console/contracts/solidity/
@@ -281,7 +280,7 @@ cp ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains-sample/bcos/HelloW
 bash console/start.sh
 ```
 
-输出下述信息表明启动成功 否则请检查`conf/applicationContext.xml`中节点端口配置是否正确
+输出下述信息表明启动成功，否则请检查`conf/applicationContext.xml`中节点端口配置是否正确。
 
 ```bash
 =============================================================================================
@@ -305,36 +304,36 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```bash
 [group:1]> deploy HelloWeCross
 contract address: 0x19a70c01e801d3cac241de5f11686e3aa01e463b
-
-[group:1]> quit # 退出控制台
+# 退出控制台
+[group:1]> quit 
 ```
 
-将HelloWeCross的合约地址记录下来，后续步骤中使用：
+将`HelloWeCross`的合约地址记录下来，后续步骤中使用：
 
 `contract address: 0x19a70c01e801d3cac241de5f11686e3aa01e463b`
 
 #### 搭建Fabric链
 
-为方便Fabric链的搭建，WeCross提供了Fabric链的demo搭建脚本。若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
+为方便Fabric链的搭建，WeCross Demo包中提供了Fabric链搭建脚本。若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
 
 ``` bash
 mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
 
-# 下载Fabric链demo搭建脚本
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) -t resources # 下载，生成demo文件夹
+# 下载Demo包
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) -t resources 
 cp demo/fabric/* ./
 
 # 搭建
 bash build.sh # 若出错，执行 bash clear.sh 后重新 bash build.sh
 ```
 
-搭建成功，查看Fabric链各个容器运行状态
+搭建成功，查看Fabric链各个容器运行状态。
 
 ``` bash
 docker ps
 ```
 
-可看到各个容器的状态
+可看到各个容器的状态：
 
 ``` bash
 CONTAINER ID        IMAGE                                                                                                  COMMAND                  CREATED             STATUS              PORTS                      NAMES
@@ -357,7 +356,7 @@ fcf1bfe17dbe        hyperledger/fabric-peer:latest                              
 
 **添加BCOS账户**
 
-所配置的账户可用于向`BCOS2.0`类型的链发交易
+所配置的账户可用于向`BCOS2.0`类型的链发交易。
 
 ```shell
 # 切换至对应router的目录下
@@ -365,14 +364,12 @@ cd ~/wecross/routers-payment/127.0.0.1-8250-25500/
 
 # 用脚本生成BCOS账户：账户类型（BCOS2.0），账户名（bcos_user1）
 bash add_account.sh -t BCOS2.0 -n bcos_user1 
-
-# 查看生成目录
-tree conf/accounts/bcos_user1/
 ```
 
-生成的bcos_user1文件目录如下。
+生成的bcos_user1文件目录如下：
 
 ``` bash
+tree conf/accounts/bcos_user1/
 conf/accounts/bcos_user1/
 ├── account.key
 └── account.toml
@@ -380,20 +377,18 @@ conf/accounts/bcos_user1/
 
 **添加Fabric账户**
 
-所配置的账户可用于向`Fabric1.4`类型的链发交易
+所配置的账户可用于向`Fabric1.4`类型的链发交易。
 
 ``` bash
 # 用脚本生成Fabric账户：账户类型（Fabric1.4），账户名（fabric_user1）
 bash add_account.sh -t Fabric1.4 -n fabric_user1
 cp ~/wecross/fabric/certs/accounts/fabric_user1/* conf/accounts/fabric_user1/  # 拷贝 Fabric链的证书，具体说明请参考《跨链接入》章节
-
-# 查看生成目录
-tree conf/accounts/fabric_user1/
 ```
 
-生成的fabric_user1文件目录如下。
+生成的fabric_user1文件目录如下：
 
 ``` bash
+tree conf/accounts/fabric_user1/
 conf/accounts/fabric_user1/
 ├── account.crt
 ├── account.key
@@ -410,15 +405,14 @@ conf/accounts/fabric_user1/
 
 ```bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
-bash add_chain.sh -t BCOS2.0 -n bcos # -t 链类型，-n 指定链名字
-
-# 查看生成目录
-tree conf/chains/bcos
+ # -t 链类型，-n 指定链名字
+bash add_chain.sh -t BCOS2.0 -n bcos
 ```
 
 生成的目录结构如下：
 
 ```bash
+tree conf/chains/bcos
 conf/chains/bcos
 └── stub.toml          # chain配置文件
 ```
@@ -429,13 +423,13 @@ conf/chains/bcos
 
 **配置BCOS节点连接**
 
-从BCOS节点处拷贝sdk的证书
+- 拷贝证书
 
 ```bash
 cp ~/wecross/bcos/nodes/127.0.0.1/sdk/* conf/chains/bcos/
 ```
 
-修改配置
+- 修改配置
 
 ```bash
 vim conf/chains/bcos/stub.toml
@@ -458,9 +452,9 @@ vim conf/chains/bcos/stub.toml
 
 **配置跨链资源**
 
-在`stub.toml`文件中配置HelloWeCross合约资源信息，让此跨链路由能够访问此合约。**并将配置中多余无用的举例删除**。
+在`stub.toml`文件中配置`HelloWeCross`合约资源信息，让此跨链路由能够访问此合约。**可将配置中多余的资源配置举例删除**。
 
-在前面的步骤中，已经通过FISCO BCOS控制台部署了一个`HelloWeCross`合约，地址为`0x19a70c01e801d3cac241de5f11686e3aa01e463b`，将此地址填入`contractAddress`中。
+在前面的步骤中，已经通过FISCO BCOS控制台部署了一个`HelloWeCross`合约，地址为`0x19a70c01e801d3cac241de5f11686e3aa01e463b`，将`contractAddress`配置为该地址中。
 
 ```toml 
 [[resources]]
@@ -472,7 +466,7 @@ vim conf/chains/bcos/stub.toml
 
 **完整配置**
 
-完成了上述的步骤，那么已经完成了`bcos`的连接配置，并注册了一个合约资源，最终的`stub.toml`文件如下。[参考此处获取更详尽的配置说明](../manual/scripts.html#fisco-bcos-stub)
+此时已完成`bcos`的连接配置，并注册了一个合约资源，最终的`stub.toml`文件如下。[参考此处获取更详尽的配置说明](../stubs/bcos.html#id8)
 
 ```toml
 [common]
@@ -500,7 +494,7 @@ vim conf/chains/bcos/stub.toml
 
 **启动路由**
 
-启动跨链路由加载配置好的跨链资源。
+启动跨链路由加载已配置的跨链资源。
 
 ```bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
@@ -512,15 +506,11 @@ bash stop.sh
 bash start.sh
 ```
 
-检查日志
+检查日志，可看到刷出已加载的跨链资源，`ctrl + c` 退出。
 
 ``` bash
 tail -f logs/info.log |grep "active resources"
-```
 
-可看到刷出已加载的跨链资源，`ctrl + c` 退出
-
-``` log
 2020-04-24 20:07:20.966 [Thread-4] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(local)
 2020-04-24 20:07:30.973 [Thread-4] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(local)
 2020-04-24 20:07:40.980 [Thread-4] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(local)
@@ -530,30 +520,29 @@ tail -f logs/info.log |grep "active resources"
 
 #### 添加账户
 
-在router中添加用于向链上发交易的账户。账户配置好后，可通过跨链网络向相应的链发交易，交易可被router转发至对应的链上。
+在router中添加用于向链上发交易的账户。
 
 **添加Fabric账户**
-
-所配置的账户可用于向`Fabric1.4`类型的链发交易
 
 ``` bash
 # 切换至对应router的目录下
 cd ~/wecross/routers-payment/127.0.0.1-8251-25501/
 
 # 用脚本生成Fabric账户配置：账户类型（Fabric1.4），账户名（fabric_admin）
-bash add_account.sh -t Fabric1.4 -n fabric_admin # 接入Fabric链，需要配置一个admin账户
-cp ~/wecross/fabric/certs/accounts/fabric_admin/*  conf/accounts/fabric_admin/  # 拷贝 Fabric链的证书，具体说明请参考《跨链接入》章节
+# 接入Fabric链，需要配置一个admin账户
+bash add_account.sh -t Fabric1.4 -n fabric_admin 
+
+# 拷贝 Fabric链的证书，具体说明请参考《跨链接入》章节
+cp ~/wecross/fabric/certs/accounts/fabric_admin/*  conf/accounts/fabric_admin/  
 
 # router-8250上配置的账户直接拷贝也可用
 cp -r ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/accounts/fabric_user1 conf/accounts/
-
-# 生成至conf/accounts目录下
-tree conf/accounts
 ```
 
-目前配置了两个账户，若此router需要向BCOS的链发交易，也可配置BCOS的账户。账户配置与接入的链无关，router间自动转发交易至相应的链。此处省略。
+目前配置了两个账户，若此router需要向BCOS的链发交易，也可配置BCOS的账户。账户配置与接入的链无关，router间自动转发交易至相应的链。账户目录结构如下：
 
-``` log
+```bash
+tree conf/accounts
 conf/accounts
 ├── fabric_admin
 │   ├── account.crt
@@ -571,19 +560,18 @@ conf/accounts
 
 **生成配置文件**
 
-切换至跨链路由的目录，用 [add_chain.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成fabric的配置文件框架。
+切换至跨链路由的目录，用 [add_chain.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成Fabric的配置文件框架。
 
 ```bash
 cd ~/wecross/routers-payment/127.0.0.1-8251-25501
-bash add_chain.sh -t Fabric1.4 -n fabric # -t 链类型，-n 指定链名字
-
-# 查看生成目录
-tree conf/chains/fabric
+# -t 链类型，-n 指定链名字
+bash add_chain.sh -t Fabric1.4 -n fabric 
 ```
 
 生成的目录结构如下：
 
 ```bash
+tree conf/chains/fabric
 conf/chains/fabric
 └── stub.toml          # chain配置文件
 ```
@@ -592,19 +580,20 @@ conf/chains/fabric
 
 **配置Fabric节点连接**
 
-拷贝证书
+- 拷贝证书
 
 ``` bash
-cp ~/wecross/fabric/certs/chains/fabric/* conf/chains/fabric/ # 证书具体说明请参考《跨链接入》章节
+# 证书具体说明请参考《跨链接入》章节
+cp ~/wecross/fabric/certs/chains/fabric/* conf/chains/fabric/ 
 ```
 
-修改配置
+- 修改配置
 
 ``` bash
 vim conf/chains/fabric/stub.toml
 ```
 
-内容为（此处默认即可）
+相关配置项使用默认即可。
 
 ``` toml
 [fabricServices]
@@ -645,7 +634,7 @@ vim conf/chains/fabric/stub.toml
 
 **完整配置**
 
-完成了上述的步骤，那么已经完成了`fabric`的连接配置，并注册了一个合约资源，最终的`stub.toml`文件如下。[参考此处获取更详尽的配置说明](../manual/scripts.html#fabric-stub)
+此时已完成`fabric`的连接配置，并注册了一个合约资源，最终的`stub.toml`文件如下。[参考此处获取更详尽的配置说明](../stubs/fabric.html#id6)
 
 ``` toml
 [common]
@@ -693,15 +682,10 @@ bash stop.sh
 bash start.sh
 ```
 
-检查日志
+检查日志，可看到刷出已加载的跨链资源，`ctrl + c` 退出。
 
 ``` bash
 tail -f logs/info.log |grep "active resources"
-```
-
-可看到刷出已加载的跨链资源，`ctrl + c` 退出
-
-``` log
 2020-04-24 20:30:30.444 [Thread-2] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(remote), payment.fabric.abac(local)
 2020-04-24 20:30:40.458 [Thread-2] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(remote), payment.fabric.abac(local)
 2020-04-24 20:30:50.469 [Thread-2] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(remote), payment.fabric.abac(local)
@@ -715,7 +699,7 @@ tail -f logs/info.log |grep "active resources"
 
 **启动控制台**
 
-控制台连接的是`router-8250`
+控制台连接的是`router-8250`。
 
 ``` bash
 cd ~/wecross/WeCross-Console
@@ -729,12 +713,12 @@ bash start.sh
 
 **查看资源**
 
-进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有两个资源
+进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有两个资源：
 
 * payment.bcos.HelloWeCross
-  * 对应于**FISCO BCOS**链上的[HelloWeCross.sol](../stubs/bcos.html#id1)合约
+  * 对应于FISCO BCOS链上的[HelloWeCross.sol](../stubs/bcos.html#id1)合约
 * payment.fabric.abac
-  * 对应于**Fabric**网络上的[abac.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/abac/go/abac.go)合约
+  * 对应于Fabric链上的[abac.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/abac/go/abac.go)合约
 
 ```bash
 [WeCross]> listResources
@@ -745,7 +729,7 @@ total: 2
 
 **查看账户**
 
-用`listAccounts`命令查看WeCross Router上已存在的账户，操作资源时用相应账户进行操作
+用`listAccounts`命令查看WeCross Router上已存在的账户，操作资源时用相应账户进行操作。
 
 ```bash
 [WeCross]> listAccounts
@@ -756,20 +740,22 @@ total: 2
 
 **操作资源：payment.bcos.HelloWeCross**
 
-读资源：`call path 账户名 接口名 （参数列表）`
-
-> 调用HelloWeCross合约中的get接口
+- 读资源
+  - 命令：`call path 账户名 接口名 [参数列表]`
+  - 示例：`call payment.bcos.HelloWeCross bcos_user1 get`
 
 ```bash
+# 调用HelloWeCross合约中的get接口
 [WeCross]> call payment.bcos.HelloWeCross bcos_user1 get
 Result: [Talk is cheap, Show me the code]
 ```
 
-写资源：`sendTransaction path 返回值类型列表 接口名 （参数列表）`
-
-> 调用HelloWeCross合约中的set接口
+- 写资源
+  - 命令：`sendTransaction path 账户名 接口名 [参数列表]`
+  - 示例：`sendTransaction payment.bcos.HelloWeCross bcos_user1 set Tom`
 
 ```bash
+# 调用HelloWeCross合约中的set接口
 [WeCross]> sendTransaction payment.bcos.HelloWeCross bcos_user1 set Tom
 Txhash  : 0x21a412a1eb5239f2da9d40d09d11ce0107a5d82d113f1ecb315f2aa5bd3cc0cd
 BlockNum: 2
@@ -781,20 +767,20 @@ Result: [Tom] // 再次get，Tom已set
 
 **操作资源：payment.fabric.abac**
 
-读资源：`call path 账户名 接口名 （参数列表）`
+跨链资源是对各个不同链上资源的统一和抽象，因此操作的命令是保持一致的。
 
-> 调用abac合约中的query接口
+- 读资源
 
 ```bash
+# 调用abac合约中的query接口
 [WeCross]> call payment.fabric.abac fabric_user1 query a
 Result: [90] // 初次query，a的值为90
 ```
 
-写资源：`sendTransaction path 返回值类型列表 接口名 （参数列表）`
-
-> 调用abac合约中的invoke接口
+- 写资源
 
 ```bash
+# 调用abac合约中的invoke接口
 [WeCross]> sendTransaction payment.fabric.abac fabric_user1 invoke a b 10
 Txhash  : db44b064c54d4dc97f01cdcd013cae219f7849c329f38ee102853344d8f0004d
 BlockNum: 5
