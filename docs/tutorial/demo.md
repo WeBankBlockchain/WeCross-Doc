@@ -13,7 +13,7 @@
 ``` bash
 cd ~
 # 下载，生成demo文件夹
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) -t resources 
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh)
 ```
 
 - 部署
