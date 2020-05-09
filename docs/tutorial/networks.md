@@ -28,7 +28,7 @@ mkdir -p ~/wecross/ && cd ~/wecross/
 WeCross中包含了生成跨链路由的工具，执行以下命令进行下载（提供[三种下载方式](../version/download.html#wecross)，可根据网络环境选择合适的方式进行下载），程序下载至当前目录`WeCross/`中。
 
 ```bash
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross-rc2.sh) -s -b release-rc2
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh)
 ```
 
 #### 生成跨链路由
