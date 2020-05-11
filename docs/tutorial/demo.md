@@ -4,7 +4,7 @@
 
 ![](../images/tutorial/demo.png)
 
-## 搭建Demo
+## 搭建 Demo
 
 - 下载
 
@@ -21,7 +21,7 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 ```bash
 cd demo
 # 运行部署脚本，耗时10-30分钟左右
-bash build.sh
+bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 ```
 
 部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
@@ -124,6 +124,9 @@ Result  : []
 
 [WeCross]> call payment.fabric.abac fabric_user1 query a
 Result: [80] // 再次query，a的值变成80
+
+# 退出WeCross控制台
+[WeCross]> quit 
 ```
 
 WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链网络后，可基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
@@ -185,6 +188,8 @@ Result: [0]
 Txhash: 0x40ae8e2e284de813f8b071e0261e627ddc4d91e365e63f222638db9b1a70d05a
 BlockNum: 7
 Result: create a htlc transfer proposal successfully
+# 退出当前控制台
+[WeCross]> quit 
 ```
 
 **跨链资产转移**
@@ -203,6 +208,9 @@ bash start.sh
 
 [WeCross]> call payment.bcos.htlc bcos_sender balanceOf 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
 Result: [700]
+
+# 退出当前控制台
+[WeCross]> quit 
 ```
 
 - 查询Fabric链上资产接收者余额
@@ -212,4 +220,19 @@ bash start.sh
 
 [WeCross]>  call payment.fabric.htlc fabric_admin balanceOf User1@org1.example.com
 Result: [500]
+
+# 退出当前控制台
+[WeCross]> quit 
 ```
+
+## 清理 Demo
+
+为了不影响[手动组网](./networks.md)章节的体验，可将搭建的Demo清理掉。
+
+``` bash
+cd ~/demo/
+bash clear.sh
+```
+
+至此，恭喜你，快速体验完成！可进入[手动组网](./networks.md)章节深入了解更多细节。
+
