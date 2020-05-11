@@ -13,7 +13,7 @@
 
 ![](../images/tutorial/routers.png)
 
-操作以`~/wecross/`目录下为例进行
+操作以`~/wecross/`目录下为例进行。若Demo未清理，请先[清理Demo环境](../demo.html#id4)。
 
 ``` bash
 mkdir -p ~/wecross/ && cd ~/wecross/
@@ -144,7 +144,7 @@ WeCross提供了控制台，方便用户进行跨链开发和调试。可通过�
 
 ```bash
 cd ~/wecross/
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_console.sh)
 ```
 
 **配置控制台**
@@ -159,7 +159,7 @@ cp conf/application-sample.toml conf/application.toml
 
 ```eval_rst
 .. important::
-    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/application.toml，详见 `控制台配置 <../manual/application.toml#id11>`_。
+    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/application.toml，详见 `控制台配置 <../manual/console.html#id12>`_。
 ```
 
 **启动控制台**
@@ -320,7 +320,7 @@ contract address: 0x19a70c01e801d3cac241de5f11686e3aa01e463b
 mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
 
 # 下载Demo包
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) -t resources 
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh)
 cp demo/fabric/* ./
 
 # 搭建
@@ -788,6 +788,9 @@ Result  : []
 
 [WeCross]> call payment.fabric.abac fabric_user1 query a
 Result: [80] // 再次query，a的值变成80
+
+# 退出当前控制台
+[WeCross]> quit 
 ```
 
 恭喜，你已经完成了整个WeCross网络的体验。相信优秀的你已经对WeCross有了大致的了解。接下来，你可以基于WeCross Java SDK开发更多的跨连应用，通过统一的接口对各种链上的资源进行操作。

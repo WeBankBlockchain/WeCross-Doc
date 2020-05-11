@@ -43,17 +43,17 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 **方式1：命令下载**
 
 ```shell
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_console.sh)
 ```
 
 **方式2：命令下载（源码编译模式）**
 
 ```shell
 # 默认下载master分支
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh) -s
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_console.sh) -s
 
 # 下载特定版本下的控制台
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh) -s -t v1.0.0-rc2
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_console.sh) -s -t v1.0.0-rc2
 ```
 
 **方式3：手动下载**

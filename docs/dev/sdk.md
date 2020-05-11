@@ -1,4 +1,4 @@
-# 跨链SDK
+# 跨链SDK开发应用
 
 WeCross router向外部暴露了所有的UBI接口，开发者可以通过SDK实现这些接口的快速调用。
 

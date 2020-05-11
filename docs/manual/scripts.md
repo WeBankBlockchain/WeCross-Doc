@@ -104,8 +104,8 @@ Usage:
 
 ```
 Usage: 
-    -t <type>                           [Required] type of account, BCOS2.0 or Fabric1.4
-    -n <name>                           [Required] name of account
+    -t <type>                           [Required] type of chain, BCOS2.0 or Fabric1.4
+    -n <name>                           [Required] name of chain
     -d <dir>                            [Optional] generated target_directory, default conf/stubs/
     -h                                  [Optional] Help
 ```
@@ -142,8 +142,8 @@ e.g
     bash create_cert.sh -n -D ./ca -d ./ca/node -C 10
 ```
 - **`c`**： 生成ca证书，只有生成了ca证书，才能生成节点证书。
-- **`n`**：生成节点证书。
 - **`C`**：配合`-n`，指定生成节点证书的数量。
 - **`D`**：配合`-n`，指定ca证书路径。
 - **`d`**：指定输出目录。
+- **`n`**：生成节点证书。
 - **`t`**：指定`cert.cnf`的路径
