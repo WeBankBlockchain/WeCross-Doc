@@ -9,5 +9,3 @@
    config.md
    console.md
    scripts.md
-   sdk.md
-   api.md

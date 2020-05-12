@@ -33,6 +33,7 @@ WeCross 着眼应对区块链行业现存挑战，不局限于满足同构区块
 * **IPath（Interchain Path）**
   * 跨链资源的唯一标识
   * 跨链路由根据IPath将请求路由至相应区块链上
+  * 在代码和文档中将IPath简称为path
 * **跨链分区**
   * 多条链通过跨链路由相连，形成跨链分区
   * 跨链分区有唯一标识，即IPath中的第一项（`payment.stub3.resource-d`的`payment`）
