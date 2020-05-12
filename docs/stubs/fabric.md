@@ -1,344 +1,261 @@
-# 接入Fabric
+# 接入 Fabric 1.4
 
-## Fabric环境搭建
+WeCross Fabric Stub 是 WeCross Router的插件，让Router具备接入Fabric 1.4的链的能力。其要点包括：
 
-## 前置准备工作
-#### docker安装
+* 插件安装
+* 接入配置：用于接入相应的Fabric 1.4链
+* 账户配置：用于用相应账户发交易
 
-docker安装需要满足内核版本不低于3.10。
+## 插件安装
 
-##### centos环境下docker安装
-###### 卸载旧版本
-```
-sudo yum remove docker docker-common docker-selinux docker-engine
-```
-###### 安装依赖
-```
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-```
+在生成router时，默认安装Fabric 1.4插件，安装目录为router下的`plugin`目录：
 
-###### 设置yum源
-```
-sudo  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+``` bash
+cd ~/wecross/routers-payment/127.0.0.1-8251-25501/
+tree plugin/
+plugin/
+└── fabric1-stub-XXXXX.jar
 ```
 
-###### 安装docker
-```
-sudo yum install docker-ce
+用户如有特殊需求，可以自行编译，替换`plugin`目录下的插件。
+
+### 手动安装
+
+**下载编译**
+
+``` bash
+git clone https://github.com/WeBankFinTech/WeCross-Fabric1-Stub.git
+cd WeCross-Fabric1-Stub
+bash gradlew assemble # 在 dist/apps/下生成fabric1-stub-XXXXX.jar
 ```
 
-###### 启动docker
-```
-service docker start
+**安装插件**
+
+``` bash
+cp dist/apps/fabric1-stub-XXXXX.jar ~/wecross/routers-payment/127.0.0.1-8250-25500/plugin/
 ```
 
-##### ubuntu环境下docker安装
-###### 卸载旧版本
-```
-sudo apt-get remove docker docker-engine docker-ce docker.io
-```
-
-###### 更新apt包索引
-```
-sudo apt-get update
-```
-
-###### 安装HTTPS依赖库
-```
-sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-```
-
-###### 添加Docker官方的GPG密钥
-```
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-```
-###### 设置stable存储库
-```
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-```
-
-###### 更新apt包索引
-```
-sudo apt-get update
-```
-
-###### 安装最新版本的Docker-ce
-```
-sudo apt-get install -y docker-ce
-```
-
-###### 启动docker
-```
-service docker start
-```
-
-#### docker-compose安装
-##### 安装docker-compose方式1：
-```
-sudo curl -L "https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-```
+**注：若router中配置了两个相同的插件，插件冲突，会导致router启动失败。**
 
 
- 若安装完成后输入`docker-compose --version`命令报如下错误，是由于网络不稳定导致下载失败，可尝试方式2进行安装。
 
-`Cannot open self /usr/local/bin/docker-compose or archive /usr/local/bin/docker-compose.pkg`
+## 账户配置
 
-##### 安装-docker-compose方式2：
-```
-sudo pip install docker-compose==1.18.0
-```
+在router中配置Fabric账户，用户可在sdk中指定router用相应的账号发交易。
 
-##### 查看docker-compose版本
-```
-docker-compose --version
-docker-compose version 1.18.0, build 8dd22a9
-```
+### 完整配置
 
-#### go安装
-##### 安装go
-```
-wget https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz
-sudo tar zxvf go1.11.5.linux-amd64.tar.gz -C /usr/local
-```
-#####  环境变量配置
-###### 创建文件夹和软链
-```
-cd ~
-sudo mkdir /data/go
-ln -s /data/go go
+配置完成的账户如下，在`accounts`目录中
+
+``` bash
+accounts/						# router的账户目录，所有账户的文件夹放在此目录下
+└── fabric_admin       			# 目录名即为此账户名，SDK发交易时，指定的即为处的账户名
+    ├── account.toml			# 账户配置文件
+    ├── user.crt				# Fabric的用户证书
+    └── user.key				# Fabric的用户私钥
 ```
 
-###### 修改环境变量
+其中 `account.toml `为账户配置文件
 
-```
-sudo vim /etc/profile
-```
-添加如下内容:
-```
-export PATH=$PATH:/usr/local/go/bin
-export GOROOT=/usr/local/go
-export GOPATH=/data/go/
-export PATH=$PATH:$GOROOT/bin
+``` toml
+[account]
+    type = 'Fabric1.4'			# 采用插件的名字
+    mspid = 'Org1MSP'			# 账户对应机构的MSP ID
+    keystore = 'user.key'		# 账户私钥文件名字，指向与此文件相同目录下的私钥文件
+    signcert = 'user.crt'		# 账户证书名字，指向与此文件相同目录下的证书文件
 ```
 
-修改完成后,执行如下操作:
-```
-source /etc/profile
+### 配置步骤
+
+**生成配置文件**
+
+为router生成某个账户的配置，在router目录下执行
+
+``` bash
+cd ~/wecross/routers-payment/127.0.0.1-8251-25501/
+
+# 举例1：生成名字为fabric_admin的账户配置 -t 指定使用Fabric1.4插件生成 -n 设置一个账户名
+bash add_account.sh -t Fabric1.4 -n fabric_admin
+
+# 举例2：生成名字为fabric_user1的账户配置 -t 指定使用Fabric1.4插件生成 -n 设置一个账户名
+bash add_account.sh -t Fabric1.4 -n fabric_user1 
 ```
 
-###### 确认go环境安装成功
-新增helloworld.go文件，内容如下：
-```
-    package main
-    import "fmt"
-    func main() {
-    fmt.Println("hello world.")
-    }
+生成后，`conf/accounts`目录下出现对应名字的账户目录，接下来需将相关账户文件拷贝入目录中。
+
+**拷贝账户文件**
+
+以`fabric-sample/first-network`的`crypto-config`为例，配置其中一个账户即可
+
+* 若配置 Org1 的 Admin
+
+``` bash
+# 拷贝用户私钥，命名为 user.key
+cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk accounts/fabric_admin/user.key
+# 拷贝用户证书，命名为 user.crt
+cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/*.pem accounts/fabric_admin/user.crt 
 ```
 
-运行helloworld.go文件
-```
-go run helloworld.go
-```
-如果安装和配置成功,将输出:
-```
-hello world.
+* 若配置 Org1的 User1
+
+``` bash
+# 拷贝用户私钥，命名为 user.key
+cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/*_sk accounts/fabric_user1/user.key 
+# 拷贝用户证书，命名为 user.crt
+cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/*.pem accounts/fabric_user1/user.crt 
 ```
 
-请确保这一步可以正常输出，如果不能正常输出，请检查go的版本以及环境变量配置。
+**编辑配置文件**
 
-#### Fabric链搭建
-##### 目录准备
-```
-cd ~
-mkdir go/src/github.com/hyperledger -p
-cd go/src/github.com/hyperledger
-```
-##### 源码下载
-```
-git clone -b release-1.4 https://github.com/hyperledger/fabric.git
-git clone -b release-1.4 https://github.com/hyperledger/fabric-samples.git
-```
-##### 源码编译
-```
-cd ~/go/src/github.com/hyperledger/fabric
-make release
-```
-##### 环境变量修改
-sudo vi /etc/profile 新增如下一行
-```
-export PATH=$PATH:$GOPATH/src/github.com/hyperledger/fabric/release/linux-amd64/bin
-```
-修改完成后执行
-```
-source /etc/profile
-```
-##### 节点启动
-```
-cd ~/go/src/github.com/hyperledger/fabric-samples/first-network
-./byfn.sh up
+编辑 `account.toml`
+
+``` bash
+vim conf/accounts/<account_name>/account.toml
 ```
 
-##### 验证
-执行如下命令，进入容器
-```
-sudo docker exec -it cli bash
-```
-进入操作界面，执行如下命令:
-```
-peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
-peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"Args":["invoke","b","a","1"]}'
-peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
-```
+内容为
 
-## Fabric stub配置
-
-### Fabric证书介绍
-
-Fabric交易执行流程如下图:
-![](../images/stubs/FabricExecute.png)
-
-从图中可以看出，和交易sdk直接交互的CA节点，背书节点和排序节点。
-所以需要配置的证书包括：
-1 CA证书，包括用户私钥和证书文件。
-2 背书节点证书，背书节点有多少个就需要拷贝多少个背书节点证书。
-3 排序节点证书。
-
-
-### Fabric证书路径说明
-
-访问Fabric链依赖的证书需要从链上拷贝，以上面搭建的链为例，说明相关证书文件路径。
-
-首先进入容器
-```
-sudo docker exec -it cli bash
-```
-### CA证书路径
-
-CA证书是分用户的，如果用户为Admin,则用户私钥和证书文件的路径分别为
-```
-    #私钥文件
-/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk
-
-    #证书文件
-/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
-
-```
-
-如果用户是User1,则用户私钥和证书文件的路径分别为:
-
-```
-    #私钥文件
-/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/*_sk
-
-    #证书文件
-/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem
-
-```
-
-### 背书节点证书
-
-按照上面步骤部署出来的链码有两个背书节点，路径分别为:
-
-```
-#peer0.org1证书
-/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
-
-#peer0.org2证书
-/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
-
+``` bash
+[account]
+    type = 'Fabric1.4'			# 采用插件的名字
+    mspid = 'Org1MSP'			# 账户对应机构的MSP ID
+    keystore = 'user.key'		# 账户私钥文件名字，指向与此文件相同目录下的私钥文件
+    signcert = 'user.crt'		# 账户证书名字，指向与此文件相同目录下的证书文件
 ```
 
 
-### 排序节点证书
 
-按照上面步骤部署出来的链码有一个排序节点，路径为:
+## 插件配置
 
-```
-/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-```
+在router中配置需接入的链，访问链上资源。
 
-### Fabric stub配置
+### 完整配置
 
-WeCross配置好之后，默认的conf目录结构如下：
+配置完成如下，在`chains`目录中
 
-```
-├── log4j2.xml
-├── p2p
-│   ├── ca.crt
-│   ├── node.crt
-│   ├── node.key
-│   └── node.nodeid
-├── stubs-sample
-│   ├── bcos
-│   │   └── stub-sample.toml
-│   ├── fabric
-│       └── stub-sample.toml
-├── wecross-sample.toml
-└── wecross.toml
+``` bash
+chains							# router的stub的配置目录，所有的stub都在此目录下配置
+└── fabric						# 此链的名字，名字可任意指定，与链类型无关
+    ├── orderer-tlsca.crt		# orderer证书
+    ├── org1-tlsca.crt			# 需要连接的peer的证书1，有则配
+    ├── org2-tlsca.crt			# 需要连接的peer的证书2，有则配
+    └── stub.toml				# stub配置文件
 ```
 
-假定当前目录在conf，执行如下操作:
-```
-mkdir -p stubs/fabric;
-cp stubs-sample/fabric/stub-sample.toml  stubs/fabric/stub.toml
-```
+其中，`stub.toml` 为接入的链的配置文件
 
-执行上述命令之后，目录结构变成如下：
-```
-├── log4j2.xml
-├── p2p
-│   ├── ca.crt
-│   ├── node.crt
-│   ├── node.key
-│   └── node.nodeid
-├── stubs
-│   ├── bcos
-│   │   └── stub-sample.toml
-│   ├── fabric
-│       └── stub-sample.toml
-│       └── stub.toml
-│
-├── wecross-sample.toml
-└── wecross.toml
-```
-
-查看stub.toml，可以看到文件内容如下：
-```
+``` toml
 [common]
-    stub = 'fabric'
-    type = 'FABRIC'
+    name = 'fabric'
+    type = 'Fabric1.4'
 
-# fabricServices is a list
 [fabricServices]
     channelName = 'mychannel'
     orgName = 'Org1'
     mspId = 'Org1MSP'
-    orgUserName = 'Admin'
-    orgUserKeyFile = 'classpath:/stubs/fabric/orgUserKeyFile'
-    orgUserCertFile = 'classpath:/stubs/fabric/orgUserCertFile'
-    ordererTlsCaFile = 'classpath:/stubs/fabric/ordererTlsCaFile'
-    ordererAddress = 'grpcs://127.0.0.1:7050'
+    orgUserName = 'fabric_admin'
+    orgUserAccountPath = 'classpath:accounts/fabric_admin'
+    ordererTlsCaFile = 'orderer-tlsca.crt'
+    ordererAddress = 'grpcs://localhost:7050'
 
 [peers]
     [peers.org1]
-        peerTlsCaFile = 'classpath:/stubs/fabric/peerOrg1CertFile'
-        peerAddress = 'grpcs://127.0.0.1:7051'
+        peerTlsCaFile = 'org1-tlsca.crt'
+        peerAddress = 'grpcs://localhost:7051'
     [peers.org2]
-         peerTlsCaFile = 'classpath:/stubs/fabric/peerOrg2CertFile'
-         peerAddress = 'grpcs://127.0.0.1:9051'
+         peerTlsCaFile = 'org2-tlsca.crt'
+         peerAddress = 'grpcs://localhost:9051'
 
 # resources is a list
 [[resources]]
     # name cannot be repeated
-    name = 'HelloWeCross'
+    name = 'abac'
     type = 'FABRIC_CONTRACT'
     chainCodeName = 'mycc'
     chainLanguage = "go"
     peers=['org1','org2']
+```
+
+### 配置步骤
+
+**生成配置文件**
+
+``` bash
+cd ~/wecross/routers-payment/127.0.0.1-8251-25501
+bash add_chain.sh -t Fabric1.4 -n fabric # -t 链类型，-n 指定链名字
+
+# 查看生成目录
+tree conf/chains/fabric
+```
+
+生成的目录结构如下：
+
+```bash
+conf/chains/fabric
+└── stub.toml          # chain配置文件
+```
+
+**拷贝链证书**
+
+以`fabric-sample/first-network`的`crypto-config`为例
+
+``` bash
+# 拷贝 orderer证书
+cp ~/demo/fabric/fabric-sample/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem conf/chains/fabric/orderer-tlsca.crt
+# 拷贝 peer.org1 证书
+cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt conf/chains/fabric/org1-tlsca.crt
+# 拷贝 peer.org2 证书
+cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt conf/chains/fabric/org2-tlsca.crt
+```
+
+**编辑配置文件**
+
+``` bash
+vim conf/chains/fabric/stub.toml
+```
+
+* 基础配置
+
+``` toml
+[common]
+    name = 'fabric'				# 指定的连接的链的名字，对应path中的{zone}/{chain}/{resource}的chain
+    type = 'Fabric1.4'			# 采用插件的名字
+```
+
+* 配置链
+
+``` toml
+[fabricServices]
+    channelName = 'mychannel'	
+    orgName = 'Org1'				# 指定一个机构机构名
+    mspId = 'Org1MSP'				# 相应的机构MSP ID
+    orgUserName = 'fabric_admin'	# 机构的 admin 账户名
+    orgUserAccountPath = 'classpath:accounts/fabric_admin'# 账户配置步骤已配置好的admin账户目录
+    ordererTlsCaFile = 'orderer-tlsca.crt' # orderer证书名字，指向与此配置文件相同目录下的证书
+    ordererAddress = 'grpcs://localhost:7050'	# orderer的url
+
+[peers]	# peers列表
+    [peers.org1]
+        peerTlsCaFile = 'org1-tlsca.crt'	# peer.org1证书名，指向与此配置文件相同目录下的证书	
+        peerAddress = 'grpcs://localhost:7051'						# peer.org1的URL
+    [peers.org2]
+         peerTlsCaFile = 'org2-tlsca.crt'	# peer.org2证书名，指向与此配置文件相同目录下的证书	
+         peerAddress = 'grpcs://localhost:9051'						# peer.org2的URL
+```
+
+* 配置跨链资源
+
+``` toml
+# resources is a list
 [[resources]]
+    # name cannot be repeated
+    name = 'HelloWeCross'		# 资源名，对应path中的{zone}/{chain}/{resource}中的resource
+    type = 'FABRIC_CONTRACT'	# 合约类型，默认即可
+    chainCodeName = 'mycc'		# chaincode名字
+    chainLanguage = "go"		# chaincode编程语言
+    peers=['org1','org2']		# 此chaincode对应的peers列表，在[peers]中需
+    
+[[resources]]					# 另一个资源的配置
     name = 'HelloWorld'
     type = 'FABRIC_CONTRACT'
     chainCodeName = 'mygg'
@@ -346,40 +263,9 @@ cp stubs-sample/fabric/stub-sample.toml  stubs/fabric/stub.toml
     peers=['org1','org2']
 ```
 
-需要配置的项包括：
-
-```orgUserName```:用户名称，按照上面搭出来的链可选为```Admin```或者```User1```。
-
-```orgUserKeyFile```:用户私钥文件，需要从链上拷贝，文件路径请参考[ca证书路径](./fabric.html#ca)。请拷贝文件,修改文件名为```orgUserKeyFile```并将文件拷贝到```conf/stubs/fabric```目录。
-
-```orgUserCertFile```:用户证书文件，需要从链上拷贝。文件路径请参考[ca证书路径](./fabric.html#ca)。请拷贝文件,修改文件名为```orgUserCertFile```并将文件拷贝到```conf/stubs/fabric```目录。
-
-```ordererTlsCaFile```:排序节点证书文件，需要从链上拷贝。文件路径请参考[排序节点证书路径](./fabric.html#id27)。请拷贝文件,修改文件名为```ordererTlsCaFile```并将文件拷贝到```conf/stubs/fabric```目录。
-
-```ordererAddress```:排序节点地址，将默认的```127.0.0.1```改成真实ip。
-
-```peerTlsCaFile```:背书节点证书文件，需要从链上拷贝。文件路径请参考[背书节点证书路径](./fabric.html#id26)。请拷贝对应的两个文件,分别修改文件名为```peerOrg1CertFile```和```peerOrg2CertFile```，并将文件拷贝到```conf/stubs/fabric```目录。
-
-```peerAddress```:背书节点地址，将默认的```127.0.0.1```改成真实ip。
 
 
-### Fabric环境搭建常见问题定位
-
-1.  启动docker提示:"dial unix /var/run/docker.sock: connect: `permission denied`"
-解决方案：将当前用户加入到docker用户组
-```
-sudo gpasswd -a ${USER} docker
-```
 
 
-2 节点启动或者停止过程出现类似错误:
 
-```
-ERROR: for peer0.org2.example.com  container 4cd74d7c81ed915ebee257e1b9d73a0b53dd92447a44f7654aa36563adabbd06: driver "overlay2" failed to remove root filesystem: unlinkat /var/lib/docker/overlay2/14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31/merged: device or resource busy
-```
 
-解决方案:获得所有和docker相关的进程，找到正在使用的设备号对应的进程，kill掉进程。
-
-```
-grep docker /proc/*/mountinfo | grep 14bc15bfac499738c5e4f12083b2e9907f5a304ff234d68d3ba95eef839f4a31 | awk -F ':' '{print $1}' | awk -F'/' '{print $3}'
-```

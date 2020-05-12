@@ -10,6 +10,5 @@
    :maxdepth: 1
    
    env.md
-   setup.md
-   chain.md
-   zones.md
+   demo.md
+   networks.md
