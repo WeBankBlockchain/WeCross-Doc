@@ -256,7 +256,7 @@ node3 start successfully
 ```bash
 # 获取控制台
 cd ~/wecross/bcos/nodes/127.0.0.1/
-bash download_console.sh
+bash download_console.sh -v 1.0.9
 
 # 拷贝控制台配置文件
 # 若节点未采用默认端口，请将文件中的20200替换成节点对应的channle端口。
