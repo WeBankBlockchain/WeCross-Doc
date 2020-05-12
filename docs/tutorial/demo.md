@@ -29,16 +29,16 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 ``` 
 [INFO] Success! WeCross demo network is running. Framework:
 
-      FISCO BCOS                    Fabric
-     (4node pbft)              (first-network)
-   (HelloWeCross.sol)             (abac.go)
-           |                          |
-           |                          |
-    WeCross Router <----------> WeCross Router
-(127.0.0.1-8250-25500)      (127.0.0.1-8251-25501)
-           | 
-           | 
-    WeCross Console
+        FISCO BCOS				 	 Fabric
+       (4node pbft)				 (first-network)
+     (HelloWeCross.sol)				(abac.go)
+			|							|
+			|							|
+      WeCross Router <----------> WeCross Router
+  (127.0.0.1-8250-25500)      (127.0.0.1-8251-25501)
+			| 
+			| 
+      WeCross Console
     
 Start console? [Y/n]
 ```
