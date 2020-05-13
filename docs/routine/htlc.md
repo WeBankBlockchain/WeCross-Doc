@@ -1,6 +1,12 @@
 # 哈希时间锁定
 
-哈希时间锁合约（hash time lock contract，htlc）能够实现两条异构链之间资产的原子交换。WeCross提供了Solidity版和Golang版版本的htlc基类合约，基于htlc基类合约可以轻松开发适用于不同资产类型的htlc应用合约。本章节以FISCO BCOS的`BAC001`资产和Hyperledger Fabric的`ledgerSample`为例，演示如何实现两条异构链的资产互换。
+哈希时间锁合约（hash time lock contract，htlc）能够实现两条异构链之间资产的原子交换，即跨链转账。
+
+如果你想**快速体验**跨链转账可以参考[体验WeCross](../tutorial/demo.html#id3)。
+
+WeCross提供了Solidity和Golang版本的htlc基类合约，基于htlc基类合约可以轻松开发适用于不同资产类型的htlc应用合约。
+
+本章节以FISCO BCOS的`BAC001`资产和Hyperledger Fabric的`ledgerSample`为例，演示如何实现两条异构链的资产互换。
 
 **注**：Fabric官方暂无资产模型，此处只是一个示例账本。
 
