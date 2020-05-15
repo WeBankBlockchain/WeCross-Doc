@@ -6,9 +6,7 @@
 
 WeCross提供了Solidity和Golang版本的htlc基类合约，基于htlc基类合约可以轻松开发适用于不同资产类型的htlc应用合约。
 
-本章节以FISCO BCOS的`BAC001`资产和Hyperledger Fabric的`ledgerSample`为例，演示如何实现两条异构链的资产互换。
-
-**注**：Fabric官方暂无资产模型，此处只是一个示例账本。
+本章节以FISCO BCOS和Hyperledger Fabric的**示例资产合约**为例，演示如何实现两条异构链的资产互换。
 
 ## 准备工作
 
@@ -25,28 +23,28 @@ WeCross提供了Solidity和Golang版本的htlc基类合约，基于htlc基类合
 
 - 拷贝合约
 
-假设当前位于router的根目录，将`conf/chains-sample/bcos/htlc`目录下的`BAC001.sol`、`HTLC.sol`以及`BACHTLC.sol`文件拷贝至BCOS控制台的`contracts/solidity`目录。
+假设当前位于router的根目录，将`conf/chains-sample/bcos/htlc`目录下的`LedgerSample.sol`、`HTLC.sol`以及`LedgerSampleHTLC.sol`文件拷贝至BCOS控制台的`contracts/solidity`目录。
 
-- 部署`BACHTLC.sol`
+- 部署`LedgerSampleHTLC.sol`
 
 ```bash
-[group:1]> deploy BACHTLC
+[group:1]> deploy LedgerSampleHTLC
 # 合约地址需要记录下来
 contract address: 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1
 ```
 
 **发行资产**
 
-FISCO BCOS提供了标准的资产合约`BAC001`，可借助bac工具完成资产的发行、转账和授权。
+FISCO BCOS提供的资产示例合约可借助ledger-tool完成资产的发行、转账和授权。
 
 ```bash
-git clone https://github.com/Shareong/bactool.git
-cd bactool
+git clone https://github.com/Shareong/ledger-tool.git
+cd ledger-tool
 gradle build
 # 工具包需要和节点通讯，将节点sdk目录下的证书文件ca.crt, sdk.crt, sdk.key拷贝到dist/conf目录，并根据实际情况配置conf目录下的application.xml，账户用默认的pem文件即可。
 # 根据金额发行资产，在dist目录下执行
 java -cp 'apps/*:lib/*:conf' Application init 100000000
-# 输出BAC资产地址，以及资产的拥有者                                                                        
+# 输出资产地址，以及资产的拥有者                                                                        
 assetAddress: 0x1796f3f195697c38bedaaaa27e424d05f359ca0f
 owner: 0x55f934bcbe1e9aef8337f5551142a442fdde781c
 ```
@@ -56,7 +54,7 @@ owner: 0x55f934bcbe1e9aef8337f5551142a442fdde781c
 要完成跨链转账，资产拥有者需要将资产的转移权授权给哈希时间锁合约。
 
 ```bash
-# approve [BAC资产地址]，[被授权者地址]（此处为自己的哈希时间锁合约地址），[授权金额]
+# approve [资产地址]，[被授权者地址]（此处为自己的哈希时间锁合约地址），[授权金额]
 java -cp 'apps/*:lib/*:conf' Application approve 0x1796f3f195697c38bedaaaa27e424d05f359ca0f 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 1000000
 # 成功输出如下
 approve successfully
@@ -69,10 +67,10 @@ amount: 1000000
 
 ```bash
 # 在FISCO BCOS控制台执行，此处约定Fabric的合约名为fabric_htlc，之后将以该名称安装和初始化链码
-call BACHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 init ["0x1796f3f195697c38bedaaaa27e424d05f359ca0f","fabric_htlc"]
+call LedgerSampleHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 init ["0x1796f3f195697c38bedaaaa27e424d05f359ca0f","fabric_htlc"]
 
 # 查看owner余额，检查是否初始化成功
-call BACHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 balanceOf ["0x55f934bcbe1e9aef8337f5551142a442fdde781c"]
+call LedgerSampleHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 balanceOf ["0x55f934bcbe1e9aef8337f5551142a442fdde781c"]
 [100000000]
 ```
 
@@ -202,7 +200,7 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["balanceOf","Admin
 
 两个router需要在accounts目录下配置发送者的账户，因为跨链提案只能由资产的转出者创建。
 
-FISCO BCOS用户需要将`bactool/dist/conf`目录下的私钥文件配置到router端的accounts目录，并假设命名为bcos，配置方法详见[BCOS账户配置](../stubs/bcos.html#id4)。
+FISCO BCOS用户需要将`ledger-tool/dist/conf`目录下的私钥文件配置到router端的accounts目录，并假设命名为bcos，配置方法详见[BCOS账户配置](../stubs/bcos.html#id4)。
 
 Fabric用户需要将admin账户配置到router端的`accounts`目录，并假设命名为fabric，配置方法详见[Fabric账户配置](../stubs/fabric.html#id3)。
 
@@ -223,7 +221,7 @@ $$
 **协商内容**
 
 - FISCO BCOS的两个账户：
-    - 资产转出者：0x55f934bcbe1e9aef8337f5551142a442fdde781c（和bactool初始化时返回的owner地址保持一致）
+    - 资产转出者：0x55f934bcbe1e9aef8337f5551142a442fdde781c（和ledger-tool初始化时返回的owner地址保持一致）
     - 资产接收者：0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
 - FISCO BCOS转账金额：700
 - Fabric的两个账户：
