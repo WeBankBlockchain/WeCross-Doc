@@ -183,7 +183,7 @@ stub插件的配置文件`stub.toml`格式以及字段含义
     sslCert = 'sdk.crt' # sdk证书
     sslKey = 'sdk.key'  # sdk私钥
     timeout = 5000      # SDK请求超时时间
-    connectionsStr = ['10.107.108.46:3304','10.107.108.17:3304']    # 连接列表
+    connectionsStr = ['127.0.0.1:20200','127.0.0.2:20200']    # 连接列表
 
 # [[resources]] 资源列表
 [[resources]]
