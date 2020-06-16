@@ -172,7 +172,7 @@ bash start.sh
 
 ```bash
 =================================================================================
-Welcome to WeCross console(v1.0.0-rc2)!
+Welcome to WeCross console(v1.0.0-rc3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =================================================================================
 ```
