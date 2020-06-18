@@ -43,6 +43,13 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 Start console? [Y/n]
 ```
 
+```eval_rst
+.. note::
+    Mac用户若出现“无法打开”，“无法验证开发者”的情况，可采用以下方式解决：
+    - cd ~/demo/ && bash clear.sh && cd ~ && rm -rf demo  # 清理环境
+    - bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) && cd demo && bash build.sh # 将三个命令拼在一起执行即可
+```
+
 ## 操作跨链资源
 
 **查看资源**
@@ -126,7 +133,7 @@ Result  : []
 Result: [80] // 再次query，a的值变成80
 
 # 退出WeCross控制台
-[WeCross]> quit 
+[WeCross]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
 ```
 
 WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链网络后，可基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
