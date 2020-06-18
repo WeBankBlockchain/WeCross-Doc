@@ -48,6 +48,13 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 Start console? [Y/n]
 ```
 
+```eval_rst
+.. note::
+    Mac用户若出现“无法打开”，“无法验证开发者”的情况，可采用以下方式解决：
+    - cd ~/demo/ && bash clear.sh && cd ~ && rm -rf demo  # 清理环境
+    - bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) && cd demo && bash build.sh # 将三个命令拼在一起执行即可
+```
+
 ## 操作跨链资源
 
 **查看资源**
