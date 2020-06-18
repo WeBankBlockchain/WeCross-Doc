@@ -133,7 +133,7 @@ Result  : []
 Result: [80] // 再次query，a的值变成80
 
 # 退出WeCross控制台
-[WeCross]> quit 
+[WeCross]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
 ```
 
 WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链网络后，可基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
