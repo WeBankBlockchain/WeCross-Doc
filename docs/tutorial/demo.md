@@ -24,6 +24,11 @@ cd demo
 bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 ```
 
+```eval_rst
+.. note::
+    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../faq/faq.html#id3>`_ 的方式解决
+```
+
 部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
 
 ``` 
