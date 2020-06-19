@@ -6,7 +6,7 @@
 
 ## 搭建 Demo
 
-- 下载
+- 下载、
 
 若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
 
@@ -22,6 +22,11 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 cd demo
 # 运行部署脚本，耗时10-30分钟左右
 bash build.sh # 若出错，可用 bash clear.sh 清理后重试
+```
+
+```eval_rst
+.. note::
+    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../faq/faq.html#id3>`_ 的方式解决
 ```
 
 部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
@@ -42,16 +47,6 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
     
 Start console? [Y/n]
 ```
-
-> 在部署过程中，MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可采用以下方式解决
-
-``` bash
-# 清理环境
-cd ~/demo/ && bash clear.sh && cd ~ && rm -rf demo
-# 将三个步骤的命令拼成一条命令执行
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) && cd demo && bash build.sh
-```
-
 
 ## 操作跨链资源
 
