@@ -6,7 +6,7 @@
 
 ## 搭建 Demo
 
-- 下载、
+- 下载
 
 若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
 
