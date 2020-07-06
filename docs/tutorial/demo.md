@@ -138,7 +138,7 @@ WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链�
 
 ## 跨链事务
 
-WeCross支持两阶段事务操作
+WeCross支持两阶段事务
 
 ## 跨链转账
 
