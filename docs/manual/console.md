@@ -147,9 +147,19 @@ status                             Check if the resource exists.
 detail                             Get resource information.
 call                               Call constant method of smart contract.
 sendTransaction                    Call non-constant method of smart contract.
+callTransaction                    Call constant method of smart contract during transaction.
+execTransaction                    Call non-constant method of smart contract during transaction.
+startTransaction                   Start a 2pc transaction.
+commitTransaction                  Commit a 2pc transaction.
+rollbackTransaction                Rollback a 2pc transaction.
+getTransactionInfo                 Get info of specified transaction.
+bcosDeploy                         Deploy contract in BCOS chain.
+bcosRegister                       Register contract abi in BCOS chain.
+fabricInstall                      Install chaincode in fabric chain.
+fabricInstantiate                  Instantiate chaincode in fabric chain.
 genTimelock                        Generate two valid timelocks.
 genSecretAndHash                   Generate a secret and its hash.
-newHTLCTransferProposal            Create a htlc transfer agreement.
+newHTLCProposal                    Create a htlc transfer proposal .
 checkTransferStatus                Check htlc transfer status by hash.
 WeCross.getResource                Init resource by path and account name, and assign it to a custom variable.
 [resource].[command]               Equal to: command [path] [account name].
@@ -348,6 +358,77 @@ Result: [create a htlc transfer proposal successfully]
 status: succeeded!
 ```
 
+##### startTransaction
+开始两阶段事务
+
+参数：
+- transactionID：事务ID，类型为字符串，由用户指定，作为事务的唯一标识，后续所有的事务资源操作都必须指定该事务ID
+- account_1 ... account_n：用于开始事务的账号列表，由于两阶段事务可能跨越多种区块链，多种区块链会使用不同类型的账号，因此开始事务时，需要为每种区块链指定至少一个账号，WeCross会使用相应类型的账号向链上发送开始事务交易，该账号列表仅用于开始事务，事务开始后，可以使用该账号列表以外的账号来发送事务交易
+- path_1 ... path_n：参与事务的资源路径列表，路径列表中的资源会被本次事务锁定，锁定后仅限本事务相关的交易才能对这些资源发起写操作，非本次事务的所有写操作都会被拒绝
+
+```
+
+startTransaction 200 account fabric zone.chain.res1 zone.chain.res2
+
+```
+
+##### execTransaction
+发起事务交易
+
+参数：
+- path：资源路径
+- account：交易账号
+- transactionID：事务ID，该资源正在参与事务的ID
+- seq：事务编号，本次操作的编号，每次事务交易唯一，要求递增
+- method：接口名，同sendTransaction
+- args：参数，同sendTransaction
+
+```
+
+execTransaction zone.chain.res1 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res1的transfer接口
+
+execTransaction zone.chain.res2 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res2的transfer接口
+
+```
+
+##### commitTransaction
+提交事务，确认事务执行过程中所有的变动
+
+参数：
+- transactionID：事务ID，待提交事务的ID
+- account_1 ... account_n：用于提交事务的账号列表，由于两阶段事务可能跨越多种区块链，多种区块链会使用不同类型的账号，需要为每种区块链指定至少一个账号，WeCross会使用相应类型的账号向链上发送提交事务交易
+- path_1 ... path_n：用于提交事务的路径列表，此处填写所有参与了事务的链，无需精确到参与事务的资源，填入链的路径即可
+
+```
+
+startTransaction 100 account zone.chain.res1 zone.chain.res2 #开始事务
+
+execTransaction zone.chain.res1 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res1的transfer接口
+execTransaction zone.chain.res2 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res2的transfer接口
+
+commitTransaction 100 account zone.chain #提交事务
+
+```
+
+##### rollbackTransaction
+撤销本次事务的所有变更时
+
+参数：
+- transactionID：事务ID，待回滚事务的ID
+- account_1 ... account_n：用于回滚事务的账号列表，由于两阶段事务可能跨越多种区块链，多种区块链会使用不同类型的账号，需要为每种区块链指定至少一个账号，WeCross会使用相应类型的账号向链上发送回滚事务交易
+- path_1 ... path_n：用于回滚事务的路径列表，此处填写所有参与了事务的链，无需精确到参与事务的资源，填入链的路径即可
+
+```
+
+startTransaction 100 account zone.chain.res1 zone.chain.res2 #开始事务
+
+execTransaction zone.chain.res1 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res1的transfer接口
+execTransaction zone.chain.res2 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res2的transfer接口
+execTransaction zone.chain.res2 account 100 1 set 'fromUserName' 'property' "true"  #调用事务资源zone.chain.res2的set接口，假设该接口调用失败
+
+rollbackTransaction 100 account zone.chain #回滚事务
+
+```
 
 ### 交互式命令
 

@@ -136,6 +136,10 @@ Result: [80] // 再次query，a的值变成80
 
 WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链网络后，可基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
 
+## 跨链事务
+
+WeCross支持两阶段事务操作
+
 ## 跨链转账
 
 WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示:
