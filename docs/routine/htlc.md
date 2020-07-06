@@ -28,25 +28,24 @@ WeCross提供了Solidity和Golang版本的htlc基类合约，基于htlc基类合
 - 部署`LedgerSampleHTLC.sol`
 
 ```bash
-[group:1]> deploy LedgerSampleHTLC
+# router能调用的合约需使用CNS方式部署
+[group:1]> deployByCNS LedgerSampleHTLC 0.1
 # 合约地址需要记录下来
 contract address: 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1
 ```
 
 **发行资产**
 
-FISCO BCOS提供的资产示例合约可借助ledger-tool完成资产的发行、转账和授权。
+FISCO BCOS可通过LedgerSample合约完成资产的发行、转账和授权。
 
 ```bash
-git clone https://github.com/Shareong/ledger-tool.git
-cd ledger-tool
-gradle build
-# 工具包需要和节点通讯，将节点sdk目录下的证书文件ca.crt, sdk.crt, sdk.key拷贝到dist/conf目录，并根据实际情况配置conf目录下的application.xml，账户用默认的pem文件即可。
-# 根据金额发行资产，在dist目录下执行
-java -cp 'apps/*:lib/*:conf' Application init 100000000
-# 输出资产地址，以及资产的拥有者                                                                        
-assetAddress: 0x1796f3f195697c38bedaaaa27e424d05f359ca0f
-owner: 0x55f934bcbe1e9aef8337f5551142a442fdde781c
+# 启动BCOS控制台，指定发行资产使用的账户
+./start.sh 1 -pem 0x55f934bcbe1e9aef8337f5551142a442fdde781c.pem
+
+# 根据金额发行资产
+deploy LedgerSample "" "" 100000000
+# 输出资产合约地址，资产拥有者为0x55f934bcbe1e9aef8337f5551142a442fdde781c
+contract address: 0x06ce972bb1f2187c62c1043b801fbb002d2bc202
 ```
 
 **资产授权**
@@ -54,11 +53,9 @@ owner: 0x55f934bcbe1e9aef8337f5551142a442fdde781c
 要完成跨链转账，资产拥有者需要将资产的转移权授权给哈希时间锁合约。
 
 ```bash
-# approve [资产地址]，[被授权者地址]（此处为自己的哈希时间锁合约地址），[授权金额]
-java -cp 'apps/*:lib/*:conf' Application approve 0x1796f3f195697c38bedaaaa27e424d05f359ca0f 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 1000000
-# 成功输出如下
-approve successfully
-amount: 1000000
+# 在BCOS控制台操作
+# approve [被授权者地址]（此处为自己的哈希时间锁合约地址），[授权金额]
+call LedgerSample 0x06ce972bb1f2187c62c1043b801fbb002d2bc202 approve "0xc25825d8c0c9819e1302b1cd0019d3228686b2b1" 1000000
 ```
 
 **哈希时间锁合约初始化**
@@ -66,18 +63,13 @@ amount: 1000000
 需要将资产合约的地址和对手方的哈希时间锁合约地址保存到自己的哈希时间锁合约。
 
 ```bash
+# 在BCOS控制台操作
 # 在FISCO BCOS控制台执行，此处约定Fabric的合约名为fabric_htlc，之后将以该名称安装和初始化链码
-call LedgerSampleHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 init ["0x1796f3f195697c38bedaaaa27e424d05f359ca0f","fabric_htlc"]
+call LedgerSampleHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 init ["0x06ce972bb1f2187c62c1043b801fbb002d2bc202","fabric_htlc"]
 
 # 查看owner余额，检查是否初始化成功
 call LedgerSampleHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 balanceOf ["0x55f934bcbe1e9aef8337f5551142a442fdde781c"]
 [100000000]
-```
-
-```eval_rst
-.. important::
-    - 初始化只能进行一次，所以在执行命令前务必确保相关参数都是正确的。
-    - 如果初始化时传参有误，只能重新部署哈希时间锁合约，并重新做资产授权。
 ```
 
 ### Fabric前期准备
