@@ -24,6 +24,11 @@ cd demo
 bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 ```
 
+```eval_rst
+.. note::
+    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../faq/faq.html#id3>`_ 的方式解决
+```
+
 部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
 
 ``` 
@@ -126,7 +131,7 @@ Result  : []
 Result: [80] // 再次query，a的值变成80
 
 # 退出WeCross控制台
-[WeCross]> quit 
+[WeCross]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
 ```
 
 WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链网络后，可基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
