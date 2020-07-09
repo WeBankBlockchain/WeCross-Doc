@@ -36,13 +36,13 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 
       FISCO BCOS                    Fabric
      (4node pbft)              (first-network)
-   (HelloWeCross.sol)             (abac.go)
+    (HelloWorld.sol)              (sacc.go)
            |                          |
            |                          |
     WeCross Router <----------> WeCross Router
 (127.0.0.1-8250-25500)      (127.0.0.1-8251-25501)
-           | 
-           | 
+           |
+           |
     WeCross Console
     
 Start console? [Y/n]
@@ -54,15 +54,15 @@ Start console? [Y/n]
 
 进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有两个资源：
 
-* payment.bcos.HelloWeCross
-  * 对应于FISCO BCOS链上的[HelloWeCross.sol](../stubs/bcos.html#id1)合约
-* payment.fabric.abac
-  * 对应于Fabric链上的[abac.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/abac/go/abac.go)合约
+* payment.bcos.HelloWorld
+  * 对应于FISCO BCOS链上的HelloWorld.sol合约
+* payment.fabric.sacc
+  * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
 
 ```bash
 [WeCross]> listResources
-path: payment.bcos.HelloWeCross, type: BCOS2.0, distance: 0
-path: payment.fabric.abac, type: Fabric1.4, distance: 1
+path: payment.bcos.HelloWorld, type: BCOS2.0, distance: 0
+path: payment.fabric.sacc, type: Fabric1.4, distance: 1
 total: 2
 ```
 
@@ -73,22 +73,22 @@ total: 2
 ```bash
 [WeCross]> listAccounts
 name: fabric_user1, type: Fabric1.4
-name: fabric_default_account, type: Fabric1.4
 name: bcos_user1, type: BCOS2.0
 name: bcos_default_account, type: BCOS2.0
+name: fabric_default_account, type: Fabric1.4
 total: 4
 ```
 
-**操作资源：payment.bcos.HelloWeCross**
+**操作资源：payment.bcos.HelloWorld**
 
 - 读资源
   - 命令：`call path 账户名 接口名 [参数列表]`
-  - 示例：`call payment.bcos.HelloWeCross bcos_user1 get`
+  - 示例：`call payment.bcos.HelloWorld bcos_user1 get`
   
 ```bash
-# 调用HelloWeCross合约中的get接口
-[WeCross]> call payment.bcos.HelloWeCross bcos_user1 get
-Result: [Talk is cheap, Show me the code]
+# 调用HelloWorld合约中的get接口
+[WeCross]> call payment.bcos.HelloWorld bcos_user1 get
+Result: [Hello, World!]
 ```
 
 - 写资源
@@ -97,38 +97,38 @@ Result: [Talk is cheap, Show me the code]
 
 ```bash
 # 调用HelloWeCross合约中的set接口
-[WeCross]> sendTransaction payment.bcos.HelloWeCross bcos_user1 set Tom
-Txhash  : 0x21a412a1eb5239f2da9d40d09d11ce0107a5d82d113f1ecb315f2aa5bd3cc0cd
-BlockNum: 2
-Result  : [Tom]  // 将Tom给set进去
+[WeCross]> sendTransaction payment.bcos.HelloWorld bcos_user1 set Tom
+Txhash  : 0x7e747198f553cb2e90e729b52179533dc4321e520b0f11b83b1f0e81fa7ff716
+BlockNum: 6
+Result  : []     // 将Tom给set进去
 
-[WeCross]> call payment.bcos.HelloWeCross bcos_user1 get
+[WeCross]> call payment.bcos.HelloWorld bcos_user1 get
 Result: [Tom]    // 再次get，Tom已set
 ```
 
-**操作资源：payment.fabric.abac**
+**操作资源：payment.fabric.sacc**
 
 跨链资源是对各个不同链上资源的统一和抽象，因此操作的命令是保持一致的。
 
 - 读资源
 
 ```bash
-# 调用abac合约中的query接口
-[WeCross]> call payment.fabric.abac fabric_user1 query a
-Result: [90] // 初次query，a的值为90
+# 调用mycc合约中的query接口
+[WeCross]> call payment.fabric.sacc fabric_user1 get a
+Result: [10] // 初次get，a的值为10
 ```
 
 - 写资源
 
 ```bash
-# 调用abac合约中的invoke接口
-[WeCross]> sendTransaction payment.fabric.abac fabric_user1 invoke a b 10
-Txhash  : db44b064c54d4dc97f01cdcd013cae219f7849c329f38ee102853344d8f0004d
-BlockNum: 5
-Result  : [] 
+# 调用sacc合约中的set接口
+[WeCross]> sendTransaction payment.fabric.sacc fabric_user1 set a 666
+Txhash  : eca4ecacf7b159c1499d6c190fcaf9fd7348bdb96cdbf35cd29b34ac9bd8e518
+BlockNum: 7
+Result  : [666]
 
-[WeCross]> call payment.fabric.abac fabric_user1 query a
-Result: [80] // 再次query，a的值变成80
+[WeCross]> call payment.fabric.sacc fabric_user1 get a
+Result: [666] // 再次get，a的值变成666
 
 # 退出WeCross控制台
 [WeCross]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
