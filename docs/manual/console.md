@@ -32,7 +32,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
   * [sendTransaction](#sendtransaction)：发交易，用于改变链上资源，触发出块
 
 * 跨链转账
-  * [newHTLCTransferProposal](#newhtlctransferproposal)：创建转账提案
+  * [newHTLCProposal](#newhtlcproposal)：创建转账提案
 
 #### 交互式命令
 
@@ -45,7 +45,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 - `Ctrl+R`：搜索输入的历史命令
 - &uarr;：  向前浏览历史命令
 - &darr;：  向后浏览历史命令
-- `tab`： 自动补全，支持命令、变量名、资源名以及其它固定参数的补全
+- `tab`： 自动补全，支持命令、变量名、资源名、账户名以及其它固定参数的补全
 
 ### 控制台响应
 
@@ -317,7 +317,7 @@ secret: afd1c0f9c2f8acc2c1ed839ef506e8e0d0b4636644a889f5aa8e65360420d2a9
 hash  : 66ebd11ec6cc289aebe8c0e24555b1e58a5191410043519960d26027f749c54f
 ```
 
-##### newHTLCTransferProposal
+##### newHTLCProposal
 新建一个基于哈希时间锁合约的跨链转账提案，该命令由两条链的资金转出方分别执行。
 
 参数：   
@@ -337,7 +337,7 @@ hash  : 66ebd11ec6cc289aebe8c0e24555b1e58a5191410043519960d26027f749c54f
     - timelock1：参与方的超时时间，小于发起方的超时时间
 
 ```bash
-[WeCross]> newHTLCTransferProposal payment.bcos.htlc bcos_sender 88b6cea9b5ece573c6c35cb3f1a2237bf380dfbbf9155b82d5816344cdac0185 null false Admin@org1.example.com User1@org1.example.com 200 2000010000 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf  100 2000000000
+[WeCross]> newHTLCProposal payment.bcos.htlc bcos_sender 88b6cea9b5ece573c6c35cb3f1a2237bf380dfbbf9155b82d5816344cdac0185 null false Admin@org1.example.com User1@org1.example.com 200 2000010000 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf  100 2000000000
 
 Txhash: 0x244d302382d03985eebcc1f7d95d0d4eef7ff2b3d528fdf7c93effa94175e921
 BlockNum: 2222

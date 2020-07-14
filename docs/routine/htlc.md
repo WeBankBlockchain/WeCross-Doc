@@ -27,12 +27,12 @@ WeCross提供了Solidity和Golang版本的htlc基类合约，基于htlc基类合
 bash start.sh
 
 # 发行资产，拥有者是bcos_user1，资产名为htlc，最小单位1，发行数量100000000
-[WeCross]> bcosDeploy payment.bcos.ledger bcos_user1 conf/contracts/solidity/LedgerSample.sol LedgerSample 1.0.0 token htlc 1 100000000
+[WeCross]> bcosDeploy payment.bcos.ledger bcos_user1 conf/contracts/solidity/LedgerSample.sol LedgerSample 1.0 token htlc 1 100000000
 # 资产合约地址需要记录下来
 Result: 0xf4fdcdfe0184644f09a1cfa16a945cc71a5d44ff
 
 # 部署htlc合约
-[WeCross]> bcosDeploy payment.bcos.htlc bcos_user1 conf/contracts/solidity/LedgerSampleHTLC.sol LedgerSampleHTLC 1.0.0
+[WeCross]> bcosDeploy payment.bcos.htlc bcos_user1 conf/contracts/solidity/LedgerSampleHTLC.sol LedgerSampleHTLC 1.0
 # htlc合约地址需要记录下来
 Result: 0x22a83719f748da09845d91fe1a2f44437f0ad13b
 ```
@@ -87,27 +87,27 @@ Result: [0x55f934bcbe1e9aef8337f5551142a442fdde781c]
 bash start.sh
 
 # 在机构1安装资产合约链码
-[WeCross]> fabricInstall payment.fabric.ledger fabric_admin_org1 1.0.0 Org1 GO_LANG
+[WeCross]> fabricInstall payment.fabric.ledger fabric_admin_org1 Org1 contracts/chaincode/ledger 1.0 GO_LANG
 path: classpath:contracts/chaincode/ledger
 Result: Success
 # 在机构2安装资产合约链码
-[WeCross]> fabricInstall payment.fabric.ledger fabric_admin_org2 1.0.0 Org2 GO_LANG
+[WeCross]> fabricInstall payment.fabric.ledger fabric_admin_org2 Org2 contracts/chaincode/ledger 1.0 GO_LANG
 path: classpath:contracts/chaincode/ledger
 Result: Success
 # 实例化链码，为fabric_admin发行资产100000000
-[WeCross]> fabricInstantiate payment.fabric.ledger fabric_admin 1.0.0 ["Org1","Org2"] GO_LANG default ["token","htlc","100000000"]
+[WeCross]> fabricInstantiate payment.fabric.ledger fabric_admin ["Org1","Org2"] contracts/chaincode/ledger 1.0 GO_LANG default ["token","htlc","100000000"]
 Result: Query success. Please wait and use 'listResources' to check.
 
 # 在机构1安装哈希时间锁合约链码
-[WeCross]> fabricInstall payment.fabric.htlc fabric_admin_org1 1.0.0 Org1 GO_LANG
+[WeCross]> fabricInstall payment.fabric.htlc fabric_admin_org1 Org1 contracts/chaincode/htlc 1.0 GO_LANG
 path: classpath:contracts/chaincode/htlc
 Result: Success
 # 在机构2安装哈希时间锁合约链码
-[WeCross]> fabricInstall payment.fabric.htlc fabric_admin_org2 1.0.0 Org2 GO_LANG
+[WeCross]> fabricInstall payment.fabric.htlc fabric_admin_org2 Org2 contracts/chaincode/htlc 1.0 GO_LANG
 path: classpath:contracts/chaincode/htlc
 Result: Success
 # 实例化哈希时间锁合约，需要写入[己方资产合约名，channel，以及BCOS的哈希时间锁合约地址]
-[WeCross]> fabricInstantiate payment.fabric.htlc fabric_admin 1.0.0 ["Org1","Org2"] GO_LANG default ["ledger","mychannel","0x22a83719f748da09845d91fe1a2f44437f0ad13b"]
+[WeCross]> fabricInstantiate payment.fabric.htlc fabric_admin ["Org1","Org2"] contracts/chaincode/htlc 1.0 GO_LANG default ["ledger","mychannel","0x22a83719f748da09845d91fe1a2f44437f0ad13b"]
 Result: Query success. Please wait and use 'listResources' to check.
 ```
 
