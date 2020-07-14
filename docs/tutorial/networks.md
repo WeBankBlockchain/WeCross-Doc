@@ -673,21 +673,21 @@ bash start.sh
 
 为不同的Org分别安装（install）相同的chaincode
 
-> 参数：ipath（xxx.yyy.zzz，xxx.yyy为指定的链，zzz为chaincode名），机构admin账户，指定一个版本，机构名，chaincode语言
+> 参数：ipath（xxx.yyy.zzz，xxx.yyy为指定的链，zzz为chaincode名），机构admin账户，机构名，chaincode代码工程目录，指定一个版本，chaincode语言
 
 ``` groovy
-[WeCross]> fabricInstall payment.fabric.sacc fabric_admin_org1 1.0 Org1 GO_LANG
+[WeCross]> fabricInstall payment.fabric.sacc fabric_admin_org1 Org1 contracts/chaincode/sacc 1.0 GO_LANG
 Result: Success
-[WeCross]> fabricInstall payment.fabric.sacc fabric_admin_org2 1.0 Org2 GO_LANG
+[WeCross]> fabricInstall payment.fabric.sacc fabric_admin_org2 Org2 contracts/chaincode/sacc 1.0 GO_LANG
 Result: Success
 ```
 
 实例化（instantiate）指定chaincode
 
-> 参数：ipath，admin账户，指定的版本，对应的几个Org，chaincode语言，背书策略，初始化参数
+> 参数：ipath，admin账户，对应的几个Org，chaincode代码工程目录，指定的版本，chaincode语言，背书策略（此处用默认），初始化参数
 
 ``` groovy
-[WeCross]> fabricInstantiate payment.fabric.sacc fabric_admin 1.0 ["Org1","Org2"] GO_LANG default ["a","10"]
+[WeCross]> fabricInstantiate payment.fabric.sacc fabric_admin ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"]
 Result: Query success. Please wait and use 'listResources' to check.
 ```
 
