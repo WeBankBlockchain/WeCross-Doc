@@ -1,6 +1,6 @@
 # 手动组网
 
-本文档介绍以手动的方式，一步步搭建一个与[Demo](./demo.md)相同的跨链网络。
+本文档介绍以手动的方式，一步步搭建一个与[Demo](./demo/demo.md)相同的跨链网络。
 
 ![](../images/tutorial/demo.png)
 
