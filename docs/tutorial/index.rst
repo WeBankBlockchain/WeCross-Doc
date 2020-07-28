@@ -10,5 +10,5 @@
    :maxdepth: 1
    
    env.md
-   demo.md
+   demo/index.md
    networks.md

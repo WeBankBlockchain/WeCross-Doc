@@ -1,26 +1,20 @@
-# 快速体验
+# 跨平台 FISCO BCOS & Fabric
 
-我们提供一个Demo帮助用户快速体验并理解WeCross的原理。Demo搭建了一个WeCross跨链网络，连接FISCO BCOS和Hyperledger Fabric区块链。用户可通过WeCross控制台，对不同的链上资源进行操作。
+此Demo搭建了一个WeCross跨链网络，连接FISCO BCOS和Hyperledger Fabric区块链。用户可通过WeCross控制台，对不同的链上资源进行操作。
 
-![](../images/tutorial/demo.png)
+![](../../images/tutorial/demo.png)
 
-## 搭建 Demo
+## 网络部署
 
-- 下载
-
-若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
-
-``` bash
-cd ~
-# 下载，生成demo文件夹
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh)
-```
-
-- 部署
+在已下载的demo目录下进行操作
 
 ```bash
-cd demo
-# 运行部署脚本，耗时10-30分钟左右
+cd ~/demo
+
+#清理旧demo环境
+bash clear.sh
+
+# 运行部署脚本，第一次运行需耗时10-30分钟左右
 bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 ```
 
@@ -48,7 +42,7 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 Start console? [Y/n]
 ```
 
-## 操作跨链资源
+## 跨链资源操作
 
 **查看资源**
 
@@ -142,9 +136,9 @@ WeCross支持两阶段事务
 
 ## 跨链转账
 
-WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示:
+WeCross基于[哈希时间锁合约](../../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示:
 
-![](../images/tutorial/htlc_sample.png)
+![](../../images/tutorial/htlc_sample.png)
 
 **配置哈希时间锁合约**
 
@@ -155,7 +149,7 @@ WeCross基于[哈希时间锁合约](../routine/htlc.html)实现了异构链之�
 bash htlc_config.sh
 ```
 
-跨链转账涉及两条链、两个用户、四个账户，两条链上的资产转出者各自通过WeCross控制台创建一个[转账提案](../routine/htlc.html#id4)，之后router会自动完成跨链转账。
+跨链转账涉及两条链、两个用户、四个账户，两条链上的资产转出者各自通过WeCross控制台创建一个[转账提案](../../routine/htlc.html#id4)，之后router会自动完成跨链转账。
 
 **创建转账提案**
 
@@ -236,12 +230,12 @@ Result: [500]
 
 ## 清理 Demo
 
-为了不影响[手动组网](./networks.md)章节的体验，可将搭建的Demo清理掉。
+为了不影响其它章节的体验，可将搭建的Demo清理掉。
 
 ``` bash
 cd ~/demo/
 bash clear.sh
 ```
 
-至此，恭喜你，快速体验完成！可进入[手动组网](./networks.md)章节深入了解更多细节。
+至此，恭喜你，快速体验完成！可进入[手动组网](../networks.md)章节深入了解更多细节。
 
