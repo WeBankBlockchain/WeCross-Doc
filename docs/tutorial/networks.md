@@ -134,62 +134,6 @@ netstat -napl | grep 8251
 netstat -napl | grep 25501
 ```
 
-### 部署WeCross控制台
-
-WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本`build_console.sh`搭建控制台。
-
-**下载WeCross控制台**
-
-执行如下命令进行下载（提供[三种下载方式](../version/download.html#id2)，可根据网络环境选择合适的方式进行下载），下载完成后在当前目录下生成`WeCross-Console`目录。
-
-```bash
-cd ~/wecross/
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_console.sh)
-```
-
-**配置控制台**
-
-```bash
-cd ~/wecross/WeCross-Console
-# 拷贝连接router所需的TLS证书，从生成的routers-payment/cert/sdk目录下拷贝
-cp ~/wecross/routers-payment/cert/sdk/* conf/ # 包含：ca.crt、node.nodeid、ssl.crt、ssl.key
-# 拷贝配置文件，并配置跨链路由RPC服务地址以及端口。此处采用默认配置，默认连接至本地8250端口。
-cp conf/application-sample.toml conf/application.toml
-```
-
-```eval_rst
-.. important::
-    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/application.toml，详见 `控制台配置 <../manual/console.html#id12>`_。
-```
-
-**启动控制台**
-
-```bash
-bash start.sh
-```
-
-启动成功则输出如下信息，通过`help`可查看控制台帮助
-
-```bash
-=================================================================================
-Welcome to WeCross console(v1.0.0-rc3)!
-Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
-=================================================================================
-```
-
-**测试功能**
-
-```bash
-# 查看连接的router当前支持接入的链类型
-[WeCross]> supportedStubs
-[BCOS2.0, GM_BCOS2.0, Fabric1.4] 
-
-# 退出控制台
-[server1]> quit
-```
-
-更多控制台命令及含义详见[控制台命令](../manual/console.html#id13)。
-
 ## 接入区块链
 
 完成了WeCross的部署，如何让它和一条真实的区块链交互，相信优秀的您一定在跃跃欲试。本节包括
@@ -616,6 +560,62 @@ bash stop.sh
 # 重新启动
 bash start.sh
 ```
+
+## 部署WeCross控制台
+
+WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本`build_console.sh`搭建控制台。
+
+**下载WeCross控制台**
+
+执行如下命令进行下载（提供[三种下载方式](../version/download.html#id2)，可根据网络环境选择合适的方式进行下载），下载完成后在当前目录下生成`WeCross-Console`目录。
+
+```bash
+cd ~/wecross/
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_console.sh)
+```
+
+**配置控制台**
+
+```bash
+cd ~/wecross/WeCross-Console
+# 拷贝连接router所需的TLS证书，从生成的routers-payment/cert/sdk目录下拷贝
+cp ~/wecross/routers-payment/cert/sdk/* conf/ # 包含：ca.crt、node.nodeid、ssl.crt、ssl.key
+# 拷贝配置文件，并配置跨链路由RPC服务地址以及端口。此处采用默认配置，默认连接至本地8250端口。
+cp conf/application-sample.toml conf/application.toml
+```
+
+```eval_rst
+.. important::
+    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/application.toml，详见 `控制台配置 <../manual/console.html#id12>`_。
+```
+
+**启动控制台**
+
+```bash
+bash start.sh
+```
+
+启动成功则输出如下信息，通过`help`可查看控制台帮助
+
+```bash
+=================================================================================
+Welcome to WeCross console(v1.0.0-rc3)!
+Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
+=================================================================================
+```
+
+**测试功能**
+
+```bash
+# 查看连接的router当前支持接入的链类型
+[WeCross]> supportedStubs
+[BCOS2.0, GM_BCOS2.0, Fabric1.4] 
+
+# 退出控制台
+[server1]> quit
+```
+
+更多控制台命令及含义详见[控制台命令](../manual/console.html#id13)。
 
 ## 部署跨链资源
 
