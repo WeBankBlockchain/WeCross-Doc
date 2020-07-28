@@ -279,7 +279,7 @@ b4118a65f01a        hyperledger/fabric-orderer:latest                           
 fcf1bfe17dbe        hyperledger/fabric-peer:latest                                                                         "peer node start"        14 minutes ago      Up 14 minutes       0.0.0.0:7051->7051/tcp     peer0.org1.example.com
 ```
 
-### 接入BCOS链
+### 接入FISCO BCOS链
 
 #### 添加账户
 
@@ -326,7 +326,7 @@ conf/accounts/fabric_user1/
 └── account.toml
 ```
 
-#### 配置接入BCOS链
+#### 配置接入FISCO BCOS链
 
 为router添加需要接入的链配置。
 
