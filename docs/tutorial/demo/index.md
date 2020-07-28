@@ -20,9 +20,9 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 **Demo 场景**
 
 * [跨平台 FISCO BCOS & Fabric](demo.md)
-  * [跨链资源操作](demo/demo.html#id2)
-  * [跨链事务（2PC）](demo/demo.html#id3)
-  * [跨链转账（HTLC）](demo/demo.html#id4)
+  * [跨链资源操作](./demo.html#id2)
+  * [跨链事务（2PC）](./demo.html#id3)
+  * [跨链转账（HTLC）](./demo.html#id4)
 * [跨多群组](demo_cross_groups.md)
 * [跨国密、非国密](demo_cross_gm.md)
 
