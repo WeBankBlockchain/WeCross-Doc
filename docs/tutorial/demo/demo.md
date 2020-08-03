@@ -228,7 +228,7 @@ Result: [500]
 
 WeCross支持多种事务机制。此跨链转账的demo是两阶段事务机制（2PC）的举例。WeCross基于其[2PC框架](../../routine/xa.html)实现了**异构链之间证据的同时确认**，如下图所示:
 
-![]()
+![](../../images/tutorial/2pc_sample.png)
 
 **部署跨链存证demo的合约**
 
