@@ -24,7 +24,7 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
    * [跨链资源操作](./demo.html#id2)
    * [跨链转账（HTLC）](./demo.html#id3)
 
-   * [跨链事务（2PC）](./demo.html#id4)
+   * [跨链存证（2PC）](./demo.html#id4)
 
 2. Demo：[跨多群组](demo_cross_groups.md)
 
