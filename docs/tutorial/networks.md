@@ -508,43 +508,37 @@ vim conf/chains/fabric/stub.toml
 
 [fabricServices]
     channelName = 'mychannel'
-    orgName = 'Org1'
-    mspId = 'Org1MSP'
     orgUserName = 'fabric_admin'
     orgUserAccountPath = 'classpath:accounts/fabric_admin'
     ordererTlsCaFile = 'orderer-tlsca.crt'
     ordererAddress = 'grpcs://localhost:7050'
 
-[peers]
-    [peers.peer1]
-        orgName = 'Org1' # 此peer属于的Org1
-        peerTlsCaFile = 'org1-tlsca.crt'
-        peerAddress = 'grpcs://localhost:7051'
-    [peers.peer2]
-        orgName = 'Org2' # 此peer属与的Org2
-        peerTlsCaFile = 'org2-tlsca.crt'
-        peerAddress = 'grpcs://localhost:9051'
+[orgs]
+    [orgs.Org1]
+         tlsCaFile = 'org1-tlsca.crt'
+         adminName = 'fabric_admin_org1'
+         endorsers = ['grpcs://localhost:7051']
+
+    [orgs.Org2]
+         tlsCaFile = 'org2-tlsca.crt'
+         adminName = 'fabric_admin_org2'
+         endorsers = ['grpcs://localhost:9051']
 ```
 
 **部署代理chaincode**
 
-代理chaincode是插件与链交互的入口。每个Org需用对应的账户进行部署。此router共配置了2个Org：
+执行命令，部署代理chaincode
 
 ``` bash
 cd ~/wecross/routers-payment/127.0.0.1-8251-25501
 
-# 部署Org1的代理chaincode：deploy，conf下的链配置位置，机构admin账户名，机构名
-java -cp conf/:lib/*:plugin/* com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric fabric_admin_org1 Org1 
-
-# 部署Org2的代理chaincode：deploy，conf下的链配置位置，机构admin账户名，机构名
-java -cp conf/:lib/*:plugin/* com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric fabric_admin_org2 Org2
+java -cp conf/:lib/*:plugin/* com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric # deploy conf下的链配置位置
 ```
 
 部署成功
 
 ``` bash
-SUCCESS: WeCrossProxy has been deployed to Org1
-SUCCESS: WeCrossProxy has been deployed to Org2
+SUCCESS: WeCrossProxy has been deployed to chains/fabric
 ```
 
 **启动路由**
