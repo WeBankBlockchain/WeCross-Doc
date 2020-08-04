@@ -39,7 +39,7 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
            |
     WeCross Console
     
-Start console? [Y/n]
+Start WeCross Console? [Y/n]
 ```
 
 ## 跨链资源操作
@@ -130,19 +130,15 @@ Result: [666] // 再次get，a的值变成666
 
 WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链网络后，可基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
 
-## 跨链事务
-
-WeCross支持两阶段事务
-
 ## 跨链转账
 
-WeCross基于[哈希时间锁合约](../../routine/htlc.html)实现了异构链之间资产的原子互换，如下图所示:
+WeCross支持多种事务机制。此跨链转账的demo是哈希时间锁定机制（HTLC）的举例。WeCross基于其[HTLC框架](../../routine/htlc.html)实现了**异构链之间资产的原子互换**，如下图所示:
 
 ![](../../images/tutorial/htlc_sample.png)
 
-**配置哈希时间锁合约**
+**部署哈希时间锁合约**
 
-可通过脚本`htlc_config.sh`完成相关配置，并体验跨链转账。
+可通过脚本`htlc_config.sh`完成相关部署，并体验跨链转账。
 
 ```bash
 # 请确保demo已搭建完毕，并在demo根目录执行，耗时5分钟左右
@@ -226,6 +222,144 @@ Result: [500]
 
 # 退出当前控制台
 [WeCross]> quit 
+```
+
+## 跨链存证
+
+WeCross支持多种事务机制。此跨链转账的demo是两阶段事务机制（2PC）的举例。WeCross基于其[2PC框架](../../routine/xa.html)实现了**异构链之间证据的同时确认**，如下图所示:
+
+![](../../images/tutorial/2pc_sample.png)
+
+**部署跨链存证demo的合约**
+
+用一键脚本，在FISCO BCOS和Fabric上分别部署存证跨链的两个存证demo合约
+
+``` bash
+cd ~/demo/
+bash 2pc_config.sh
+```
+
+部署成功，输入Y进入控制台
+
+``` 
+[INFO] SUCCESS: 2PC evidence example has been deployed to FISCO BCOS and Fabric:
+
+      FISCO BCOS                    Fabric
+(payment.bcos.evidence)    (payment.fabric.evidence)
+           |                          |
+           |                          |
+    WeCross Router <----------> WeCross Router
+(127.0.0.1-8250-25500)      (127.0.0.1-8251-25501)
+           |
+           |
+    WeCross Console
+
+Start WeCross Console to try? [Y/n]
+```
+
+**发起跨链事务（start）**
+
+发起一个跨链事务，指定事务涉及的跨链资源，此处FISCO BCOS和Fabric上各一个资源
+
+* payment.bcos.evidence
+* payment.fabric.evidence
+
+``` bash
+# 发起事务，事务号100 
+[WeCross]> startTransaction 100 bcos_user1 fabric_user1 payment.bcos.evidence payment.fabric.evidence
+Result: success!
+
+# 查看当前存证evidence0的内容
+[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence0
+Result: [] # 未存入，空
+
+[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence0
+Result: [] # 未存入，空
+```
+
+**发送事务操作（exec）**
+
+事务开始后，通过execTransaction此事务涉及的资源发送事务操作，操作会被缓存，在下一步commit时让所有操作同时被确认。
+
+``` bash
+# 在FISCO BCOS链上进行存证，事务号100，序列号1，证据名：evidence0，内容：I'm Tom
+[WeCross]> execTransaction payment.bcos.evidence bcos_user1 100 1 newEvidence evidence0 "I'm Tom"
+Result: [true]
+
+# 在Fabric链上进行存证，事务号100，序列号1，证据名：evidence0，内容：I'm Jerry
+[WeCross]> execTransaction payment.fabric.evidence fabric_user1 100 1 newEvidence evidence0 "I'm Jerry"
+Result: [newEvidence success]
+
+# 可发送更多的操作
+```
+
+**确认跨链事务（commit）**
+
+在此事务下缓存了一些列的事务操作后，通过commitTransaction让所有操作同时被确认，结束此事务。
+
+``` bash 
+# 确认事务，事务结束
+[WeCross]> commitTransaction 100 bcos_user1 fabric_user1 payment.bcos.evidence payment.fabric.evidence
+Result: success!
+
+# 查看当前存证内容，两条链都已完成存证
+[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence0
+Result: [I'm Tom]
+
+[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence0
+Result: [I'm Jerry]
+```
+
+**回滚跨链事务（rollback）**
+
+在commit前，若不想让事务发生，则用rollbackTransaction回滚此事务，所有缓存的事务操作被丢弃，链上数据回退到事务发起前状态，事务结束。（每个事务要么commit，要么rollback）
+
+``` bash
+# 查看当前存证evidence1的内容
+[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence1
+Result: [] # 未存入，空
+
+[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence1
+Result: [] # 未存入，空
+
+# 发起另一个事务，事务号101
+[WeCross]> startTransaction 101 bcos_user1 fabric_user1 payment.bcos.evidence payment.fabric.evidence
+Result: success!
+
+# 向FISCO BCOS链发送事务操作，设置evidence1，内容为I'm TomGG
+[WeCross]> execTransaction payment.bcos.evidence bcos_user1 101 1 newEvidence evidence1 "I'm TomGG"
+Result: [true]
+
+# 向Fabric链发送事务操作，设置evidence1，内容为I'm JerryMM
+[WeCross]> execTransaction payment.fabric.evidence fabric_user1 101 1 newEvidence evidence1 "I'm JerryMM"
+Result: [newEvidence success]
+
+# 查看当前事务状态下的数据
+[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence1
+Result: [I'm TomGG]
+
+# 查看当前事务状态下的数据
+[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence1
+Result: [I'm JerryMM]
+
+# 尝试发送普通交易修改此事务下的资源，由于此资源处在事务状态中，被锁定，不可修改
+[WeCross]> sendTransaction payment.bcos.evidence bcos_user1 newEvidence evidence1 "I'm TomDD"
+Error: code(2031), message(payment.bcos.evidence is locked by unfinished transaction: 101)
+
+# 查看当前事务状态下的数据，未变化，普通交易修改失败，符合预期
+[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence1
+Result: [I'm TomGG]
+
+# 回滚操作！假设此事务不符合预期，需回滚至事务开始前状态，执行如下命令进行回滚，事务结束
+[WeCross]> rollbackTransaction 101 bcos_user1 fabric_user1 payment.bcos.evidence payment.fabric.evidence
+Result: success!
+
+# 再次查看当前存证evidence1的内容
+[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence1
+Result: [] # 已回滚至开始状态
+
+[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence1
+Result: [] # 已回滚至开始状态
 ```
 
 ## 清理 Demo
