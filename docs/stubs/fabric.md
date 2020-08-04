@@ -246,7 +246,7 @@ vim conf/chains/fabric/stub.toml
 配置完成后，在router目录下执行命令，部署代理合约
 
 ``` bash
-java -cp conf/:lib/*:plugin/* com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric # deploy conf下的链配置位置
+java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric # deploy conf下的链配置位置
 ```
 
 部署成功
