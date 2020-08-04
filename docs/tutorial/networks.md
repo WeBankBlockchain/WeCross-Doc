@@ -340,7 +340,7 @@ vim conf/chains/bcos/stub.toml
 ``` bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
 
-java -cp conf/:lib/*:plugin/* com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment deploy chains/bcos bcos_user1 # deploy conf下的链配置位置 账户名
+java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment deploy chains/bcos bcos_user1 # deploy conf下的链配置位置 账户名
 ```
 
 部署成功，输出
@@ -532,7 +532,7 @@ vim conf/chains/fabric/stub.toml
 ``` bash
 cd ~/wecross/routers-payment/127.0.0.1-8251-25501
 
-java -cp conf/:lib/*:plugin/* com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric # deploy conf下的链配置位置
+java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric # deploy conf下的链配置位置
 ```
 
 部署成功
@@ -682,7 +682,7 @@ Result: Success
 
 ``` groovy
 [WeCross]> fabricInstantiate payment.fabric.sacc fabric_admin ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"]
-Result: Query success. Please wait and use 'listResources' to check.
+Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
 ```
 
 instantiate请求后，需等待1min左右。用`listResources`查看是否成功。若instantiate成功，可查询到资源`payment.fabric.sacc`。
