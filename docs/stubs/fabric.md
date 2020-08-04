@@ -123,9 +123,7 @@ vim conf/accounts/<account_name>/account.toml
     signcert = 'user.crt'		# 账户证书名字，指向与此文件相同目录下的证书文件
 ```
 
-
-
-## 插件配置
+## 接入链配置
 
 在router中配置需接入的链，访问链上资源。
 
@@ -137,8 +135,8 @@ vim conf/accounts/<account_name>/account.toml
 chains							# router的stub的配置目录，所有的stub都在此目录下配置
 └── fabric						# 此链的名字，名字可任意指定，与链类型无关
     ├── orderer-tlsca.crt		# orderer证书
-    ├── org1-tlsca.crt			# 需要连接的peer的证书1，有则配
-    ├── org2-tlsca.crt			# 需要连接的peer的证书2，有则配
+    ├── org1-tlsca.crt			# 需要连接Org1的endorser的证书1，有则配
+    ├── org2-tlsca.crt			# 需要连接Org2的endorser的证书2，有则配
     └── stub.toml				# stub配置文件
 ```
 
@@ -151,29 +149,21 @@ chains							# router的stub的配置目录，所有的stub都在此目录下配
 
 [fabricServices]
     channelName = 'mychannel'
-    orgName = 'Org1'
-    mspId = 'Org1MSP'
     orgUserName = 'fabric_admin'
     orgUserAccountPath = 'classpath:accounts/fabric_admin'
     ordererTlsCaFile = 'orderer-tlsca.crt'
     ordererAddress = 'grpcs://localhost:7050'
 
-[peers]
-    [peers.org1]
-        peerTlsCaFile = 'org1-tlsca.crt'
-        peerAddress = 'grpcs://localhost:7051'
-    [peers.org2]
-         peerTlsCaFile = 'org2-tlsca.crt'
-         peerAddress = 'grpcs://localhost:9051'
+[orgs]
+    [orgs.Org1]
+         tlsCaFile = 'org1-tlsca.crt'
+         adminName = 'fabric_admin_org1'
+         endorsers = ['grpcs://localhost:7051']
 
-# resources is a list
-[[resources]]
-    # name cannot be repeated
-    name = 'abac'
-    type = 'FABRIC_CONTRACT'
-    chainCodeName = 'mycc'
-    chainLanguage = "go"
-    peers=['org1','org2']
+    [orgs.Org2]
+         tlsCaFile = 'org2-tlsca.crt'
+         adminName = 'fabric_admin_org2'
+         endorsers = ['grpcs://localhost:9051']
 ```
 
 ### 配置步骤
@@ -202,9 +192,9 @@ conf/chains/fabric
 ``` bash
 # 拷贝 orderer证书
 cp ~/demo/fabric/fabric-sample/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem conf/chains/fabric/orderer-tlsca.crt
-# 拷贝 peer.org1 证书
+# 拷贝 Org1 证书
 cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt conf/chains/fabric/org1-tlsca.crt
-# 拷贝 peer.org2 证书
+# 拷贝 Org2 证书
 cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt conf/chains/fabric/org2-tlsca.crt
 ```
 
@@ -226,42 +216,56 @@ vim conf/chains/fabric/stub.toml
 
 ``` toml
 [fabricServices]
-    channelName = 'mychannel'	
-    orgName = 'Org1'				# 指定一个机构机构名
-    mspId = 'Org1MSP'				# 相应的机构MSP ID
-    orgUserName = 'fabric_admin'	# 机构的 admin 账户名
-    orgUserAccountPath = 'classpath:accounts/fabric_admin'# 账户配置步骤已配置好的admin账户目录
+    channelName = 'mychannel'
+    orgUserName = 'fabric_admin' # 指定一个机构的admin账户，用于与orderer通信
     ordererTlsCaFile = 'orderer-tlsca.crt' # orderer证书名字，指向与此配置文件相同目录下的证书
-    ordererAddress = 'grpcs://localhost:7050'	# orderer的url
+    ordererAddress = 'grpcs://localhost:7050' # orderer的url
 
-[peers]	# peers列表
-    [peers.org1]
-        peerTlsCaFile = 'org1-tlsca.crt'	# peer.org1证书名，指向与此配置文件相同目录下的证书	
-        peerAddress = 'grpcs://localhost:7051'						# peer.org1的URL
-    [peers.org2]
-         peerTlsCaFile = 'org2-tlsca.crt'	# peer.org2证书名，指向与此配置文件相同目录下的证书	
-         peerAddress = 'grpcs://localhost:9051'						# peer.org2的URL
+[orgs] # 机构节点列表
+    [orgs.Org1] # 机构1：Org1
+         tlsCaFile = 'org1-tlsca.crt' # Org1的证书
+         adminName = 'fabric_admin_org1' # Org1的admin账户，在下一步骤中配置
+         endorsers = ['grpcs://localhost:7051'] # endorser的ip:port列表，可配置多个
+
+    [orgs.Org2] # 机构2：Org2
+         tlsCaFile = 'org2-tlsca.crt' # Org2的证书
+         adminName = 'fabric_admin_org2' # Org2的admin账户，在下一步骤中配置
+         endorsers = ['grpcs://localhost:9051'] # endorser的ip:port列表，可配置多个
 ```
 
-* 配置跨链资源
+**配相关账户**
 
-``` toml
-# resources is a list
-[[resources]]
-    # name cannot be repeated
-    name = 'HelloWeCross'		# 资源名，对应path中的{zone}/{chain}/{resource}中的resource
-    type = 'FABRIC_CONTRACT'	# 合约类型，默认即可
-    chainCodeName = 'mycc'		# chaincode名字
-    chainLanguage = "go"		# chaincode编程语言
-    peers=['org1','org2']		# 此chaincode对应的peers列表，在[peers]中需
-    
-[[resources]]					# 另一个资源的配置
-    name = 'HelloWorld'
-    type = 'FABRIC_CONTRACT'
-    chainCodeName = 'mygg'
-    chainLanguage = "go"
-    peers=['org1','org2']
+`stub.toml`中涉及三个账户，采用账户配置给出的步骤配置入conf/accounts目录即可：
+
+* fabric_admin：fabricServices的admin账户，用于与orderer通信，此处选择一个Org的admin账户作为此账户即可
+* fabric_admin_org1：与Org1的endorser通信的账户，需配置Org1的admin
+* fabric_admin_org2：与Org2的endorser通信的账户，需配置Org2的admin，**注意生成账户后需手动将默认的mspid改为 Org2MSP**
+
+**部署代理合约**
+
+配置完成后，在router目录下执行命令，部署代理合约
+
+``` bash
+java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric # deploy conf下的链配置位置
 ```
+
+部署成功
+
+``` bash
+SUCCESS: WeCrossProxy has been deployed to chains/fabric
+```
+
+代理合约部署完成后，即可启动router，接入链配置完成
+
+## 部署跨链资源
+
+用户可通过WeCross控制台部署和升级链码，相关操作见控制台说明部分：
+
+* [fabricInstall](../manual/console.html#fabricInstall)
+* [fabricInstantiate](../manual/console.html#fabricInstantiate)
+* [fabricUpgrade](../manual/console.html#fabricUpgrade)
+
+
 
 
 

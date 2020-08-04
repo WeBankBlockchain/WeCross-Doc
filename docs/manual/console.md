@@ -26,11 +26,17 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
   * [detail](#detail)：查看资源详情
   * [listAccounts](#listaccounts)：查看账户列表
   * [supportedStubs](#supportedstubs)：查看连接的router支持接入的链类型
-
 * 资源调用
   * [call](#call)：调用链上资源，用于查询，不触发出块
   * [sendTransaction](#sendtransaction)：发交易，用于改变链上资源，触发出块
-
+* 资源部署
+  * BCOS：[bcosDeploy](#bcosDeploy)、[bcosRegister](#bcosRegister)
+  * Fabric：[fabricInstall](#fabricInstall)、[fabricInstantiate](#fabricInstantiate)、[fabricUpgrade](#fabricUpgrade)
+* 跨链事务
+  * [startTransaction](#startTransaction)：开始两阶段事务
+  * [execTransaction](#execTransaction)：发起事务交易
+  * [commitTransaction](#commitTransaction)：提交事务，确认事务执行过程中所有的变动
+  * [rollbackTransaction](#rollbackTransaction)：撤销本次事务的所有变更时
 * 跨链转账
   * [newHTLCProposal](#newhtlcproposal)：创建转账提案
 
@@ -153,10 +159,12 @@ startTransaction                   Start a 2pc transaction.
 commitTransaction                  Commit a 2pc transaction.
 rollbackTransaction                Rollback a 2pc transaction.
 getTransactionInfo                 Get info of specified transaction.
+getTransactionIDs                  Get all transaction ids.
 bcosDeploy                         Deploy contract in BCOS chain.
 bcosRegister                       Register contract abi in BCOS chain.
 fabricInstall                      Install chaincode in fabric chain.
 fabricInstantiate                  Instantiate chaincode in fabric chain.
+fabricUpgrade                      Upgrade chaincode in fabric chain.
 genTimelock                        Generate two valid timelocks.
 genSecretAndHash                   Generate a secret and its hash.
 newHTLCProposal                    Create a htlc transfer proposal .
@@ -296,7 +304,80 @@ BlockNum: 2219
 Result  : [hello, wecross]
 ```
 
+##### bcosDepoly
+
+FISCO BCOS 合约部署命令
+
+##### bcosRegister
+
+FISCO BCOS 注册已有合约为跨链资源
+
+##### fabricInstall
+
+Fabric 安装链码命令，安装后需fabricInstantiate来启动链码
+
+参数：
+
+* path：跨链资源标识。   
+* account：被安装链码的endorser所属机构的admin账户
+* orgName：被安装链码的endorser所属的机构
+* sourcePath：链码工程所在目录，支持绝对路径和WeCross-Console的conf目录内的相对路径
+* version：指定一个版本，fabricInstantiate时与此版本对应
+* language：指定一个链码语言，支持GO_LANG和JAVA
+
+```bash
+[WeCross]> fabricInstall payment.fabric.sacc fabric_admin_org1 Org1 contracts/chaincode/sacc 1.0 GO_LANG
+Result: Success
+[WeCross]> fabricInstall payment.fabric.sacc fabric_admin_org2 Org2 contracts/chaincode/sacc 1.0 GO_LANG
+Result: Success
+```
+
+##### fabricInstantiate
+
+Fabric 启动（实例化）已安装的链码。此步骤前需先用fabricInstall向指定机构安装链码。
+
+参数：
+
+* path：跨链资源标识。   
+* account：指定一个发交易的账户
+* orgNames：链码被安装的的机构列表
+* sourcePath：链码工程所在目录，支持绝对路径和WeCross-Console的conf目录内的相对路径
+* version：指定一个版本，与fabricInstall时的版本对应
+* language：指定一个链码语言，支持GO_LANG和JAVA
+* policy：指定背书策略文件，设置default为OR所有endorser
+* initArgs：链码初始化参数
+
+``` bash
+[WeCross]> fabricInstantiate payment.fabric.sacc fabric_admin ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"]
+Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
+```
+
+启动时间较长（1min左右），可用listResources查看是否已启动，若长时间未启动，可查看router的日志进行排查。
+
+##### fabricUpgrade
+
+Fabric 升级已启动的链码逻辑，不改变已上链的数据。此步骤前需先用fabricInstall向指定机构安装另一个版本的链码。
+
+参数：
+
+* path：跨链资源标识。   
+* account：指定一个发交易的账户
+* orgNames：链码被安装的的机构列表
+* sourcePath：链码工程所在目录，支持绝对路径和WeCross-Console的conf目录内的相对路径
+* version：指定一个版本，与fabricInstall时的版本对应
+* language：指定一个链码语言，支持GO_LANG和JAVA
+* policy：指定背书策略文件，设置default为OR所有endorser
+* initArgs：链码初始化参数
+
+``` bash
+[WeCross]> fabricUpgrade payment.fabric.sacc fabric_admin ["Org1","Org2"] contracts/chaincode/sacc 2.0 GO_LANG default ["a","10"]
+Result: Upgrading... Please wait and use 'detail' to check the version. See router's log for more information.
+```
+
+升级时间较长（1min左右），可用`detail payment.fabric.sacc`查看版本号，若长时间升级完成，可查看router的日志进行排查。
+
 ##### genTimelock
+
 跨链转账辅助命令，根据时间差生成两个合法的时间戳。
 
 参数：   
@@ -429,6 +510,10 @@ execTransaction zone.chain.res2 account 100 1 set 'fromUserName' 'property' "tru
 rollbackTransaction 100 account zone.chain #回滚事务
 
 ```
+
+##### getTransactionInfo
+
+##### getTransactionIDs
 
 ### 交互式命令
 
