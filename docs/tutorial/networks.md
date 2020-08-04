@@ -682,7 +682,7 @@ Result: Success
 
 ``` groovy
 [WeCross]> fabricInstantiate payment.fabric.sacc fabric_admin ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"]
-Result: Query success. Please wait and use 'listResources' to check.
+Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
 ```
 
 instantiate请求后，需等待1min左右。用`listResources`查看是否成功。若instantiate成功，可查询到资源`payment.fabric.sacc`。

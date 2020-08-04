@@ -152,7 +152,7 @@ conf/accounts/
     └── account.toml
 ```
 
-## 插件配置
+## 接入链配置
 
 stub插件的配置文件为`stub.toml`，作用：
 - 配置资源信息
