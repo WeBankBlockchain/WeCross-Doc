@@ -33,10 +33,11 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
   * BCOS：[bcosDeploy](#bcosDeploy)、[bcosRegister](#bcosRegister)
   * Fabric：[fabricInstall](#fabricInstall)、[fabricInstantiate](#fabricInstantiate)、[fabricUpgrade](#fabricUpgrade)
 * 跨链事务
-  * [startTransaction](#startTransaction)：开始两阶段事务
-  * [execTransaction](#execTransaction)：发起事务交易
-  * [commitTransaction](#commitTransaction)：提交事务，确认事务执行过程中所有的变动
-  * [rollbackTransaction](#rollbackTransaction)：撤销本次事务的所有变更时
+  * [startTransaction](#starttransaction)：开始两阶段事务
+  * [execTransaction](#exectransaction)：发起事务交易
+  * [callTransaction](#calltransaction)：读取事务过程中的数据
+  * [commitTransaction](#committransaction)：提交事务，确认事务执行过程中所有的变动
+  * [rollbackTransaction](#rollbacktransaction)：撤销本次事务的所有变更时
 * 跨链转账
   * [newHTLCProposal](#newhtlcproposal)：创建转账提案
 
@@ -159,7 +160,7 @@ startTransaction                   Start a 2pc transaction.
 commitTransaction                  Commit a 2pc transaction.
 rollbackTransaction                Rollback a 2pc transaction.
 getTransactionInfo                 Get info of specified transaction.
-getTransactionIDs                  Get all transaction ids.
+getTransactionIDs                  Get transaction ids of 2pc.
 bcosDeploy                         Deploy contract in BCOS chain.
 bcosRegister                       Register contract abi in BCOS chain.
 fabricInstall                      Install chaincode in fabric chain.
@@ -394,8 +395,8 @@ timelock1: 1586916989
 
 ```bash
 [WeCross]> genSecretAndHash
-secret: afd1c0f9c2f8acc2c1ed839ef506e8e0d0b4636644a889f5aa8e65360420d2a9
 hash  : 66ebd11ec6cc289aebe8c0e24555b1e58a5191410043519960d26027f749c54f
+secret: afd1c0f9c2f8acc2c1ed839ef506e8e0d0b4636644a889f5aa8e65360420d2a9
 ```
 
 ##### newHTLCProposal
@@ -440,7 +441,7 @@ status: succeeded!
 ```
 
 ##### startTransaction
-开始两阶段事务
+写接口，开始两阶段事务
 
 参数：
 - transactionID：事务ID，类型为字符串，由用户指定，作为事务的唯一标识，后续所有的事务资源操作都必须指定该事务ID
@@ -448,72 +449,157 @@ status: succeeded!
 - path_1 ... path_n：参与事务的资源路径列表，路径列表中的资源会被本次事务锁定，锁定后仅限本事务相关的交易才能对这些资源发起写操作，非本次事务的所有写操作都会被拒绝
 
 ```
-
-startTransaction 200 account fabric zone.chain.res1 zone.chain.res2
+[WeCross]> startTransaction 0001 bcos_user1 fabric_user1 payment.bcos.2pc payment.fabric.2pc
+Result: success!
 
 ```
 
 ##### execTransaction
-发起事务交易
+写接口，发起事务交易
 
 参数：
 - path：资源路径
 - account：交易账号
 - transactionID：事务ID，该资源正在参与事务的ID
 - seq：事务编号，本次操作的编号，每次事务交易唯一，要求递增
-- method：接口名，同sendTransaction
+- method：接口名，同sendTransaction。需要注意的是，该接口需要在合约中配套以`_revert`结尾的回滚接口。
 - args：参数，同sendTransaction
 
 ```
 
-execTransaction zone.chain.res1 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res1的transfer接口
+[WeCross]> execTransaction payment.bcos.2pc bcos_user1 0001 1 newEvidence key1 evidence1
+Result: [true]
 
-execTransaction zone.chain.res2 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res2的transfer接口
+[WeCross]> execTransaction payment.fabric.2pc fabric_user1 0001 1 newEvidence key1 evidence1
+Result: [newEvidence success]
+```
 
+##### callTransaction
+读接口，查询事务中的数据
+
+参数：
+- path：资源路径
+- account：交易账号
+- transactionID：事务ID，该资源正在参与事务的ID
+- method：接口名，同sendTransaction。
+- args：参数，同sendTransaction
+
+```
+[WeCross]> callTransaction payment.bcos.2pc bcos_user1 0002 queryEvidence key1
+Result: [evidence1]
 ```
 
 ##### commitTransaction
-提交事务，确认事务执行过程中所有的变动
+写接口，提交事务，确认事务执行过程中所有的变动
 
 参数：
 - transactionID：事务ID，待提交事务的ID
 - account_1 ... account_n：用于提交事务的账号列表，由于两阶段事务可能跨越多种区块链，多种区块链会使用不同类型的账号，需要为每种区块链指定至少一个账号，WeCross会使用相应类型的账号向链上发送提交事务交易
-- path_1 ... path_n：用于提交事务的路径列表，此处填写所有参与了事务的链，无需精确到参与事务的资源，填入链的路径即可
+- path_1 ... path_n：用于提交事务的路径列表
 
 ```
-
-startTransaction 100 account zone.chain.res1 zone.chain.res2 #开始事务
-
-execTransaction zone.chain.res1 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res1的transfer接口
-execTransaction zone.chain.res2 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res2的transfer接口
-
-commitTransaction 100 account zone.chain #提交事务
-
+[WeCross]> commitTransaction 0001 bcos_user1 fabric_user1 payment.bcos.2pc payment.fabric.2pc
 ```
 
 ##### rollbackTransaction
-撤销本次事务的所有变更时
+写接口，撤销本次事务的所有变更时
 
 参数：
 - transactionID：事务ID，待回滚事务的ID
 - account_1 ... account_n：用于回滚事务的账号列表，由于两阶段事务可能跨越多种区块链，多种区块链会使用不同类型的账号，需要为每种区块链指定至少一个账号，WeCross会使用相应类型的账号向链上发送回滚事务交易
-- path_1 ... path_n：用于回滚事务的路径列表，此处填写所有参与了事务的链，无需精确到参与事务的资源，填入链的路径即可
+- path_1 ... path_n：用于回滚事务的路径列表
 
 ```
+# 查看开始前的状态
+[WeCross]> call payment.bcos.2pc bcos_user1 queryEvidence key2
+Result: []
 
-startTransaction 100 account zone.chain.res1 zone.chain.res2 #开始事务
+# 开始事务
+[WeCross]> startTransaction 0002 bcos_user1 fabric_user1 payment.bcos.2pc payment.fabric.2pc
+Result: success!
 
-execTransaction zone.chain.res1 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res1的transfer接口
-execTransaction zone.chain.res2 account 100 1 transfer 'fromUserName' 'toUserName' 100 #调用事务资源zone.chain.res2的transfer接口
-execTransaction zone.chain.res2 account 100 1 set 'fromUserName' 'property' "true"  #调用事务资源zone.chain.res2的set接口，假设该接口调用失败
+# 执行事务
+[WeCross]> execTransaction payment.bcos.2pc bcos_user1 0002 1 newEvidence key2 evidence2
+Result: [true]
 
-rollbackTransaction 100 account zone.chain #回滚事务
+# 读事务数据
+[WeCross]> callTransaction payment.bcos.2pc bcos_user1 0002 queryEvidence key2
+Result: [evidence2]
 
+# 回滚事务
+[WeCross]> rollbackTransaction 0002 bcos_user1 fabric_user1 payment.bcos.2pc payment.fabric.2pc
+Result: success!
+
+# 查看事务回滚后的状态，和开始前保持一致
+[WeCross]> call payment.bcos.2pc bcos_user1 queryEvidence key2
+Result: []
 ```
-
 ##### getTransactionInfo
+读接口，查询事务信息
+
+参数：
+- transactionID：事务ID，待提交事务的ID
+- account_1 ... account_n：如果涉及多条链需要多个账户
+- path_1 ... path_n：参与事务的资源路径列表
+
+```
+[WeCross]> getTransactionInfo 0001 bcos_user1 fabric_user1 payment.bcos.2pc payment.fabric.2pc
+XATransactionInfo{
+ transactionID='0001',
+ status=1,
+ startTimestamp=1596962127015,
+ commitTimestamp=1596962353724,
+ rollbackTimestamp=0,
+ paths=[
+  payment.fabric.2pc,
+  payment.bcos.2pc
+ ],
+ transactionSteps=[
+  XATransactionStep{
+   seq=1,
+   contract='0xd6cd8179b796f0fc04718364c232723833b8ca59',
+   path='payment.bcos.2pc',
+   timestamp='1596962287683',
+   func='newEvidence(string,
+   string)',
+   args='0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000046b65793100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000965766964656e6365310000000000000000000000000000000000000000000000'
+  },
+  XATransactionStep{
+   seq=2,
+   contract='null',
+   path='payment.fabric.2pc',
+   timestamp='1596962314',
+   func='newEvidence',
+   args='{
+    "args":[
+     "key1",
+     "evidence1"
+    ]
+   }'
+  }
+ ]
+}
+```
 
 ##### getTransactionIDs
+读接口，查询链上的事务ID
+
+参数：
+- account：交易账户
+- path：指定需要查询的链
+- option：选项。0全部事务，1已完成的事务，2未完成的事务
+```
+[WeCross]> getTransactionIDs payment.bcos.2pc bcos_user1 0
+Result: [0001, 0002]
+
+[WeCross]> getTransactionIDs payment.bcos.2pc bcos_user1 1
+Result: [0001]
+
+[WeCross]> getTransactionIDs payment.bcos.2pc bcos_user1 2
+Result: [0002]
+
+```
+
 
 ### 交互式命令
 
