@@ -353,7 +353,7 @@ Source file path -- The solidity source code/solidity abi file path, e.g: HelloW
 Contract address -- contract address
 Version -- The contract version
 Example:
-    bcosRegister payment.bcos.HelloWeCross bcos_user1 conf/contracts/solidity/HelloWeCross.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
+    bcosRegister payment.bcos.HelloWorld bcos_user1 conf/contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
     bcosRegister payment.bcos.HelloWorld bcos_user1 /data/app/HelloWorld.abi 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
 ---------------------------------------------------------------------------------------------
 ```
@@ -367,7 +367,7 @@ Example:
 
 示例：
 ```shell
-> bcosRegister payment.my_bcos_chain.HelloWeCross my_bcos_account conf/contracts/solidity/HelloWeCross.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f v1.0
+> bcosRegister payment.my_bcos_chain.HelloWorld my_bcos_account conf/contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f v1.0
 Result: Success
 ```
 
