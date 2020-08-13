@@ -307,11 +307,70 @@ Result  : [hello, wecross]
 
 ##### bcosDepoly
 
-FISCO BCOS 合约部署命令
+FISCO BCOS 合约部署命令，成功返回部署的合约地址，失败返回错误描述
+
+```bash
+bcosDeploy -h
+---------------------------------------------------------------------------------------------
+Deploy contract and register contract info to CNS in BCOS chain
+Usage: bcosDeploy [Path] [Account] [Source file path] [Class name] [Version]
+Path -- e.g: [zone.chain.res], specify which the path to be deployed
+Account -- Choose an account to send transaction
+Source file path -- The solidity source code file path, e.g: HelloWorld.sol
+Class name -- The contract to be deploy
+Version -- The contract version
+Example:
+    bcosDeploy payment.bcos.HelloWorld bcos_user1 conf/contracts/solidity/HelloWorld.sol HelloWorld 1.0
+```
+
+参数：
+
+* Path: 跨链资源标示，用于标记部署的合约资源
+* Account: 部署合约发送交易的账户
+* Source file path: 部署的合约路径，支持绝对路径/相对路径
+* Class Name: 部署的合约名
+* Verseion: 部署合约版本号，**注意: 同一合约版本号唯一，再次部署相同的版本号会失败**
+
+示例：
+
+```bash
+
+[WeCross]> bcosDeploy payment.my_bcos_chain.HelloWorld my_bcos_account conf/contracts/solidity/HelloWorld.sol HelloWorld 1.0
+Result: 0x79a178e71dc77fbccd31d464c114c95403a31e00
+```
 
 ##### bcosRegister
 
-FISCO BCOS 注册已有合约为跨链资源
+FISCO BCOS 注册已有合约为跨链资源，成功返回`Success`，失败返回错误描述
+
+```shell
+bcosRegister -h
+---------------------------------------------------------------------------------------------
+Register contract info to CNS in BCOS chain
+Usage: bcosRegister [Path] [Account] [Source file path] [Contract address] [Version]
+Path -- e.g: [zone.chain.res], specify which the path to be register
+Account -- Choose an account to send transaction
+Source file path -- The solidity source code/solidity abi file path, e.g: HelloWorld.sol or HelloWorld.abi
+Contract address -- contract address
+Version -- The contract version
+Example:
+    bcosRegister payment.bcos.HelloWorld bcos_user1 conf/contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
+    bcosRegister payment.bcos.HelloWorld bcos_user1 /data/app/HelloWorld.abi 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
+---------------------------------------------------------------------------------------------
+```
+
+参数：
+* Path: 跨链资源标示，用于标记注册的合约资源
+* Account: 注册合约发送交易的账户
+* Source file path: 合约的ABI文件路径或者合约源码路径
+* Contract address: 注册的合约地址
+* Version: 合约版本号，**注意: 同一部署合约版本号唯一，再次部署相同版本号的合约会失败**
+
+示例：
+```shell
+> bcosRegister payment.my_bcos_chain.HelloWorld my_bcos_account conf/contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f v1.0
+Result: Success
+```
 
 ##### fabricInstall
 
