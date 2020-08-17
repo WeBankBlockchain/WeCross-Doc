@@ -16,15 +16,31 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
     RemoteCall<TransactionResponse> call(Request<TransactionRequest> request);
 
-    RemoteCall<TransactionResponse> call(String path, String accountName, String method, String... args);
+    RemoteCall<TransactionResponse> call(String path, String account, String method, String... args);
 
     RemoteCall<TransactionResponse> sendTransaction(Request<TransactionRequest> request);
 
-    RemoteCall<TransactionResponse> sendTransaction(String path, String accountName, String method, String... args);
+    RemoteCall<TransactionResponse> sendTransaction(String path, String account, String method, String... args);
+
+    RemoteCall<TransactionResponse> callTransaction(String transactionID, String path, String account, String method, String... args);
+
+    RemoteCall<TransactionResponse> execTransaction(String transactionID,String seq, String path, String account, String method, String... args);
+
+    RemoteCall<RoutineResponse> startTransaction(String transactionID, String[] accounts, String[] paths);
+
+    RemoteCall<RoutineResponse> commitTransaction(String transactionID, String[] accounts, String[] paths);
+
+    RemoteCall<RoutineResponse> rollbackTransaction(String transactionID, String[] accounts, String[] paths);
+
+    RemoteCall<RoutineInfoResponse> getTransactionInfo(String transactionID, String[] accounts, String[] paths);
+
+    RemoteCall<CommandResponse> customCommand(String command, String path, String account, Object... args);
+
+    RemoteCall<RoutineIDResponse> getTransactionIDs(String path, String account, int option);
 
 * 资源接口
 
-    Resource ResourceFactory.build(WeCrossRPC weCrossRPC, String path, String accountName)
+    Resource ResourceFactory.build(WeCrossRPC weCrossRPC, String path, String account)
 
     boolean isActive();
 
@@ -129,7 +145,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 参数   
 - `path`: `String` - 跨链资源标识     
-- `accountName`: `String` - 账户名
+- `account`: `String` - 账户名
 - `method`: `String` - 调用的方法
 
 #### 返回值   
@@ -153,7 +169,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 参数   
 - `path`: `String` - 跨链资源标识   
-- `accountName`: `String` - 账户名  
+- `account`: `String` - 账户名  
 - `method`: `String` - 调用的方法
 - `args` : `String...` - 可变参数列表
 
@@ -178,7 +194,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 参数   
 - `path`: `String` - 跨链资源标识  
-- `accountName`: `String` - 账户名   
+- `account`: `String` - 账户名   
 - `method`: `String` - 调用的方法
 
 #### 返回值   
@@ -202,7 +218,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 #### 参数   
 - `path`: `String` - 跨链资源标识  
-- `accountName`: `String` - 账户名   
+- `account`: `String` - 账户名   
 - `method`: `String` - 调用的方法
 - `args` : `String...` - 可变参数列表
 
@@ -217,8 +233,206 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 ```java
     TransactionResponse transactionResponse =
         weCrossRPC
-            .call(
+            .sendTransaction(
                 "payment.bcos.HelloWeCross","set","value")
+            .send();
+```
+
+### callTransaction
+获取事务中的状态数据，不发交易
+
+#### 参数   
+- `transactionID`:`String` - 事务ID
+- `path`: `String` - 跨链资源标识  
+- `account`: `String` - 账户名   
+- `method`: `String` - 调用的方法
+- `args` : `String...` - 可变参数列表
+
+#### 返回值   
+- `TransactionResponse` - 响应包
+   - `version`: `String` - 版本号
+   - `errorCode`: `int` - 状态码
+   - `message`: `String` - 错误消息
+   - `data`: `Receipt` - 调用结果
+     
+#### java示例
+```java
+    TransactionResponse transactionResponse =
+        weCrossRPC
+            .callTransaction(
+                "0001","payment.bcos.2pc","queryEvidence","key1")
+            .send();
+```
+
+### execTransaction
+执行事务，发交易
+
+#### 参数   
+- `transactionID`:`String` - 事务ID
+- `seq`:`String` - 事务序列号，需递增
+- `path`: `String` - 跨链资源标识  
+- `account`: `String` - 账户名   
+- `method`: `String` - 调用的方法
+- `args` : `String...` - 可变参数列表
+
+#### 返回值   
+- `TransactionResponse` - 响应包
+   - `version`: `String` - 版本号
+   - `errorCode`: `int` - 状态码
+   - `message`: `String` - 错误消息
+   - `data`: `Receipt` - 调用结果
+     
+#### java示例
+```java
+    TransactionResponse transactionResponse =
+        weCrossRPC
+            .execTransaction(
+                "0001","1","payment.bcos.2pc","newEvidence","key1","evidence1")
+            .send();
+```
+
+### startTransaction
+开始事务，锁定事务相关资源，发交易
+
+#### 参数   
+- `transactionID`:`String` - 事务ID
+- `accounts`:`String[]` - 账户列表，每条链需要一个发交易的账户
+- `paths`: `String[]` - 跨链资源列表 
+
+#### 返回值   
+- `RoutineResponse` - 响应包
+   - `version`: `String` - 版本号
+   - `errorCode`: `int` - 状态码
+   - `message`: `String` - 错误消息
+   - `data`: `int` - 调用结果
+     
+#### java示例
+```java
+    RoutineResponse routineResponse =
+        weCrossRPC
+            .startTransaction(
+                "0001", new String[]{"bcos_user1","fabric_user1"}, new String[]{"payment.bcos.2pc", "payment.fabric.2pc"},)
+            .send();
+```
+
+### commitTransaction
+提交事务，释放事务相关资源，发交易
+
+#### 参数   
+- `transactionID`:`String` - 事务ID
+- `accounts`:`String[]` - 账户列表，每条链需要一个发交易的账户
+- `paths`: `String[]` - 跨链资源列表 
+
+#### 返回值   
+- `RoutineResponse` - 响应包
+   - `version`: `String` - 版本号
+   - `errorCode`: `int` - 状态码
+   - `message`: `String` - 错误消息
+   - `data`: `int` - 调用结果
+     
+#### java示例
+```java
+    RoutineResponse routineResponse =
+        weCrossRPC
+            .commitTransaction(
+                "0001", new String[]{"bcos_user1","fabric_user1"}, new String[]{"payment.bcos.2pc", "payment.fabric.2pc"},)
+            .send();
+```
+
+### rollbackTransaction
+回滚事务，释放事务相关资源，发交易
+
+#### 参数   
+- `transactionID`:`String` - 事务ID
+- `accounts`:`String[]` - 账户列表，每条链需要一个发交易的账户
+- `paths`: `String[]` - 跨链资源列表 
+
+#### 返回值   
+- `RoutineResponse` - 响应包
+   - `version`: `String` - 版本号
+   - `errorCode`: `int` - 状态码
+   - `message`: `String` - 错误消息
+   - `data`: `int` - 调用结果
+     
+#### java示例
+```java
+    RoutineResponse routineResponse =
+        weCrossRPC
+            .rollbackTransaction(
+                "0001", new String[]{"bcos_user1","fabric_user1"}, new String[]{"payment.bcos.2pc", "payment.fabric.2pc"},)
+            .send();
+```
+
+### getTransactionInfo
+获取事务详情，不发交易
+
+#### 参数   
+- `transactionID`:`String` - 事务ID
+- `accounts`:`String[]` - 账户列表，每条链需要一个发交易的账户
+- `paths`: `String[]` - 跨链资源列表 
+
+#### 返回值   
+- `RoutineInfoResponse` - 响应包
+   - `version`: `String` - 版本号
+   - `errorCode`: `int` - 状态码
+   - `message`: `String` - 错误消息
+   - `data`: `String` - 事务信息
+     
+#### java示例
+```java
+    RoutineInfoResponse routineInfoResponse =
+        weCrossRPC
+            .getTransactionInfo(
+                "0001", new String[]{"bcos_user1","fabric_user1"}, new String[]{"payment.bcos.2pc", "payment.fabric.2pc"},)
+            .send();
+```
+
+### getTransactionIDs
+获取事务ID列表，不发交易
+
+#### 参数   
+- `path`: `String` - 跨链资源标识  
+- `account`: `String` - 账户名   
+- `option`: `int` - 选项，0全部事务，1已完成的事务，2未完成的事务
+- 
+#### 返回值   
+- `RoutineIDResponse` - 响应包
+   - `version`: `String` - 版本号
+   - `errorCode`: `int` - 状态码
+   - `message`: `String` - 错误消息
+   - `data`: `String[]` - 事务ID列表
+     
+#### java示例
+```java
+    RoutineIDResponse routineIDResponse =
+        weCrossRPC
+            .getTransactionIDs(
+                "payment.bcos.2pc", "bcos_user1", 0)
+            .send();
+```
+
+### customCommand
+自定义命令
+
+#### 参数  
+- `command`: `String` - 命令名称  
+- `path`: `String` - 跨链资源标识  
+- `account`: `String` - 账户名   
+- `args`: `Object...` - 可变参数
+- 
+#### 返回值   
+- `CommandResponse` - 响应包
+   - `version`: `String` - 版本号
+   - `errorCode`: `int` - 状态码
+   - `message`: `String` - 错误消息
+   - `data`: `String` - 调用结果
+     
+#### java示例
+```java
+    CommandResponse commandResponse =
+        weCrossRPC
+            .customCommand(
+                "deploy", "payment.bcos.2pc", "bcos_user1")
             .send();
 ```
 
@@ -230,7 +444,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 #### 参数   
 - `weCrossRPC` : `WeCrossRPC` - RPC实例
 - `path`: `String` - 跨链资源标识     
-- `accountName`: `String` - 账户名
+- `account`: `String` - 账户名
 
 #### 返回值   
 - `Resource` - 跨链资源实例
@@ -242,7 +456,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     WeCrossRPC weCrossRPC = WeCrossRPCFactory.build(weCrossRPCService);
 
     // 初始化资源实例
-    Resource resource = ResourceFactory.build(weCrossRPC, path, accountName);
+    Resource resource = ResourceFactory.build(weCrossRPC, path, account);
 ```
 
 **注**
@@ -390,3 +604,4 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 | 10301   | htlc错误      |
 | 2000x | 内部错误，结合message查看错误原因 |
 | 5xxxx | 插件内错误，结合message查看错误原因 |
+| 6xxxx | 两阶段事务错误，结合message查看错误原因 |

@@ -21,131 +21,127 @@ WeCross提供了Solidity和Golang版本的htlc基类合约，基于htlc基类合
 
 **部署合约**
 
-- 拷贝合约
-
-假设当前位于router的根目录，将`conf/chains-sample/bcos/htlc`目录下的`LedgerSample.sol`、`HTLC.sol`以及`LedgerSampleHTLC.sol`文件拷贝至BCOS控制台的`contracts/solidity`目录。
-
-- 部署`LedgerSampleHTLC.sol`
+进入连接BCOS链的router的控制台。
 
 ```bash
-[group:1]> deploy LedgerSampleHTLC
-# 合约地址需要记录下来
-contract address: 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1
-```
+bash start.sh
 
-**发行资产**
+# 发行资产，拥有者是bcos_user1，资产名为htlc，最小单位1，发行数量100000000
+[WeCross]> bcosDeploy payment.bcos.ledger bcos_user1 contracts/solidity/LedgerSample.sol LedgerSample 1.0 token htlc 1 100000000
+# 资产合约地址需要记录下来
+Result: 0xf4fdcdfe0184644f09a1cfa16a945cc71a5d44ff
 
-FISCO BCOS提供的资产示例合约可借助ledger-tool完成资产的发行、转账和授权。
-
-```bash
-git clone https://github.com/Shareong/ledger-tool.git
-cd ledger-tool
-gradle build
-# 工具包需要和节点通讯，将节点sdk目录下的证书文件ca.crt, sdk.crt, sdk.key拷贝到dist/conf目录，并根据实际情况配置conf目录下的application.xml，账户用默认的pem文件即可。
-# 根据金额发行资产，在dist目录下执行
-java -cp 'apps/*:lib/*:conf' Application init 100000000
-# 输出资产地址，以及资产的拥有者                                                                        
-assetAddress: 0x1796f3f195697c38bedaaaa27e424d05f359ca0f
-owner: 0x55f934bcbe1e9aef8337f5551142a442fdde781c
+# 部署htlc合约
+[WeCross]> bcosDeploy payment.bcos.htlc bcos_user1 contracts/solidity/LedgerSampleHTLC.sol LedgerSampleHTLC 1.0
+# htlc合约地址需要记录下来
+Result: 0x22a83719f748da09845d91fe1a2f44437f0ad13b
 ```
 
 **资产授权**
 
 要完成跨链转账，资产拥有者需要将资产的转移权授权给哈希时间锁合约。
 
+进入连接BCOS链的router的控制台。
+
 ```bash
-# approve [资产地址]，[被授权者地址]（此处为自己的哈希时间锁合约地址），[授权金额]
-java -cp 'apps/*:lib/*:conf' Application approve 0x1796f3f195697c38bedaaaa27e424d05f359ca0f 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 1000000
-# 成功输出如下
-approve successfully
-amount: 1000000
-```
+bash start.sh
+
+# approve [被授权者地址]（此处为自己的哈希时间锁合约地址），[授权金额]
+[WeCross]> sendTransaction payment.bcos.ledger bcos_user1 approve 0x22a83719f748da09845d91fe1a2f44437f0ad13b 1000000
+Txhash  : 0x718e948b0ab55697c61675253acfd580104e539c85e0fcb23c0686457ea429d4
+BlockNum: 46
+Result  : [true]
+``` 
 
 **哈希时间锁合约初始化**
 
 需要将资产合约的地址和对手方的哈希时间锁合约地址保存到自己的哈希时间锁合约。
 
-```bash
-# 在FISCO BCOS控制台执行，此处约定Fabric的合约名为fabric_htlc，之后将以该名称安装和初始化链码
-call LedgerSampleHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 init ["0x1796f3f195697c38bedaaaa27e424d05f359ca0f","fabric_htlc"]
+进入连接BCOS链的router的控制台。
 
-# 查看owner余额，检查是否初始化成功
-call LedgerSampleHTLC 0xc25825d8c0c9819e1302b1cd0019d3228686b2b1 balanceOf ["0x55f934bcbe1e9aef8337f5551142a442fdde781c"]
+```bash
+bash start.sh
+
+# init [己方资产合约地址] [对端哈希时间锁合约地址](此处约定Fabric的合约名为htlc，之后将以该名称安装和初始化链码)
+[WeCross]> sendTransaction payment.bcos.htlc bcos_user1 init 0xf4fdcdfe0184644f09a1cfa16a945cc71a5d44ff htlc
+Txhash  : 0x7df25ce20e7db6f6bba836bf54c258bb5386873e14b57e74a2371ec367b31779
+BlockNum: 51
+Result  : [success]
+
+# 查看bcos_user1的地址
+[WeCross]> call payment.bcos.htlc bcos_user1 queryAddress
+# bcos_user1的地址需要记录下来，发起转账提案时需要
+Result: [0x55f934bcbe1e9aef8337f5551142a442fdde781c]
+
+# 查看bcos_user1即owner余额，检查是否初始化成功
+[WeCross]> call payment.bcos.htlc bcos_user1 balanceOf 0x55f934bcbe1e9aef8337f5551142a442fdde781c
 [100000000]
 ```
 
-```eval_rst
-.. important::
-    - 初始化只能进行一次，所以在执行命令前务必确保相关参数都是正确的。
-    - 如果初始化时传参有误，只能重新部署哈希时间锁合约，并重新做资产授权。
-```
+###Fabric前期准备
 
-### Fabric前期准备
+进入连接fabric链的router的控制台。
 
-**拷贝链码**
+**部署合约**
 ```bash
-# 获取docker容器id
-docker ps -a|grep cli
-0523418f889d  hyperledger/fabric-tools:latest
-# 假设当前位于router根目录, 将链码拷贝到Fabric的chaincode目录下
-docker cp conf/chains-sample/fabric/ledger 0523418f889d:/opt/gopath/src/github.com/chaincode/ledger
-docker cp conf/chains-sample/fabric/htlc 0523418f889d:/opt/gopath/src/github.com/chaincode/htlc
-```
+bash start.sh
 
-**部署资产合约**
-```bash
-# 启动容器
-docker exec -it cli bash
-# 安装链码，-n指定名字，此处命名为ledgerSample
-peer chaincode install -n ledgerSample -v 1.0 -p github.com/chaincode/ledger/
-# 初始化
-peer chaincode instantiate -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n ledgerSample -l golang -v 1.0 -c '{"Args":["init","HTLCoin","htc","100000000"]}' -P 'OR ('\''Org1MSP.peer'\'','\''Org2MSP.peer'\'')'
-# 查看账户余额
-peer chaincode query -C mychannel -n ledgerSample -c '{"Args":["balanceOf","Admin@org1.example.com"]}'
-# 输出应该为100000000
+# 在机构1安装资产合约链码
+[WeCross]> fabricInstall payment.fabric.ledger fabric_admin_org1 Org1 contracts/chaincode/ledger 1.0 GO_LANG
+path: classpath:contracts/chaincode/ledger
+Result: Success
+# 在机构2安装资产合约链码
+[WeCross]> fabricInstall payment.fabric.ledger fabric_admin_org2 Org2 contracts/chaincode/ledger 1.0 GO_LANG
+path: classpath:contracts/chaincode/ledger
+Result: Success
+# 实例化链码，为fabric_admin发行资产100000000
+[WeCross]> fabricInstantiate payment.fabric.ledger fabric_admin ["Org1","Org2"] contracts/chaincode/ledger 1.0 GO_LANG default ["token","htlc","100000000"]
+Result: Query success. Please wait and use 'listResources' to check.
+
+# 在机构1安装哈希时间锁合约链码
+[WeCross]> fabricInstall payment.fabric.htlc fabric_admin_org1 Org1 contracts/chaincode/htlc 1.0 GO_LANG
+path: classpath:contracts/chaincode/htlc
+Result: Success
+# 在机构2安装哈希时间锁合约链码
+[WeCross]> fabricInstall payment.fabric.htlc fabric_admin_org2 Org2 contracts/chaincode/htlc 1.0 GO_LANG
+path: classpath:contracts/chaincode/htlc
+Result: Success
+# 实例化哈希时间锁合约，需要写入[己方资产合约名，channel，以及BCOS的哈希时间锁合约地址]
+[WeCross]> fabricInstantiate payment.fabric.htlc fabric_admin ["Org1","Org2"] contracts/chaincode/htlc 1.0 GO_LANG default ["ledger","mychannel","0x22a83719f748da09845d91fe1a2f44437f0ad13b"]
+Result: Query success. Please wait and use 'listResources' to check.
 ```
 
 **资产授权**
-ledgerSample合约通过创建一个托管账户实现资产的授权。
+fabric的示例资产合约通过创建一个托管账户实现资产的授权。
+
+进入连接fabric链的router的控制台。
 
 ```bash
-# 该命令默认使用admin账户发交易，即admin账户完成了一次授权
-peer chaincode invoke -C mychannel -n ledgerSample -c '{"Args":["createEscrowAccount","1000000"]}' -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem 
-```
+bash start.sh
 
-**部署哈希时间锁合约**
+# fabric_admin创建一个托管账户完成授权
+[WeCross]> sendTransaction payment.fabric.ledger fabric_admin createEscrowAccount 1000000
+Txhash  : d6a6241cbaac9cad768465213f3462f54c62e32f168c26bcce23d060315f0751
+BlockNum: 1097
+Result  : [HTLCoin-Admin@org1.example.com-EscrowAccount]
 
-```bash
-# 安装链码，命名为fabric_htlc
-peer chaincode install -n fabric_htlc -v 1.0 -p github.com/chaincode/htlc/
-# 初始化，需要指定己方资产合约名和对手方的哈希时间锁合约地址
-# init [己方资产合约名] [channel] [对手方哈希时间锁合约地址]
-peer chaincode instantiate -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n fabric_htlc -l golang -v 1.0 -c '{"Args":["init","ledgerSample","mychannel","0xc25825d8c0c9819e1302b1cd0019d3228686b2b1"]}'
+# 查看fabric_admin的地址
+[WeCross]> call payment.fabric.htlc fabric_admin queryAddress
+Result: [Admin@org1.example.com]
 
-# 查看admin余额，检查是否初始化成功
-peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["balanceOf","Admin@org1.example.com"]}'
-# 输出应该为99000000，因为有一部资产已经转到了托管账户。
+# 查看fabric_admin授权后的余额
+[WeCross]> call payment.fabric.htlc fabric_admin balanceOf Admin@org1.example.com
+Result: [99000000]
 ```
 
 ## 哈希时间锁合约配置
 
 **配置FISCO BCOS端router**
-
-在插件配置文件`stub.toml`中配置htlc资源。
-
-```toml
-[[resources]]
-    # name cannot be repeated
-    name = 'htlc'
-    type = 'BCOS_CONTRACT' # BCOS_CONTRACT or BCOS_SM_CONTRACT
-    contractAddress = '0xc25825d8c0c9819e1302b1cd0019d3228686b2b1'
-```
-
 在主配置文件`wecross.toml`中配置htlc任务。
 
 ```toml
 [[htlc]]
-     #本地配置的哈希时间锁资源路径
+     #直连链的哈希时间锁资源路径
     selfPath = 'payment.bcos.htlc' 
 
     #确保已在router的accounts目录配置了bcos_default_account账户    
@@ -166,24 +162,12 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["balanceOf","Admin
 
 **配置Fabric端router**
 
-在插件配置文件`stub.toml`中配置htlc资源。
-
-```toml
-[[resources]]
-    # name cannot be repeated
-    name = 'htlc'
-    type = 'FABRIC_CONTRACT'
-    chainCodeName = 'fabric_htlc'
-    chainLanguage = "go"
-    peers=['org1']
-```
-
 在主配置文件`wecross.toml`中配置htlc任务。
 
 ```toml
 [[htlc]]
 
-     #本地配置的哈希时间锁资源路径
+     #直连链的的哈希时间锁资源路径
     selfPath = 'payment.fabric.htlc' 
 
     #确保已在router的accounts目录配置了fabric_default_account账户    
@@ -195,14 +179,6 @@ peer chaincode query -C mychannel -n fabric_htlc -c '{"Args":["balanceOf","Admin
     #确保已在router的accounts目录配置了bcos_default_account账户    
     account2 = 'bcos_default_account'     
 ```
-
-**配置发送者账户**
-
-两个router需要在accounts目录下配置发送者的账户，因为跨链提案只能由资产的转出者创建。
-
-FISCO BCOS用户需要将`ledger-tool/dist/conf`目录下的私钥文件配置到router端的accounts目录，并假设命名为bcos，配置方法详见[BCOS账户配置](../stubs/bcos.html#id4)。
-
-Fabric用户需要将admin账户配置到router端的`accounts`目录，并假设命名为fabric，配置方法详见[Fabric账户配置](../stubs/fabric.html#id3)。
 
 **重启两个router**
 
@@ -221,11 +197,11 @@ $$
 **协商内容**
 
 - FISCO BCOS的两个账户：
-    - 资产转出者：0x55f934bcbe1e9aef8337f5551142a442fdde781c（和ledger-tool初始化时返回的owner地址保持一致）
+    - 资产转出者：0x55f934bcbe1e9aef8337f5551142a442fdde781c（BCOS链发行资产的地址）
     - 资产接收者：0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
 - FISCO BCOS转账金额：700
 - Fabric的两个账户：
-    - 资产转出者：Admin@org1.example.com （admin账户）
+    - 资产转出者：Admin@org1.example.com （fabric链发行资产的地址）
     - 资产接收者：User1@org1.example.com
 - Fabric转账金额500
 - 哈希: 2afe76d15f32c37e9f219ffd0a8fcefc76d850fa9b0e0e603cbd64a2f4aa670d
@@ -245,7 +221,7 @@ $$
 两条链的**资产转出者**通过WeCross控制台创建跨链转账提案，将协商的转账信息写入各自的区块链。
 
 - 命令介绍
-    - 命令：`newHTLCTransferProposal`
+    - 命令：`newHTLCProposal`
     - 参数：`path`, `account`(资产转出者账户名), `hash`，`secret`， `role`，`sender0`，`receiver0`，`amount0`，`timelock0`，`sender1`，`receiver1`，`amount1`，`timelock1`
 
 - 注意事项
@@ -254,25 +230,28 @@ $$
 
 - 启动控制台
 
-```bash
-# 进入控制台dist目录
-bash start.sh
-```
-
 - 发起方创建转账提案
 
 该步骤由发起方即BCOS链的资产转出者完成。
 
+进入连接BCOS链的router的控制台。
+
 ```bash
-newHTLCTransferProposal payment.bcos.htlc bcos edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f 049db09dd9cf6fcf69486512c1498a1f6ea11d33b271aaad1893cd590c16542a true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
+bash start.sh
+
+[WeCross]> newHTLCProposal payment.bcos.htlc bcos_user1 edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f 049db09dd9cf6fcf69486512c1498a1f6ea11d33b271aaad1893cd590c16542a true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 ```
 
 - 参与方创建转账提案
 
-该步骤由参与方即Fabric链的资产转出者完成。
+该步骤由参与方即fabric链的资产转出者完成。
+
+进入连接fabric链的router的控制台。
 
 ```bash
-newHTLCTransferProposal payment.fabric.htlc fabric edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
+bash start.sh
+
+[WeCross]> newHTLCProposal payment.fabric.htlc fabric_admin edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 ```
 
 **结果确认**
@@ -282,13 +261,13 @@ newHTLCTransferProposal payment.fabric.htlc fabric edafd70a27887b361174ba5b83177
 - FISCO BCOS用户确认
 
 ```bash
-[WeCross]> call payment.bcos.htlc bcos balanceOf 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
+[WeCross]> call payment.bcos.htlc bcos_user1 balanceOf 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
 Result: [700]
 ```
 
 - Fabric用户确认
 ```bash
-[WeCross]> call payment.fabric.htlc fabric balanceOf User1@org1.example.com
+[WeCross]> call payment.fabric.htlc fabric_admin balanceOf User1@org1.example.com
 Result: [500]
 ```
 **注**：跨链转账存在交易时延，取决于两条链以及机器的性能，一般需要5~25s完成转账。

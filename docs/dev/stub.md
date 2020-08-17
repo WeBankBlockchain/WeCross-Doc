@@ -20,7 +20,7 @@ Gradle依赖分类
 // Gradle 依赖示例
 dependencies {
     // Stub接口定义Jar
-    implementation 'com.webank:wecross-java-stub:1.0.0-rc3'
+    implementation 'com.webank:wecross-java-stub:1.0.0-rc4'
     // BCOS JavaSDK
     implementation 'org.fisco-bcos:web3sdk:2.4.0'
     // toml文件解析

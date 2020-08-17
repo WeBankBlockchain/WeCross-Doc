@@ -75,9 +75,13 @@ WeCross Router的配置位于`conf`目录下，分为：
 - `[rpc] `RPC配置
   - address：字符串；RPC服务监听地址，通常设置为本机IP地址
   - port：整型；WeCross Router的RPC端口；WeCross Java SDK调用Router的端口
-  - caCert ：字符串；WeCross Router根证书路径
-  - sslCert ：字符串；WeCross Router证书路径
-  - sslKey ：字符串；WeCross Router私钥路径
+  - sslOn：SSl开关，默认true
+  - caCert：字符串；WeCross Router根证书路径
+  - sslCert：字符串；WeCross Router证书路径
+  - sslKey：字符串；WeCross Router私钥路径
+  - threadNum：rpc线程数，默认16
+  - threadQueueCapacity：任务队列容量，默认10000
+
 - `[p2p]` 组网配置
   - listenIP：字符串；P2P服务监听地址；一般为'0.0.0.0'
   - listenPort ：整型；P2P服务监听端口；WeCross Router之间交换消息的端口
@@ -85,7 +89,9 @@ WeCross Router的配置位于`conf`目录下，分为：
   - sslCert ：字符串；WeCross Router证书路径
   - sslKey ：字符串；WeCross Router私钥路径
   - peers：字符串数组；peer列表；需要互相连接的WeCross Router列表
-  - threadNum：p2p线程数，默认500
+  - threadNum：p2p线程数，默认16
+  - threadQueueCapacity：任务队列容量，默认10000
+
 - `[htlc] `htlc配置(可选)
   - selfPath：本地配置的htlc合约资源路径
   - account1：可调用本地配置的htlc合约的账户
