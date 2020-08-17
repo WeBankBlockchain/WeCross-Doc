@@ -83,15 +83,13 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/downlo
 
 ```bash
 ├── apps
-│   └── wecross-console.jar  # 控制台jar包
+│   └── wecross-console-xxx.jar  # 控制台jar包
 ├── conf
 │   ├── application-sample.toml   # 配置示例文件
 │   └── log4j2.xml           # 日志配置文件
-├── download_console.sh      # 获取控制台脚本
 ├── lib                      # 相关依赖的jar包目录
 ├── logs                     # 日志文件
 └── start.sh                 # 启动脚本
-
 ```
 
 #### 配置控制台
@@ -110,7 +108,7 @@ cp ~/wecross/routers-payment/cert/sdk/* conf/ # 包含：ca.crt、node.nodeid、
 vim conf/application.toml
 ```
 
-配置与控制台r与某个router的连接
+配置控制台与某个router的连接
 
 ``` toml
 [connection]
@@ -196,6 +194,7 @@ Usage: detail [path]
 ```
 
 ##### listAccounts
+
 显示所有已配置的账户列表。
 
 ```bash
@@ -208,6 +207,7 @@ total: 5
 ```
 
 ##### listLocalResources
+
 显示router配置的跨链资源。
 
 ```bash
@@ -218,6 +218,7 @@ total: 2
 ```
 
 ##### listResources
+
 查看WeCross跨链代理本地配置的跨链资源和所有的远程资源。
 
 ```bash
@@ -230,7 +231,8 @@ total: 4
 ```
 
 ##### status
-查看跨链资源的状态，即是否存在于连接的router中。
+
+判断跨链资源是否存在。
 
 参数：     
 - path：跨链资源标识。    
@@ -247,31 +249,34 @@ exists
 - path：跨链资源标识。        
 
 ```bash
-[WeCross]> detail payment.bcos.HelloWeCross
+[WeCross]> detail   payment.bcos.HelloWorld
 ResourceDetail{
- path='payment.bcos.HelloWeCross',
+ path='payment.bcos.HelloWorld',
  distance=0',
  stubType='BCOS2.0',
  properties={
   BCOS_PROPERTY_CHAIN_ID=1,
-  BCOS_PROPERTY_GROUP_ID=1,
-  HelloWeCross=0x708133d132372727ce3848a16d47ab4daf77698c
+  BCOS_PROPERTY_GROUP_ID=1
  },
- checksum='0xb452f3d12c91b6cd93e083a518d2ea2cffbcf3d8b971221a5224f07a3be5e41a'
+ checksum='c77f0ac3ead48d106d357ffe0725b9761bd55d3e27edd8ce669ad8b470a27bc8'
 }
 
-[WeCross]> detail payment.fabric.abac
+[WeCross]> detail  payment.fabric.sacc
 ResourceDetail{
- path='payment.fabric.abac',
+ path='payment.fabric.sacc',
  distance=1',
  stubType='Fabric1.4',
  properties={
-  PROPOSAL_WAIT_TIME=120000,
-  CHAINCODE_TYPE=GO_LANG,
+  ORG_NAMES=[
+   Org1,
+   Org2
+  ],
+  PROPOSAL_WAIT_TIME=300000,
+  CHAINCODE_VERSION=1.0,
   CHANNEL_NAME=mychannel,
-  CHAINCODE_NAME=mycc
+  CHAINCODE_NAME=sacc
  },
- checksum='c77f0ac3ead48d106d357ffe0725b9761bd55d3e27edd8ce669ad8b470a27bc8'
+ checksum='058b239a9f10dc2b1154e28910861053c376be61cbbfd539b71f354b85ed309b'
 }
 ```
 
@@ -309,20 +314,6 @@ Result  : [hello, wecross]
 
 FISCO BCOS 合约部署命令，成功返回部署的合约地址，失败返回错误描述
 
-```bash
-bcosDeploy -h
----------------------------------------------------------------------------------------------
-Deploy contract and register contract info to CNS in BCOS chain
-Usage: bcosDeploy [Path] [Account] [Source file path] [Class name] [Version]
-Path -- e.g: [zone.chain.res], specify which the path to be deployed
-Account -- Choose an account to send transaction
-Source file path -- The solidity source code file path, e.g: HelloWorld.sol
-Class name -- The contract to be deploy
-Version -- The contract version
-Example:
-    bcosDeploy payment.bcos.HelloWorld bcos_user1 contracts/solidity/HelloWorld.sol HelloWorld 1.0
-```
-
 参数：
 
 * Path: 跨链资源标示，用于标记部署的合约资源
@@ -334,7 +325,6 @@ Example:
 示例：
 
 ```bash
-
 [WeCross]> bcosDeploy payment.my_bcos_chain.HelloWorld my_bcos_account contracts/solidity/HelloWorld.sol HelloWorld 1.0
 Result: 0x79a178e71dc77fbccd31d464c114c95403a31e00
 ```
@@ -342,22 +332,6 @@ Result: 0x79a178e71dc77fbccd31d464c114c95403a31e00
 ##### bcosRegister
 
 FISCO BCOS 注册已有合约为跨链资源，成功返回`Success`，失败返回错误描述
-
-```shell
-bcosRegister -h
----------------------------------------------------------------------------------------------
-Register contract info to CNS in BCOS chain
-Usage: bcosRegister [Path] [Account] [Source file path] [Contract address] [Version]
-Path -- e.g: [zone.chain.res], specify which the path to be register
-Account -- Choose an account to send transaction
-Source file path -- The solidity source code/solidity abi file path, e.g: HelloWorld.sol or HelloWorld.abi
-Contract address -- contract address
-Version -- The contract version
-Example:
-    bcosRegister payment.bcos.HelloWorld bcos_user1 contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
-    bcosRegister payment.bcos.HelloWorld bcos_user1 /data/app/HelloWorld.abi 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
----------------------------------------------------------------------------------------------
-```
 
 参数：
 * Path: 跨链资源标示，用于标记注册的合约资源
@@ -368,7 +342,7 @@ Example:
 
 示例：
 ```shell
-> bcosRegister payment.my_bcos_chain.HelloWorld my_bcos_account contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f v1.0
+[WeCross]> bcosRegister payment.my_bcos_chain.HelloWorld my_bcos_account contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f v1.0
 Result: Success
 ```
 
@@ -478,7 +452,7 @@ secret: afd1c0f9c2f8acc2c1ed839ef506e8e0d0b4636644a889f5aa8e65360420d2a9
     - timelock1：参与方的超时时间，小于发起方的超时时间
 
 ```bash
-[WeCross]> newHTLCProposal payment.bcos.htlc bcos_sender 88b6cea9b5ece573c6c35cb3f1a2237bf380dfbbf9155b82d5816344cdac0185 null false Admin@org1.example.com User1@org1.example.com 200 2000010000 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf  100 2000000000
+[WeCross]> newHTLCProposal payment.bcos.htlc bcos_sender 88b6cea9b5ece573c6c35cb3f1a2237bf380dfbbf9155b82d5816344cdac0185 null false Admin@org1.example.com User1@org1.example.com 200 2000010000 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 100 2000000000
 
 Txhash: 0x244d302382d03985eebcc1f7d95d0d4eef7ff2b3d528fdf7c93effa94175e921
 BlockNum: 2222
@@ -525,7 +499,6 @@ Result: success!
 - args：参数，同sendTransaction
 
 ```
-
 [WeCross]> execTransaction payment.bcos.2pc bcos_user1 0001 1 newEvidence key1 evidence1
 Result: [true]
 
@@ -549,6 +522,7 @@ Result: [evidence1]
 ```
 
 ##### commitTransaction
+
 写接口，提交事务，确认事务执行过程中所有的变动
 
 参数：
@@ -561,6 +535,7 @@ Result: [evidence1]
 ```
 
 ##### rollbackTransaction
+
 写接口，撤销本次事务的所有变更时
 
 参数：
@@ -656,7 +631,6 @@ Result: [0001]
 
 [WeCross]> getTransactionIDs payment.bcos.2pc bcos_user1 2
 Result: [0002]
-
 ```
 
 

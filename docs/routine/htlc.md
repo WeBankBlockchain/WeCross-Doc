@@ -51,7 +51,7 @@ bash start.sh
 Txhash  : 0x718e948b0ab55697c61675253acfd580104e539c85e0fcb23c0686457ea429d4
 BlockNum: 46
 Result  : [true]
-``` 
+```
 
 **哈希时间锁合约初始化**
 
@@ -78,7 +78,7 @@ Result: [0x55f934bcbe1e9aef8337f5551142a442fdde781c]
 [100000000]
 ```
 
-###Fabric前期准备
+### Fabric前期准备
 
 进入连接fabric链的router的控制台。
 
@@ -98,6 +98,10 @@ Result: Success
 [WeCross]> fabricInstantiate payment.fabric.ledger fabric_admin ["Org1","Org2"] contracts/chaincode/ledger 1.0 GO_LANG default ["token","htlc","100000000"]
 Result: Query success. Please wait and use 'listResources' to check.
 
+# 用listResources确认payment.fabric.ledger已实例化完成（约1分钟）
+[WeCross]> listResources
+path: payment.fabric.ledger, type: Fabric1.4, distance: 0
+
 # 在机构1安装哈希时间锁合约链码
 [WeCross]> fabricInstall payment.fabric.htlc fabric_admin_org1 Org1 contracts/chaincode/htlc 1.0 GO_LANG
 path: classpath:contracts/chaincode/htlc
@@ -109,6 +113,10 @@ Result: Success
 # 实例化哈希时间锁合约，需要写入[己方资产合约名，channel，以及BCOS的哈希时间锁合约地址]
 [WeCross]> fabricInstantiate payment.fabric.htlc fabric_admin ["Org1","Org2"] contracts/chaincode/htlc 1.0 GO_LANG default ["ledger","mychannel","0x22a83719f748da09845d91fe1a2f44437f0ad13b"]
 Result: Query success. Please wait and use 'listResources' to check.
+
+# 用listResources确认payment.fabric.htlc已实例化完成（约1分钟）
+[WeCross]> listResources
+path: payment.fabric.htlc, type: Fabric1.4, distance: 0
 ```
 
 **资产授权**

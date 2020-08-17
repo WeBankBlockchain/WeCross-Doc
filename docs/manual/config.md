@@ -54,7 +54,6 @@ WeCross Router的配置位于`conf`目录下，分为：
     sslCert = 'classpath:ssl.crt'
     sslKey = 'classpath:ssl.key'
     peers = ['127.0.0.1:25501']
-    threadNum = 500
 
 
 #[[htlc]]
@@ -75,12 +74,12 @@ WeCross Router的配置位于`conf`目录下，分为：
 - `[rpc] `RPC配置
   - address：字符串；RPC服务监听地址，通常设置为本机IP地址
   - port：整型；WeCross Router的RPC端口；WeCross Java SDK调用Router的端口
-  - sslOn：SSl开关，默认true
   - caCert：字符串；WeCross Router根证书路径
   - sslCert：字符串；WeCross Router证书路径
   - sslKey：字符串；WeCross Router私钥路径
-  - threadNum：rpc线程数，默认16
-  - threadQueueCapacity：任务队列容量，默认10000
+  - sslOn（可选）：SSl开关，默认true
+  - threadNum（可选）：rpc线程数，默认16
+  - threadQueueCapacity（可选）：任务队列容量，默认10000
 
 - `[p2p]` 组网配置
   - listenIP：字符串；P2P服务监听地址；一般为'0.0.0.0'
@@ -89,10 +88,10 @@ WeCross Router的配置位于`conf`目录下，分为：
   - sslCert ：字符串；WeCross Router证书路径
   - sslKey ：字符串；WeCross Router私钥路径
   - peers：字符串数组；peer列表；需要互相连接的WeCross Router列表
-  - threadNum：p2p线程数，默认16
-  - threadQueueCapacity：任务队列容量，默认10000
+  - threadNum（可选）：p2p线程数，默认16
+  - threadQueueCapacity（可选）：任务队列容量，默认10000
 
-- `[htlc] `htlc配置(可选)
+- `[htlc] `htlc配置（可选）
   - selfPath：本地配置的htlc合约资源路径
   - account1：可调用本地配置的htlc合约的账户
   - counterpartyPath：本地配置的htlc合约的对手方合约路径
@@ -116,7 +115,7 @@ WeCross Router的配置位于`conf`目录下，分为：
 
 在`stub.toml`中配置与区块链交互所需链接的信息。
 
-* 跨链资源
+* 跨链资源（可选）
 
 在`stub.toml`中配置需要参与跨链的资源。
 
