@@ -744,7 +744,7 @@ bash start.sh
 > 参数：ipath，代码目录，合约名，设置一个版本号
 
 ``` groovy
-[WeCross]> bcosDeploy payment.bcos.HelloWorld bcos_user1 conf/contracts/solidity/HelloWorld.sol HelloWorld 1.0
+[WeCross]> bcosDeploy payment.bcos.HelloWorld bcos_user1 contracts/solidity/HelloWorld.sol HelloWorld 1.0
 Result: 0x1b557d68ebc51ed5b12438ff1666f8111718f47a
 ```
 

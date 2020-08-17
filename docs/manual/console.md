@@ -320,7 +320,7 @@ Source file path -- The solidity source code file path, e.g: HelloWorld.sol
 Class name -- The contract to be deploy
 Version -- The contract version
 Example:
-    bcosDeploy payment.bcos.HelloWorld bcos_user1 conf/contracts/solidity/HelloWorld.sol HelloWorld 1.0
+    bcosDeploy payment.bcos.HelloWorld bcos_user1 contracts/solidity/HelloWorld.sol HelloWorld 1.0
 ```
 
 参数：
@@ -335,7 +335,7 @@ Example:
 
 ```bash
 
-[WeCross]> bcosDeploy payment.my_bcos_chain.HelloWorld my_bcos_account conf/contracts/solidity/HelloWorld.sol HelloWorld 1.0
+[WeCross]> bcosDeploy payment.my_bcos_chain.HelloWorld my_bcos_account contracts/solidity/HelloWorld.sol HelloWorld 1.0
 Result: 0x79a178e71dc77fbccd31d464c114c95403a31e00
 ```
 
@@ -354,7 +354,7 @@ Source file path -- The solidity source code/solidity abi file path, e.g: HelloW
 Contract address -- contract address
 Version -- The contract version
 Example:
-    bcosRegister payment.bcos.HelloWorld bcos_user1 conf/contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
+    bcosRegister payment.bcos.HelloWorld bcos_user1 contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
     bcosRegister payment.bcos.HelloWorld bcos_user1 /data/app/HelloWorld.abi 0x2c8595f82dc930208314030abc6f5c4ddbc8864f 1.0
 ---------------------------------------------------------------------------------------------
 ```
@@ -368,7 +368,7 @@ Example:
 
 示例：
 ```shell
-> bcosRegister payment.my_bcos_chain.HelloWorld my_bcos_account conf/contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f v1.0
+> bcosRegister payment.my_bcos_chain.HelloWorld my_bcos_account contracts/solidity/HelloWorld.sol 0x2c8595f82dc930208314030abc6f5c4ddbc8864f v1.0
 Result: Success
 ```
 
