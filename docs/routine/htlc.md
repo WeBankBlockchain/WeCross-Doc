@@ -27,12 +27,12 @@ WeCross提供了Solidity和Golang版本的htlc基类合约，基于htlc基类合
 bash start.sh
 
 # 发行资产，拥有者是bcos_user1，资产名为htlc，最小单位1，发行数量100000000
-[WeCross]> bcosDeploy payment.bcos.ledger bcos_user1 conf/contracts/solidity/LedgerSample.sol LedgerSample 1.0 token htlc 1 100000000
+[WeCross]> bcosDeploy payment.bcos.ledger bcos_user1 contracts/solidity/LedgerSample.sol LedgerSample 1.0 token htlc 1 100000000
 # 资产合约地址需要记录下来
 Result: 0xf4fdcdfe0184644f09a1cfa16a945cc71a5d44ff
 
 # 部署htlc合约
-[WeCross]> bcosDeploy payment.bcos.htlc bcos_user1 conf/contracts/solidity/LedgerSampleHTLC.sol LedgerSampleHTLC 1.0
+[WeCross]> bcosDeploy payment.bcos.htlc bcos_user1 contracts/solidity/LedgerSampleHTLC.sol LedgerSampleHTLC 1.0
 # htlc合约地址需要记录下来
 Result: 0x22a83719f748da09845d91fe1a2f44437f0ad13b
 ```
