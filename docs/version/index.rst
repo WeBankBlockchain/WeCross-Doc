@@ -6,9 +6,9 @@
 .. toctree::
    :maxdepth: 1
    
-   v1.0.0-rc1.md
-   v1.0.0-rc2.md
-   v1.0.0-rc3.md
-   v1.0.0-rc4.md
    download.md
+   v1.0.0-rc4.md
+   v1.0.0-rc3.md
+   v1.0.0-rc2.md
+   v1.0.0-rc1.md
    

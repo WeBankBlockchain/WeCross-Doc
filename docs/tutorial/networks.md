@@ -6,7 +6,7 @@
 
 ## 快速部署
 
-本章指导完成[**跨链路由**](../introduction/introduction.html#id2)和[**跨链控制台**](../manual/console.md)的部署。
+本章指导完成[**跨链路由**](../introduction/introduction.html#id2)的部署。
 
 * **跨链路由**：与区块链节点对接，并彼此互连，形成[跨链分区](../introduction/introduction.html#id2)，负责跨链请求的转发
 * **跨链控制台**：查询和发送交易的操作终端
@@ -160,7 +160,7 @@ FISCO BCOS官方提供了一键搭链的教程，详见[单群组FISCO BCOS联�
 mkdir -p ~/wecross/bcos && cd ~/wecross/bcos
 
 # 下载build_chain.sh脚本
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 
 # 搭建单群组4节点联盟链
 # 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
@@ -246,7 +246,7 @@ bash add_account.sh -t BCOS2.0 -n bcos_user1
 ``` bash
 tree conf/accounts/bcos_user1/
 conf/accounts/bcos_user1/
-├── account.key
+├── 0xxxxxxxxxxxxxxxxx.key
 └── account.toml
 ```
 
@@ -284,6 +284,12 @@ cd ~/wecross/routers-payment/127.0.0.1-8250-25500
 bash add_chain.sh -t BCOS2.0 -n bcos
 ```
 
+执行成功。如果执行出错，请查看屏幕打印提示。
+
+``` bash
+Chain “bcos” config framework has been generated to “conf/chains/bcos"
+```
+
 生成的目录结构如下：
 
 ```bash
@@ -292,12 +298,6 @@ conf/chains/bcos
 ├── WeCrossProxy
 │   └── WeCrossProxy.sol # 代理合约
 └── stub.toml            # chain配置文件
-```
-
-执行成功。如果执行出错，请查看屏幕打印提示。
-
-``` bash
-Chain “bcos” config framework has been generated to “conf/chains/bcos"
 ```
 
 **配置BCOS节点连接**
@@ -346,7 +346,7 @@ java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyC
 部署成功，输出
 
 ``` bash 
-SUCCESS: proxy has been deployed! chain: chains/bcos
+SUCCESS: WeCrossProxy:xxxxxxxx has been deployed! chain: chains/bcos
 ```
 
 **启动路由**
@@ -368,9 +368,9 @@ bash start.sh
 ``` bash
 tail -f logs/info.log |grep "active resources"
 
-2020-04-24 20:07:20.966 [Thread-4] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(local)
-2020-04-24 20:07:30.973 [Thread-4] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(local)
-2020-04-24 20:07:40.980 [Thread-4] INFO  WeCrossHost() - Current active resources: payment.bcos.HelloWeCross(local)
+2020-08-17 15:04:10.802 [Thread-3] INFO  WeCrossHost() - Current active resources: payment.bcos.WeCrossProxy(local)
+2020-08-17 15:04:20.824 [Thread-3] INFO  WeCrossHost() - Current active resources: payment.bcos.WeCrossProxy(local)
+2020-08-17 15:04:30.841 [Thread-3] INFO  WeCrossHost() - Current active resources: payment.bcos.WeCrossProxy(local)
 ```
 
 ### 接入Fabric链
@@ -468,6 +468,12 @@ cd ~/wecross/routers-payment/127.0.0.1-8251-25501
 bash add_chain.sh -t Fabric1.4 -n fabric 
 ```
 
+执行成功。如果执行出错，请查看屏幕打印提示。
+
+``` bash
+SUCCESS: Chain "fabric" config framework has been generated to "conf/chains/fabric"
+```
+
 生成的目录结构如下：
 
 ```bash
@@ -476,12 +482,6 @@ conf/chains/fabric
 ├── WeCrossProxy
 │   └── proxy.go	   # 代理chaincode
 └── stub.toml          # chain配置文件
-```
-
-执行成功。如果执行出错，请查看屏幕打印提示。
-
-``` bash
-SUCCESS: Chain "fabric" config framework has been generated to "conf/chains/fabric"
 ```
 
 **配置Fabric节点连接**
@@ -509,20 +509,19 @@ vim conf/chains/fabric/stub.toml
 [fabricServices]
     channelName = 'mychannel'
     orgUserName = 'fabric_admin'
-    orgUserAccountPath = 'classpath:accounts/fabric_admin'
     ordererTlsCaFile = 'orderer-tlsca.crt'
     ordererAddress = 'grpcs://localhost:7050'
 
 [orgs]
     [orgs.Org1]
-         tlsCaFile = 'org1-tlsca.crt'
-         adminName = 'fabric_admin_org1'
-         endorsers = ['grpcs://localhost:7051']
+        tlsCaFile = 'org1-tlsca.crt'
+        adminName = 'fabric_admin_org1'
+        endorsers = ['grpcs://localhost:7051']
 
     [orgs.Org2]
-         tlsCaFile = 'org2-tlsca.crt'
-         adminName = 'fabric_admin_org2'
-         endorsers = ['grpcs://localhost:9051']
+        tlsCaFile = 'org2-tlsca.crt'
+        adminName = 'fabric_admin_org2'
+        endorsers = ['grpcs://localhost:9051']
 ```
 
 **部署代理chaincode**
@@ -631,11 +630,10 @@ WeCross 支持通过 WeCross-Console 向指定的Fabric链上部署chaincode。
  WeCross-Console中已默认存放了sacc，目录结构如下。
 
 ``` log
-tree conf/contracts/chaincode/
-conf/contracts/chaincode/
-└── sacc
-    ├── policy.yaml
-    └── sacc.go
+tree conf/contracts/chaincode/sacc
+conf/contracts/chaincode/sacc
+├── policy.yaml
+└── sacc.go
 ```
 
 * 启动控制台
@@ -781,9 +779,7 @@ total: 2
 [WeCross]> listAccounts
 name: fabric_user1, type: Fabric1.4
 name: bcos_user1, type: BCOS2.0
-name: bcos_default_account, type: BCOS2.0
-name: fabric_default_account, type: Fabric1.4
-total: 4
+total: 2
 ```
 
 **操作资源：payment.bcos.HelloWorld**
@@ -806,7 +802,7 @@ Result: [Hello, World!]
 # 调用HelloWeCross合约中的set接口
 [WeCross]> sendTransaction payment.bcos.HelloWorld bcos_user1 set Tom
 Txhash  : 0x7e747198f553cb2e90e729b52179533dc4321e520b0f11b83b1f0e81fa7ff716
-BlockNum: 6
+BlockNum: 5
 Result  : []     // 将Tom给set进去
 
 [WeCross]> call payment.bcos.HelloWorld bcos_user1 get
