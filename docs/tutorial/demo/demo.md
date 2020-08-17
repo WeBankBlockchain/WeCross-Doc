@@ -93,7 +93,7 @@ Result: [Hello, World!]
 # 调用HelloWeCross合约中的set接口
 [WeCross]> sendTransaction payment.bcos.HelloWorld bcos_user1 set Tom
 Txhash  : 0x7e747198f553cb2e90e729b52179533dc4321e520b0f11b83b1f0e81fa7ff716
-BlockNum: 6
+BlockNum: 5
 Result  : []     // 将Tom给set进去
 
 [WeCross]> call payment.bcos.HelloWorld bcos_user1 get
@@ -165,8 +165,8 @@ Result: [0]
 [WeCross]> newHTLCProposal payment.bcos.htlc bcos_sender bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 # 输出
 Txhash: a0c48eb7d1ca3a01ddf3563aeb6a1829f23dd0d778e7de2ce22406d1e84ba00f
-BlockNum: 6
-Result: create a htlc transfer proposal successfully
+BlockNum: 12
+Result: create a htlc proposal successfully
 # 退出当前控制台
 [WeCross]> quit 
 ```
@@ -185,8 +185,8 @@ Result: [0]
 [WeCross]> newHTLCProposal payment.fabric.htlc fabric_admin bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 # 输出
 Txhash: 0x40ae8e2e284de813f8b071e0261e627ddc4d91e365e63f222638db9b1a70d05a
-BlockNum: 7
-Result: create a htlc transfer proposal successfully
+BlockNum: 10
+Result: create a htlc proposal successfully
 # 退出当前控制台
 [WeCross]> quit 
 ```
@@ -360,6 +360,9 @@ Result: [] # 已回滚至开始状态
 
 [WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence1
 Result: [] # 已回滚至开始状态
+
+# 退出当前控制台
+[WeCross]> quit 
 ```
 
 此demo基于[2PC框架](../../routine/xa.html)实现，用户可根据业务需要基于框架开发自己的跨链应用，实现链间的原子操作。

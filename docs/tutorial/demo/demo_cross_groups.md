@@ -9,7 +9,7 @@
 在已下载的demo目录下进行操作
 
 ```bash
-cd demo
+cd ~/demo
 
 #清理旧demo环境
 bash clear.sh
