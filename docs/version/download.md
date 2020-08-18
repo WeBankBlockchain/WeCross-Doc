@@ -22,7 +22,7 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 
 **方式3：手动下载**
 
-* 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross/releases/download//v1.0.0-rc4/WeCross.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross/releases/download//v1.0.0-rc4/WeCross.tar.gz.md5)
+* 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross/v1.0.0-rc4/WeCross.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross/v1.0.0-rc4/WeCross.tar.gz.md5)
 
 * [github release](https://github.com/WeBankFinTech/WeCross/releases)（下载最新版本的 `WeCross.tar.gz`）
 
@@ -58,7 +58,7 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 
 **方式3：手动下载**
 
-- 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc4/WeCross-Console.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross-console/releases/download//v1.0.0-rc4/WeCross-Console.tar.gz.md5)
+- 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Console/v1.0.0-rc4/WeCross-Console.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Console/v1.0.0-rc4/WeCross-Console.tar.gz.md5)
 
 - [github release](https://github.com/WeBankFinTech/WeCross-Console/releases)（下载最新版本的 `WeCross-Console.tar.gz`）
 
@@ -88,7 +88,7 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 
 **方式2：手动下载**
 
-- 国内资源：[点击下载](https://www.fisco.com.cn/cdn/wecross/releases/download/v1.0.0-rc4/demo.tar.gz)，[MD5](https://www.fisco.com.cn/cdn/wecross/releases/download/v1.0.0-rc4/demo.tar.gz.md5)
+- 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Demo/v1.0.0-rc4/demo.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Demo/v1.0.0-rc4/demo.tar.gz.md5)
 
 - [github release](https://github.com/WeBankFinTech/WeCross/releases)（下载最新release下的`demo.tar.gz`）
 
