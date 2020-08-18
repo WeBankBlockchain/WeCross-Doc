@@ -6,6 +6,7 @@ WeCross BCOS2 Stub 是 WeCross Router的插件，让Router具备接入FISCO-BCOS
 * 插件安装
 * 账户配置
 * 插件配置
+* 代理合约配置
 
 ```eval_rst
 .. important::
@@ -14,36 +15,24 @@ WeCross BCOS2 Stub 是 WeCross Router的插件，让Router具备接入FISCO-BCOS
 
 ## 跨链合约
 
-BCOS2 Stub的跨链合约接口需要满足下面格式
+BCOS2 Stub支持任意类型接口的`solidity`合约。
 
-```shell
-function funcName(string[] params) qualifier public returns(string[])
-或者
-function funcName() qualifier public returns(string[])
-```
-
-`HelloWeCross`合约示例
+`HelloWorld`合约示例:
 
 ```solidity
 pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
-contract HelloWeCross {
-    string[] ss = ["Talk is cheap", "Show me the code"];
+contract HelloWorld {
+    string s = "Hello World!";
 
-    function set(string[] memory _ss) public returns (string[] memory) {
-        ss = _ss;
-        return ss;
+    function set(string memory _s) public returns (string memory) {
+        s = _s;
+        return s;
     }
 
-    function getAndClear() public constant returns(string[] memory) {
-        string[] memory _ss = ss;
-        ss.length = 0;
-        return _ss;
-    }
-
-    function get() public constant returns(string[] memory) {
-        return ss;
+    function get() public constant returns(string memory) {
+        return s;
     }
 }
 ```
@@ -104,7 +93,7 @@ WeCross Router账户配置位于`conf/accounts/`目录。每个账户使用单�
 conf/accounts/
 |-- bcos_pem
 |   |-- 0x5399e9ca7b444afb537a7a9de2762d17c3c7f63a.pem
-|   `-- account.toml
+|   └-- account.toml
 └-- bcos_p12
     |-- 0x0ed9d10e1520a502a41115a4fc8b6e3edb201940.p12
     └-- account.toml
@@ -130,11 +119,26 @@ conf/accounts/
 
 在router目录下，用`add_account.sh`直接生成账户即可，无需其他手动配置。
 
+```bash
+bash add_account.sh -h
+
+Usage:
+    -t <type>                           [Required] type of account, BCOS2.0 or GM_BCOS2.0 or Fabric1.4
+    -n <name>                           [Required] name of account
+    -d <dir>                            [Optional] generated target_directory, default conf/accounts/
+    -h                                  [Optional] Help
+e.g
+    bash add_account.sh -t BCOS2.0 -n my_bcos_account
+    bash add_account.sh -t GM_BCOS2.0 -n my_gm_bcos_account
+    bash add_account.sh -t Fabric1.4 -n my_fabric_account
+```
+
+示例:
 ``` bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500/
 
 # 举例1：生成非国密账户,-t 指定使用BCOS2.0插件（非国密插件） -n 设置一个账户名
-bash add_account.sh -t BCOS2.0 -n bcos_normal_user1
+bash add_account.sh -t BCOS2.0 -n bcos_user1
 
 # 举例2：生成国密账户,-t 指定使用GM_BCOS2.0插件（国密插件） -n 设置一个账户名
 bash add_account.sh -t GM_BCOS2.0 -n bcos_gm_user1
@@ -144,15 +148,15 @@ bash add_account.sh -t GM_BCOS2.0 -n bcos_gm_user1
 
 ``` bash
 conf/accounts/
-├── bcos_gm_user1
-│   ├── account.key
-│   └── account.toml
-└── bcos_normal_user1
-    ├── account.key
-    └── account.toml
+|-- bcos_pem
+|   |-- 0x5399e9ca7b444afb537a7a9de2762d17c3c7f63a.pem
+|   └-- account.toml
+└-- bcos_p12
+    |-- 0x0ed9d10e1520a502a41115a4fc8b6e3edb201940.p12
+    └-- account.toml
 ```
 
-## 插件配置
+## 接入链配置
 
 stub插件的配置文件为`stub.toml`，作用：
 - 配置资源信息
@@ -196,6 +200,49 @@ stub插件的配置文件`stub.toml`格式以及字段含义
 .. important::
     - BCOS2 Stub当前只支持合约类型的资源
 ```
+
+## 代理合约配置
+
+配置完成后，在router目录下执行命令，部署代理合约，分为国密与非国密的部署。
+
+### 非国密
+```shell
+Usage:
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment check [chainName]
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment deploy [chainName] [accountName]
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment upgrade [chainName] [accountName]
+Example:
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment check chains/bcos
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment deploy chains/bcos bcos_user1
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment upgrade chains/bcos bcos_user1
+```
+
+参数：
+* command
+  * check: 检查代理合约是否部署
+  * deploy: 部署代理合约子命令
+  * upgrade: 更新大代理合约子命令，表示重新部署代理合约
+* chainName: 链名称
+* accountName: 发送交易的账户
+
+### 国密
+```bash
+Usage:
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.proxy.ProxyContractDeployment check [chainName]
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.proxy.ProxyContractDeployment deploy [chainName] [accountName]
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.proxy.ProxyContractDeployment upgrade [chainName] [accountName]
+Example:
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.proxy.ProxyContractDeployment check chains/bcos
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.proxy.ProxyContractDeployment deploy chains/bcos bcos_user1
+         java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.proxy.ProxyContractDeployment upgrade chains/bcos bcos_user1
+```
+
+* command
+  * check: 检查代理合约是否部署
+  * deploy: 部署代理合约子命令
+  * upgrade: 更新大代理合约子命令，表示重新部署代理合约
+* chainName: 链名称
+* accountName: 发送交易的账户
 
 ## 参考链接
 
