@@ -39,6 +39,7 @@ if on_rtd:
         from urllib2 import HTTPError
 
     _fetch_urls = git_lfs.fetch_urls
+
     def _patched_fetch_urls(lfs_url, oid_list):
         """Hack git_lfs library that sometimes makes too big requests"""
         objects = []
@@ -49,8 +50,10 @@ if on_rtd:
             if err.code != 413:
                 raise
             print("LFS: request entity too large, splitting in half")
-            objects.extend(_patched_fetch_urls(lfs_url, oid_list[:len(oid_list) // 2]))
-            objects.extend(_patched_fetch_urls(lfs_url, oid_list[len(oid_list) // 2:]))
+            objects.extend(_patched_fetch_urls(
+                lfs_url, oid_list[:len(oid_list) // 2]))
+            objects.extend(_patched_fetch_urls(
+                lfs_url, oid_list[len(oid_list) // 2:]))
 
         return objects
 
@@ -60,10 +63,9 @@ if on_rtd:
 
 # The suffix of source filenames.
 source_parsers = {
-	'.md': 'recommonmark.parser.CommonMarkParser',
+    '.md': 'recommonmark.parser.CommonMarkParser',
 }
 source_suffix = ['.rst', '.md']
-
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -80,15 +82,14 @@ source_suffix = ['.rst', '.md']
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-  'sphinx_copybutton',
-  'sphinxcontrib.mermaid',
-  'sphinx.ext.mathjax',
-  'sphinx_markdown_tables',
+    # 'sphinx_copybutton',
+    'sphinxcontrib.mermaid',
+    'sphinx.ext.mathjax',
+    'sphinx_markdown_tables',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-
 
 
 # The encoding of source files.
@@ -158,18 +159,18 @@ pygments_style = 'sphinx'
 html_theme = 'sphinx_rtd_theme'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme_options = {'navigation_depth': 4,}
+html_theme_options = {'navigation_depth': 4, }
 using_rtd_theme = True
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 todo_include_todos = True
 
 # VCS options: https://docs.readthedocs.io/en/latest/vcs.html#github
 html_context = {
-    "display_github": True, # Integrate GitHub
-    "github_repo": "WeCross", # Repo name
+    "display_github": True,  # Integrate GitHub
+    "github_repo": "WeCross",  # Repo name
     "github_user": "fisco-dev",
-    "github_version": "1.0.0-rc4", # Version
-    "conf_py_path": "/", # Path in the checkout to the docs root
+    "github_version": "1.0.0-rc4",  # Version
+    "conf_py_path": "/",  # Path in the checkout to the docs root
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme
@@ -270,15 +271,15 @@ htmlhelp_basename = 'WeCross_doc'
 latex_engine = 'pdflatex'
 latex_use_xindy = False
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-'papersize': 'a4paper',
+    # The paper size ('letterpaper' or 'a4paper').
+    'papersize': 'a4paper',
 
-# The font size ('10pt', '11pt' or '12pt').
-'pointsize': '10pt',
+    # The font size ('10pt', '11pt' or '12pt').
+    'pointsize': '10pt',
 
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
-'preamble': r'''
+    # Additional stuff for the LaTeX preamble.
+    # 'preamble': '',
+    'preamble': r'''
 \hypersetup{unicode=true}
 \usepackage{CJKutf8}
 \DeclareUnicodeCharacter{00A0}{\nobreakspace}
@@ -294,16 +295,16 @@ latex_elements = {
 \begin{CJK}{UTF8}{gbsn}
 \AtEndDocument{\end{CJK}}
 ''',
-# Latex figure (float) alignment
-#'figure_align': 'htbp',
+    # Latex figure (float) alignment
+    # 'figure_align': 'htbp',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'WeCross.tex', u'WeCross Documentation',
-   u'WeCross Community', 'manual'),
+    (master_doc, 'WeCross.tex', u'WeCross Documentation',
+     u'WeCross Community', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -346,9 +347,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'WeCross', u'WeCross Documentation',
-   author, 'WeCross Community', 'documents of WeCross',
-   'Miscellaneous'),
+    (master_doc, 'WeCross', u'WeCross Documentation',
+     author, 'WeCross Community', 'documents of WeCross',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -367,13 +368,15 @@ texinfo_documents = [
 
 
 github_doc_root = 'https://github.com/rtfd/recommonmark/tree/master/doc/'
+
+
 def setup(app):
     app.add_config_value('recommonmark_config', {
         'url_resolver': lambda url: github_doc_root + url,
         'auto_toc_tree_section': 'Contents',
         'enable_eval_rst': True,
         'enable_auto_doc_ref': True,
-	}, True)
+    }, True)
 
     app.add_transform(AutoStructify)
     app.add_stylesheet('css/custom.css')
