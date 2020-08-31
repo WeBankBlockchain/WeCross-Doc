@@ -52,6 +52,7 @@ Usage:
 e.g
     bash build_wecross.sh -n payment -l 127.0.0.1:8250:25500
     bash build_wecross.sh -n payment -f ipfile
+    bash build_wecross.sh -n payment -f ipfile -c ./ca/
 ```
 
 - **`-n`**：指定跨链分区标识
@@ -81,7 +82,7 @@ e.g
 
 ```
 Usage:
-    -t <type>                           [Required] type of account, BCOS2.0 or Fabric1.4
+    -t <type>                           [Required] type of account, BCOS2.0 or GM_BCOS2.0 or Fabric1.4
     -n <name>                           [Required] name of account
     -d <dir>                            [Optional] generated target_directory, default conf/accounts/
     -h                                  [Optional] Help
@@ -98,13 +99,13 @@ Usage:
 
 ## 添加新接入链脚本
 
-**add_chains.sh**
+**add_chain.sh**
 
-脚本`add_chains.sh`用于在router中创建特定区块链的连接配置
+脚本`add_chain.sh`用于在router中创建特定区块链的连接配置
 
 ```
 Usage: 
-    -t <type>                           [Required] type of chain, BCOS2.0 or Fabric1.4
+    -t <type>                           [Required] type of chain, BCOS2.0 or GM_BCOS2.0 or Fabric1.4
     -n <name>                           [Required] name of chain
     -d <dir>                            [Optional] generated target_directory, default conf/stubs/
     -h                                  [Optional] Help

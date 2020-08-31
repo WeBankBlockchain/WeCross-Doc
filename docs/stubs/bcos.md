@@ -93,7 +93,7 @@ WeCross Router账户配置位于`conf/accounts/`目录。每个账户使用单�
 conf/accounts/
 |-- bcos_pem
 |   |-- 0x5399e9ca7b444afb537a7a9de2762d17c3c7f63a.pem
-|   `-- account.toml
+|   └-- account.toml
 └-- bcos_p12
     |-- 0x0ed9d10e1520a502a41115a4fc8b6e3edb201940.p12
     └-- account.toml
@@ -123,12 +123,13 @@ conf/accounts/
 bash add_account.sh -h
 
 Usage:
-    -t <type>                           [Required] type of account, BCOS2.0 or Fabric1.4
+    -t <type>                           [Required] type of account, BCOS2.0 or GM_BCOS2.0 or Fabric1.4
     -n <name>                           [Required] name of account
     -d <dir>                            [Optional] generated target_directory, default conf/accounts/
     -h                                  [Optional] Help
 e.g
     bash add_account.sh -t BCOS2.0 -n my_bcos_account
+    bash add_account.sh -t GM_BCOS2.0 -n my_gm_bcos_account
     bash add_account.sh -t Fabric1.4 -n my_fabric_account
 ```
 
@@ -147,12 +148,12 @@ bash add_account.sh -t GM_BCOS2.0 -n bcos_gm_user1
 
 ``` bash
 conf/accounts/
-├── bcos_gm_user1
-│   ├── account.key
-│   └── account.toml
-└── bcos_normal_user1
-    ├── account.key
-    └── account.toml
+|-- bcos_pem
+|   |-- 0x5399e9ca7b444afb537a7a9de2762d17c3c7f63a.pem
+|   └-- account.toml
+└-- bcos_p12
+    |-- 0x0ed9d10e1520a502a41115a4fc8b6e3edb201940.p12
+    └-- account.toml
 ```
 
 ## 接入链配置
@@ -217,9 +218,10 @@ Example:
 ```
 
 参数：
-* check: 检查代理合约是否部署
-* deploy: 部署代理合约子命令
-* upgrade: 更新大代理合约子命令，表示重新部署代理合约
+* command
+  * check: 检查代理合约是否部署
+  * deploy: 部署代理合约子命令
+  * upgrade: 更新大代理合约子命令，表示重新部署代理合约
 * chainName: 链名称
 * accountName: 发送交易的账户
 
@@ -235,7 +237,12 @@ Example:
          java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.proxy.ProxyContractDeployment upgrade chains/bcos bcos_user1
 ```
 
-参数：同上
+* command
+  * check: 检查代理合约是否部署
+  * deploy: 部署代理合约子命令
+  * upgrade: 更新大代理合约子命令，表示重新部署代理合约
+* chainName: 链名称
+* accountName: 发送交易的账户
 
 ## 参考链接
 

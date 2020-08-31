@@ -150,20 +150,19 @@ chains							# router的stub的配置目录，所有的stub都在此目录下配
 [fabricServices]
     channelName = 'mychannel'
     orgUserName = 'fabric_admin'
-    orgUserAccountPath = 'classpath:accounts/fabric_admin'
     ordererTlsCaFile = 'orderer-tlsca.crt'
     ordererAddress = 'grpcs://localhost:7050'
 
 [orgs]
     [orgs.Org1]
-         tlsCaFile = 'org1-tlsca.crt'
-         adminName = 'fabric_admin_org1'
-         endorsers = ['grpcs://localhost:7051']
+        tlsCaFile = 'org1-tlsca.crt'
+        adminName = 'fabric_admin_org1'
+        endorsers = ['grpcs://localhost:7051']
 
     [orgs.Org2]
-         tlsCaFile = 'org2-tlsca.crt'
-         adminName = 'fabric_admin_org2'
-         endorsers = ['grpcs://localhost:9051']
+        tlsCaFile = 'org2-tlsca.crt'
+        adminName = 'fabric_admin_org2'
+        endorsers = ['grpcs://localhost:9051']
 ```
 
 ### 配置步骤

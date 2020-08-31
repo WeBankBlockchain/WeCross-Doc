@@ -18,14 +18,14 @@ WeCross router向外部暴露了所有的UBI接口，开发者可以通过SDK实
 
    gradle:
 ```bash
-compile ('com.webank:wecross-java-sdk:1.0.0-rc3')
+compile ('com.webank:wecross-java-sdk:1.0.0-rc4')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>com.webank</groupId>
     <artifactId>wecross-java-sdk</artifactId>
-    <version>1.0.0-rc3</version>
+    <version>1.0.0-rc4</version>
 </dependency>
 ```
 
