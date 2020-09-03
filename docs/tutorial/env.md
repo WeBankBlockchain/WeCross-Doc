@@ -42,3 +42,7 @@ sudo yum install -y openssl curl expect tree
 # MacOS
 brew install openssl curl expect tree
 ```
+
+运行WeCross Demo时，需安装
+
+* Docker 17.06.2-ce 及以上

@@ -4,7 +4,7 @@
 
 **下载 Demo**
 
-执行命令下载Demo，若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
+执行命令下载Demo，若下载较慢，可选择[更多下载方式](../../version/download.html#wecross-demo)。
 
 ``` bash
 cd ~
