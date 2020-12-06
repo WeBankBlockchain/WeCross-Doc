@@ -8,8 +8,9 @@
 
 本章指导完成[**跨链路由**](../introduction/introduction.html#id2)的部署。
 
-* **跨链路由**：与区块链节点对接，并彼此互连，形成[跨链分区](../introduction/introduction.html#id2)，负责跨链请求的转发
-* **跨链控制台**：查询和发送交易的操作终端
+* **账户服务（account manager）**：为跨链系统提供账户管理
+* **跨链路由（router）**：与区块链节点对接，并彼此互连，形成[跨链分区](../introduction/introduction.html#id2)，负责跨链请求的转发
+* **跨链控制台（console）**：查询和发送交易的操作终端
 
 ![](../images/tutorial/routers.png)
 
@@ -78,10 +79,9 @@ routers-payment/
 生成的跨链路由目录内容如下，以`127.0.0.1-8250-25500`为例。
 
 ```bash
-# 已屏蔽lib目录，该目录存放所有依赖的jar包
-tree routers-payment/127.0.0.1-8250-25500/ -I "lib"
+# 已屏蔽lib和pages目录，该目录存放所有依赖的jar包
+tree routers-payment/127.0.0.1-8250-25500/
 routers-payment/127.0.0.1-8250-25500/
-├── add_account.sh    # 账户生成脚本
 ├── add_chain.sh      # 区块链配置文件创建脚本
 ├── apps
 │   └── WeCross.jar   # WeCross路由jar包
@@ -104,6 +104,65 @@ routers-payment/127.0.0.1-8250-25500/
 │   └── fabric-stub.jar
 ├── start.sh          # 启动脚本
 └── stop.sh           # 停止脚本
+```
+
+#### 部署账户服务
+
+下载
+
+``` bash
+bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_account_manager.sh)
+```
+
+拷贝证书
+
+``` bash
+cd ~/wecross/WeCross-Account-Manager/
+cp ~/wecross/routers-payment/cert/sdk/* conf/
+```
+
+配置
+
+``` bash
+cp conf/application-sample.toml conf/application.toml
+vim conf/application.toml
+```
+
+需配置内容如下
+
+* admin：配置admin账户，此处可默认，router中的admin账户需与此处对应，用于登录账户服务
+* db：配置自己的数据库账号密码
+
+``` toml
+[service]
+    address = '0.0.0.0'
+    port = 8340
+    sslKey = 'classpath:ssl.key'
+    sslCert = 'classpath:ssl.crt'
+    caCert = 'classpath:ca.crt'
+    sslOn = true
+
+[admin] # admin账户配置，第一次启动时写入db，之后作为启动校验字段
+    name = 'org1-admin' # admin账户名
+    password = '123456' # 密码
+
+[auth]
+    # for issuring token
+    name = 'org1'
+    expires = 18000 # 5 h
+    noActiveExpires = 600 # 10 min
+
+[db]
+    # for connect database
+    url = 'jdbc:mysql://localhost:3306/wecross_account_manager'
+    username = 'root' # 配置数据库账户
+    password = '123456' # 配置数据库密码，不支接受空密码
+```
+
+启动
+
+``` bash
+bash start.sh
 ```
 
 #### 启动跨链路由
@@ -138,8 +197,8 @@ netstat -napl | grep 25501
 
 完成了WeCross的部署，如何让它和一条真实的区块链交互，相信优秀的您一定在跃跃欲试。本节包括
 
-* 接入BCOS链：在router-8250上接入，配置交易发送账户
-* 接入Fabric链：在router-8251上接入，配置交易发送账户
+* 接入BCOS链：在router-8250上接入
+* 接入Fabric链：在router-8251上接入
 
 ![](../images/tutorial/demo.png)
 
@@ -225,55 +284,6 @@ fcf1bfe17dbe        hyperledger/fabric-peer:latest                              
 
 ### 接入FISCO BCOS链
 
-#### 添加账户
-
-在router中添加用于向链上发交易的账户。账户配置好后，可通过跨链网络向相应的链发交易，交易可被router转发至对应的链上。
-
-**添加BCOS账户**
-
-所配置的账户可用于向`BCOS2.0`类型的链发交易。
-
-```shell
-# 切换至对应router的目录下
-cd ~/wecross/routers-payment/127.0.0.1-8250-25500/
-
-# 用脚本生成BCOS账户：账户类型（BCOS2.0），账户名（bcos_user1）
-bash add_account.sh -t BCOS2.0 -n bcos_user1 
-```
-
-生成的bcos_user1文件目录如下：
-
-``` bash
-tree conf/accounts/bcos_user1/
-conf/accounts/bcos_user1/
-├── 0xxxxxxxxxxxxxxxxx.key
-└── account.toml
-```
-
-**添加Fabric账户**
-
-所配置的账户可用于向`Fabric1.4`类型的链发交易。
-
-``` bash
-# 用脚本生成Fabric账户：账户类型（Fabric1.4），账户名（fabric_user1）
-bash add_account.sh -t Fabric1.4 -n fabric_user1
-cp ~/wecross/fabric/certs/accounts/fabric_user1/* conf/accounts/fabric_user1/  # 拷贝 Fabric链的证书，具体说明请参考《跨链接入》章节
-```
-
-生成的fabric_user1文件目录如下：
-
-``` bash
-tree conf/accounts/fabric_user1/
-conf/accounts/fabric_user1/
-├── account.crt
-├── account.key
-└── account.toml
-```
-
-#### 配置接入FISCO BCOS链
-
-为router添加需要接入的链配置。
-
 **生成配置文件**
 
 切换至跨链路由的目录，用 [add_chain.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成bcos的配置文件框架。
@@ -290,7 +300,7 @@ bash add_chain.sh -t BCOS2.0 -n bcos
 Chain “bcos” config framework has been generated to “conf/chains/bcos"
 ```
 
-生成的目录结构如下：
+生成的目录结构如下：XXX
 
 ```bash
 tree conf/chains/bcos/
@@ -341,6 +351,8 @@ vim conf/chains/bcos/stub.toml
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
 
 java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.proxy.ProxyContractDeployment deploy chains/bcos bcos_user1 # deploy conf下的链配置位置 账户名
+
+java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.preparation.HubContractDeployment deploy chains/bcos bcos_user1
 ```
 
 部署成功，输出
@@ -524,7 +536,7 @@ vim conf/chains/fabric/stub.toml
         endorsers = ['grpcs://localhost:9051']
 ```
 
-**部署代理chaincode**
+**部署代理chaincode && Hub**
 
 执行命令，部署代理chaincode
 
@@ -532,6 +544,8 @@ vim conf/chains/fabric/stub.toml
 cd ~/wecross/routers-payment/127.0.0.1-8251-25501
 
 java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.fabric.proxy.ProxyChaincodeDeployment deploy chains/fabric # deploy conf下的链配置位置
+
+java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.fabric.hub.HubChaincodeDeployment deploy chains/fabric
 ```
 
 部署成功
@@ -539,6 +553,8 @@ java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.fabric.proxy.ProxyChainc
 ``` bash
 SUCCESS: WeCrossProxy has been deployed to chains/fabric
 ```
+
+
 
 **启动路由**
 
