@@ -267,7 +267,7 @@ uaID    : 3059301306...
 在当前控制台登出账号。
 
 ```bash
-[WeCross.org1-admin]>logout
+[WeCross.org1-admin]> logout
 Result: success
 ```
 
@@ -315,7 +315,7 @@ Result: success
 
 ```bash
 # 添加BCOS链账号
-[WeCross.org1-admin]>addChainAccount BCOS2.0 conf/accounts/bcos_user/0xd06636e57de535c8d148662189cb6c3d16e7a47b.public.pem  conf/accounts/bcos_user/0xd06636e57de535c8d148662189cb6c3d16e7a47b.pem 0xd06636e57de535c8d148662189cb6c3d16e7a47b false
+[WeCross.org1-admin]> addChainAccount BCOS2.0 conf/accounts/bcos_user/0xd06636e57de535c8d148662189cb6c3d16e7a47b.public.pem  conf/accounts/bcos_user/0xd06636e57de535c8d148662189cb6c3d16e7a47b.pem 0xd06636e57de535c8d148662189cb6c3d16e7a47b false
 Result: success
 Universal Account info has been changed, now auto-login again.
 Result: success
@@ -326,7 +326,7 @@ pubKey  : 3059301306...
 uaID    : 3059301306...
 
 #添加Fabric链账号
-[WeCross.org1-admin]>addChainAccount Fabric1.4 conf/accounts/fabric_admin/account.crt conf/accounts/fabric_admin/account.key Org1 true
+[WeCross.org1-admin]> addChainAccount Fabric1.4 conf/accounts/fabric_admin/account.crt conf/accounts/fabric_admin/account.key Org1 true
 Universal Account info has been changed, now auto-login again.
 Result: success
 =============================================================================================
@@ -346,7 +346,7 @@ uaID    : 3059301306...
 - keyID：指定账号的ID，可通过[listAccount](#listAccount)命令获取。
 
 ```bash
-[WeCross.org1-admin]>setDefaultAccount Fabric1.4 2
+[WeCross.org1-admin]> setDefaultAccount Fabric1.4 2
 Result: success
 Universal Account info has been changed, now auto-login again.
 Result: success
@@ -366,7 +366,7 @@ uaID    : 3059301306...
 - -d：(可选) 可返回全局账号的更加详细的信息，包括链账号公钥/证书信息，全局账号公钥信息
 
 ```bash
-[WeCross.org1-admin]>listAccount
+[WeCross.org1-admin]> listAccount
 Universal Account:
 username: org1-admin
 pubKey  : 3059301306...
@@ -399,7 +399,7 @@ chainAccounts: [
 ]
 
 # 加上`-d`
-[WeCross.org1-admin]>listAccount -d
+[WeCross.org1-admin]> listAccount -d
 Universal Account:
 username: org1-admin
 pubKey  : 3059301306072a8648ce3d020106082a811ccf5501822d03420004a313bc3d08a93a837d81b8d38fb9172fa34c1c71d7693f8ba80dbc46435bd0dec56de813d348aa134edd2cf929f74192368d3e86aade1dd3340dabbcf0b2f01b
@@ -455,7 +455,7 @@ MIICKTCCAdCgAwIBAgIRAPyuc+VKfnYg+HTl5PvUn9EwCg... #省略
 显示router配置的跨链资源。
 
 ```bash
-[WeCross.org1-admin]>listLocalResources
+[WeCross.org1-admin]> listLocalResources
 path: payment.bcos.HelloWorld, type: BCOS2.0, distance: 0
 path: payment.bcos.htlc, type: BCOS2.0, distance: 0
 path: payment.bcos.WeCrossHub, type: BCOS2.0, distance: 0
@@ -470,7 +470,7 @@ total: 6
 查看WeCross跨链代理本地配置的跨链资源和所有的远程资源。
 
 ```bash
-[WeCross.org1-admin]>listResources
+[WeCross.org1-admin]> listResources
 path: payment.fabric.WeCrossHub, type: Fabric1.4, distance: 1
 path: payment.bcos.htlc, type: BCOS2.0, distance: 0
 path: payment.fabric.ledger, type: Fabric1.4, distance: 1
@@ -495,7 +495,7 @@ total: 12
 - path：跨链资源标识。
 
 ```bash
-[WeCross.org1-admin]>status payment.bcos.HelloWorld
+[WeCross.org1-admin]> status payment.bcos.HelloWorld
 exists
 ```
 
@@ -508,7 +508,7 @@ exists
 - path：跨链资源标识。
 
 ```bash
-[WeCross.org1-admin]>detail payment.bcos.HelloWorld
+[WeCross.org1-admin]> detail payment.bcos.HelloWorld
 ResourceDetail{
  path='payment.bcos.HelloWorld',
  distance=0',
@@ -520,7 +520,7 @@ ResourceDetail{
  checksum='c77f0ac3ead48d106d357ffe0725b9761bd55d3e27edd8ce669ad8b470a27bc8'
 }
 
-[WeCross.org1-admin]>detail payment.fabric.sacc
+[WeCross.org1-admin]> detail payment.fabric.sacc
 ResourceDetail{
  path='payment.fabric.sacc',
  distance=1',
@@ -550,11 +550,11 @@ ResourceDetail{
 - args：参数列表。
 
 ```bash
-[WeCross.org1-admin]>call payment.bcos.HelloWorld get
+[WeCross.org1-admin]> call payment.bcos.HelloWorld get
 Result: [Hello, World!]
 # 在事务状态下，call命令可自动转变成命令 callTransaction
 [Transaction running: 575905db7aab412bb476db8b89a4c042]
-[WeCross.org1-admin]>call payment.bcos.HelloWorld get
+[WeCross.org1-admin]> call payment.bcos.HelloWorld get
 Result: [test2]
 ```
 
@@ -569,7 +569,7 @@ Result: [test2]
 - args：参数列表。
 
 ```bash
-[WeCross.org1-admin]>sendTransaction payment.bcos.HelloWorld set "Hello, WeCross!"
+[WeCross.org1-admin]> sendTransaction payment.bcos.HelloWorld set "Hello, WeCross!"
 Txhash  : 0x4e3fe01371cf2a304b0782b554399bf8643cd50e5ea9c522d9c846ee38ec00dd
 BlockNum: 16
 Result  : []
@@ -587,23 +587,23 @@ Result  : []
 
 ```bash
 # 非事务状态时，invoke相当于命令 sendTransaction
-[WeCross.org1-admin]>invoke payment.bcos.HelloWorld set test1
+[WeCross.org1-admin]> invoke payment.bcos.HelloWorld set test1
 Txhash  : 0x5b925655f1668357845c1846450b47ab92bbe1f96cdeaf9e2db98aa834536da1
 BlockNum: 35
 Result  : []
 
-[WeCross.org1-admin]>startTransaction payment.bcos.HelloWorld
+[WeCross.org1-admin]> startTransaction payment.bcos.HelloWorld
 Result: success!
 Transaction ID is: 575905db7aab412bb476db8b89a4c042
 # 事务状态时，invoke相当于命令 execTransaction
 [Transaction running: 575905db7aab412bb476db8b89a4c042]
-[WeCross.org1-admin]>invoke payment.bcos.HelloWorld set test2
+[WeCross.org1-admin]> invoke payment.bcos.HelloWorld set test2
 Txhash  : 0x3d22c863570696c9eed121f94bd6794865286ac85c5c9778b14777b2a8338bff
 BlockNum: 37
 Result  : []
 
 [Transaction running: 575905db7aab412bb476db8b89a4c042]
-[WeCross.org1-admin]>callTransaction payment.bcos.HelloWorld get
+[WeCross.org1-admin]> callTransaction payment.bcos.HelloWorld get
 Result: [test2]
 ```
 
@@ -621,7 +621,7 @@ FISCO BCOS 合约部署命令，成功返回部署的合约地址，失败返回
 示例：
 
 ```bash
-[WeCross.org1-admin]>bcosDeploy payment.bcos.HelloWorld contracts/solidity/HelloWorld.sol HelloWorld 2.0
+[WeCross.org1-admin]> bcosDeploy payment.bcos.HelloWorld contracts/solidity/HelloWorld.sol HelloWorld 2.0
 Result: 0xc3c72dce00c1695e8f50696f22310375e3348e1e
 ```
 
@@ -639,7 +639,7 @@ FISCO BCOS 注册已有合约为跨链资源，成功返回`Success`，失败返
 示例：
 
 ```shell
-[WeCross.org1-admin]>bcosRegister payment.bcos.HelloWorld contracts/solidity/HelloWorld.sol 0xc3c72dce00c1695e8f50696f22310375e3348e1e HelloWorld 3.0
+[WeCross.org1-admin]> bcosRegister payment.bcos.HelloWorld contracts/solidity/HelloWorld.sol 0xc3c72dce00c1695e8f50696f22310375e3348e1e HelloWorld 3.0
 Result: success
 ```
 
@@ -656,13 +656,13 @@ Fabric 安装链码命令，安装后需fabricInstantiate来启动链码
 
 ```bash
 # 在Org1中部署sacc合约
-[WeCross.org1-admin]>fabricInstall payment.fabric.sacc Org1 contracts/chaincode/sacc 2.0 GO_LANG
+[WeCross.org1-admin]> fabricInstall payment.fabric.sacc Org1 contracts/chaincode/sacc 2.0 GO_LANG
 path: classpath:contracts/chaincode/sacc
 Result: Success
 
 # 将Fabric的默认账号切换至Org2-admin的账号，以便于我们部署合约到Org2中
 # 注意：此示例中，Org2-admin账号的keyID为2，可通过listAccount命令查询
-[WeCross.org1-admin]>setDefaultAccount Fabric1.4 2
+[WeCross.org1-admin]> setDefaultAccount Fabric1.4 2
 Result: success
 Universal Account info has been changed, now auto-login again.
 Result: success
@@ -673,7 +673,7 @@ pubKey  : 3059301306...
 uaID    : 3059301306...
 
 # 在Org2中部署sacc合约
-[WeCross.org1-admin]>fabricInstall payment.fabric.sacc Org2 contracts/chaincode/sacc 2.0 GO_LANG
+[WeCross.org1-admin]> fabricInstall payment.fabric.sacc Org2 contracts/chaincode/sacc 2.0 GO_LANG
 path: classpath:contracts/chaincode/sacc
 Result: Success
 ```
@@ -693,7 +693,7 @@ Fabric 启动（实例化）已安装的链码。此步骤前需先用fabricInst
 - initArgs：链码初始化参数
 
 ``` bash
-[WeCross.org1-admin]>fabricInstantiate payment.fabric.sacc ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"]
+[WeCross.org1-admin]> fabricInstantiate payment.fabric.sacc ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"]
 Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
 ```
 
@@ -714,7 +714,7 @@ Fabric 升级已启动的链码逻辑，不改变已上链的数据。此步骤�
 - initArgs：链码初始化参数
 
 ``` bash
-[WeCross.org1-admin]>fabricUpgrade payment.fabric.sacc ["Org1","Org2"] contracts/chaincode/sacc 2.0 GO_LANG default ["a","10"]
+[WeCross.org1-admin]> fabricUpgrade payment.fabric.sacc ["Org1","Org2"] contracts/chaincode/sacc 2.0 GO_LANG default ["a","10"]
 Result: Upgrading... Please wait and use 'detail' to check the version. See router's log for more information.
 ```
 
@@ -728,7 +728,7 @@ Result: Upgrading... Please wait and use 'detail' to check the version. See rout
 - interval：时间间隔   
 
 ```bash
-[WeCross.org1-admin]>genTimelock 300
+[WeCross.org1-admin]> genTimelock 300
 timelock0: 1607245965
 timelock1: 1607245665
 ```
@@ -737,7 +737,7 @@ timelock1: 1607245665
 跨链转账辅助命令，生成一个秘密和它的哈希。
 
 ```bash
-[WeCross.org1-admin]>genSecretAndHash
+[WeCross.org1-admin]> genSecretAndHash
 hash  : cdbfc235be9aff715967119a25b03f49e7103480fec459a610d2efe51ff35fad
 secret: 266a85d058afbf743c541f8da4add95d54f02cad27acd90d8b2155947524d303
 ```
@@ -762,7 +762,7 @@ secret: 266a85d058afbf743c541f8da4add95d54f02cad27acd90d8b2155947524d303
   - timelock1：参与方的超时时间，小于发起方的超时时间
 
 ```bash
-[WeCross.org1-admin]>newHTLCProposal payment.bcos.htlc bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x4305196480b029bbecb071b4b68e95dfef36a7b7 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
+[WeCross.org1-admin]> newHTLCProposal payment.bcos.htlc bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x4305196480b029bbecb071b4b68e95dfef36a7b7 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
 
 Txhash: 0xf9b50871c0b05830af9c251d786d2ea93e6f98282e33b6d4c530ed0fddde2f25
 BlockNum: 18
@@ -780,7 +780,7 @@ Result: create a htlc proposal successfully
 - hash：转账提案号。
 
 ```bash
-[WeCross.org1-admin]>checkTransferStatus payment.bcos.htlc bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11
+[WeCross.org1-admin]> checkTransferStatus payment.bcos.htlc bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11
 status: ongoing!
 ```
 
@@ -793,7 +793,7 @@ status: ongoing!
 - path_1 ... path_n：参与事务的资源路径列表，路径列表中的资源会被本次事务锁定，锁定后仅限本事务相关的交易才能对这些资源发起写操作，非本次事务的所有写操作都会被拒绝。
 
 ```bash
-[WeCross.org1-admin]>startTransaction payment.bcos.evidence payment.fabric.evidence
+[WeCross.org1-admin]> startTransaction payment.bcos.evidence payment.fabric.evidence
 Result: success!
 Transaction ID is: 024f0ff81cda4b938a0b48805be9eb61
 # 系统自动生成一串事务ID，并在下次Prompt加上事务标识表示事务正在进行中
@@ -814,13 +814,13 @@ Transaction ID is: 024f0ff81cda4b938a0b48805be9eb61
 
 ```bash
 [Transaction running: 024f0ff81cda4b938a0b48805be9eb61]
-[WeCross.org1-admin]>execTransaction payment.bcos.evidence newEvidence evidence1 Jerry
+[WeCross.org1-admin]> execTransaction payment.bcos.evidence newEvidence evidence1 Jerry
 Txhash  : 0xcb4ee8b1b83f6855e7583c75bec35c29004ee446c93a7bcfe92b5d7156572235
 BlockNum: 28
 Result  : [true]
 
 [Transaction running: 024f0ff81cda4b938a0b48805be9eb61]
-[WeCross.org1-admin]>execTransaction payment.fabric.evidence newEvidence evidence2 Tom
+[WeCross.org1-admin]> execTransaction payment.fabric.evidence newEvidence evidence2 Tom
 Txhash  : bb955ee814b12ebc19a068c8d3c10afbc7aadc6c62225dac51fc5c496049c36d
 BlockNum: 14
 Result  : [Success]
@@ -838,7 +838,7 @@ Result  : [Success]
 
 ```bash
 [Transaction running: 024f0ff81cda4b938a0b48805be9eb61]
-[WeCross.org1-admin]>call payment.bcos.evidence queryEvidence evidence1
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence1
 Result: [Jerry]
 ```
 
@@ -851,11 +851,11 @@ Result: [Jerry]
 - path_1 ... path_n：(可选) 用于提交事务的路径列表。
 
 ```bash
-[WeCross.org1-admin]>commitTransaction payment.bcos.evidence payment.fabric.evidence
+[WeCross.org1-admin]> commitTransaction payment.bcos.evidence payment.fabric.evidence
 
 # 也可以直接输入`commitTransaction`命令，输入y提交这次事务，输入n则取消
 [Transaction running: 024f0ff81cda4b938a0b48805be9eb61]
-[WeCross.org1-admin]>commitTransaction
+[WeCross.org1-admin]> commitTransaction
 Transaction running now, transactionID is: 024f0ff81cda4b938a0b48805be9eb61
 Are you sure commit it now?(y/n)  y
 Committing transaction: 024f0ff81cda4b938a0b48805be9eb61...
@@ -875,30 +875,30 @@ Result: success!
 
 ```bash
 # 查看开始前的状态
-[WeCross.org1-admin]>call payment.bcos.evidence queryEvidence evidence0
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence0
 Result: []
 
 # 开始事务
-[WeCross.org1-admin]>startTransaction payment.bcos.evidence
+[WeCross.org1-admin]> startTransaction payment.bcos.evidence
 Result: success!
 Transaction ID is: e27ddd9fc4564256b20e6329f9ce9969
 
 # 执行事务
 [Transaction running: e27ddd9fc4564256b20e6329f9ce9969]
-[WeCross.org1-admin]>execTransaction payment.bcos.evidence newEvidence evidence0 WeCross
+[WeCross.org1-admin]> execTransaction payment.bcos.evidence newEvidence evidence0 WeCross
 Txhash  : 0x5851a927a33b673f76b9fe3a57767ddd3d920230d54d7fee92400789a0bd551c
 BlockNum: 31
 Result  : [true]
 
 # 读事务数据
 [Transaction running: e27ddd9fc4564256b20e6329f9ce9969]
-[WeCross.org1-admin]>callTransaction payment.bcos.evidence queryEvidence evidence0
+[WeCross.org1-admin]> callTransaction payment.bcos.evidence queryEvidence evidence0
 Result: [WeCross]
 
 # 回滚事务
 # 可以直接输入`rollbackTransaction`命令，输入y回滚这次事务，输入n则取消，也可以输入全资源路径
 [Transaction running: e27ddd9fc4564256b20e6329f9ce9969]
-[WeCross.org1-admin]>rollbackTransaction
+[WeCross.org1-admin]> rollbackTransaction
 Transaction running now, transactionID is: e27ddd9fc4564256b20e6329f9ce9969
 Are you sure rollback transaction now?(y/n)  y
 Rollback transaction: e27ddd9fc4564256b20e6329f9ce9969...
@@ -906,7 +906,7 @@ Rollback transaction: e27ddd9fc4564256b20e6329f9ce9969...
 Result: success!
 
 # 查看事务回滚后的状态，和开始前保持一致
-[WeCross.org1-admin]>call payment.bcos.evidence queryEvidence evidence0
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence0
 Result: []
 ```
 
@@ -920,7 +920,7 @@ Result: []
 - path_1 ... path_n：参与事务的资源路径列表
 
 ```bash
-[WeCross.org1-admin]>getXATransaction 024f0ff81cda4b938a0b48805be9eb61 payment.fabric.evidence
+[WeCross.org1-admin]> getXATransaction 024f0ff81cda4b938a0b48805be9eb61 payment.fabric.evidence
 XATransactionResponse{
  xaTransactionID='024f0ff81cda4b938a0b48805be9eb61',
  username='org1-admin',
@@ -957,7 +957,7 @@ XATransactionResponse{
 - size：指定查询个数，范围在[1-1024]
 
 ```bash
-[WeCross.org1-admin]>listXATransactions 4
+[WeCross.org1-admin]> listXATransactions 4
 Result: [ {
   "xaTransactionID" : "e27ddd9fc4564256b20e6329f9ce9969",
   "username" : "org1-admin",
@@ -996,7 +996,7 @@ Result: [ {
 
 ```bash
 # 查询最新事务，事务正处于进行中
-[WeCross.org1-admin]>listXATransactions 1
+[WeCross.org1-admin]> listXATransactions 1
 Result: [ {
   "xaTransactionID" : "0a359201499047f8a99a6a978b9a7f77",
   "username" : "org1-admin",
@@ -1005,7 +1005,7 @@ Result: [ {
   "paths" : [ "payment.bcos.HelloWorld" ]
 } ]
 
-[WeCross.org1-admin]>loadTransaction 0a359201499047f8a99a6a978b9a7f77 payment.bcos.HelloWorld
+[WeCross.org1-admin]> loadTransaction 0a359201499047f8a99a6a978b9a7f77 payment.bcos.HelloWorld
 Load transaction success!
 # 恢复到事务上下文
 [Transaction running: 0a359201499047f8a99a6a978b9a7f77]
@@ -1018,7 +1018,7 @@ Load transaction success!
 
 ```bash
 [Transaction running: 0a359201499047f8a99a6a978b9a7f77]
-[WeCross.org1-admin]>getCurrentTransactionID
+[WeCross.org1-admin]> getCurrentTransactionID
 There is a Transaction running now, ID is: 0a359201499047f8a99a6a978b9a7f77.
 ```
 
@@ -1060,7 +1060,7 @@ exists
 ##### detail
 
 ```bash
-[WeCross.org1-admin]>myResource.detail
+[WeCross.org1-admin]> myResource.detail
 ResourceDetail{
  path='payment.bcos.HelloWorld',
  distance=0',
@@ -1077,16 +1077,16 @@ ResourceDetail{
 ##### call
 
 ```bash
-[WeCross.org1-admin]>myResource.call get
+[WeCross.org1-admin]> myResource.call get
 Result: [Hello, World!]
 ```
 
 ##### sendTransaction
 
 ```bash
-[WeCross.org1-admin]>myResource.sendTransaction set "Hello, WeCross!"
+[WeCross.org1-admin]> myResource.sendTransaction set "Hello, WeCross!"
 Result: []
 
-[WeCross.org1-admin]>myResource.call get
+[WeCross.org1-admin]> myResource.call get
 Result: [Hello, WeCross!]
 ```
