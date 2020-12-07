@@ -14,7 +14,7 @@ cd ~/demo
 #清理旧demo环境
 bash clear.sh
 
-# 运行部署脚本，第一次运行需耗时10-30分钟左右
+# 运行部署脚本，输入数据库账号密码，第一次运行需耗时10-30分钟左右
 bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 ```
 
@@ -28,21 +28,75 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 ``` 
 [INFO] Success! WeCross demo network is running. Framework:
 
-      FISCO BCOS                    Fabric
-     (4node pbft)              (first-network)
-    (HelloWorld.sol)              (sacc.go)
-           |                          |
-           |                          |
-    WeCross Router <----------> WeCross Router
-(127.0.0.1-8250-25500)      (127.0.0.1-8251-25501)
-           |
-           |
-    WeCross Console
+            FISCO BCOS                    Fabric
+           (4node pbft)              (first-network)
+          (HelloWorld.sol)              (sacc.go)
+                 |                          |
+                 |                          |
+                 |                          |
+          WeCross Router <----------> WeCross Router <----------> WeCross Account Manager
+      (127.0.0.1-8250-25500)      (127.0.0.1-8251-25501)             (127.0.0.1:8340)
+          /            \
+         /              \
+        /                \
+ WeCross WebApp     WeCross Console
     
 Start WeCross Console? [Y/n]
 ```
 
-## 跨链资源操作
+## 操作跨链资源
+
+**登录跨链账户**
+
+进入控制台，首先登录跨链账户。（demo中已配置好一个账户：org1-admin，密码：123456）
+
+``` groovy
+[WeCross]> login org1-admin 123456
+Result: success
+=============================================================================================
+Universal Account:
+username: org1-admin
+pubKey  : 3059301306...
+uaID    : 3059301306...
+```
+
+**查看账户**
+
+用`listAccount`命令查看此跨链账户下，向不同类型的链发送交易的链账户。
+
+``` gr
+[WeCross.org1-admin]> listAccount
+Universal Account:
+username: org1-admin
+pubKey  : 3059301306...
+uaID    : 3059301306...
+chainAccounts: [
+        BCOS2.0 Account:
+        keyID    : 0
+        type     : BCOS2.0
+        address  : 0x07234bd37393a97268f91ee2b7c76cb3ec3601b0
+        isDefault: true
+        ----------
+        Fabric1.4 Account:
+        keyID    : 1
+        type     : Fabric1.4
+        MembershipID : Org1MSP
+        isDefault: true
+        ----------
+        Fabric1.4 Account:
+        keyID    : 3
+        type     : Fabric1.4
+        MembershipID : Org1MSP
+        isDefault: false
+        ----------
+        Fabric1.4 Account:
+        keyID    : 2
+        type     : Fabric1.4
+        MembershipID : Org2MSP
+        isDefault: false
+        ----------
+]
+```
 
 **查看资源**
 
@@ -52,51 +106,42 @@ Start WeCross Console? [Y/n]
   * 对应于FISCO BCOS链上的HelloWorld.sol合约
 * payment.fabric.sacc
   * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
+* xxxx.xxxx.WeCrossHub
+  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考XXX
 
 ```bash
-[WeCross]> listResources
+[WeCross.org1-admin]> listResources
 path: payment.bcos.HelloWorld, type: BCOS2.0, distance: 0
+path: payment.fabric.WeCrossHub, type: Fabric1.4, distance: 1
+path: payment.bcos.WeCrossHub, type: BCOS2.0, distance: 0
 path: payment.fabric.sacc, type: Fabric1.4, distance: 1
-total: 2
-```
-
-**查看账户**
-
-用`listAccounts`命令查看WeCross Router上已存在的账户，操作资源时用相应账户进行操作。
-
-```bash
-[WeCross]> listAccounts
-name: fabric_user1, type: Fabric1.4
-name: bcos_user1, type: BCOS2.0
-name: bcos_default_account, type: BCOS2.0
-name: fabric_default_account, type: Fabric1.4
 total: 4
 ```
 
 **操作资源：payment.bcos.HelloWorld**
 
 - 读资源
-  - 命令：`call path 账户名 接口名 [参数列表]`
-  - 示例：`call payment.bcos.HelloWorld bcos_user1 get`
+  - 命令：`call path 接口名 [参数列表]`
+  - 示例：`call payment.bcos.HelloWorld get`
   
 ```bash
 # 调用HelloWorld合约中的get接口
-[WeCross]> call payment.bcos.HelloWorld bcos_user1 get
+[WeCross.org1-admin]> call payment.bcos.HelloWorld get
 Result: [Hello, World!]
 ```
 
 - 写资源
-  - 命令：`sendTransaction path 账户名 接口名 [参数列表]`
-  - 示例：`sendTransaction payment.bcos.HelloWeCross bcos_user1 set Tom`
+  - 命令：`sendTransaction path 接口名 [参数列表]`
+  - 示例：`sendTransaction payment.bcos.HelloWeCross set Tom`
 
 ```bash
 # 调用HelloWeCross合约中的set接口
-[WeCross]> sendTransaction payment.bcos.HelloWorld bcos_user1 set Tom
-Txhash  : 0x7e747198f553cb2e90e729b52179533dc4321e520b0f11b83b1f0e81fa7ff716
-BlockNum: 5
+[WeCross.org1-admin]> sendTransaction payment.bcos.HelloWorld set Tom
+Txhash  : 0x7043064899fa48b6c3138f545ecf0f8d6f823d45e0783406bc2afe489061c77c
+BlockNum: 6
 Result  : []     // 将Tom给set进去
 
-[WeCross]> call payment.bcos.HelloWorld bcos_user1 get
+[WeCross.org1-admin]> call payment.bcos.HelloWorld get
 Result: [Tom]    // 再次get，Tom已set
 ```
 
@@ -108,7 +153,7 @@ Result: [Tom]    // 再次get，Tom已set
 
 ```bash
 # 调用mycc合约中的query接口
-[WeCross]> call payment.fabric.sacc fabric_user1 get a
+[WeCross.org1-admin]> call payment.fabric.sacc get a
 Result: [10] // 初次get，a的值为10
 ```
 
@@ -116,16 +161,16 @@ Result: [10] // 初次get，a的值为10
 
 ```bash
 # 调用sacc合约中的set接口
-[WeCross]> sendTransaction payment.fabric.sacc fabric_user1 set a 666
-Txhash  : eca4ecacf7b159c1499d6c190fcaf9fd7348bdb96cdbf35cd29b34ac9bd8e518
-BlockNum: 7
+[WeCross.org1-admin]> sendTransaction payment.fabric.sacc set a 666
+Txhash  : 85dd6c2c76b959cd5d6d5c60d1f4bc509df4c84a48ef7066f6c66bd59b67c6be
+BlockNum: 8
 Result  : [666]
 
-[WeCross]> call payment.fabric.sacc fabric_user1 get a
+[WeCross.org1-admin]> call payment.fabric.sacc get a
 Result: [666] // 再次get，a的值变成666
 
 # 退出WeCross控制台
-[WeCross]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
+[WeCross.org1-admin]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
 ```
 
 WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链网络后，可基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
@@ -366,6 +411,26 @@ Result: [] # 已回滚至开始状态
 ```
 
 此demo基于[2PC框架](../../routine/xa.html)实现，用户可根据业务需要基于框架开发自己的跨链应用，实现链间的原子操作。
+
+## 访问网页管理台
+
+浏览器访问`router-8250`的网页管理台
+
+``` url
+http://localhost:8250/s/index.html
+```
+
+用demo已配置账户进行登录：`org1-admin`，密码：`123456`
+
+![](D:/out-branch/WeCross-docs/docs/images/tutorial/page.png)
+
+``` eval_rst
+.. note::
+若需要远程访问，请操作：
+cd ~/demo/routers-payment/127.0.0.1-8250-25500/ # 进入router-8250所在目录
+vim conf/wecross.toml   # 修改[rpc]标签下的address为所需ip（如：0.0.0.0），保存
+bash stop.sh && bash start.sh # 重启router，用远程ip进行访问
+```
 
 ## 清理 Demo
 

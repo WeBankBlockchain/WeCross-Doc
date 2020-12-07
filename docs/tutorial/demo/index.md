@@ -25,10 +25,9 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
    * [跨链转账（HTLC）](./demo.html#id3)
 
    * [跨链存证（2PC）](./demo.html#id4)
-
 2. Demo：[跨多群组](demo_cross_groups.md)
-
 3. Demo：[跨国密、非国密](demo_cross_gm.md)
+4. Demo：[混合场景（Fabric、FISCO BCOS 国密非国密、多群组）](demo_cross_all.md)
 
 实际情况下，WeCross的场景不仅限于两条链，用户可配置接入多条各种类型的区块链。
 
@@ -40,5 +39,6 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
    demo.md
    demo_cross_groups.md
    demo_cross_gm.md
+   demo_cross_all.md
 ```
 
