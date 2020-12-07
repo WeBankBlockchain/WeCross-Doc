@@ -17,21 +17,25 @@ WeCross router向外部暴露了所有的UBI接口，开发者可以通过SDK实
    通过gradle或maven引入SDK到java应用
 
    gradle:
+
 ```bash
-compile ('com.webank:wecross-java-sdk:1.0.0-rc4')
+compile ('com.webank:wecross-java-sdk:1.0.0')
 ```
+
    maven:
+
 ``` xml
 <dependency>
     <groupId>com.webank</groupId>
     <artifactId>wecross-java-sdk</artifactId>
-    <version>1.0.0-rc4</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
 ## 使用方法
 
 示例代码如下：
+
 ```java
 try {
     // 初始化 Service
@@ -39,7 +43,9 @@ try {
 
     // 初始化Resource
     WeCrossRPC weCrossRPC = WeCrossRPCFactory.build(weCrossRPCService);
-    Resource resource = ResourceFactory.build(weCrossRPC, "payment.bcos.HelloWecross", "bcos_user1"); // RPC服务，资源的path，用哪个账户名操作此resource
+
+    weCrossRPC.login("username", "password").send(); // 需要有登录态才能进一步操作
+    Resource resource = ResourceFactory.build(weCrossRPC, "payment.bcos.HelloWecross"); // RPC服务，资源的path
 
     // 用初始化好的resource进行调用
     String[] callRet = resource.call("get");   // call 接口函数名 参数列表
