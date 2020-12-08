@@ -1,4 +1,4 @@
-# 跨链SDK开发应用
+# WeCross Java SDKSDK开发应用
 
 WeCross router向外部暴露了所有的UBI接口，开发者可以通过SDK实现这些接口的快速调用。
 
@@ -18,7 +18,7 @@ WeCross router向外部暴露了所有的UBI接口，开发者可以通过SDK实
 
    gradle:
 
-```bash
+```gradle
 compile ('com.webank:wecross-java-sdk:1.0.0')
 ```
 
@@ -31,6 +31,51 @@ compile ('com.webank:wecross-java-sdk:1.0.0')
     <version>1.0.0</version>
 </dependency>
 ```
+
+## 配置SDK
+
+WeCorss Java SDK 主要包括以下配置选项：
+
+- 路由网络配置（必须）
+- SSL密钥配置（必须）
+- SSL证书配置（必须）
+- CA证书配置（必须）
+- SSL开关（必须）
+
+### 配置步骤
+
+1. 在应用的主目录下新建一个`conf`目录；
+2. 从路由目录下`router-${zone}/cert/sdk/`目录下的证书密钥拷贝到新建的`conf`目录；
+3. 在新建的`conf`目录下新建文件 `application.toml`，默认配置如下：
+
+```toml
+[connection]
+    server =  '127.0.0.1:8250'
+    sslKey = 'classpath:ssl.key'
+    sslCert = 'classpath:ssl.crt'
+    caCert = 'classpath:ca.crt'
+    sslSwitch = 2 # disable ssl:2, SSL without client auth:1 , SSL with client and server auth: 0
+```
+
+4. 修改`application.toml`中`server`，使用router实际监听的IP和端口。
+
+### 配置解读
+
+WeCorss Java SDK 主要包括以下配置选项：
+
+- 路由网络配置（必须）
+- SSL密钥配置（必须）
+- SSL证书配置（必须）
+- CA证书配置（必须）
+- SSL开关（必须）
+
+在`application.toml`配置文件中，`[connection]`配置与路由的SSL连接的证书信息，具体包括以下配置项：
+
+- `server`：路由实际监听的IP和端口；
+- `sslKey`：SDK的SSL私钥路径，SDK将从配置指定路径加载SDK私钥；
+- `sslCert`：SDK的SSL证书路径，SDK将从配置指定路径加载SDK证书；
+- `caCert`：CA证书路径，从配置指定的路径加载CA证书；
+- `sslSwitch`：SSL的模式开关，当配置为0时，客户端和路由端都是打开SSL；当配置为1时，则为客户端不开启，路由端开启SSL；当位置为2时，两端均关闭SSL。
 
 ## 使用方法
 
