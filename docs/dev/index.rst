@@ -9,3 +9,4 @@
    sdk.md
    api.md
    stub.md
+   rpc.md

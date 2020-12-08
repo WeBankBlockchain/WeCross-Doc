@@ -14,6 +14,7 @@ WeCross
    docs/introduction/introduction.md
    docs/version/index.rst
    docs/tutorial/index.rst
+   docs/interchain/interchain.md
    docs/manual/index.rst
    docs/stubs/index.rst
    docs/dev/index.rst
@@ -21,3 +22,4 @@ WeCross
    docs/scenarios/index.rst
    docs/faq/faq.md
    docs/community/community.md
+
