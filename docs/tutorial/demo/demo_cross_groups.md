@@ -171,7 +171,7 @@ http://localhost:8250/s/index.html
 
 用demo已配置账户进行登录：`org1-admin`，密码：`123456`
 
-![](D:/out-branch/WeCross-docs/docs/images/tutorial/page.png)
+![](../../images/tutorial/page.png)
 
 ``` eval_rst
 .. note::

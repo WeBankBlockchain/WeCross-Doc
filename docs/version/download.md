@@ -85,7 +85,7 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 **方式2：命令下载（源码编译模式）**
 
 ```shell
-# 默认下载master分支
+# 默认下载master分支，
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_account_manager.sh) -s
 
 # 下载特定版本下的控制台
@@ -98,16 +98,18 @@ bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resou
 
 - [github release](https://github.com/WeBankFinTech/WeCross-Account-Manager/releases)（下载最新版本的 `WeCross-Account-Manager.tar.gz`）
 
-  手动下载解压
+  下载后执行命令
 
   ```shell
-  tar -zxvf WeCross-Account-Manager.tar.gz
+  tar -zxvf WeCross-Account-Manager.tar.gz # 解压
+  cd WeCross-Account-Manager/conf # 进入
+  mysql -u your_database_username -p < db_setup.sql # 配置数据库
   ```
 
 下载后，目录下包含`WeCross-Account-Manager/`文件夹。
 
-<hr>
 
+<hr>
 ### 下载WeCross Demo
 
 同样提供两种方式，根据网络环境选择合适的方式进行下载。
