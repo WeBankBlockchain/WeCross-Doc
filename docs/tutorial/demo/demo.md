@@ -78,12 +78,6 @@ chainAccounts: [
         isDefault: true
         ----------
         Fabric1.4 Account:
-        keyID    : 1
-        type     : Fabric1.4
-        MembershipID : Org1MSP
-        isDefault: true
-        ----------
-        Fabric1.4 Account:
         keyID    : 3
         type     : Fabric1.4
         MembershipID : Org1MSP
@@ -321,7 +315,7 @@ WeCross支持多种事务机制。此跨链转账的demo是两阶段事务机制
 
 ``` bash
 cd ~/demo/
-bash 2pc_config.sh
+bash xa_config_evidence.sh
 ```
 
 部署成功，输入Y进入控制台
@@ -330,7 +324,7 @@ bash 2pc_config.sh
 [INFO] SUCCESS: 2PC evidence example has been deployed to FISCO BCOS and Fabric:
 
       FISCO BCOS                    Fabric
-(payment.bcos.evidence)    (payment.fabric.evidence)
+(payment.bcos.evidence)   (payment.fabric.evidence)
            |                          |
            |                          |
     WeCross Router <----------> WeCross Router
@@ -342,6 +336,18 @@ bash 2pc_config.sh
 Start WeCross Console to try? [Y/n]
 ```
 
+进入控制台，首先登录跨链账户。（demo中已配置好一个账户：org1-admin，密码：123456）
+
+``` bash
+[WeCross]> login org1-admin  123456
+Result: success
+=============================================================================================
+Universal Account:
+username: org1-admin
+pubKey  : 3059301306...
+uaID    : 3059301306...
+```
+
 **发起跨链事务（start）**
 
 发起一个跨链事务，指定事务涉及的跨链资源，此处FISCO BCOS和Fabric上各一个资源
@@ -350,15 +356,15 @@ Start WeCross Console to try? [Y/n]
 * payment.fabric.evidence
 
 ``` bash
-# 发起事务，事务号100 
-[WeCross]> startTransaction 100 bcos_user1 fabric_user1 payment.bcos.evidence payment.fabric.evidence
+# 发起事务
+[WeCross.org1-admin]> startTransaction payment.bcos.evidence payment.fabric.evidence
 Result: success!
 
 # 查看当前存证evidence0的内容
-[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence0
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence0
 Result: [] # 未存入，空
 
-[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence0
+[WeCross.org1-admin]> call payment.fabric.evidence queryEvidence evidence0
 Result: [] # 未存入，空
 ```
 
@@ -367,13 +373,17 @@ Result: [] # 未存入，空
 事务开始后，通过execTransaction发送事务交易至向此事务涉及的资源，交易会被缓存入事务交易队列，在下一步commit时让所有交易同时被确认。
 
 ``` bash
-# 在FISCO BCOS链上进行存证，事务号100，序列号1，证据名：evidence0，内容：I'm Tom
-[WeCross]> execTransaction payment.bcos.evidence bcos_user1 100 1 newEvidence evidence0 "I'm Tom"
-Result: [true]
+# 在FISCO BCOS链上进行存证，证据名：evidence0，内容：I'm Tom
+[WeCross.org1-admin]> execTransaction payment.bcos.evidence newEvidence evidence0 "I'm Tom"
+Txhash  : 0xa5bdd60240622438be1a99b8cca70b6a71aa3cfa444eefac405b22febf6ce4c9
+BlockNum: 8
+Result  : [true]
 
-# 在Fabric链上进行存证，事务号100，序列号1，证据名：evidence0，内容：I'm Jerry
-[WeCross]> execTransaction payment.fabric.evidence fabric_user1 100 1 newEvidence evidence0 "I'm Jerry"
-Result: [newEvidence success]
+# 在Fabric链上进行存证，证据名：evidence0，内容：I'm Jerry
+[WeCross.org1-admin]> execTransaction payment.fabric.evidence newEvidence evidence0 "I'm Jerry"
+Txhash  : c01809f3cf9154d09fb1a057c743a07dbb0ab2f0c544a9f9d644eb55fb384604
+BlockNum: 10
+Result  : [Success]
 
 # 可发送更多的操作
 ```
@@ -384,14 +394,14 @@ Result: [newEvidence success]
 
 ``` bash 
 # 确认事务，事务结束
-[WeCross]> commitTransaction 100 bcos_user1 fabric_user1 payment.bcos.evidence payment.fabric.evidence
+[WeCross.org1-admin]> commitTransaction payment.bcos.evidence payment.fabric.evidence
 Result: success!
 
 # 查看当前存证内容，两条链都已完成存证
-[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence0
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence0
 Result: [I'm Tom]
 
-[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence0
+[WeCross.org1-admin]> call payment.fabric.evidence queryEvidence evidence0
 Result: [I'm Jerry]
 ```
 
@@ -401,53 +411,57 @@ Result: [I'm Jerry]
 
 ``` bash
 # 查看当前存证evidence1的内容
-[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence1
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence1
 Result: [] # 未存入，空
 
-[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence1
+[WeCross.org1-admin]> call payment.fabric.evidence queryEvidence evidence1
 Result: [] # 未存入，空
 
 # 发起另一个事务，事务号101
-[WeCross]> startTransaction 101 bcos_user1 fabric_user1 payment.bcos.evidence payment.fabric.evidence
+[WeCross.org1-admin]> startTransaction payment.bcos.evidence payment.fabric.evidence
 Result: success!
 
 # 向FISCO BCOS链发送事务交易，设置evidence1，内容为I'm TomGG
-[WeCross]> execTransaction payment.bcos.evidence bcos_user1 101 1 newEvidence evidence1 "I'm TomGG"
-Result: [true]
+[WeCross.org1-admin]> execTransaction payment.bcos.evidence newEvidence evidence1 "I'm TomGG"
+Txhash  : 0x1f81a63a3986702a6c1b532c1d94074f2771a825c3bef1b9dffc73321b45cbe2
+BlockNum: 11
+Result  : [true]
 
 # 向Fabric链发送事务交易，设置evidence1，内容为I'm JerryMM
-[WeCross]> execTransaction payment.fabric.evidence fabric_user1 101 1 newEvidence evidence1 "I'm JerryMM"
-Result: [newEvidence success]
+[WeCross.org1-admin]> execTransaction payment.fabric.evidence newEvidence evidence1 "I'm JerryMM"
+Txhash  : fd18cbecaa3f2528e865ece6ea243c1f18c37e306ee6a59c56407476cce6cc37
+BlockNum: 13
+Result  : [Success]
 
 # 查看当前事务状态下的数据
-[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence1
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence1
 Result: [I'm TomGG]
 
 # 查看当前事务状态下的数据
-[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence1
+[WeCross.org1-admin]> call payment.fabric.evidence queryEvidence evidence1
 Result: [I'm JerryMM]
 
 # 尝试发送普通交易修改此事务下的资源，由于此资源处在事务状态中，被锁定，不可修改
-[WeCross]> sendTransaction payment.bcos.evidence bcos_user1 newEvidence evidence1 "I'm TomDD"
-Error: code(2031), message(payment.bcos.evidence is locked by unfinished transaction: 101)
+[WeCross.org1-admin]> sendTransaction payment.bcos.evidence newEvidence evidence1 "I'm TomDD"
+Error: code(2031), message(evidence is locked by unfinished xa transaction: b04a651171644bf591f2047c2a0a79eb)
 
 # 查看当前事务状态下的数据，未变化，普通交易修改失败，符合预期
-[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence1
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence1
 Result: [I'm TomGG]
 
 # 回滚操作！假设此事务不符合预期，需回滚至事务开始前状态，执行如下命令进行回滚，事务结束
-[WeCross]> rollbackTransaction 101 bcos_user1 fabric_user1 payment.bcos.evidence payment.fabric.evidence
+[WeCross.org1-admin]> rollbackTransaction payment.bcos.evidence payment.fabric.evidence
 Result: success!
 
 # 再次查看当前存证evidence1的内容
-[WeCross]> call payment.bcos.evidence bcos_user1 queryEvidence evidence1
+[WeCross.org1-admin]> call payment.bcos.evidence queryEvidence evidence1
 Result: [] # 已回滚至开始状态
 
-[WeCross]> call payment.fabric.evidence fabric_user1 queryEvidence evidence1
+[WeCross.org1-admin]> call payment.fabric.evidence queryEvidence evidence1
 Result: [] # 已回滚至开始状态
 
 # 退出当前控制台
-[WeCross]> quit 
+[WeCross.org1-admin]> quit 
 ```
 
 此demo基于[2PC框架](../../routine/xa.html)实现，用户可根据业务需要基于框架开发自己的跨链应用，实现链间的原子操作。
