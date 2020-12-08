@@ -1044,5 +1044,25 @@ Result: [666] // 再次get，a的值变成666
 [WeCross.org1-admin]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
 ```
 
+## 访问网页管理台
+
+浏览器访问`router-8250`的网页管理台
+
+``` url
+http://localhost:8250/s/index.html
+```
+
+用demo已配置账户进行登录：`org1-admin`，密码：`123456`
+
+![](D:/out-branch/WeCross-docs/docs/images/tutorial/page.png)
+
+``` eval_rst
+.. note::
+若需要远程访问，请操作：
+cd ~/demo/routers-payment/127.0.0.1-8250-25500/ # 进入router-8250所在目录
+vim conf/wecross.toml   # 修改[rpc]标签下的address为所需ip（如：0.0.0.0），保存
+bash stop.sh && bash start.sh # 重启router，用远程ip进行访问
+```
+
 恭喜，你已经完成了整个WeCross网络的体验。相信优秀的你已经对WeCross有了大致的了解。接下来，你可以基于WeCross Java SDK开发更多的跨连应用，通过统一的接口对各种链上的资源进行操作。
 
