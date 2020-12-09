@@ -122,13 +122,15 @@ vim conf/application.toml
 
 配置控制台与某个router的连接
 
-``` toml
+```toml
 [connection]
     server =  '127.0.0.1:8250' # 对应router的ip和rpc端口
     sslKey = 'classpath:ssl.key'
     sslCert = 'classpath:ssl.crt'
     caCert = 'classpath:ca.crt'
-[login] # 可配置全局账号密码，执行命令`login`时可不输入账号密码
+    sslSwitch = 2 # disable ssl:2, SSL without client auth:1 , SSL with client and server auth: 0
+# 可配置全局账号密码，执行命令`login`时可不输入账号密码
+[login]
     username = 'username'
     password = 'password'
 ```
