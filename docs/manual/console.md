@@ -1,6 +1,6 @@
 ## 控制台
 
-[控制台](https://github.com/WeBankFinTech/WeCross-Console)是WeCross重要的客户端工具，它基于[WeCross-Java-SDK](../dev/sdk.html)与WeCross跨链路由建立连接，实现对跨链资源的读写访问请求。控制台拥有丰富的命令，包括获取跨链资源列表，调用跨链资源，发起事务等等。
+[控制台](https://github.com/WeBankBlockchain/WeCross-Console)是WeCross重要的客户端工具，它基于[WeCross-Java-SDK](../dev/sdk.html)与WeCross跨链路由建立连接，实现对跨链资源的读写访问请求。控制台拥有丰富的命令，包括获取跨链资源列表，调用跨链资源，发起事务等等。
 
 ### 控制台命令
 
@@ -88,7 +88,7 @@ cd ~ && mkdir -p wecross && cd wecross
 # 获取控制台
 bash <(curl -sL https://github.com/WeBankFinTech/WeCross-Console/releases/download/resources/download_console.sh)
 ```
-
+WeBankBlockchain
 执行成功后，会生成`WeCross-Console`目录，结构如下：
 
 ```bash

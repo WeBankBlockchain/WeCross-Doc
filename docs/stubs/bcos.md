@@ -54,7 +54,7 @@ plugin/
 
 ```shell
 git clone https://github.com/WeBankFinTech/WeCross-BCOS2-Stub.git
-cd WeCross-BCOS2-Stub
+cd WeCross-BCOS2-StubWeBankBlockchain
 bash gradlew assemble
 ```
 
@@ -217,4 +217,4 @@ Example:
 
 [FISCO-BCOS JavaSDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html)
 
-[FISCO-BCOS Console文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html)
+[FISCO-BCOS Console文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html)WeBankBlockchain

@@ -32,7 +32,7 @@ dependencies {
 
 新建Gradle工程，并且在`build.gradle`中添加依赖。  
 
-Gradle配置参考: [WeCross-BCOS-Stub build.gradle](https://github.com/WeBankFinTech/WeCross-BCOS2-Stub/blob/master/build.gradle)  
+Gradle配置参考: [WeCross-BCOS-Stub build.gradle](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/build.gradle)  
 
 ### 核心组件
 `Stub`插件需要实现的组件接口：
@@ -128,7 +128,7 @@ conf/accounts
     accountFile = '0x4c9e341a015ce8200060a028ce45dfea8bf33e15.pem' # 配置的私钥文件名称
 ```
 
-`account.toml`解析流程可以参考[BCOS Stub account.toml解析](https://github.com/WeBankFinTech/WeCross-BCOS2-Stub/blob/dev/src/main/java/com/webank/wecross/stub/bcos/config/BCOSAccountConfigParser.java)
+`account.toml`解析流程可以参考[BCOS Stub account.toml解析](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/dev/src/main/java/com/webank/wecross/stub/bcos/config/BCOSAccountConfigParser.java)
 
 BCOS Stub示例
 ```Java
@@ -239,7 +239,7 @@ conf/chains/
             # 其他文件列表，比如：证书文件
 ```
 
-`stub.toml`解析流程可以参考[BCOS Stub stub.toml解析](https://github.com/WeBankFinTech/WeCross-BCOS2-Stub/blob/dev/src/main/java/com/webank/wecross/stub/bcos/config/BCOSStubConfigParser.java)
+`stub.toml`解析流程可以参考[BCOS Stub stub.toml解析](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/dev/src/main/java/com/webank/wecross/stub/bcos/config/BCOSStubConfigParser.java)
 
 BCOS示例
 ```Java
@@ -645,8 +645,8 @@ bash gradlew build
 `dist/apps`目录生成`jar`文件
 
 ### 参考链接
-[WeCross-BCOS-Stub](https://github.com/WeBankFinTech/WeCross-BCOS2-Stub)
+[WeCross-BCOS-Stub](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub)
 
-[WeCross-Fabric-Stub](https://github.com/WeBankFinTech/WeCross-Fabric1-Stub)  
+[WeCross-Fabric-Stub](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub)  
 
 [WeCross文档](https://wecross.readthedocs.io/zh_CN/latest/)

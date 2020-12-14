@@ -24,7 +24,7 @@ plugin/
 
 **下载编译**
 
-``` bash
+``` bashWeBankBlockchain
 git clone https://github.com/WeBankFinTech/WeCross-Fabric1-Stub.git
 cd WeCross-Fabric1-Stub
 bash gradlew assemble # 在 dist/apps/下生成fabric1-stub-XXXXX.jar
