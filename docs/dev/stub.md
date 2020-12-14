@@ -1,4 +1,4 @@
-## WeCross Stub插件开发
+## Stub插件开发
 
 本章内容介绍区块链接入WeCross的完整开发流程，用户可以根据本教程实现一个WeCross区块链`Stub`插件，通过该插件接入WeCross。
 

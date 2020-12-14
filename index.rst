@@ -21,3 +21,4 @@ WeCross
    docs/scenarios/index.rst
    docs/faq/faq.md
    docs/community/community.md
+
