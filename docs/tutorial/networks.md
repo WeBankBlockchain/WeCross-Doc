@@ -29,7 +29,7 @@ mkdir -p ~/wecross/ && cd ~/wecross/
 WeCross中包含了生成跨链路由的工具，执行以下命令进行下载（提供[三种下载方式](../version/download.html#wecross)，可根据网络环境选择合适的方式进行下载），程序下载至当前目录`WeCross/`中。
 
 ```bash
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_wecross.sh)
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_wecross.sh)
 ```
 
 #### 生成跨链路由
@@ -112,7 +112,7 @@ routers-payment/127.0.0.1-8250-25500/
 下载
 
 ``` bash
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_account_manager.sh)
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_account_manager.sh)
 ```
 
 拷贝证书
@@ -264,7 +264,7 @@ node3 start successfully
 mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
 
 # 下载Demo包, 拷贝其中的Fabric demo链环境
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh)
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
 cp demo/fabric/* ./
 
 # 搭建
@@ -354,7 +354,7 @@ vim conf/chains/bcos/stub.toml
     timeout = 300000  # ms, default 60000ms
     connectionsStr = ['127.0.0.1:20200']
 
-[sealer]
+[sealers]
 ```
 
 **部署代理合约**
@@ -584,7 +584,7 @@ WeCross提供了控制台，方便用户进行跨链开发和调试。可通过�
 
 ```bash
 cd ~/wecross/
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_console.sh)
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_console.sh)
 ```
 
 **配置控制台**

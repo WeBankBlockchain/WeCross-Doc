@@ -34,7 +34,7 @@ MacOS对下载的包权限要求较为严格，必须同一个进程下载的才
 # 清理环境
 cd ~/demo/ && bash clear.sh && cd ~ && rm -rf demo
 # 将三个步骤的命令拼成一条命令执行
-bash <(curl -sL https://github.com/WeBankFinTech/WeCross/releases/download/resources/download_demo.sh) && cd demo && bash build.sh
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh) && cd demo && bash build.sh
 ```
 
 
