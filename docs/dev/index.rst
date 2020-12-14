@@ -6,6 +6,7 @@
 .. toctree::
    :maxdepth: 1
    
+   interchain.md
    sdk.md
    api.md
    stub.md

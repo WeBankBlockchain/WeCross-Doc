@@ -1,10 +1,9 @@
-# WeCross Java SDK API
+# Java SDK API
 
-SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中资源接口是对RPC接口进行了封装。
-
+SDK API分为两大类型，一种是对跨链路由RPC接口调用的封装，一种是资源接口。
 ## API列表
 
-* RPC接口
+* RPC封装接口
 
 ```java
     RemoteCall<StubResponse> supportedStubs();
@@ -65,20 +64,16 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
     ResourceDetail detail();
 
-    TransactionResponse call(Request<TransactionRequest> request);
-
     String[] call(String method);
 
     String[] call(String method, String... args);
-
-    TransactionResponse sendTransaction(Request<TransactionRequest> request);
 
     String[] sendTransaction(String method);
 
     String[] sendTransaction(String method, String... args);
 ```
 
-## RPC接口解析
+## RPC封装接口解析
 
 ### supportedStubs
 
@@ -377,7 +372,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 #### 参数
 
 - `transactionID`:`String` - 事务ID
-- `paths`: `String[]` - 跨链资源列表
+- `paths`: `String[]` - 参与该事务的链路径列表
 
 #### 返回值
 
@@ -393,7 +388,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     XAResponse xaResponse =
         weCrossRPC
             .startXATransaction(
-                "0001", new String[]{"payment.bcos.evidence", "payment.fabric.evidence"},)
+                "0001", new String[]{"payment.bcos", "payment.fabric"},)
             .send();
 ```
 
@@ -404,7 +399,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 #### 参数
 
 - `transactionID`:`String` - 事务ID
-- `paths`: `String[]` - 跨链资源列表
+- `paths`: `String[]` - 参与该事务的链路径列表
 
 #### 返回值
 
@@ -420,7 +415,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     XAResponse xaResponse =
         weCrossRPC
             .commitTransaction(
-                "0001", new String[]{"payment.bcos.evidence", "payment.fabric.evidence"},)
+                "0001", new String[]{"payment.bcos", "payment.fabric"},)
             .send();
 ```
 
@@ -431,7 +426,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 #### 参数
 
 - `transactionID`:`String` - 事务ID
-- `paths`: `String[]` - 跨链资源列表
+- `paths`: `String[]` - 参与该事务的链路径列表
 
 #### 返回值
 
@@ -447,7 +442,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     XAResponse xaResponse =
         weCrossRPC
             .rollbackTransaction(
-                "0001", new String[]{"payment.bcos.evidence", "payment.fabric.evidence"},)
+                "0001", new String[]{"payment.bcos", "payment.fabric"},)
             .send();
 ```
 
@@ -458,7 +453,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 #### 参数
 
 - `transactionID`:`String` - 事务ID
-- `paths`: `String[]` - 跨链资源列表
+- `paths`: `String[]` - 参与该事务的链路径列表
 
 #### 返回值
 
@@ -474,7 +469,7 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     XATransactionResponse xaTransactionResponse =
         weCrossRPC
             .getTransactionInfo(
-                "0001", new String[]{"payment.bcos.evidence", "payment.fabric.evidence"},)
+                "0001", new String[]{"payment.bcos", "payment.fabric"},)
             .send();
 ```
 
@@ -718,28 +713,6 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
     ResourceDetail detail = resource.detail();
 ```
 
-### call
-
-调用智能合约，不更改链状态，不发交易。
-
-#### 参数
-
-- `request`: `Request<TransactionRequest>` - 请求体
-
-#### 返回值
-
-- `TransactionResponse` - 响应包
-   - `version`: `String` - 版本号
-   - `errorCode`: `int` - 状态码
-   - `message`: `String` - 错误消息
-   - `data`: `Receipt` - 调用结果
-
-#### java示例
-
-```java
-    TransactionResponse transactionResponse = resource.call(request);
-```
-
 ### call(无参数)
 
 调用智能合约，不更改链状态，不发交易。
@@ -775,28 +748,6 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 
 ```java
     String[] result = resource.call("get", "key");
-```
-
-### sendTransaction
-
-调用智能合约，会改变链状态，发交易。
-
-#### 参数
-
-- `request`: `Request<TransactionRequest>` - 请求体
-
-#### 返回值
-
-- `TransactionResponse` - 响应包
-   - `version`: `String` - 版本号
-   - `errorCode`: `int` - 状态码
-   - `message`: `String` - 错误消息
-   - `data`: `Receipt` - 调用结果
-
-#### java示例
-
-```java
-    TransactionResponse transactionResponse = resource.sendTransaction(request);
 ```
 
 ### sendTransaction(无参数)
@@ -835,26 +786,3 @@ SDK API分为两大类型，一种是RPC接口，一种是资源接口，其中�
 ```java
     String[] result = resource.sendTransaction("set", "value");
 ```
-
-## RPC状态码
-
-当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
-
-- errorCode: 使用数值表示该异常的错误类型，必须为整数。
-- message: 对该错误的简单描述字符串。
-
-标准状态码及其对应的含义如下：  
-
-| code     | 含义            |
-| :------- | :------------- |
-| 0        | 执行成功        |
-| 10100   | 内部错误        |
-| 10201   | 版本错误        |
-| 10202   | 资源标识错误     |
-| 10203   | 资源不存在      |
-| 10204   | 缺少登录态      ｜
-| 10205   | 请求解码错误     |
-| 10301   | htlc错误      |
-| 2000x | 内部错误，结合message查看错误原因 |
-| 5xxxx | 插件内错误，结合message查看错误原因 |
-| 6xxxx | 两阶段事务错误，结合message查看错误原因 |

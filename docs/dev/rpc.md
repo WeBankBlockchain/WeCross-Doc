@@ -2,6 +2,27 @@
 
 WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它语言的项目则可通过调用JSON-RPC API完成跨链开发。
 
+## 状态码
+
+当RPC调用遇到错误时，返回的响应对象必须包含错误结果字段，该字段有下列成员参数：
+
+- errorCode: 使用数值表示该异常的错误类型，必须为整数。
+- message: 对该错误的简单描述字符串。
+
+状态码及其对应的含义如下：  
+
+| code    | 含义            |
+| :-------| :------------- |
+| 0       | 执行成功  |
+| 10000   | 内部错误  |
+| 10001   | URI访问路径错误  |
+| 10002   | URI查询字段错误  |
+| 2xxxx   | 网络包错误  |
+| 3xxxx   | 跨链账户错误 |
+| 4xxxx   | 资源调用错误 |
+| 5xxxx   | 交易查询错误 |
+| 6xxxx   | 两阶段事务错误 |
+| 7xxxx   | 哈希时间锁合约错误 |
 
 ## login
 登录接口
@@ -69,7 +90,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzM0ODA3OTk2LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMzNDgwNywiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM1MjgwNywiaWF0IjoxNjA3MzM0ODA3fQ.j16YP6a9hJNhNMzSe1FfZQxvfoQgiWMAf6Bohgu1acg |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 请求Body参数
 
@@ -116,7 +137,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzI3ODAyNzYxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMyNzgwMiwiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0NTgwMiwiaWF0IjoxNjA3MzI3ODAyfQ._P8dGf8LCAzzbnhCWJWioH0Moci0HXPUWFUMJgWMv14 |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 
 #### 成功响应示例
@@ -160,7 +181,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzI3ODAyNzYxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMyNzgwMiwiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0NTgwMiwiaWF0IjoxNjA3MzI3ODAyfQ._P8dGf8LCAzzbnhCWJWioH0Moci0HXPUWFUMJgWMv14 |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 
 #### 成功响应示例
@@ -200,7 +221,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzI3ODAyNzYxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMyNzgwMiwiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0NTgwMiwiaWF0IjoxNjA3MzI3ODAyfQ._P8dGf8LCAzzbnhCWJWioH0Moci0HXPUWFUMJgWMv14 |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 请求Body参数
 
@@ -261,7 +282,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzI3ODAyNzYxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMyNzgwMiwiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0NTgwMiwiaWF0IjoxNjA3MzI3ODAyfQ._P8dGf8LCAzzbnhCWJWioH0Moci0HXPUWFUMJgWMv14 |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 请求Body参数
 
@@ -333,7 +354,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzMxNjUzMjk1LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMzMTY1MywiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0OTY1MywiaWF0IjoxNjA3MzMxNjUzfQ.3Si0TXTFn5GWMNkQ6ex2F4JKMu-67sYaApuzbJQhA3s |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 成功响应示例
 ```javascript
@@ -384,7 +405,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzMxNjUzMjk1LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMzMTY1MywiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0OTY1MywiaWF0IjoxNjA3MzMxNjUzfQ.3Si0TXTFn5GWMNkQ6ex2F4JKMu-67sYaApuzbJQhA3s |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 
 #### 成功响应示例
@@ -429,7 +450,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzMxNjUzMjk1LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMzMTY1MywiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0OTY1MywiaWF0IjoxNjA3MzMxNjUzfQ.3Si0TXTFn5GWMNkQ6ex2F4JKMu-67sYaApuzbJQhA3s |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 请求Body参数
 
@@ -481,7 +502,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzMxNjUzMjk1LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMzMTY1MywiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0OTY1MywiaWF0IjoxNjA3MzMxNjUzfQ.3Si0TXTFn5GWMNkQ6ex2F4JKMu-67sYaApuzbJQhA3s |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 请求Body参数
 
@@ -534,7 +555,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzMxNjUzMjk1LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMzMTY1MywiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0OTY1MywiaWF0IjoxNjA3MzMxNjUzfQ.3Si0TXTFn5GWMNkQ6ex2F4JKMu-67sYaApuzbJQhA3s |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 请求Body参数
 
@@ -586,7 +607,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzMxNjUzMjk1LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMzMTY1MywiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0OTY1MywiaWF0IjoxNjA3MzMxNjUzfQ.3Si0TXTFn5GWMNkQ6ex2F4JKMu-67sYaApuzbJQhA3s |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 请求Body参数
 
@@ -660,7 +681,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | Content-Type     | application/json |  必填 | - |
-| Authorization     | Bearer eyJpYXRtaWxsIjoxNjA3MzMxNjUzMjk1LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzaGFyZW9uZyIsIm5iZiI6MTYwNzMzMTY1MywiaXNzIjoib3JnMSIsImV4cCI6MTYwNzM0OTY1MywiaWF0IjoxNjA3MzMxNjUzfQ.3Si0TXTFn5GWMNkQ6ex2F4JKMu-67sYaApuzbJQhA3s |  必填 | login返回的credential |
+| Authorization     | |  必填 | login返回的credential |
 
 #### 请求Body参数
 

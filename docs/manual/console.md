@@ -1,6 +1,6 @@
 ## 控制台
 
-[控制台](https://github.com/WeBankFinTech/WeCross-Console)是WeCross重要的交互式客户端工具，它通过[WeCross-Java-SDK](../dev/sdk.html)与WeCross 跨链代理建立连接，实现对跨链资源的读写访问请求。控制台拥有丰富的命令，包括获取跨链资源列表，查询资源状态，以及所有的JSON-RPC接口命令。
+[控制台](https://github.com/WeBankFinTech/WeCross-Console)是WeCross重要的客户端工具，它基于[WeCross-Java-SDK](../dev/sdk.html)与WeCross跨链路由建立连接，实现对跨链资源的读写访问请求。控制台拥有丰富的命令，包括获取跨链资源列表，调用跨链资源，发起事务等等。
 
 ### 控制台命令
 
@@ -10,15 +10,13 @@
 
 普通命令由两部分组成，即指令和指令相关的参数：
 
-- **指令**: 指令是执行的操作命令，包括获取跨链资源列表，查询资源状态指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
-**使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
+- **指令：**指令是执行的操作命令。**使用提示: 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
   
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../dev/api.html)。
-
+- **指令相关的参数：**指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。
 #### 交互式命令
 
-WeCross控制台为了方便用户使用，还提供了交互式的使用方式，比如将跨链资源标识赋值给变量，初始化一个类，并用`.command`的方式访问方法。
-详见：[交互式命令](#id14)
+WeCross控制台为了方便用户使用，还提供了交互式的使用方式，比如将跨链资源路径赋值给变量，初始化一个类，并用`.command`的方式访问方法。
+详见：[交互式命令](#id15)
 
 ### 常用命令链接
 
@@ -113,7 +111,7 @@ cd ~/wecross/WeCross-Console
 # 拷贝配置sample
 cp conf/application-sample.toml conf/application.toml
 
-# 拷贝连接router所需的TLS证书，从生成的routers-payment/cert/sdk目录下拷贝
+# 拷贝连接跨链路由所需的证书
 cp ~/wecross/routers-payment/cert/sdk/* conf/ # 包含：ca.crt、node.nodeid、ssl.crt、ssl.key
 
 # 配置
@@ -137,7 +135,7 @@ vim conf/application.toml
 
 #### 启动控制台
 
-在WeCross已经开启的情况下，启动控制台
+在跨链路由已经启动的情况下，启动控制台
 
 ```bash
 cd ~/wecross/WeCross-Console
