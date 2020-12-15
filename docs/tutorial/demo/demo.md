@@ -78,10 +78,10 @@ chainAccounts: [
         isDefault: true
         ----------
         Fabric1.4 Account:
-        keyID    : 3
+        keyID    : 1
         type     : Fabric1.4
         MembershipID : Org1MSP
-        isDefault: false
+        isDefault: true
         ----------
         Fabric1.4 Account:
         keyID    : 2
