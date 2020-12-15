@@ -229,3 +229,5 @@ src
 ![contribute](../images/webApp/contribute.png)
 
 欢迎通过以上按钮，对我们WeCross的产品进行提Issue、提Bug、提需求，也欢迎各位参与到我们的社区中，来领取CIP任务，打怪升级，赢得任务奖励！:)
+
+详情可参考：[参与社区](../../community/community.html)
