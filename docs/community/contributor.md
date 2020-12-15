@@ -4,7 +4,7 @@
 
 社区开发者可以针对代码中的BUG、不足和功能点发起Pull Request(PR)来申请对代码的修改。
 
-社区将牢记每一份来自社区成员的贡献，并且会[奖励](./community.html#社区治理)每一位贡献者。
+社区将牢记每一份来自社区成员的贡献，并且会[奖励](./community.html#id2)每一位贡献者。
 
 ## 代码分支策略
 
@@ -32,7 +32,7 @@
 
 ## 如何快速参与
 
-如果你已经对WeCross有一定了解，并且希望能够为WeCross贡献代码，[Help Wanted Issues](https://github.com/WeBankBlockchain/WeCross/issues/109)为你列出了很多合适的开发任务，每一项都标注了难度级别，详见[Task挑战](./event.html#Task挑战)介绍。当然里面也会有一些极具挑战的任务，期待极客的你迎难而上，马到功成！
+如果你已经对WeCross有一定了解，并且希望能够为WeCross贡献代码，[Help Wanted Issues](https://github.com/WeBankBlockchain/WeCross/issues/109)为你列出了很多合适的开发任务，每一项都标注了难度级别，详见[Task挑战](./event.html#task)介绍。当然里面也会有一些极具挑战的任务，期待极客的你迎难而上，马到功成！
 
 如果你想搞点大事情，例如添加新的功能组件、改变目前的使用方式或者进行较大的项目优化，在实践之前请务必确保你已经在Issue区发起了一个[改进提案CIP](./cip.html)，并经过了社区的充分讨论和设计。
 

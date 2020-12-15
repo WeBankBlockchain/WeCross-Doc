@@ -12,11 +12,11 @@
 
 - 交流群：如在实操方面遇到阻碍或想和开发者们随时随地交流，那么加群、加群、加群，群里的“老司机”很乐意为你提供解答和支持。
 
-![assistant](../images/community/assistant.png)
+![](../images/community/assistant.png)
 
 - 公众号：及时掌握项目动态、了解版本更新信息、阅读来自社区的精彩文章，以及查阅近期活动安排。
 
-![account](../images/community/account.png)
+![](../images/community/account.png)
 
 - 社区活动：社区不定期举办各类型交流活动，你可以来[Meetup](https://mp.weixin.qq.com/s/X91tRrYudrFUVavig4koaQ)上和社区开发者深度讨论技术，极速提高技术能力；可以花36小时在Hackathon赛场上和开发者们进行代码的创意角逐，收获一份“秃然”的革命友谊；可以参加WeCross社区例会，为开发进程建言献策，并找到合适的切入点，一起参与WeCross项目的建设。
 
@@ -26,15 +26,15 @@
 
 >目前，我们在[WeCross Issues](https://github.com/WeBankBlockchain/WeCross/issues)中设置了低难度（Task-L）和中难度（Task-M）两个梯度的Task，其中标注为help wanted的Issue均为可认领Task。
 >
->完成代码，提交PR并合入后，将根据任务难度等级获得积分，累计一定数量积分可换取神秘纪念品！详情请关注：[社区活动](./event.html#Task挑战)
+>完成代码，提交PR并合入后，将根据任务难度等级获得积分，累计一定数量积分可换取神秘纪念品！详情请关注：[社区活动](./event.html#task)
 
 **每一份付出都值得铭记**。社区公开维护一个贡献榜记录曾参与和帮助WeCross建设的社区贡献者。榜单见证了每一位贡献者成长的轨迹，也留下了WeCross不断迭代发展的烙印。
 
 >WeCross的开发、维护、运营都由社区协作完成，感谢在各个版本开发过程中积极参与和贡献的每一位小伙伴。
 >
->![contributors](../images/community/contributors.jpeg)
+>![](../images/community/contributors.jpeg)
 
-**每一个约定都值得坚守**。为了让用户的诉求得到清晰而充分地表达，为了让开发者更高效便捷地参与WeCross建设，社区协作制定了[PR规范](./contributor.html#PR规范)，[代码规范](./contributor.html#代码规范)，[测试规范](./contributor.html#测试规范)，[改进提案(CIP)规范](./cip.html)等社区规约，欢迎大家一起遵守和完善。
+**每一个约定都值得坚守**。为了让用户的诉求得到清晰而充分地表达，为了让开发者更高效便捷地参与WeCross建设，社区协作制定了[PR规范](./contributor.html#pr)，[代码规范](./contributor.html#id5)，[测试规范](./contributor.html#id8)，[改进提案(CIP)规范](./cip.html)等社区规约，欢迎大家一起遵守和完善。
 
 正如WeCross[白皮书](https://mp.weixin.qq.com/s/w0APEAonFXbOoinMJipPAA)所言，“风起于青萍之末，一场围绕区块链技术的变革正在徐徐拉开帷幕。与一个具备无限潜力的趋势共同成长，现在，正是最好的时节”。期待更多开发者和WeCross社区并肩同行！
 
