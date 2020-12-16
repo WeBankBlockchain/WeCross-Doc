@@ -24,7 +24,117 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 6xxxx   | 两阶段事务错误 |
 | 7xxxx   | 哈希时间锁合约错误 |
 
-## login
+## RPC接口列表
+
+### pub
+获取公钥，前端用于对敏感数据加密
+
+#### 接口URL
+> http://127.0.0.1:8250/auth/pub
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> application/json
+
+#### 请求Query参数
+空
+#### 请求Body参数
+空
+
+#### 成功响应示例
+```json
+{
+  "version": "1.0",
+  "errorCode": 0,
+  "message": "success",
+  "data": {
+    "errorCode": 0,
+    "message": "success",
+    "pub": "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAiJ0u2c/Xze3Jv+beltOfoaavZtatVmldwctq3ItZZ5w60whzKiNdrsFcQZqj2PszLbwiYsC4fEFKQIcaTiHCXDSQ1Km25ay8/c+NKprl/ruevGB1pXDnQNZhQqoaghfzijTX2bl6DJqCnuSV46sCKgKfyKm3PNPcsMUxYWC1283an3cviUvdSnZyXHN++T2Otw77EVm55CNuDpX5MkOOIPTMSAxzweC9n9dJf5sGbmzqK2Yx8Jp/9vUA+jqR8ljqKJ7Q6bLVW3/xuqAN542U8a3dvPY3RVAkLVxgnl7UIfQl5PcBIxd4W3NZM6da/ZGmp76MAq/hxpceoU7DmQntkP9mX9ExtzcUTNFTm+LERwR530YRx4P7QB3EAAujEklZrlhXVwNa3phXnZRJWm4nuJ3qQB0I2VIw9q247aSLWEkoXQWu9CyRWzt7hmxgspwCYwsMdkvs0t8zv5L1LK0i8qXLHQCrasHkoJQ16+aztSDFmrAhJKtC4JN+ACnR1kMXAz/r2o3Y+pCO/2eBSDllsYSwCMRcgFwGvmutSD5dLes+zFZusxTRZ6vVnnnob+fOZ0NAdEDG9QY4UZoUxMjqSqM2db9jQ67QlcuMuEsc7uQ7T5mWlNORBnEVCz/UIjvFKnw7XnvGWcT/hKTPKYbgkqOJ/KQ05DoF/W3VHU+inPMCAwEAAQ=="
+  }
+}
+```
+
+### authCode
+获取验证码，登录、注册时使用
+
+#### 接口URL
+> http://127.0.0.1:8250/auth/authCode
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> application/json
+
+#### 请求Query参数
+空
+#### 请求Body参数
+空
+
+#### 成功响应示例
+```json
+{
+  "version": "1.0",
+  "errorCode": 0,
+  "message": "success",
+  "data": {
+    "errorCode": 0,
+    "message": "success",
+    "authCode": {
+      "randomToken": "ad4b480b9585eaee7368a8260e28a198119bb88073f6f3b1aa03ede49ef1214e",
+      "imageBase64": "iVBORw0KGgoAAAANSUhEUgAAAJsAAAA8CAIAAAD+Gl+NAAADQUlEQVR42u3cMW7kMAwFUB1im9S5xQLpUi9yhhxiq82Vttw+N0q53WSAAQzDGtGfFClSGgpqknFsj58lk7Sd8vX/kn2lXi6N9u/zL/FjNqN2Pc6yvq2hIJyJOkyxf20M0XQNPkxvPUVXa0Ugl6gpmi2AaIZIa4pmGrOgqEWEnc1fNFuKZkvRbCmaLUVTdJ4mvllRt/ffP/c9Rc/b25/XQwf/8OXXE9gF+dgB8m5P0dCoxLic1zVF2ZzBUT2vo1zUbZIMghrTdRrR7WqHc+KiMs4UlYvuQ9Mxorj6o4se2EDUQ7LRGQSJUVuurA19PP+49YlFa7YNDxGtc0dHUdaStWKrLyJKSNOiNerhN1qoBBjrruKpqKJricaJiFrko0h8JBMFObVQI4oqopqWGkBUlmi/q5so8ik+6yoWBdUTGBpsMlFk/LmI0oV7Lip9A+AUTHfi9Rmj3NwUR6W995Z2xd56E2OiXDdR2WKnl1LEW/bYm3gG3lwXj3W1RAU1ffWcFcxzrn1YuOuTj4oX47pa1CJ66oIWES/0JlNYURy1dZdGsXjUCoy1khlQ0aeuq4tKXFbrBexQb5sQV3rFrnRk5yYqiHjrL9bSou/VyKbT1iklTlL36wFFkSg9kCiozgpoZdUG4gIJPpoEjsj6/COW6Xoj2MUVrAhqJaa6ySg4RokhSAxWVg7tL8qt8Q6oCI4UPe3c8N7hjre6qEXhXlbj1c1e6MgoxKwrdtVF5T6iPaB2j4iCj48HerqTeLahp6SgVV5QfJYMryIJXtt1fktCxnZ6vOxKRZ3Pj9U2BGTcKuD4FvBFdALp7kBMUSpkCMtJQ8r2vKxk2Rqpjq6tHaN3uAe1LGnZOuUHu7YsWVeK6PnoSM7WQRlGy9ouvUv4Ny1BVASHmPUn9SasUfHN4V8fuR4Xd06xUP+YtkMFOcWnMhEilCCcrEPcKbE/oy1QTy/eKkF4aw0lDieopWhgkd7Qc4DW5qYZo50fRaAlkkvFs4cY9yUg58Xjf8Fuk3BndUJrPeJDN5moaYBKh5GK/13H7rh1ifbstCCJvAyp1vZHKwMmkhQdLeo4QOWi1pyd2aoX6oOKLow68aw7XtS9yD7LGP0G/T53V67Tc1kAAAAASUVORK5CYII="
+    }
+  }
+}
+```
+
+### register
+用户注册
+
+#### 接口URL
+> http://127.0.0.1:8250/auth/register
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> application/json
+
+#### 请求Body参数
+```json
+{
+  "version": "1",
+  "data": "eEG9fFyTDU2RHjp/kVMTCANqrbQACm0tjGdE+UQgvniGT/+xzrDDKOPpIPMPhFTs4rqOAaCHAmzzTP26i72e4l1a+YvRo1lqARxtofDMPD9ku7yaM8xz47bCz5d+9P9E/i9lZiKZ1fsv1qgdTw74/Sbixh7KhPeqUUajh4v3cu4/4b57/4NKoHUAr1AlMDE1/N7wcuRlWQposZLpMQrPd9uLuviWFw+l7b7ugT/VsVPIuM8K6qo7ubeMoH269jp+1/tYNzqbG2bAi2uoFXSYelcETM3ew8zVxJZEGAeqgklNWSFOjKAeZSvkIceQzVH4wxVT/b6+hiH7Q+hQiowK6Yd7AcHNm/mCkXKdZIH87NaACWVimWowQZvrIrmINgESuMMQo60iZJc+pU46O0118WXNSeBnlgUf7LeVUz37sOn00O6rNH1/ov2z7LmUo1XdCTOB24qj6Pl9040NMWWV/mh8Ck+0cThhf+IKmpdS+Hx4cvPChM6mSZDI5reQdoe+Ay1ABLIAEERLwDM3Oa3IAnWaG1hzihsWh5daTi3Xo3jICX08aTy6ossoC1f8oRPdPUTvNk8UtqUu5IO1OsPT9s2ZpSh0cyCHgjpuaqg1FOJEVCkYGOj9SZ1AHbe3qrYyCvrp8t81BaONmi52iWW7ldXbh6ylm47ix7B3EbmkA50="
+}
+```
+
+| 参数        | 示例值   | 是否必填   |  参数描述  |
+| :--------   | :-----  | :-----  | :----  |
+| version     | 1 |  必填 | 接口版本 |
+| data     |  |  必填 | 账户名+密码+认证码 RSA加密，再进行base64编码 |
+
+#### 成功响应示例
+```json
+{
+  "version": "1",
+  "errorCode": 0,
+  "message": "success",
+  "data": {
+    "errorCode": 0,
+    "message": "success",
+    "universalAccount": {
+      "username": "shareong",
+      "pubKey": "3059301306072a8648ce3d020106082a811ccf5501822d034200044f7f2e394493742fa58bf17b22ed73fd92125be9ca7c093c516531572bac91a7608578ef6724a3115a1126047cb50762fc6f4e1eb0b4fb8a4c3efe6d1982c356",
+      "uaID": "3059301306072a8648ce3d020106082a811ccf5501822d034200044f7f2e394493742fa58bf17b22ed73fd92125be9ca7c093c516531572bac91a7608578ef6724a3115a1126047cb50762fc6f4e1eb0b4fb8a4c3efe6d1982c356"
+    }
+  }
+}
+```
+
+### login
 登录接口
 
 #### 接口URL
@@ -40,18 +150,15 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 
 ```json
 {
-	"version": "1",
-	"data": {
-		"username": "alice",
-		"password": "123456"
-	}
+  "version": "1",
+  "data": "LvZLmoOgui6NAoTNuDz4T9rv5rmvFAzji+87EOm39MhfK/sXeUZ0WqLPoLYHL8kabVKOAvSdzskGHUYc84O88hO1bN7aUc6RYjw2e2dJdf1Bqe0MnGRccxTEZU37mwA1JcWbpzL9yv0w64xisLsfO87K7WC7frSU6kUy9MXJyEkIsBKSY9eSyhynwA/3FaHhZ0YMRx9LsdD4/lsrBg3Qk0D2/V1PTlt+KG32PJvwB6EsCDjQYFUhHkOfBQQZ6uZVWWcJkJQtSQ0NwFKaaQ4nUUP+dueUGD+1dfYuer1mOhjiuwuQNoMBcr8mq7ZpZQPG7FIXrMHMX/nw57+L3M01tf6YthuQV7QVDUdFZjP5q2bcX70217BYivAGJar4w6WlEhPAJTnu8ovl+DEGBNWPnhOBdtKffUW51iqtiooQfPw61GRR5uRFlxV3zVn7blaBmFH7H2naa1+4Dk1xgnC06lgJyQiLxfZ8/+4issYzjniqu6Lf7Lx2iiejzTk10csQ/DjDN1Hs1gHv4NZ7s1n8ESM7uL1Hqu2fOKIzMbctoNzVMeBidxBtdrz0g/keUMBzzN/j4meq6kDvxc/FaVI0TWCuOZ5diRD/+dGcOELh2eEhTdNknE67ekx1oY7RleyObulRexV3gu1C6X4PtcxfnsnfD04sGkO73zyTepUu7cE="
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
-| data.username     | alice |  必填 | 跨链账户名 |
-| data.password     | 123456 |  必填 | 密码 |
+| data     |  |  必填 | 账户名+密码+验证码 RSA加密，再进行base64编码 |
 
 #### 成功响应示例
 ```json
@@ -73,7 +180,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## logout
+### logout
 登出接口
 
 #### 接口URL
@@ -111,7 +218,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## listResources
+### listResources
 获取指定区块链的资源列表
 
 #### 接口URL
@@ -164,7 +271,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## detail
+### detail
 获取资源的详情，若资源路径path=zone.chain.name，则访问路径为：```resource/zone/chain/name/detail```
 
 #### 接口URL
@@ -204,7 +311,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 ```
 
 
-## call
+### call
 基于只读方式调用资源，若资源路径path=zone.chain.name，则访问路径为：```resource/zone/chain/name/call```
 
 #### 接口URL
@@ -238,6 +345,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -265,7 +373,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 ```
 
 
-## sendTransaction
+### sendTransaction
 基于发交易的方式调用资源，若资源路径path=zone.chain.name，则访问路径为：```resource/zone/chain/name/sendTransaction```
 
 #### 接口URL
@@ -301,6 +409,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -328,7 +437,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## listTransactions
+### listTransactions
 获取指定区块链的交易列表
 
 #### 接口URL
@@ -379,7 +488,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## getTransaction
+### getTransaction
 根据块高和哈希获取交易详情
 
 #### 接口URL
@@ -433,7 +542,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## startXATransaction
+### startXATransaction
 开始事务
 
 #### 接口URL
@@ -466,6 +575,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
     }
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -485,7 +595,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## commitXATransaction
+### commitXATransaction
 提交事务，注意：提交和回滚事务只需要传入参与该事务的区块链的路径就可以了，无需传入所有参与事务的资源
 
 #### 接口URL
@@ -518,6 +628,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -537,7 +648,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## rollbackXATransaction
+### rollbackXATransaction
 回滚事务，注意：提交和回滚事务只需要传入参与该事务的区块链的路径就可以了，无需传入所有参与事务的资源
 
 #### 接口URL
@@ -571,6 +682,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -590,7 +702,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## listXATransactions
+### listXATransactions
 获取事务列表，结果根据事务的开启时间排序，同时返回是否已经获取完毕，以及下一次请求的偏移
 
 #### 接口URL
@@ -620,6 +732,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -664,7 +777,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## getXATransaction
+### getXATransaction
 根据事务ID获取事务详情
 
 #### 接口URL
@@ -697,6 +810,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
