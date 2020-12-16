@@ -25,10 +25,10 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 - 账号操作
   - [login](#login)：在当前控制台登录全局账号
   - [logout](#logout)：控制台登出
-  - [registerAccount](#registerAccount)：注册全局账号
-  - [addChainAccount](#addChainAccount)：在当前全局账号添加一个链账号
-  - [setDefaultAccount](#setDefaultAccount)：设定某个账号为这个链类型的交易发送默认账号
-  - [listAccount](#listAccount)：查看当前全局账号的详细信息
+  - [registerAccount](#registeraccount)：注册全局账号
+  - [addChainAccount](#addChainaccount)：在当前全局账号添加一个链账号
+  - [setDefaultAccount](#setdefaultaccount)：设定某个账号为这个链类型的交易发送默认账号
+  - [listAccount](#listaccount)：查看当前全局账号的详细信息
 - 状态查询
   - [listResources](#listresources)：查看资源列表
   - [detail](#detail)：查看资源详情
@@ -38,15 +38,15 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
   - [sendTransaction](#sendtransaction)：发交易，用于改变链上资源，触发出块
   - [invoke](#invoke)：功能等同[sendTransaction](#sendtransaction)，在跨链事务时自动转化为命令[execTransaction](#exectransaction)
 - 资源部署
-  - BCOS：[bcosDeploy](#bcosDeploy)、[bcosRegister](#bcosRegister)
-  - Fabric：[fabricInstall](#fabricInstall)、[fabricInstantiate](#fabricInstantiate)、[fabricUpgrade](#fabricUpgrade)
+  - BCOS：[bcosDeploy](#bcosdeploy)、[bcosRegister](#bcosregister)
+  - Fabric：[fabricInstall](#fabricinstall)、[fabricInstantiate](#fabricinstantiate)、[fabricUpgrade](#fabricupgrade)
 - 跨链事务
   - [startTransaction](#starttransaction)：开始两阶段事务
   - [execTransaction](#exectransaction)：发起事务交易
   - [callTransaction](#calltransaction)：读取事务过程中的数据
   - [commitTransaction](#committransaction)：提交事务，确认事务执行过程中所有的变动
   - [rollbackTransaction](#rollbacktransaction)：撤销本次事务的所有变更时
-  - [loadTransaction](#loadTransaction)：恢复到某个正在执行的事务上下文
+  - [loadTransaction](#loadtransaction)：恢复到某个正在执行的事务上下文
 - 跨链转账
   - [newHTLCProposal](#newhtlcproposal)：创建转账提案
 
@@ -70,7 +70,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
-- **状态码:** 控制台的命令调用JSON-RPC接口时，状态码[参考这里](../dev/api.html#id61)。
+- **状态码:** 控制台的命令调用JSON-RPC接口时，状态码[参考这里](../dev/rpc.html#id1)。
 
 ### 控制台配置与运行
 
@@ -577,7 +577,7 @@ Result  : []
 
 ##### invoke
 
-在非事务状态时，与命令[sendTransaction](#sendTransaction)功能一致；在事务状态时，与命令[execTransaction](#execTransaction)功能一致
+在非事务状态时，与命令[sendTransaction](#sendtransaction)功能一致；在事务状态时，与命令[execTransaction](#exectransaction)功能一致
 
 参数：
 

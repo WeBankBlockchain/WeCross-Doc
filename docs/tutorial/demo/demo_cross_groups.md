@@ -48,7 +48,7 @@ Start console? [Y/n]
 
 **登录跨链账户**
 
-进入控制台，首先登录跨链账户。（demo中已配置好一个账户：org1-admin，密码：123456）
+进入控制台，首先登录跨链账户。（Demo中已配置好一个账户：org1-admin，密码：123456）
 
 ``` groovy
 [WeCross]> login org1-admin 123456
@@ -82,14 +82,14 @@ chainAccounts: [
 
 **查看资源**
 
-进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有两个资源：
+用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有多个资源：
 
-* payment.group1.HelloWorldGroup1
+* `payment.group1.HelloWorldGroup1`
   * 对应于Group1上的HelloWorld.sol合约
-* payment.group2.HelloWorldGroup2
+* `payment.group2.HelloWorldGroup2`
   * 对应于Group2上的HelloWorld.sol合约
-* xxxx.xxxx.WeCrossHub
-  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考XXX
+* `xxxx.xxxx.WeCrossHub`
+  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
 [WeCross.org1-admin]>listResources
@@ -166,19 +166,16 @@ WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链�
 浏览器访问`router-8250`的网页管理台
 
 ``` url
-http://localhost:8250/s/index.html
+http://localhost:8250/s/index.html#/login
 ```
 
 用demo已配置账户进行登录：`org1-admin`，密码：`123456`
 
-![](../../images/tutorial/page.png)
+![](../../images/tutorial/page_groups.png)
 
 ``` eval_rst
 .. note::
-若需要远程访问，请操作：
-cd ~/demo/routers-payment/127.0.0.1-8250-25500/ # 进入router-8250所在目录
-vim conf/wecross.toml   # 修改[rpc]标签下的address为所需ip（如：0.0.0.0），保存
-bash stop.sh && bash start.sh # 重启router，用远程ip进行访问
+    - 若需要远程访问，请在router的conf/wecross.toml中，修改[rpc]标签下的address为所需ip（如：0.0.0.0）。保存后，重启router即可。
 ```
 
 ## 清理 Demo
