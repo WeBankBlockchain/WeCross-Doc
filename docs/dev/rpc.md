@@ -26,6 +26,37 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 
 ## RPC接口列表
 
+### pub
+获取公钥
+
+#### 接口URL
+> http://127.0.0.1:8250/auth/pub
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> application/json
+
+#### 请求Query参数
+空
+#### 请求Body参数
+空
+
+#### 成功响应示例
+```json
+{
+  "version": "1.0",
+  "errorCode": 0,
+  "message": "success",
+  "data": {
+    "errorCode": 0,
+    "message": "success",
+    "pub": "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAiJ0u2c/Xze3Jv+beltOfoaavZtatVmldwctq3ItZZ5w60whzKiNdrsFcQZqj2PszLbwiYsC4fEFKQIcaTiHCXDSQ1Km25ay8/c+NKprl/ruevGB1pXDnQNZhQqoaghfzijTX2bl6DJqCnuSV46sCKgKfyKm3PNPcsMUxYWC1283an3cviUvdSnZyXHN++T2Otw77EVm55CNuDpX5MkOOIPTMSAxzweC9n9dJf5sGbmzqK2Yx8Jp/9vUA+jqR8ljqKJ7Q6bLVW3/xuqAN542U8a3dvPY3RVAkLVxgnl7UIfQl5PcBIxd4W3NZM6da/ZGmp76MAq/hxpceoU7DmQntkP9mX9ExtzcUTNFTm+LERwR530YRx4P7QB3EAAujEklZrlhXVwNa3phXnZRJWm4nuJ3qQB0I2VIw9q247aSLWEkoXQWu9CyRWzt7hmxgspwCYwsMdkvs0t8zv5L1LK0i8qXLHQCrasHkoJQ16+aztSDFmrAhJKtC4JN+ACnR1kMXAz/r2o3Y+pCO/2eBSDllsYSwCMRcgFwGvmutSD5dLes+zFZusxTRZ6vVnnnob+fOZ0NAdEDG9QY4UZoUxMjqSqM2db9jQ67QlcuMuEsc7uQ7T5mWlNORBnEVCz/UIjvFKnw7XnvGWcT/hKTPKYbgkqOJ/KQ05DoF/W3VHU+inPMCAwEAAQ=="
+  }
+}
+```
+
 ### login
 登录接口
 
@@ -42,19 +73,15 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 
 ```json
 {
-	"version": "1",
-	"data": {
-		"username": "alice",
-		"password": "123456"
-	}
+  "version": "1",
+  "data": "LvZLmoOgui6NAoTNuDz4T9rv5rmvFAzji+87EOm39MhfK/sXeUZ0WqLPoLYHL8kabVKOAvSdzskGHUYc84O88hO1bN7aUc6RYjw2e2dJdf1Bqe0MnGRccxTEZU37mwA1JcWbpzL9yv0w64xisLsfO87K7WC7frSU6kUy9MXJyEkIsBKSY9eSyhynwA/3FaHhZ0YMRx9LsdD4/lsrBg3Qk0D2/V1PTlt+KG32PJvwB6EsCDjQYFUhHkOfBQQZ6uZVWWcJkJQtSQ0NwFKaaQ4nUUP+dueUGD+1dfYuer1mOhjiuwuQNoMBcr8mq7ZpZQPG7FIXrMHMX/nw57+L3M01tf6YthuQV7QVDUdFZjP5q2bcX70217BYivAGJar4w6WlEhPAJTnu8ovl+DEGBNWPnhOBdtKffUW51iqtiooQfPw61GRR5uRFlxV3zVn7blaBmFH7H2naa1+4Dk1xgnC06lgJyQiLxfZ8/+4issYzjniqu6Lf7Lx2iiejzTk10csQ/DjDN1Hs1gHv4NZ7s1n8ESM7uL1Hqu2fOKIzMbctoNzVMeBidxBtdrz0g/keUMBzzN/j4meq6kDvxc/FaVI0TWCuOZ5diRD/+dGcOELh2eEhTdNknE67ekx1oY7RleyObulRexV3gu1C6X4PtcxfnsnfD04sGkO73zyTepUu7cE="
 }
 ```
 
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
-| data.username     | alice |  必填 | 跨链账户名 |
-| data.password     | 123456 |  必填 | 密码 |
+| data     |  |  必填 | 账户名+密码 RSA加密，再进行base64编码 |
 
 #### 成功响应示例
 ```json
