@@ -27,7 +27,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 ## RPC接口列表
 
 ### pub
-获取公钥
+获取公钥，对前端敏感数据进行加密
 
 #### 接口URL
 > http://127.0.0.1:8250/auth/pub
@@ -57,6 +57,49 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
+### register
+用户注册
+
+#### 接口URL
+> http://127.0.0.1:8250/auth/register
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> application/json
+
+#### 请求Body参数
+```json
+{
+  "version": "1",
+  "data": "eEG9fFyTDU2RHjp/kVMTCANqrbQACm0tjGdE+UQgvniGT/+xzrDDKOPpIPMPhFTs4rqOAaCHAmzzTP26i72e4l1a+YvRo1lqARxtofDMPD9ku7yaM8xz47bCz5d+9P9E/i9lZiKZ1fsv1qgdTw74/Sbixh7KhPeqUUajh4v3cu4/4b57/4NKoHUAr1AlMDE1/N7wcuRlWQposZLpMQrPd9uLuviWFw+l7b7ugT/VsVPIuM8K6qo7ubeMoH269jp+1/tYNzqbG2bAi2uoFXSYelcETM3ew8zVxJZEGAeqgklNWSFOjKAeZSvkIceQzVH4wxVT/b6+hiH7Q+hQiowK6Yd7AcHNm/mCkXKdZIH87NaACWVimWowQZvrIrmINgESuMMQo60iZJc+pU46O0118WXNSeBnlgUf7LeVUz37sOn00O6rNH1/ov2z7LmUo1XdCTOB24qj6Pl9040NMWWV/mh8Ck+0cThhf+IKmpdS+Hx4cvPChM6mSZDI5reQdoe+Ay1ABLIAEERLwDM3Oa3IAnWaG1hzihsWh5daTi3Xo3jICX08aTy6ossoC1f8oRPdPUTvNk8UtqUu5IO1OsPT9s2ZpSh0cyCHgjpuaqg1FOJEVCkYGOj9SZ1AHbe3qrYyCvrp8t81BaONmi52iWW7ldXbh6ylm47ix7B3EbmkA50="
+}
+```
+
+| 参数        | 示例值   | 是否必填   |  参数描述  |
+| :--------   | :-----  | :-----  | :----  |
+| version     | 1 |  必填 | 接口版本 |
+| data     |  |  必填 | 账户名+密码+认证码 RSA加密，再进行base64编码 |
+
+#### 成功响应示例
+```json
+{
+  "version": "1",
+  "errorCode": 0,
+  "message": "success",
+  "data": {
+    "errorCode": 0,
+    "message": "success",
+    "universalAccount": {
+      "username": "shareong",
+      "pubKey": "3059301306072a8648ce3d020106082a811ccf5501822d034200044f7f2e394493742fa58bf17b22ed73fd92125be9ca7c093c516531572bac91a7608578ef6724a3115a1126047cb50762fc6f4e1eb0b4fb8a4c3efe6d1982c356",
+      "uaID": "3059301306072a8648ce3d020106082a811ccf5501822d034200044f7f2e394493742fa58bf17b22ed73fd92125be9ca7c093c516531572bac91a7608578ef6724a3115a1126047cb50762fc6f4e1eb0b4fb8a4c3efe6d1982c356"
+    }
+  }
+}
+```
+
 ### login
 登录接口
 
@@ -81,7 +124,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
-| data     |  |  必填 | 账户名+密码 RSA加密，再进行base64编码 |
+| data     |  |  必填 | 账户名+密码+验证码 RSA加密，再进行base64编码 |
 
 #### 成功响应示例
 ```json
