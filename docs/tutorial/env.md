@@ -41,7 +41,7 @@ sudo apt-get install -y openssl curl expect tree fontconfig
 sudo yum install -y openssl curl expect tree
 
 # MacOS
-brew install openssl curl expect tree
+brew install openssl curl expect tree md5sha1sum
 ```
 
 运行WeCross Demo时，需安装
