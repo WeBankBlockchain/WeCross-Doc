@@ -24,7 +24,9 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 | 6xxxx   | 两阶段事务错误 |
 | 7xxxx   | 哈希时间锁合约错误 |
 
-## login
+## RPC接口列表
+
+### login
 登录接口
 
 #### 接口URL
@@ -47,6 +49,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -73,7 +76,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## logout
+### logout
 登出接口
 
 #### 接口URL
@@ -111,7 +114,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## listResources
+### listResources
 获取指定区块链的资源列表
 
 #### 接口URL
@@ -164,7 +167,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## detail
+### detail
 获取资源的详情，若资源路径path=zone.chain.name，则访问路径为：```resource/zone/chain/name/detail```
 
 #### 接口URL
@@ -204,7 +207,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 ```
 
 
-## call
+### call
 基于只读方式调用资源，若资源路径path=zone.chain.name，则访问路径为：```resource/zone/chain/name/call```
 
 #### 接口URL
@@ -238,6 +241,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -265,7 +269,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 ```
 
 
-## sendTransaction
+### sendTransaction
 基于发交易的方式调用资源，若资源路径path=zone.chain.name，则访问路径为：```resource/zone/chain/name/sendTransaction```
 
 #### 接口URL
@@ -301,6 +305,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -328,7 +333,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## listTransactions
+### listTransactions
 获取指定区块链的交易列表
 
 #### 接口URL
@@ -379,7 +384,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## getTransaction
+### getTransaction
 根据块高和哈希获取交易详情
 
 #### 接口URL
@@ -433,7 +438,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## startXATransaction
+### startXATransaction
 开始事务
 
 #### 接口URL
@@ -466,6 +471,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
     }
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -485,7 +491,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## commitXATransaction
+### commitXATransaction
 提交事务，注意：提交和回滚事务只需要传入参与该事务的区块链的路径就可以了，无需传入所有参与事务的资源
 
 #### 接口URL
@@ -518,6 +524,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -537,7 +544,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## rollbackXATransaction
+### rollbackXATransaction
 回滚事务，注意：提交和回滚事务只需要传入参与该事务的区块链的路径就可以了，无需传入所有参与事务的资源
 
 #### 接口URL
@@ -571,6 +578,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -590,7 +598,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## listXATransactions
+### listXATransactions
 获取事务列表，结果根据事务的开启时间排序，同时返回是否已经获取完毕，以及下一次请求的偏移
 
 #### 接口URL
@@ -620,6 +628,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
@@ -664,7 +673,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 }
 ```
 
-## getXATransaction
+### getXATransaction
 根据事务ID获取事务详情
 
 #### 接口URL
@@ -697,6 +706,7 @@ WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它�
 	}
 }
 ```
+
 | 参数        | 示例值   | 是否必填   |  参数描述  |
 | :--------   | :-----  | :-----  | :----  |
 | version     | 1 |  必填 | 接口版本 |
