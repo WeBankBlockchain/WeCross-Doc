@@ -14,7 +14,7 @@
 
 ![](../images/tutorial/routers.png)
 
-操作以`~/wecross/`目录下为例进行。若Demo未清理，请先[清理Demo环境](../demo.html#id4)。
+操作以`~/wecross/`目录下为例进行。若Demo未清理，请先[清理Demo环境](../demo/demo.html#demo)。
 
 ``` bash
 mkdir -p ~/wecross/ && cd ~/wecross/
@@ -149,7 +149,8 @@ vim conf/application.toml
     caCert = 'classpath:ca.crt'
     sslOn = true
 
-[admin] # admin账户配置，第一次启动时写入db，之后作为启动校验字段
+[admin] 
+	# admin账户配置，第一次启动时写入db，之后作为启动校验字段
     name = 'org1-admin' # admin账户名
     password = '123456' # 密码
 
@@ -229,7 +230,7 @@ FISCO BCOS官方提供了一键搭链的教程，详见[单群组FISCO BCOS联�
 mkdir -p ~/wecross/bcos && cd ~/wecross/bcos
 
 # 下载build_chain.sh脚本
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
 
 # 搭建单群组4节点联盟链
 # 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
@@ -336,7 +337,7 @@ cp ~/wecross/bcos/nodes/127.0.0.1/sdk/* conf/chains/bcos/
 vim conf/chains/bcos/stub.toml
 ```
 
-如果搭FISCO BCOS链采用的都是默认配置，那么将会得到一条单群组四节点的链，群组ID为1，可连接至节点0的channel端口`20200`，则配置如下（[参考此处获取更详尽的配置说明](../stubs/bcos.html#id8)）：
+如果搭FISCO BCOS链采用的都是默认配置，那么将会得到一条单群组四节点的链，群组ID为1，可连接至节点0的channel端口`20200`，则配置如下，采用默认配置即可（[参考此处获取更详尽的配置说明](../stubs/bcos.html#id6)）：
 
 ```toml
 [common]
@@ -354,7 +355,9 @@ vim conf/chains/bcos/stub.toml
     timeout = 300000  # ms, default 60000ms
     connectionsStr = ['127.0.0.1:20200']
 
-[sealers]
+#verify sealer in block header
+#[sealers]
+       #pubKey = [] # null:disable, [empty array]: always verify false.
 ```
 
 **部署代理合约**
@@ -373,6 +376,7 @@ java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.preparation.
 
 ``` bash 
 SUCCESS: WeCrossProxy:xxxxxxxx has been deployed! chain: chains/bcos
+SUCCESS: WeCrossHub:xxxxxxxx has been deployed! chain: chains/bcos
 ```
 
 **启动路由**
@@ -558,6 +562,7 @@ java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.fabric.hub.HubChaincodeD
 
 ``` bash
 SUCCESS: WeCrossProxy has been deployed to chains/fabric
+SUCCESS: WeCrossHub has been deployed to chains/fabric
 ```
 
 **启动路由**
@@ -726,9 +731,6 @@ uaID    : 3059301306...
 
 # 添加 fabric_admin_org2
 [WeCross.org1-admin]> addChainAccount Fabric1.4 conf/accounts/fabric_admin_org2/account.crt conf/accounts/fabric_admin_org2/account.key Org2MSP true
-
-# 添加 fabric_user1
-[WeCross.org1-admin]> addChainAccount Fabric1.4 conf/accounts/fabric_user1/account.crt conf/accounts/fabric_user1/account.key Org1MSP true
 ```
 
 **查看链账户**
@@ -821,8 +823,8 @@ Result: 0x953c8f97f9ea5930e6ca8d5eabbd9dfdcb142e6c
 ``` bash
 [WeCross.org1-admin]> listResources
 path: payment.bcos.HelloWorld, type: BCOS2.0, distance: 0
-path: payment.fabric.WeCrossHub, type: Fabric1.4, distance: 1
 path: payment.bcos.WeCrossHub, type: BCOS2.0, distance: 0
+path: payment.fabric.WeCrossHub, type: Fabric1.4, distance: 1
 total: 3
 ```
 
@@ -847,8 +849,6 @@ conf/contracts/chaincode/sacc
 **部署chaincode**
 
 为不同的Org分别安装（install）相同的chaincode
-
-> 参数：ipath（xxx.yyy.zzz，xxx.yyy为指定的链，zzz为chaincode名），机构admin账户，机构名，chaincode代码工程目录，指定一个版本，chaincode语言
 
 ``` bash
 # 在登录态下，查看默认链账户，可看到Fabric1.4的默认账户是Org2MSP的
@@ -904,7 +904,7 @@ Result: Success
 Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
 ```
 
-instantiate请求后，需等待1min左右。用`listResources`查看是否成功。若instantiate成功，可查询到资源`payment.fabric.sacc`。
+instantiate请求后，需等待1分钟左右。用`listResources`查看是否成功。若instantiate成功，可查询到资源`payment.fabric.sacc`。
 
 ``` bash
 [WeCross.org1-admin]> listResources
@@ -935,12 +935,14 @@ uaID    : 3059301306...
 
 **查看资源**
 
-进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有两个资源：
+用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有多个资源：
 
 * `payment.bcos.HelloWorld`
   * 对应于FISCO BCOS链上的HelloWorld.sol合约
 * `payment.fabric.sacc`
   * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
+* `xxxx.xxxx.WeCrossHub`
+  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
 [WeCross.org1-admin]> listResources
@@ -1049,19 +1051,16 @@ Result: [666] // 再次get，a的值变成666
 浏览器访问`router-8250`的网页管理台
 
 ``` url
-http://localhost:8250/s/index.html
+http://localhost:8250/s/index.html#/login
 ```
 
 用demo已配置账户进行登录：`org1-admin`，密码：`123456`
 
-![](D:/out-branch/WeCross-docs/docs/images/tutorial/page.png)
+![](../images/tutorial/page_bcos_fabric.png)
 
 ``` eval_rst
 .. note::
-若需要远程访问，请操作：
-cd ~/demo/routers-payment/127.0.0.1-8250-25500/ # 进入router-8250所在目录
-vim conf/wecross.toml   # 修改[rpc]标签下的address为所需ip（如：0.0.0.0），保存
-bash stop.sh && bash start.sh # 重启router，用远程ip进行访问
+    - 若需要远程访问，请在router的conf/wecross.toml中，修改[rpc]标签下的address为所需ip（如：0.0.0.0）。保存后，重启router即可。
 ```
 
 恭喜，你已经完成了整个WeCross网络的体验。相信优秀的你已经对WeCross有了大致的了解。接下来，你可以基于WeCross Java SDK开发更多的跨连应用，通过统一的接口对各种链上的资源进行操作。

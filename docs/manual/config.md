@@ -126,7 +126,7 @@ WeCross Router的配置位于`conf`目录下，分为：
 **注：**  
 
 1. WeCross启动时会把`conf`目录指定为classpath，若配置项的路径中开头为`classpath:`，则以`conf`为相对目录。
-2.  `[p2p]`配置项中的证书和私钥可以通过[create_cert.sh](./scripts.md#p2p)脚本生成。
+2.  `[p2p]`配置项中的证书和私钥可以通过[create_cert.sh](./scripts.html#p2p)脚本生成。
 3. 若通过build_wecross.sh脚本生成的项目，那么已自动帮忙配置好了`wecross.toml`，包括P2P的配置，其中链配置的根目录默认为`chains`。
 
 ### 链配置

@@ -7,7 +7,7 @@
 * FISCO BCOS 非国密链群组1：bcos-group1
 * FISCO BCOS 非国密链群组2：bcos-group2
 
-搭建后，用户可网页管理台和WeCross控制台，对不同的链上资源进行操作。
+搭建后，用户可使用网页管理台和WeCross控制台，对不同的链上资源进行操作。
 
 ![](../../images/tutorial/demo_cross_all.png)
 
@@ -30,7 +30,7 @@ bash build_cross_all.sh # 若出错，可用 bash clear.sh 清理后重试
     - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../faq/faq.html#id3>`_ 的方式解决
 ```
 
-部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入N，回车，进入WeCross控制台）
+部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
 
 ``` 
 [INFO] Success! WeCross demo network is running. Framework:
@@ -55,7 +55,7 @@ Start WeCross Console? [Y/n]
 
 **登录跨链账户**
 
-进入控制台，首先登录跨链账户。（demo中已配置好一个账户：org1-admin，密码：123456）
+进入控制台，首先登录跨链账户。（Demo中已配置好一个账户：org1-admin，密码：123456）
 
 ``` groovy
 [WeCross]> login org1-admin 123456
@@ -113,18 +113,18 @@ chainAccounts: [
 
 **查看资源**
 
-进入控制台，用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有多个跨链资源：
+用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有多个跨链资源：
 
-* payment.bcos-group1.HelloWorldGroup1
+* `payment.bcos-group1.HelloWorldGroup1`
   * bcos-group1链上的HelloWorld.sol合约
-* payment.bcos-group2.HelloWorldGroup2
+* `payment.bcos-group2.HelloWorldGroup2`
   * bcos-group2链上的HelloWorld.sol合约
-* payment.bcos-gm.HelloWorld
+* `payment.bcos-gm.HelloWorld`
   * 对应于国密FISCO BCOS链上的HelloWorld.sol合约
-* payment.fabric-mychannel.sacc
+* `payment.fabric-mychannel.sacc`
   * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
-* xxxx.xxxx.WeCrossHub
-  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考XXX
+* `xxxx.xxxx.WeCrossHub`
+  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
 path: payment.bcos-group2.HelloWorldGroup2, type: BCOS2.0, distance: 0
@@ -140,14 +140,19 @@ total: 8
 
 **操作资源**
 
-本demo涉及资源较多，操作资源与其它demo的方式相同，此处不再赘述。请直接访问网页管理台，更直观的操作跨链资源。
+本demo涉及资源较多，可在[其他demo](./index.html)体验。请直接访问网页管理台，更直观的操作跨链资源。
+
+``` bash
+# 退出当前控制台
+[WeCross.org1-admin]> quit 
+```
 
 ## 访问网页管理台
 
 浏览器访问`router-8250`的网页管理台
 
 ``` url
-http://localhost:8250/s/index.html
+http://localhost:8250/s/index.html#/login
 ```
 
 用demo已配置账户进行登录：`org1-admin`，密码：`123456`
@@ -156,10 +161,7 @@ http://localhost:8250/s/index.html
 
 ``` eval_rst
 .. note::
-若需要远程访问，请操作：
-cd ~/demo/routers-payment/127.0.0.1-8250-25500/ # 进入router-8250所在目录
-vim conf/wecross.toml   # 修改[rpc]标签下的address为所需ip（如：0.0.0.0），保存
-bash stop.sh && bash start.sh # 重启router，用远程ip进行访问
+    - 若需要远程访问，请在router的conf/wecross.toml中，修改[rpc]标签下的address为所需ip（如：0.0.0.0）。保存后，重启router即可。
 ```
 
 ## 清理 Demo
@@ -171,5 +173,5 @@ cd ~/demo/
 bash clear.sh
 ```
 
-至此，恭喜你，快速体验完成！可进入[手动组网](../networks.md)章节深入了解更多细节。
+至此，恭喜你，快速体验完成！可进一步操作，体验其他Demo。
 

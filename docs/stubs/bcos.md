@@ -130,7 +130,7 @@ stub插件的配置文件`stub.toml`格式以及字段含义
 
 ## 系统合约
 
-每个Stub需要部署两个系统合约，分别是[代理合约]()和[桥接合约]()，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。
+每个Stub需要部署两个系统合约，分别是代理合约和桥接合约，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。
 
 配置完成后，需要在跨链路由主目录执行以下命令，以安装系统合约。
 
@@ -217,4 +217,4 @@ Example:
 
 [FISCO-BCOS JavaSDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html)
 
-[FISCO-BCOS Console文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html)WeBankBlockchain
+[FISCO-BCOS Console文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html)

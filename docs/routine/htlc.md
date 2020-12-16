@@ -14,7 +14,7 @@ WeCross提供了[Solidity版本](https://github.com/WeBankFinTech/WeCross-Consol
 
 **部署WeCross和控制台**
 - 以[组网方式](../tutorial/networks.html)搭建两个跨链路由
-- 搭建两个WeCross[控制台](../tutorial/networks.html#id5)，分别连接两个跨链路由
+- 搭建WeCross[控制台](../tutorial/networks.html#id11)，连接跨链路由
 
 
 ### BCOS链前期准备

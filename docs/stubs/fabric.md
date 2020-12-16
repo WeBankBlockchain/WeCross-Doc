@@ -109,7 +109,7 @@ vim conf/chains/fabric/stub.toml
 
 ## 系统合约
 
-每个Stub需要部署两个系统合约，分别是[代理合约]()和[桥接合约]()，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。
+每个Stub需要部署两个系统合约，分别是代理合约和桥接合约，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。
 
 配置完成后，需要在跨链路由主目录执行以下命令，以安装系统合约。
 
@@ -142,9 +142,9 @@ SUCCESS: WeCrossHub has been deployed to chains/fabric
 
 用户可通过WeCross控制台部署和升级链码，相关操作见控制台说明部分：
 
-* [fabricInstall](../manual/console.html#fabricInstall)
-* [fabricInstantiate](../manual/console.html#fabricInstantiate)
-* [fabricUpgrade](../manual/console.html#fabricUpgrade)
+* [fabricInstall](../manual/console.html#fabricinstall)
+* [fabricInstantiate](../manual/console.html#fabricinstantiate)
+* [fabricUpgrade](../manual/console.html#fabricupgrade)
 
 
 

@@ -33,7 +33,7 @@ npm -v
 若您是从WeCross [快速体验](../tutorial/demo/index.html)搭建的跨链Demo，那么在Demo中已经默认完成对网页管理平台的下载部署工作，您可以直接从浏览器输入以下地址即可访问：
 
 ```URL
-http://localhost:8250/s/index.html
+http://localhost:8250/s/index.html#/login
 ```
 
 其中`localhost`为跨链路由所配置的IP地址，`8250`为所访问的跨链路由的端口号，在这里的URL为默认配置，可根据您本地的配置进行修改。
