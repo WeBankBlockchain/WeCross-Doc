@@ -150,7 +150,7 @@ vim conf/application.toml
     sslOn = true
 
 [admin] 
-	# admin账户配置，第一次启动时写入db，之后作为启动校验字段
+    # admin账户配置，第一次启动时写入db，之后作为启动校验字段
     name = 'org1-admin' # admin账户名
     password = '123456' # 密码
 
@@ -266,7 +266,7 @@ mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
 
 # 下载Demo包, 拷贝其中的Fabric demo链环境
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
-cp demo/fabric/* ./
+cp wecross-demo/fabric/* ./
 
 # 搭建
 bash build.sh # 若出错，执行 bash clear.sh 后重新 bash build.sh
