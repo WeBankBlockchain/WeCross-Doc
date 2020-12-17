@@ -8,7 +8,7 @@
 
 ``` bash
 cd ~
-# 下载WeCross demo合集，生成demo目录，目录下包含各种类型的demo
+# 下载WeCross demo合集，生成wecross-demo目录，目录下包含各种类型的demo
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
 ```
 

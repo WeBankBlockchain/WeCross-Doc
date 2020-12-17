@@ -135,7 +135,8 @@ bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/re
 
   ```shell
   tar -zxvf demo.tar.gz
+  mv demo wecross-demo # 命名为wecross-demo目录
   ```
 
-下载后，目录下包含`demo/`文件夹。
+下载后，`wecross-demo/`目录即为WeCross Demo。
 
