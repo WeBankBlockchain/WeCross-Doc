@@ -95,8 +95,8 @@ chainAccounts: [
   * 对应于**非国密FISCO BCOS链**上的HelloWorld.sol合约
 * `payment.bcos_gm.HelloWorld`
   * 对应于**国密FISCO BCOS链**上的HelloWorld.sol合约
-* `xxxx.xxxx.WeCrossHub`
-  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
+* `payment.xxxx.WeCrossHub`
+  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用，可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
 [WeCross.org1-admin]> listResources
@@ -192,7 +192,7 @@ http://localhost:8250/s/index.html#/login
 
 ``` eval_rst
 .. note::
-    - 若需要远程访问，请在router的conf/wecross.toml中，修改[rpc]标签下的address为所需ip（如：0.0.0.0）。保存后，重启router即可。
+    - 若需要远程访问，请修改router的主配置（如：~/demo/routers-payment/127.0.0.1-8250-25500/conf/wecross.toml）， 将 ``[rpc]`` 标签下的 ``address`` 修改为所需ip（如：0.0.0.0）。保存后，重启router即可。
 ```
 
 ## 清理 Demo

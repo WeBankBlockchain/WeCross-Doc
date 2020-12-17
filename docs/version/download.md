@@ -6,13 +6,13 @@
 
 **方式1：命令下载**
 
-``` shell
+```shell
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_wecross.sh)
 ```
 
 **方式2：命令下载（源码编译模式）**
 
-``` shell
+```shell
 # 默认下载master分支
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_wecross.sh) -s
 
@@ -28,7 +28,7 @@ bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/re
 
   手动下载后解压
 
-  ``` shell
+  ```shell
   tar -zxvf WeCross.tar.gz
   ```
 

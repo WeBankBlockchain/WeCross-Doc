@@ -37,14 +37,22 @@ WeCross提供了[Solidity版本](https://github.com/WeBankBlockchain/WeCross-BCO
  *  @param _callbackMethod 回调方法名
  *  @return 跨链请求的唯一ID
  */ 
-function interchainInvoke(string memory _path, string memory _method, string[] memory _args, string memory _callbackPath, string memory _callbackMethod) public returns(string memory uid)
+function interchainInvoke(
+        string memory _path, 
+        string memory _method, 
+        string[] memory _args, 
+        string memory _callbackPath, 
+        string memory _callbackMethod
+) public returns(string memory uid)
 
 /** 供用户调用，查询回调的调用结果
  *
  *  @param _uid   跨链请求的唯一ID
  *  @return       字符串数组: [事务ID, 事务Seq, 错误码, 错误消息, 回调调用结果的JSON序列化]
  */ 
-function selectCallbackResult(string memory _uid) public view returns(string[] memory)
+function selectCallbackResult(
+    string memory _uid
+) public view returns(string[] memory)
 ``` 
 
 - Golang版本
@@ -53,20 +61,26 @@ function selectCallbackResult(string memory _uid) public view returns(string[] m
  *  @param [path, method, args, callbackPath, callbackMethod]
  *  @return 跨链请求的唯一ID
  */
-func (h *Hub) interchainInvoke(stub shim.ChaincodeStubInterface, args []string) peer.Response 
+func (h *Hub) interchainInvoke(
+    stub shim.ChaincodeStubInterface, 
+    args []string
+) peer.Response 
 
 /**
  *  @param  uid
  *  @return 字符串数组: [事务ID, 事务Seq, 错误码, 错误消息, 回调调用结果的JSON序列化]
  */
-func (h *Hub) selectCallbackResult(stub shim.ChaincodeStubInterface, args []string) peer.Response
+func (h *Hub) selectCallbackResult(
+    stub shim.ChaincodeStubInterface, 
+    args []string
+) peer.Response
 ``` 
 
 ```eval_rst
 .. important::
-    - 调用的目标链的接口定义必须匹配: ```string[] func(string[] args)```
-    - 回调函数的接口定义必须匹配: ```string[] func(bool state, string[] result)```，state表示调用目标链是否成功，result是调用结果
-    - 实现跨链调用的业务合约编写规范可参考示例合约: `Solidity版 <>`_ 和 `Golang版 <>`_ 
+    - 调用的目标链的接口定义必须匹配: ``string[] func(string[] args)``
+    - 回调函数的接口定义必须匹配: ``string[] func(bool state, string[] result)``，state表示调用目标链是否成功，result是调用结果
+    - 实现跨链调用的业务合约编写规范可参考示例合约: `Solidity版 <https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/solidity/InterchainSample.sol>`_ 和 `Golang版 <https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/chaincode/interchain/interchainSample.go>`_ 
 ```
 
 ## 操作示例
@@ -85,13 +99,19 @@ set(): 更新data
 callback(): 使用跨链调用的结果更新data
 ```
 
-两个示例合约联动过程：A链的示例合约发起一个跨链调用，调用B链的示例合约的set接口，更新B链的data，然后触发回调，调用A链的callback接口并更新A链的data。通过上述方式，一次控制台调用就能完成两条链数据的更新。
+**两个示例合约联动过程**：A链的示例合约发起一个跨链调用，调用B链的示例合约的set接口，更新B链的data，然后触发回调，调用A链的callback接口并更新A链的data。
 
-**部署跨链调用示例合约**
+通过上述方式，一次控制台调用就能完成两条链数据的更新。
 
-在WeCross控制台执行以下命令：
+### 前期准备
 
-``` shell
+以下操作示例涉及 FISCO BCOS 和 Hyperledger Fabric 两条链，整个跨链网络的搭建和部署请参考[快速入门章节](../tutorial/demo/demo.md)。
+
+### 部署跨链调用示例合约
+
+完成环境搭建后，在WeCross控制台执行以下命令：
+
+```shell
 # 登录
 [WeCross]>login org1-admin 123456
 
@@ -119,20 +139,23 @@ path: classpath:contracts/chaincode/interchain
 Result: Success
 
 # 实例化链码
-fabricInstantiate payment.fabric.interchain ["Org1","Org2"] contracts/chaincode/interchain 1.0 GO_LANG default []
+[WeCross.org1-admin]>fabricInstantiate payment.fabric.interchain ["Org1","Org2"] contracts/chaincode/interchain 1.0 GO_LANG default []
 
 Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
 
 #等待实例化完成
 ```
 
-**查询桥接合约地址**
+### 查询桥接合约地址
 
 因为示例合约需要调用桥接合约，所以先查询桥接合约地址，以用于初始化示例合约。
 
 在BCOS链的跨链路由根目录下执行命令：
 
 ```shell
+# 进入跨链路由根目录
+cd  ~/wecross-demo/routers-payment/127.0.0.1-8250-25500
+
 # 非国密链，其中chains/bcos是链的路径，在conf目录下可查看
 java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.preparation.HubContractDeployment getAddress chains/bcos
 
@@ -145,7 +168,7 @@ WeCrossHub address: 0xb00b0a913f2c4b6bc9e7a588061a8bc55d07afe1
 
 因此BCOS链的桥接合约地址为`0xb00b0a913f2c4b6bc9e7a588061a8bc55d07afe1`。而Fabric链的桥接合约名字固定为`WeCrossHub`，无需查询。
 
-**初始化示例合约**
+### 初始化示例合约
 
 在WeCross控制台执行以下命令：
 
@@ -160,7 +183,7 @@ WeCrossHub address: 0xb00b0a913f2c4b6bc9e7a588061a8bc55d07afe1
 [WeCross.org1-admin]>sendTransaction payment.fabric.interchain init mychannel WeCrossHub
 ```
 
-**发起跨链调用**
+### 发起跨链调用
 
 在WeCross控制台执行以下命令：
 
@@ -186,7 +209,7 @@ Txhash  : 0x840355ed53de047594f0a5778312edb2f2fe93908eb5efb6336cf535805f5c26
 BlockNum: 1898
 Result  : [1]
 
-# 查询跨链调用结果，发现两条链的数据都发生了变化
+# 查询示例合约，发现两条链的数据都发生了变化
 [WeCross.org1-admin]>call payment.bcos.interchain get
 
 Result: [["Hello world"]]
@@ -208,7 +231,7 @@ Txhash  : cf7eda25f1c0515b68d702ed495fdbbefed6bdcfd4a3bc68aaab315631d3d102
 BlockNum: 2386
 Result  : [1]
 
-# 查询跨链调用结果
+# 查询示例合约
 [WeCross.org1-admin]>call payment.bcos.interchain get
 
 Result: [[ "Hello WeCross" ]]
