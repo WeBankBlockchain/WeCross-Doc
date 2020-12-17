@@ -178,6 +178,16 @@ FISCO BCOS 资源部署页面如下图所示，操作可分为`部署合约`和`
 
 ![](../images/webApp/BCOSDeploy.png)
 
+为了用户更好地体验FISCO BCOS部署流程，我们已准备打包压缩好的FISCO BCOS Solidity合约包，供用户下载体验：
+
+| 合约名           | 下载链接                                                                                                                             | 合约类名         |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------------|------------------|
+| 资产转账合约     | [AssetSample](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/AssetSample.zip)           | Asset            |
+| 存证合约         | [EvidenceSample](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/EvidenceSample.zip)     | Evidence         |
+| HelloWeCross     | [HelloWeCross](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/HelloWeCross.zip)         | HelloWeCross     |
+| HelloWorld       | [HelloWorld](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/HelloWorld.zip)             | HelloWorld       |
+| LedgerSampleHTLC | [LedgerSampleHTLC](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/LedgerSampleHTLC.zip) | LedgerSampleHTLC |
+
 Hyperledger Fabric 部署页面如下图所示，Fabric的操作分为`安装合约`、`实例化合约`以及`升级合约`。在`安装合约`时，填入的`所属机构名`为当前UA的Fabric1.4类型的默认链账户所属的机构。在安装合约的时候，必须上传`tar.gz`压缩打包的合约，且合约必须在文件夹`src/chaincode`下。例如图中的`asset.tar.gz`，解压缩后文件结构如下：
 
 ```bash
@@ -192,6 +202,15 @@ src
 因为Hyperledger Fabric的特性，安装的合约必须实例化/升级实例化才能正常地显示在资源列表中。Hyperledger Fabric 实例化/升级实例化页面如下图所示。`机构列表`应填入所有参与实例化机构的列表，必须以`JSON`数组的形式填入，`其他参数`也同理。`背书策略`可上传`YAML`格式的背书文件，若不上传则默认为空。
 
 ![](../images/webApp/FabricInstan.png)
+
+为了用户更好地在网页管理平台体验Hyperledger Fabric部署流程，我们已额外准备打包压缩好的Fabric部署流程，我们已准备打包压缩好的FISCO chaincode合约包，供用户下载体验：
+
+| 合约名            | 下载链接                                                                                                                 | 实例化参数 |
+|-------------------|--------------------------------------------------------------------------------------------------------------------------|------------|
+| 资产转账chaincode | [asset](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/chaincode-webApp-demo/asset.tar.gz)       | []         |
+| 存证合约          | [evidence](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/chaincode-webApp-demo/evidence.tar.gz) | []         |
+| htlc              | [htlc](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/chaincode-webApp-demo/htlc.tar.gz)         | []         |
+| sacc              | [sacc](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/chaincode-webApp-demo/sacc.tar.gz)         | ["a","10"] |
 
 ### 交易管理模块
 
