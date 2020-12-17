@@ -29,7 +29,7 @@ WeCross负责管理多个Stub并与多条链通讯，同时作为Web Server提�
 WeCross作为Java项目，需要安装Java环境包括：
 - [JDK8及以上](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#id1)
 - Gradle 5.0及以上
-- Mysql 5.6及以上
+- Mysql 5.6及以上（[安装](https://www.runoob.com/mysql/mysql-install.html)）
 
 WeCross提供了多种脚本帮助用户快速体验，这些脚本依赖`openssl, curl, expect`，使用下面的指令安装。
 
@@ -46,4 +46,4 @@ brew install openssl curl expect tree md5sha1sum
 
 运行WeCross Demo时，需安装
 
-* Docker 17.06.2-ce 及以上
+* Docker 17.06.2-ce 及以上（[安装](https://www.runoob.com/docker/ubuntu-docker-install.html)）
