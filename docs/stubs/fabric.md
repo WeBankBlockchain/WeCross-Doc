@@ -61,15 +61,15 @@ chains							# 跨链路由的stub的配置目录，所有的stub都在此目录
 
 **拷贝链证书**
 
-以[demo](../tutorial/demo/demo_cross_all.html)为例，在跨链路由的主目录`~/demo/routers-payment/127.0.0.1-8251-25501`执行下列命令
+以[demo](../tutorial/demo/demo_cross_all.html)为例，在跨链路由的主目录`~/wecross-demo/routers-payment/127.0.0.1-8251-25501`执行下列命令
 
 ``` bash
 # 拷贝 orderer证书
-cp ~/demo/fabric/fabric-sample/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem conf/chains/fabric/orderer-tlsca.crt
+cp ~/wecross-demo/fabric/fabric-sample/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem conf/chains/fabric/orderer-tlsca.crt
 # 拷贝 Org1 证书
-cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt conf/chains/fabric/org1-tlsca.crt
+cp ~/wecross-demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt conf/chains/fabric/org1-tlsca.crt
 # 拷贝 Org2 证书
-cp ~/demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt conf/chains/fabric/org2-tlsca.crt
+cp ~/wecross-demo/fabric/fabric-sample/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt conf/chains/fabric/org2-tlsca.crt
 ```
 
 **编辑配置文件**

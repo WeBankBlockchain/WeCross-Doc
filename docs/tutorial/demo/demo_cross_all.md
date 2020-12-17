@@ -16,7 +16,7 @@
 在已下载的demo目录下进行操作
 
 ```bash
-cd ~/demo
+cd ~/wecross-demo
 
 #清理旧demo环境
 bash clear.sh
@@ -28,6 +28,7 @@ bash build_cross_all.sh # 若出错，可用 bash clear.sh 清理后重试
 ```eval_rst
 .. note::
     - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../faq/faq.html#id3>`_ 的方式解决
+    - 输入数据库IP时，若"127.0.0.1"无法成功，请尝试输入"localhost"
 ```
 
 部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
@@ -159,6 +160,16 @@ http://localhost:8250/s/index.html#/login
 
 ![](../../images/tutorial/page.png)
 
+管理台中包含如下内容，点击链接进入相关操作指导。
+
+* [登录/注册](../../manual/webApp.html#id10)
+* [平台首页](../../manual/webApp.html#id11)
+* [账户管理](../../manual/webApp.html#id12)
+* [路由管理](../../manual/webApp.html#id13)
+* [资源管理](../../manual/webApp.html#id14)
+* [交易管理](../../manual/webApp.html#id15)
+* [事务管理](../../manual/webApp.html#id16)
+
 ``` eval_rst
 .. note::
     - 若需要远程访问，请在router的conf/wecross.toml中，修改[rpc]标签下的address为所需ip（如：0.0.0.0）。保存后，重启router即可。
@@ -169,7 +180,7 @@ http://localhost:8250/s/index.html#/login
 为了不影响其它章节的体验，可将搭建的Demo清理掉。
 
 ``` bash
-cd ~/demo/
+cd ~/wecross-demo/
 bash clear.sh
 ```
 
