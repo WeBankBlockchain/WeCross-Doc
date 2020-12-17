@@ -14,7 +14,7 @@
 
 ![](../images/tutorial/routers.png)
 
-操作以`~/wecross/`目录下为例进行。若Demo未清理，请先[清理Demo环境](../demo/demo.html#demo)。
+操作以`~/wecross/`目录下为例进行。若Demo未清理，请先[清理Demo环境](./demo/demo.html#demo)。
 
 ``` bash
 mkdir -p ~/wecross/ && cd ~/wecross/
