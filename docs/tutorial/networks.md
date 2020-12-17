@@ -14,7 +14,7 @@
 
 ![](../images/tutorial/routers.png)
 
-操作以`~/wecross/`目录下为例进行。若Demo未清理，请先[清理Demo环境](../demo/demo.html#demo)。
+操作以`~/wecross/`目录下为例进行。若Demo未清理，请先[清理Demo环境](./demo/demo.html#demo)。
 
 ``` bash
 mkdir -p ~/wecross/ && cd ~/wecross/
@@ -109,7 +109,7 @@ routers-payment/127.0.0.1-8250-25500/
 
 #### 部署账户服务
 
-下载
+下载（执行时需输入相应数据库的配置）
 
 ``` bash
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_account_manager.sh)
@@ -150,7 +150,7 @@ vim conf/application.toml
     sslOn = true
 
 [admin] 
-	# admin账户配置，第一次启动时写入db，之后作为启动校验字段
+    # admin账户配置，第一次启动时写入db，之后作为启动校验字段
     name = 'org1-admin' # admin账户名
     password = '123456' # 密码
 
@@ -266,7 +266,7 @@ mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
 
 # 下载Demo包, 拷贝其中的Fabric demo链环境
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
-cp demo/fabric/* ./
+cp wecross-demo/fabric/* ./
 
 # 搭建
 bash build.sh # 若出错，执行 bash clear.sh 后重新 bash build.sh
@@ -941,7 +941,7 @@ uaID    : 3059301306...
   * 对应于FISCO BCOS链上的HelloWorld.sol合约
 * `payment.fabric.sacc`
   * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
-* `xxxx.xxxx.WeCrossHub`
+* `payment.xxxx.WeCrossHub`
   * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
@@ -958,16 +958,11 @@ total: 4
 用`listAccount`命令查看当前登录的跨链账户中已经配置的链账户
 
 ```bash
-[WeCross.org1-admin]> listAccount
-Universal Account:
-username: org1-admin
-pubKey  : 3059301306...
-uaID    : 3059301306...
 chainAccounts: [
         BCOS2.0 Account:
         keyID    : 0
         type     : BCOS2.0
-        address  : 0x4e89af80184147fcddc391c64ad673512236af67
+        address  : 0xe011a210f24f1078a423458cb53ee49fc5feb342
         isDefault: true
         ----------
         Fabric1.4 Account:
@@ -975,12 +970,6 @@ chainAccounts: [
         type     : Fabric1.4
         MembershipID : Org2MSP
         isDefault: true
-        ----------
-        Fabric1.4 Account:
-        keyID    : 3
-        type     : Fabric1.4
-        MembershipID : Org1MSP
-        isDefault: false
         ----------
         Fabric1.4 Account:
         keyID    : 1
@@ -1057,6 +1046,16 @@ http://localhost:8250/s/index.html#/login
 用demo已配置账户进行登录：`org1-admin`，密码：`123456`
 
 ![](../images/tutorial/page_bcos_fabric.png)
+
+管理台中包含如下内容，点击链接进入相关操作指导。
+
+* [登录/注册](../../manual/webApp.html#id10)
+* [平台首页](../../manual/webApp.html#id11)
+* [账户管理](../../manual/webApp.html#id12)
+* [路由管理](../../manual/webApp.html#id13)
+* [资源管理](../../manual/webApp.html#id14)
+* [交易管理](../../manual/webApp.html#id15)
+* [事务管理](../../manual/webApp.html#id16)
 
 ``` eval_rst
 .. note::

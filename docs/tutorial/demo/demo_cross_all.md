@@ -182,6 +182,11 @@ http://localhost:8250/s/index.html#/login
 ``` bash
 cd ~/wecross-demo/
 bash clear.sh
+
+mysql -u <your-username> -p # 登录数据库，清理db
+
+mysql> drop database wecross_account_manager;
+mysql> exit;
 ```
 
 至此，恭喜你，快速体验完成！可进一步操作，体验其他Demo。
