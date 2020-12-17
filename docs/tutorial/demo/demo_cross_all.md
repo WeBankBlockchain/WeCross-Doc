@@ -27,7 +27,7 @@ bash build_cross_all.sh # 若出错，可用 bash clear.sh 清理后重试
 
 ```eval_rst
 .. note::
-    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../faq/faq.html#id3>`_ 的方式解决
+    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../../faq/faq.html#id3>`_ 的方式解决
     - 输入数据库IP时，若"127.0.0.1"无法成功，请尝试输入"localhost"
 ```
 
@@ -124,8 +124,8 @@ chainAccounts: [
   * 对应于国密FISCO BCOS链上的HelloWorld.sol合约
 * `payment.fabric-mychannel.sacc`
   * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
-* `xxxx.xxxx.WeCrossHub`
-  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
+* `payment.xxxx.WeCrossHub`
+  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用，可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
 path: payment.bcos-group2.HelloWorldGroup2, type: BCOS2.0, distance: 0
@@ -172,7 +172,7 @@ http://localhost:8250/s/index.html#/login
 
 ``` eval_rst
 .. note::
-    - 若需要远程访问，请在router的conf/wecross.toml中，修改[rpc]标签下的address为所需ip（如：0.0.0.0）。保存后，重启router即可。
+    - 若需要远程访问，请修改router的主配置（如：~/demo/routers-payment/127.0.0.1-8250-25500/conf/wecross.toml）， 将 ``[rpc]`` 标签下的 ``address`` 修改为所需ip（如：0.0.0.0）。保存后，重启router即可。
 ```
 
 ## 清理 Demo

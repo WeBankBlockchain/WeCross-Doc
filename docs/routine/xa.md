@@ -129,6 +129,8 @@ execTransaction zone.chainA.res1 transfer 'fromUserName' 'toUserName' 100
 execTransaction zone.chainB.res2 transfer 'fromUserName' 'toUserName' 200 
 ```
 
+**注：**单个事务的步骤不宜过多，否则在获取事务详情或者回滚事务时容易出现gas不足导致执行失败。
+
 ### 提交事务
 
 使用commitTransaction命令，提交事务，确认事务执行过程中所有的变动。

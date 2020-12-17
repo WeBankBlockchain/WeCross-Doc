@@ -20,7 +20,7 @@ bash build.sh # 若出错，可用 bash clear.sh 清理后重试
 
 ```eval_rst
 .. note::
-    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../faq/faq.html#id3>`_ 的方式解决
+    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../../faq/faq.html#id3>`_ 的方式解决
     - 输入数据库IP时，若"127.0.0.1"无法成功，请尝试输入"localhost"
 ```
 
@@ -101,8 +101,8 @@ chainAccounts: [
   * 对应于FISCO BCOS链上的HelloWorld.sol合约
 * `payment.fabric.sacc`
   * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
-* `xxxx.xxxx.WeCrossHub`
-  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
+* `payment.xxxx.WeCrossHub`
+  * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用，可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
 [WeCross.org1-admin]> listResources
@@ -172,7 +172,7 @@ WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链�
 
 ## 跨链转账
 
-WeCross支持多种事务机制。此跨链转账的demo是哈希时间锁定机制（HTLC）的举例。WeCross基于其[HTLC框架](../../routine/htlc.html)实现了**异构链之间资产的原子互换**，如下图所示：
+WeCross支持多种事务机制。此跨链转账的Demo是[哈希时间锁合约(htlc)](../../routine/htlc.html)的举例。WeCross基于其htlc框架实现了**异构链之间资产的原子互换**，如下图所示：
 
 ![](../../images/tutorial/htlc_sample.png)
 
@@ -181,11 +181,11 @@ WeCross支持多种事务机制。此跨链转账的demo是哈希时间锁定机
 - BCOS 链
   - 转账金额：700
   - 发送者：org2-admin（bcos链账户：`0x4305196480b029bbecb071b4b68e95dfef36a7b7`）
-  - 接收者：org1-damin（bcos链账户：`0x2b5ad5c4795c026514f8317c7a215e218dccd6cf`）
+  - 接收者：org1-admin（bcos链账户：`0x2b5ad5c4795c026514f8317c7a215e218dccd6cf`）
 - Fabric 链
   - 转账金额：500
   - 发送者：org1-admin（Fabric链账户：`Admin@org1.example.com`）
-  - 接收者：org2-damin（Fabric链账户：`User1@org1.example.com`）
+  - 接收者：org2-admin（Fabric链账户：`User1@org2.example.com`）
 - 哈希锁：`bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11`
   - 解锁秘钥：`9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c`
 
@@ -210,11 +210,11 @@ bash htlc_config.sh
   - FISCO BCOS 链
     - 转账金额：700
     - 发送者：org2-admin（bcos链账户：`0x4305196480b029bbecb071b4b68e95dfef36a7b7`）
-    - 接收者：org1-damin（bcos链账户：`0x2b5ad5c4795c026514f8317c7a215e218dccd6cf`）
+    - 接收者：org1-admin（bcos链账户：`0x2b5ad5c4795c026514f8317c7a215e218dccd6cf`）
   - Fabric 链
     - 转账金额：500
     - 发送者：org1-admin（Fabric链账户：`Admin@org1.example.com`）
-    - 接收者：org2-damin（Fabric链账户：`User1@org1.example.com`）
+    - 接收者：org2-admin（Fabric链账户：`User1@org2.example.com`）
   - 哈希锁：`bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11`
     - 是否是发起方：是
     - 解锁秘钥：`9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c`
@@ -235,7 +235,7 @@ Result: [1000000000]
 Result: [0]
 
 # 创建转账提案
-[WeCross.org2-admin]> newHTLCProposal payment.bcos.htlc bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x4305196480b029bbecb071b4b68e95dfef36a7b7 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
+[WeCross.org2-admin]> newHTLCProposal payment.bcos.htlc bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 9dda9a5e175a919ee98ff0198927b0a765ef96cf917144b589bb8e510e04843c true 0x4305196480b029bbecb071b4b68e95dfef36a7b7 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org2.example.com 500 2000000000
 # 输出
 Txhash: 0xc521d7dca1094d53773dc61faec1a95273d8ef2b681c5c50c94cde55263015c7
 BlockNum: 11
@@ -248,11 +248,11 @@ Result: create a htlc proposal successfully
   - FISCO BCOS 链
     - 转账金额：700
     - 发送者：org2-admin（bcos链账户：`0x4305196480b029bbecb071b4b68e95dfef36a7b7`）
-    - 接收者：org1-damin（bcos链账户：`0x2b5ad5c4795c026514f8317c7a215e218dccd6cf`）
+    - 接收者：org1-admin（bcos链账户：`0x2b5ad5c4795c026514f8317c7a215e218dccd6cf`）
   - Fabric 链
     - 转账金额：500
     - 发送者：org1-admin（Fabric链账户：`Admin@org1.example.com`）
-    - 接收者：org2-damin（Fabric链账户：`User1@org1.example.com`）
+    - 接收者：org2-admin（Fabric链账户：`User1@org2.example.com`）
   - 哈希锁：`bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11`
     - 是否是发起方：否
     - 解锁秘钥：空（非发起方无秘钥）
@@ -265,11 +265,11 @@ bash start.sh
 [WeCross]> login org1-admin 123456
 
 # 查看接收方余额
-[WeCross.org1-admin]> call payment.fabric.htlc balanceOf User1@org1.example.com
+[WeCross.org1-admin]> call payment.fabric.htlc balanceOf User1@org2.example.com
 Result: [0]
 
 # 创建转账提案
-[WeCross.org1-admin]> newHTLCProposal payment.fabric.htlc  bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 null false 0x4305196480b029bbecb071b4b68e95dfef36a7b7 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org1.example.com 500 2000000000
+[WeCross.org1-admin]> newHTLCProposal payment.fabric.htlc  bea2dfec011d830a86d0fbeeb383e622b576bb2c15287b1a86aacdba0a387e11 null false 0x4305196480b029bbecb071b4b68e95dfef36a7b7 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org2.example.com 500 2000000000
 # 输出
 Txhash: bbbe3c65a54f883151075129d4666a5ba40896bf75a3be09cfb96ef0354cc55f
 BlockNum: 10
@@ -298,7 +298,7 @@ bash start.sh
 Result: [700]
 
 # 查看Fabric接收方余额，收到500
-[WeCross.org1-admin]> call payment.fabric.htlc balanceOf User1@org1.example.com
+[WeCross.org1-admin]> call payment.fabric.htlc balanceOf User1@org2.example.com
 Result: [500]
 
 # 退出当前控制台
@@ -492,7 +492,7 @@ http://localhost:8250/s/index.html#/login
 
 ``` eval_rst
 .. note::
-    - 若需要远程访问，请在router的conf/wecross.toml中，修改[rpc]标签下的address为所需ip（如：0.0.0.0）。保存后，重启router即可。
+    - 若需要远程访问，请修改router的主配置（如：~/demo/routers-payment/127.0.0.1-8250-25500/conf/wecross.toml）， 将 ``[rpc]`` 标签下的 ``address`` 修改为所需ip（如：0.0.0.0）。保存后，重启router即可。
 ```
 
 ## 清理 Demo
