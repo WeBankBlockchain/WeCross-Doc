@@ -109,7 +109,7 @@ routers-payment/127.0.0.1-8250-25500/
 
 #### 部署账户服务
 
-下载
+下载（执行时需输入相应数据库的配置）
 
 ``` bash
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_account_manager.sh)
