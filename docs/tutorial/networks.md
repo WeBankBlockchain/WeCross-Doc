@@ -294,7 +294,7 @@ CONTAINER ID        IMAGE                               COMMAND             CREA
 
 **生成配置文件**
 
-切换至跨链路由的目录，用 [add_chain.sh](../manual/scripts.html#fisco-bcos-stub) 脚本在`conf`目录下生成bcos的配置文件框架。
+切换至跨链路由的目录，用 [add_chain.sh](../manual/scripts.html#id4) 脚本在`conf`目录下生成bcos的配置文件框架。
 
 ```bash
 cd ~/wecross/routers-payment/127.0.0.1-8250-25500
