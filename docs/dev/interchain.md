@@ -23,7 +23,7 @@ WeCross提供了两个系统合约，分别是代理合约和桥接合约。代�
 
 ## 桥接合约
 
-WeCross提供了[Solidity版本]()和[Golang版本]()的桥接合约。
+WeCross提供了[Solidity版本](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossHub.sol)和[Golang版本](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/dev/src/main/resources/chaincode/WeCrossHub/hub.go)的桥接合约。
 
 - Solidity版本
 
