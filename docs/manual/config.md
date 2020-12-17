@@ -46,6 +46,11 @@ WeCross Router的配置位于`conf`目录下，分为：
     caCert = 'classpath:ca.crt'
     sslCert = 'classpath:ssl.crt'
     sslKey = 'classpath:ssl.key'
+    threadNum = 16
+    threadQueueCapacity = 10000
+    sslSwitch = 2  # disable ssl:2, SSL without client auth:1 , SSL with client and server auth: 0
+    webRoot = 'classpath:pages'
+    mimeTypesFile = 'classpath:conf/mime.types' # set the content-types of a file
 
 [p2p]
     listenIP = '0.0.0.0'
@@ -54,6 +59,18 @@ WeCross Router的配置位于`conf`目录下，分为：
     sslCert = 'classpath:ssl.crt'
     sslKey = 'classpath:ssl.key'
     peers = ['127.0.0.1:25501']
+    threadNum = 16
+    threadQueueCapacity = 100000
+    
+[account-manager]
+    server =  '127.0.0.1:8250'
+    admin = 'org1-admin'
+    password = '123456' # This field is not used at v1.0.0, just for future
+    sslKey = 'classpath:ssl.key'
+    sslCert = 'classpath:ssl.crt'
+    caCert = 'classpath:ca.crt'
+    maxTotal = 200
+    maxPerRoute = 8
 
 
 #[[htlc]]
@@ -77,10 +94,11 @@ WeCross Router的配置位于`conf`目录下，分为：
   - caCert：字符串；WeCross Router根证书路径
   - sslCert：字符串；WeCross Router证书路径
   - sslKey：字符串；WeCross Router私钥路径
-  - sslOn（可选）：SSl开关，默认true
-  - threadNum（可选）：rpc线程数，默认16
-  - threadQueueCapacity（可选）：任务队列容量，默认10000
-
+  - threadNum（可选）：整型，rpc线程数，默认16
+  - threadQueueCapacity（可选）：整型，任务队列容量，默认10000
+  - sslSwitch：整型，SL加密配置，0：双向验证，1：验Router证书，0：无验证
+  - webRoot：字符串，网页管理台页面存放位置
+  - mimeTypesFile：字符串网页管理台的content-type映射文件存放位置
 - `[p2p]` 组网配置
   - listenIP：字符串；P2P服务监听地址；一般为'0.0.0.0'
   - listenPort ：整型；P2P服务监听端口；WeCross Router之间交换消息的端口
@@ -90,7 +108,15 @@ WeCross Router的配置位于`conf`目录下，分为：
   - peers：字符串数组；peer列表；需要互相连接的WeCross Router列表
   - threadNum（可选）：p2p线程数，默认16
   - threadQueueCapacity（可选）：任务队列容量，默认10000
-
+- `[account-manager]` 跨链账户服务配置
+  - server：字符串，需要连接的Account Manager的IP:Port
+  - admin：字符串，此Router连接的Account Manager的admin账户名，需与Account Manager中的配置保持一致
+  - password：字符串保留字段，目前无用
+  - sslKey：字符串；WeCross Router根证书路径
+  - sslCert：字符串；WeCross Router证书路径
+  - caCert：字符串；WeCross Router私钥路径
+  - maxTotal（可选）：整型，连接Account Manager的连接池maxTotal参数，默认200
+  - maxPerRoute（可选）：整型，连接Account Manager的连接池maxPerRoute参数，默认8
 - `[htlc] `htlc配置（可选）
   - selfPath：本地配置的htlc合约资源路径
   - account1：可调用本地配置的htlc合约的账户
@@ -100,7 +126,7 @@ WeCross Router的配置位于`conf`目录下，分为：
 **注：**  
 
 1. WeCross启动时会把`conf`目录指定为classpath，若配置项的路径中开头为`classpath:`，则以`conf`为相对目录。
-2.  `[p2p]`配置项中的证书和私钥可以通过[create_cert.sh](./scripts.md#p2p)脚本生成。
+2.  `[p2p]`配置项中的证书和私钥可以通过[create_cert.sh](./scripts.html#p2p)脚本生成。
 3. 若通过build_wecross.sh脚本生成的项目，那么已自动帮忙配置好了`wecross.toml`，包括P2P的配置，其中链配置的根目录默认为`chains`。
 
 ### 链配置
@@ -130,23 +156,3 @@ WeCross启动后会在`wecross.toml`中所指定的`chains`的根目录下去遍
 **配置Fabric**
 
 请参考：[Fabric 1.4插件配置](../stubs/fabric.html#id3)
-
-### 账户配置
-
-在Router中配置账户，与链进行交互。配置操作包括：
-
-* 指定账户名（`accounts/<account_name>/account.toml`下，通过目录名`<account_name>`指定账户名）
-* 指定账户类型（用于BCOS、Fabric等，在`account.toml`中配置）
-* 指定账户其它信息（密钥等，在`account.toml`中配置）
-
-WeCross启动后会在`accounts`的根目录下去遍历所有的一级目录，目录名即为账户的名字，不同的目录代表不同的链，然后尝试读取每个目录下的`account.toml`文件。
-
-配置不同类型的账户，与不同类型的链进行操作。目前WeCross支持的类型包括：[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)和[Fabric](https://github.com/hyperledger/fabric)。
-
-**配置FISCO BCOS**
-
-请参考：[FISCO BCOS 2.0账户配置](../stubs/bcos.html#id6)
-
-**配置Fabric**
-
-请参考：[Fabric 1.4账户配置](../stubs/fabric.html#id4)

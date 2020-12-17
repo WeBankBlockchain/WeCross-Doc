@@ -1,6 +1,6 @@
 # 脚本介绍
 
-为了方便用户使用，WeCross提供了丰富的脚本，脚本位于WeCross跨链路由的根目录下(如：`~/demo/routers-payment/127.0.0.1-8250-25500/`)，本章节将对这些脚步做详细介绍。
+为了方便用户使用，WeCross提供了丰富的脚本，脚本位于WeCross跨链路由的根目录下(如：`~/wecross-demo/routers-payment/127.0.0.1-8250-25500/`)，本章节将对这些脚步做详细介绍。
 
 ## 启动脚本
 
@@ -71,31 +71,6 @@ e.g
 * **`-z`**：可选，若设置，则生成跨链路由的压缩包，方便拷贝至其它机器
 * **`-T`**：可选，若设置，生成的跨链路由开启测试资源
 * **`-h`**：可选，打印Usage
-
-## 添加账户脚本
-
-**add_account.sh**
-
-脚本`add_account.sh`用于在router中创建特定区块链的账户。
-
-可通过-h查看帮助信息
-
-```
-Usage:
-    -t <type>                           [Required] type of account, BCOS2.0 or GM_BCOS2.0 or Fabric1.4
-    -n <name>                           [Required] name of account
-    -d <dir>                            [Optional] generated target_directory, default conf/accounts/
-    -h                                  [Optional] Help
-```
-
-- **`-t`**：账户类型，按照插件选择，如`BCOS2.0`，`GM_BCOS2.0`或`Fabric1.4`
-- **`-n`**：指定账户名，发交易时使用，用区分不同的账户
-- **`-d`**：账户目录，默认生成在`conf/accounts`下
-
-不同的链有不同的操作方法，具体操作请查看（操作后，请重启router，让router重启加载配置）：
-
-* [BCOS2.0 账户配置](../stubs/bcos.md)
-* [Fabric1.4 账户配置](../stubs/fabric.md)
 
 ## 添加新接入链脚本
 

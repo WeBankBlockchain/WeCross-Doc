@@ -20,4 +20,5 @@ WeCross
    docs/routine/index.rst
    docs/scenarios/index.rst
    docs/faq/faq.md
-   docs/community/community.md
+   docs/community/index.rst
+
