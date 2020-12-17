@@ -941,7 +941,7 @@ uaID    : 3059301306...
   * 对应于FISCO BCOS链上的HelloWorld.sol合约
 * `payment.fabric.sacc`
   * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
-* `xxxx.xxxx.WeCrossHub`
+* `payment.xxxx.WeCrossHub`
   * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
@@ -958,16 +958,11 @@ total: 4
 用`listAccount`命令查看当前登录的跨链账户中已经配置的链账户
 
 ```bash
-[WeCross.org1-admin]> listAccount
-Universal Account:
-username: org1-admin
-pubKey  : 3059301306...
-uaID    : 3059301306...
 chainAccounts: [
         BCOS2.0 Account:
         keyID    : 0
         type     : BCOS2.0
-        address  : 0x4e89af80184147fcddc391c64ad673512236af67
+        address  : 0xe011a210f24f1078a423458cb53ee49fc5feb342
         isDefault: true
         ----------
         Fabric1.4 Account:
@@ -975,12 +970,6 @@ chainAccounts: [
         type     : Fabric1.4
         MembershipID : Org2MSP
         isDefault: true
-        ----------
-        Fabric1.4 Account:
-        keyID    : 3
-        type     : Fabric1.4
-        MembershipID : Org1MSP
-        isDefault: false
         ----------
         Fabric1.4 Account:
         keyID    : 1
@@ -1057,6 +1046,16 @@ http://localhost:8250/s/index.html#/login
 用demo已配置账户进行登录：`org1-admin`，密码：`123456`
 
 ![](../images/tutorial/page_bcos_fabric.png)
+
+管理台中包含如下内容，点击链接进入相关操作指导。
+
+* [登录/注册](../../manual/webApp.html#id10)
+* [平台首页](../../manual/webApp.html#id11)
+* [账户管理](../../manual/webApp.html#id12)
+* [路由管理](../../manual/webApp.html#id13)
+* [资源管理](../../manual/webApp.html#id14)
+* [交易管理](../../manual/webApp.html#id15)
+* [事务管理](../../manual/webApp.html#id16)
 
 ``` eval_rst
 .. note::
