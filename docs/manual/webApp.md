@@ -138,19 +138,13 @@ WeCross网页管理平台共包含以下功能模块：
 
 ![](../images/webApp/accountManager.png)
 
-#### 添加链账户
-
 点击上图中红框3之后，将会弹出页面抽屉框，如下图所示。从下拉框选择需要添加的链账户类型，页面将会根据不同链类型生成不同的表单。
 
 ![](../images/webApp/addAccount.png)
 
-#### 添加FISCO BCOS链账户
-
 添加FISCO BCOS链类型的账户方式如下图所示，可自行选择上传私钥，系统将会自动计算公钥与地址；也可以点击红框内的`生成`按钮，将会自动为您生成一套私钥、公钥和地址。**注意：** FISCO BCOS账号当前只支持上传`PEM`格式的私钥。
 
 ![](../images/webApp/addBCOSAccount.png)
-
-#### 添加Hyperledger Fabric链账户
 
 添加Hyperledger Fabric链类型的账户方式如下图所示，目前只支持自行上传私钥、公钥证书的方式添加Fabric链类型账户。**注意：** Hyperledger Fabric账号只支持上传`PEM、KeyStore`类型的私钥、`CRT`格式的证书。
 
@@ -180,8 +174,6 @@ WeCross网页管理平台共包含以下功能模块：
 
 在`资源管理`界面点击`部署合约`按钮，可进入`资源部署页面`。`资源部署页面`会以点击`部署合约`按钮时选择的链类型改变而改变。目前总共分为两大类链类型：Hyperledger Fabric和FISCO BCOS。
 
-#### FISCO BCOS资源部署
-
 FISCO BCOS 资源部署页面如下图所示，操作可分为`部署合约`和`注册合约`。在红框1内填入部署的资源命名。**注意：** 在上传合约文件是，必须上传所有合约文件打包的`ZIP`压缩包，并且必须在文件夹最外层有`.sol`或`.abi`的合约文件。上传之后，红框2的`合约入口文件`下拉框会列出压缩包内最外层的所有合约文件，在确认执行部署之后，网页会自动读取`合约入口文件`，并解析合约之间的依赖，所以 **必须在压缩包内包含入口合约的所有依赖合约** 。在合约类名中填入`合约入口文件`的类名。
 
 ![](../images/webApp/BCOSDeploy.png)
@@ -195,8 +187,6 @@ FISCO BCOS 资源部署页面如下图所示，操作可分为`部署合约`和`
 | HelloWeCross     | [HelloWeCross](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/HelloWeCross.zip)         | HelloWeCross     |
 | HelloWorld       | [HelloWorld](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/HelloWorld.zip)             | HelloWorld       |
 | LedgerSampleHTLC | [LedgerSampleHTLC](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/LedgerSampleHTLC.zip) | LedgerSampleHTLC |
-
-#### Hyperledger Fabric资源部署
 
 Hyperledger Fabric 部署页面如下图所示，Fabric的操作分为`安装合约`、`实例化合约`以及`升级合约`。在`安装合约`时，填入的`所属机构名`为当前UA的Fabric1.4类型的默认链账户所属的机构。在安装合约的时候，必须上传`tar.gz`压缩打包的合约，且合约必须在文件夹`src/chaincode`下。例如图中的`asset.tar.gz`，解压缩后文件结构如下：
 
@@ -234,20 +224,14 @@ src
 
 ![](../images/webApp/xaManager.png)
 
-#### 开启跨链事务
-
 在事务管理页面点击发起事务，则可以进入事务开启页面。事务开启页面如下所示，分为三大块，红框1展示了事务步骤状态；红框2中是开启事务参数的选择，页面将自动生成一个UUID作为事务ID，使用`待选资源穿梭框`勾选开启事务所需要的资源，添加到右侧的`已选资源列表`；完成选择后点击红框3开启事务。
 
 ![](../images/webApp/startXA.png)
-
-#### 执行跨链事务
 
 开启事务后进入执行事务步骤，界面如下图所示，左边为发交易表单，与`资源管理模块`的发交易类似，左边为事务步骤的列表，记录每一步的操作。
 若希望结束当前事务，即提交/回滚当前事务，可点击最下方的`结束事务按钮`。
 
 ![](../images/webApp/execXA.png)
-
-#### 结束跨链事务
 
 在点击结束事务后进入结束事务步骤，界面如下图所示，展示该事务的所有详细信息。可点击下方的继续执行，返回执行事务步骤，也可选择提交/回滚事务，对事务进行结束。
 
