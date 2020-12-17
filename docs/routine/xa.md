@@ -72,7 +72,7 @@ transfer1_revert('from1', 'to1', 100)
 
 ## 使用
 
-Java项目可通过调用Java-SDK的[事务相关接口]()实现事务操作，其它语言的项目可通过[JSON-RPC]()接口完成事务调用。
+Java项目可通过调用Java-SDK的[事务相关接口](../dev/api.html#startxatransaction)实现事务操作，其它语言的项目可通过[JSON-RPC](../dev/rpc.html#startxatransaction)接口完成事务调用。
 
 WeCross控制台也提供了事务相关的命令，操作示例如下：
 
