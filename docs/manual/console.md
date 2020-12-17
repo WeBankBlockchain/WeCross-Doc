@@ -26,7 +26,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
   - [login](#login)：在当前控制台登录全局账号
   - [logout](#logout)：控制台登出
   - [registerAccount](#registeraccount)：注册全局账号
-  - [addChainAccount](#addChainaccount)：在当前全局账号添加一个链账号
+  - [addChainAccount](#addchainaccount)：在当前全局账号添加一个链账号
   - [setDefaultAccount](#setdefaultaccount)：设定某个账号为这个链类型的交易发送默认账号
   - [listAccount](#listaccount)：查看当前全局账号的详细信息
 - 状态查询
