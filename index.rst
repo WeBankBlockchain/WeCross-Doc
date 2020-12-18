@@ -44,7 +44,7 @@ WeCross
    :maxdepth: 1
    :caption: 开发手册
 
-   docs/dev/sdk.rst
+   docs/dev/sdkindex.rst
    docs/dev/interchain.md
    docs/dev/stub.md
    docs/dev/rpc.md
@@ -56,6 +56,3 @@ WeCross
    docs/scenarios/index.rst
    docs/faq/faq.md
    docs/community/index.rst
-
-
-
