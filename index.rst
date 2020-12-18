@@ -10,15 +10,52 @@ WeCross
 
 .. toctree::
    :maxdepth: 1
-   
+   :caption: 平台介绍
+
    docs/introduction/introduction.md
    docs/version/index.rst
-   docs/tutorial/index.rst
-   docs/manual/index.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 教程
+
+   docs/tutorial/env.md
+   docs/tutorial/demo/index.md
+   docs/tutorial/networks.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 跨链操作
+
    docs/stubs/index.rst
-   docs/dev/index.rst
    docs/routine/index.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 操作手册
+
+   docs/manual/webApp.md
+   docs/manual/console.md
+   docs/manual/account.md
+   docs/manual/scripts.md
+   docs/manual/config.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 开发手册
+
+   docs/dev/sdk.rst
+   docs/dev/interchain.md
+   docs/dev/stub.md
+   docs/dev/rpc.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 参考
+
    docs/scenarios/index.rst
    docs/faq/faq.md
    docs/community/index.rst
+
+
 

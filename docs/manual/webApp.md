@@ -1,4 +1,4 @@
-# 网页管理平台
+# 网页管理台
 
 [WeCross网页管理平台](https://github.com/WeBankFinTech/WeCross-WebApp)是继WeCross控制台以来，更加便捷、友好的可视化客户端工具，通过发送HTTP请求与WeCross JSON-RPC接口进行跨链路由连接与通信，实现对跨链资源的读写访问等请求。WeCross网页管理平台拥有多维度的操作，包括账户管理、资源管理、路由管理、交易管理以及事务管理等多个管理模块。
 

@@ -1,4 +1,4 @@
-# 社区活动
+# 交流 挑战 成长 ✪
 
 WeCross社区会不定期举行线上或者线下[Meetup](https://mp.weixin.qq.com/s/X91tRrYudrFUVavig4koaQ)，以及开放WeCross例会，为社区成员提供面对面的交流机会。
 

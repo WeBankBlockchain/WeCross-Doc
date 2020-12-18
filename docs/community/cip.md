@@ -1,4 +1,4 @@
-# 改进提案（CIP）
+# 发起提案
 
 **改进提案**(CIP，CrossChain Improvement Proposals)，是一种遵循一定规范的特殊Issue，用于提出和讨论WeCross的新需求、新特性和新功能。
 
