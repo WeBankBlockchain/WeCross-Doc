@@ -1,4 +1,4 @@
-# 合约跨链调用（Hub）
+# 合约跨链调用(Hub)
 
 WeCross支持由合约发起跨链调用，即可在源链的智能合约中发起对其它链资源的调用。
 
@@ -141,9 +141,7 @@ Result: Success
 # 实例化链码
 [WeCross.org1-admin]>fabricInstantiate payment.fabric.interchain ["Org1","Org2"] contracts/chaincode/interchain 1.0 GO_LANG default []
 
-Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
-
-#等待实例化完成
+# 等待实例化完成
 ```
 
 ### 查询桥接合约地址

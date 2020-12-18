@@ -151,7 +151,7 @@ WeCross启动后会在`wecross.toml`中所指定的`chains`的根目录下去遍
 
 **配置FISCO BCOS**
 
-请参考：[FISCO BCOS 2.0插件配置](../stubs/bcos.html#id8)
+请参考：[FISCO BCOS 2.0插件配置](../stubs/bcos.html#id4)
 
 **配置Fabric**
 
