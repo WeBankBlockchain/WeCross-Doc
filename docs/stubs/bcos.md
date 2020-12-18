@@ -1,6 +1,6 @@
 # 接入FISCO BCOS 2.0
 
-[WeCross-BCOS2-Stub](https://github.com/WeBankFinTech/WeCross-BCOS2-Stub)作为WeCross的插件，让跨链路由具备接入FISCO-BCOS 2.0的能力。关于该插件，本章将介绍以下内容：
+[WeCross-BCOS2-Stub](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub)作为WeCross的插件，让跨链路由具备接入FISCO-BCOS 2.0的能力。关于该插件，本章将介绍以下内容：
 
 * 跨链合约
 * 插件安装
@@ -53,7 +53,7 @@ plugin/
 **下载编译**
 
 ```shell
-git clone https://github.com/WeBankFinTech/WeCross-BCOS2-Stub.git
+git clone https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub.git
 cd WeCross-BCOS2-StubWeBankBlockchain
 bash gradlew assemble
 ```
@@ -211,10 +211,10 @@ Example:
 
 ## 参考链接
 
-[WeCross-BCOS2-Stub](https://github.com/WeBankFinTech/WeCross-BCOS2-Stub)  
+[WeCross-BCOS2-Stub](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub)  
 
 [FISCO BCOS 环境搭建参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)
 
 [FISCO-BCOS JavaSDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html)
 
-[FISCO-BCOS Console文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html)
+[FISCO-BCOS Console文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console_of_java_sdk.html)

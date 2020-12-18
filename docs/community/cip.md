@@ -16,7 +16,7 @@ CIP会对WeCross一个或多个模块的功能特性、接口规范、协议设�
 
 一个CIP从提出到结束，会有很多的社区成员参与，具体的工作流如下：
 
-1. 提案阶段(Proposal)：发起人按照CIP[模板](https://github.com/WeBankFinTech/WeCross/issues/new/choose)，填写CIP的功能简介，提交Issue，由社区审核。
+1. 提案阶段(Proposal)：发起人按照CIP[模板](https://github.com/WeBankBlockchain/WeCross/issues/new/choose)，填写CIP的功能简介，提交Issue，由社区审核。
 2. 方案阶段(Draft)：社区认可该CIP提案后，为该提案赋予`Proposal`标签，然后发起人进行CIP补充。期间发起人可以与其他社区成员一起进行多轮沟通，共同完善方案。
 3. 采纳阶段(Accepted)：发起人完成CIP完善后，社区决定是否采纳该CIP，如果发现还有需要优化的地方，会重新回到Draft阶段。如果确定采纳，社区会将此CIP纳入版本规划，发起者可以一起参与开发。
 4. 结束(Final)：CIP功能随版本发布后，将该CIP标识为结束状态。

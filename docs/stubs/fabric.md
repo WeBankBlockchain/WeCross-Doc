@@ -1,6 +1,6 @@
 # 接入Hyperledger Fabric 1.4
 
-[WeCross-Fabric1-Stub](WeCross-Fabric1-Stub)作为WeCross的插件，让跨链路由具备接入Hyperledger Fabric 1.4的能力。关于该插件，本章将介绍以下内容：
+[WeCross-Fabric1-Stub](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub)作为WeCross的插件，让跨链路由具备接入Hyperledger Fabric 1.4的能力。关于该插件，本章将介绍以下内容：
 
 * 插件安装
 * 插件配置
@@ -25,7 +25,7 @@ plugin/
 **下载编译**
 
 ``` bashWeBankBlockchain
-git clone https://github.com/WeBankFinTech/WeCross-Fabric1-Stub.git
+git clone https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub.git
 cd WeCross-Fabric1-Stub
 bash gradlew assemble # 在 dist/apps/下生成fabric1-stub-XXXXX.jar
 ```
