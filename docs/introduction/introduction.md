@@ -1,4 +1,4 @@
-# 平台介绍
+# WeCross
 
 ## 基本介绍
 
@@ -16,7 +16,7 @@ WeCross 着眼应对区块链行业现存挑战，不局限于满足同构区块
   * 与链对接，对链上的资源进行抽象
   * 向外暴露统一的接口
   * 将调用请求路由至对应的区块链
-* **跨链账户服务（WeCross Account Manager）**
+* **账户服务（WeCross Account Manager）**
   * 管理跨链账户
   * Router连接所属机构的Account Manager
   * 用户在Router上登录，以跨链账户的身份发交易

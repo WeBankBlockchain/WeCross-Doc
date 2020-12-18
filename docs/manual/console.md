@@ -1,4 +1,4 @@
-## 控制台
+## 终端控制台
 
 [控制台](https://github.com/WeBankBlockchain/WeCross-Console)是WeCross重要的客户端工具，它基于[WeCross-Java-SDK](../dev/sdk.html)与WeCross跨链路由建立连接，实现对跨链资源的读写访问请求。控制台拥有丰富的命令，包括获取跨链资源列表，调用跨链资源，发起事务等等。
 

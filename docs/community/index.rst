@@ -7,7 +7,7 @@
    :maxdepth: 1
    
    community.md
+   event.md
    contributor.md
    cip.md
-   event.md
    
