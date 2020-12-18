@@ -113,33 +113,33 @@ callback(): 使用跨链调用的结果更新data
 
 ```shell
 # 登录
-[WeCross]>login org1-admin 123456
+[WeCross]> login org1-admin 123456
 
 # 部署BCOS链示例合约
-[WeCross.org1-admin]>bcosDeploy payment.bcos.interchain contracts/solidity/InterchainSample.sol InterchainSample 1.0
+[WeCross.org1-admin]> bcosDeploy payment.bcos.interchain contracts/solidity/InterchainSample.sol InterchainSample 1.0
 
 Result: 0xb9fe7fd54b0c595c40a6417ba35908f310c0aee9
 
 # 切换Fabric默认账户
-[WeCross.org1-admin]>setDefaultAccount Fabric1.4 2
+[WeCross.org1-admin]> setDefaultAccount Fabric1.4 2
 
 # 安装链码
-[WeCross.org1-admin]>fabricInstall payment.fabric.interchain Org2 contracts/chaincode/interchain 1.0 GO_LANG
+[WeCross.org1-admin]> fabricInstall payment.fabric.interchain Org2 contracts/chaincode/interchain 1.0 GO_LANG
 
 path: classpath:contracts/chaincode/interchain
 Result: Success
 
 # 切换Fabric默认账户
-[WeCross.org1-admin]>setDefaultAccount Fabric1.4 1
+[WeCross.org1-admin]> setDefaultAccount Fabric1.4 1
 
 # 安装链码
-[WeCross.org1-admin]>fabricInstall payment.fabric.interchain Org1 contracts/chaincode/interchain 1.0 GO_LANG
+[WeCross.org1-admin]> fabricInstall payment.fabric.interchain Org1 contracts/chaincode/interchain 1.0 GO_LANG
 
 path: classpath:contracts/chaincode/interchain
 Result: Success
 
 # 实例化链码
-[WeCross.org1-admin]>fabricInstantiate payment.fabric.interchain ["Org1","Org2"] contracts/chaincode/interchain 1.0 GO_LANG default []
+[WeCross.org1-admin]> fabricInstantiate payment.fabric.interchain ["Org1","Org2"] contracts/chaincode/interchain 1.0 GO_LANG default []
 
 # 等待实例化完成
 ```
@@ -172,13 +172,13 @@ WeCrossHub address: 0xb00b0a913f2c4b6bc9e7a588061a8bc55d07afe1
 
 ```shell
 # 登录
-[WeCross]>login org1-admin 123456
+[WeCross]> login org1-admin 123456
 
 # 初始化BCOS示例合约
-[WeCross.org1-admin]>sendTransaction payment.bcos.interchain init 0xb00b0a913f2c4b6bc9e7a588061a8bc55d07afe1
+[WeCross.org1-admin]> sendTransaction payment.bcos.interchain init 0xb00b0a913f2c4b6bc9e7a588061a8bc55d07afe1
 
 # 初始化Fabric示例合约，其中mychannel是channel名
-[WeCross.org1-admin]>sendTransaction payment.fabric.interchain init mychannel WeCrossHub
+[WeCross.org1-admin]> sendTransaction payment.fabric.interchain init mychannel WeCrossHub
 ```
 
 ### 发起跨链调用
@@ -187,59 +187,59 @@ WeCrossHub address: 0xb00b0a913f2c4b6bc9e7a588061a8bc55d07afe1
 
 ````shell
 # 登录
-[WeCross]>login org1-admin 123456
+[WeCross]> login org1-admin 123456
 
 # 查看示例合约原始状态
-[WeCross.org1-admin]>call payment.fabric.interchain get
+[WeCross.org1-admin]> call payment.fabric.interchain get
 
 Result: [["Talk is cheap, show me the code."]]
 
-[WeCross.org1-admin]>call payment.bcos.interchain get
+[WeCross.org1-admin]> call payment.bcos.interchain get
 
 Result: [["Talk is cheap, show me the code."]]
 
 # BCOS发起跨链调用
 # 命令解析: 调用示例合约的interchain接口，该接口触发跨链调用
 # 参数列表: [目标链资源路径] [目标接口] [调用参数] [回调资源路径] [回调接口]
-[WeCross.org1-admin]>sendTransaction payment.bcos.interchain interchain payment.fabric.interchain set "Hello world" payment.bcos.interchain callback
+[WeCross.org1-admin]> sendTransaction payment.bcos.interchain interchain payment.fabric.interchain set "Hello world" payment.bcos.interchain callback
 
 Txhash  : 0x840355ed53de047594f0a5778312edb2f2fe93908eb5efb6336cf535805f5c26
 BlockNum: 1898
 Result  : [1]
 
 # 查询示例合约，发现两条链的数据都发生了变化
-[WeCross.org1-admin]>call payment.bcos.interchain get
+[WeCross.org1-admin]> call payment.bcos.interchain get
 
 Result: [["Hello world"]]
 
-[WeCross.org1-admin]>call payment.fabric.interchain get
+[WeCross.org1-admin]> call payment.fabric.interchain get
 
 Result: [["Hello world"]]
 
 # 根据跨链调用的返回值，查询调用回调的结果
-[WeCross.org1-admin]>call payment.bcos.WeCrossHub selectCallbackResult 1
+[WeCross.org1-admin]> call payment.bcos.WeCrossHub selectCallbackResult 1
 
 Result: [[ "0", "0", "0", "Success", "[\"Hello world\"]" ]]
 
 
 # Fabric发起跨链调用
-[WeCross.org1-admin]>sendTransaction payment.fabric.interchain interchain payment.bcos.interchain set "Hello WeCross" payment.fabric.interchain callback
+[WeCross.org1-admin]> sendTransaction payment.fabric.interchain interchain payment.bcos.interchain set "Hello WeCross" payment.fabric.interchain callback
 
 Txhash  : cf7eda25f1c0515b68d702ed495fdbbefed6bdcfd4a3bc68aaab315631d3d102
 BlockNum: 2386
 Result  : [1]
 
 # 查询示例合约
-[WeCross.org1-admin]>call payment.bcos.interchain get
+[WeCross.org1-admin]> call payment.bcos.interchain get
 
 Result: [[ "Hello WeCross" ]]
 
-[WeCross.org1-admin]>call payment.fabric.interchain get
+[WeCross.org1-admin]> call payment.fabric.interchain get
 
 Result: [[ "Hello WeCross" ]]
 
 # 查询调用回调的结果
-[WeCross.org1-admin]>call payment.fabric.WeCrossHub selectCallbackResult 1
+[WeCross.org1-admin]> call payment.fabric.WeCrossHub selectCallbackResult 1
 
 Result: [["0","0","0","Success","[ \"Hello WeCross\" ]"]]
 ```

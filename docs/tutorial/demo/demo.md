@@ -227,11 +227,11 @@ bash start.sh
 [WeCross]> login org2-admin 123456
 
 # 查看发送方余额
-[WeCross.org2-admin]>  call payment.bcos.htlc balanceOf 0x4305196480b029bbecb071b4b68e95dfef36a7b7
+[WeCross.org2-admin]> call payment.bcos.htlc balanceOf 0x4305196480b029bbecb071b4b68e95dfef36a7b7
 Result: [1000000000]
 
 # 查看接收方余额
-[WeCross.org2-admin]>  call payment.bcos.htlc balanceOf 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
+[WeCross.org2-admin]> call payment.bcos.htlc balanceOf 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf
 Result: [0]
 
 # 创建转账提案

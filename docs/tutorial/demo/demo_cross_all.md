@@ -73,7 +73,7 @@ uaID    : 3059301306...
 用`listAccount`命令查看此跨链账户下，向不同类型的链发送交易的链账户。
 
 ```bash
-[WeCross.org1-admin]>listAccount
+[WeCross.org1-admin]> listAccount
 Universal Account:
 username: org1-admin
 pubKey  : 3059301306...

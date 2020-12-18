@@ -29,7 +29,7 @@ WeCross提供了[Solidity版本](https://github.com/WeBankBlockchain/WeCross-Con
 bash start.sh
 
 # 登录
-[WeCross]>login org2-admin 123456
+[WeCross]> login org2-admin 123456
 
 # 发行资产，资产名为htlc，最小单位1，发行数量100000000
 [WeCross.org2-admin]> bcosDeploy payment.bcos.ledger contracts/solidity/LedgerSample.sol LedgerSample 1.0 token htlc 1 100000000
@@ -54,7 +54,7 @@ Result: 0x22a83719f748da09845d91fe1a2f44437f0ad13b
 bash start.sh
 
 # 登录
-[WeCross]>login org2-admin 123456
+[WeCross]> login org2-admin 123456
 
 # approve [被授权者地址]（此处为自己的哈希时间锁合约地址），[授权金额]
 [WeCross.org2-admin]> sendTransaction payment.bcos.ledger approve 0x22a83719f748da09845d91fe1a2f44437f0ad13b 1000000
@@ -74,7 +74,7 @@ Result  : [true]
 bash start.sh
 
 # 登录
-[WeCross]>login org2-admin 123456
+[WeCross]> login org2-admin 123456
 
 # init [己方资产合约地址] 
 [WeCross.org2-admin]> sendTransaction payment.bcos.htlc init 0xf4fdcdfe0184644f09a1cfa16a945cc71a5d44ff
@@ -107,10 +107,10 @@ Result: [100000000]
 bash start.sh
 
 # 登录
-[WeCross]>login org1-admin 123456
+[WeCross]> login org1-admin 123456
 
 # 切换默认账户
-[WeCross.org1-admin]>setDefaultAccount Fabric1.4 2
+[WeCross.org1-admin]> setDefaultAccount Fabric1.4 2
 
 # 在机构2安装资产合约链码
 [WeCross.org1-admin]> fabricInstall payment.fabric.ledger Org2 contracts/chaincode/ledger 1.0 GO_LANG
@@ -125,7 +125,7 @@ path: classpath:contracts/chaincode/htlc
 Result: Success
 
 # 切换默认账户
-[WeCross.org1-admin]>setDefaultAccount Fabric1.4 1
+[WeCross.org1-admin]> setDefaultAccount Fabric1.4 1
 
 # 在机构1安装资产合约链码
 [WeCross.org1-admin]> fabricInstall payment.fabric.ledger Org1 contracts/chaincode/ledger 1.0 GO_LANG
@@ -170,7 +170,7 @@ fabric的示例资产合约通过创建一个托管账户实现资产的授权�
 bash start.sh
 
 # 登录
-[WeCross]>login org1-admin 123456
+[WeCross]> login org1-admin 123456
 
 # 创建一个托管账户完成授权
 [WeCross.org1-admin]> sendTransaction payment.fabric.ledger createEscrowAccount 1000000
@@ -283,7 +283,7 @@ $$
 bash start.sh
 
 # 登录
-[WeCross]>login org2-admin 123456
+[WeCross]> login org2-admin 123456
 
 [WeCross.org2-admin]> newHTLCProposal payment.bcos.htlc edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f 049db09dd9cf6fcf69486512c1498a1f6ea11d33b271aaad1893cd590c16542a true 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org2.example.com 500 2000000000
 ```
@@ -298,7 +298,7 @@ bash start.sh
 bash start.sh
 
 # 登录
-[WeCross]>login org1-admin 123456
+[WeCross]> login org1-admin 123456
 
 [WeCross.org1-admin]> newHTLCProposal payment.fabric.htlc edafd70a27887b361174ba5b831777c761eb34ef23ee7343106c0b545ec1052f null false 0x55f934bcbe1e9aef8337f5551142a442fdde781c 0x2b5ad5c4795c026514f8317c7a215e218dccd6cf 700 2000010000 Admin@org1.example.com User1@org2.example.com 500 2000000000
 ```
