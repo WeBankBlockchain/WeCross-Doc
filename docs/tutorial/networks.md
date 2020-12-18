@@ -521,7 +521,7 @@ cp ~/wecross/fabric/certs/chains/fabric/* conf/chains/fabric/
 vim conf/chains/fabric/stub.toml
 ```
 
-相关配置项使用默认即可。（[参考此处获取更详尽的配置说明](../stubs/fabric.html#id6)）
+相关配置项使用默认即可。（[参考此处获取更详尽的配置说明](../stubs/fabric.html#id4)）
 
 ``` toml
 [common]
