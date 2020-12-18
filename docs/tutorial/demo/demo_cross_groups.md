@@ -66,7 +66,7 @@ uaID    : 3059301306...
 用`listAccount`命令查看此跨链账户下，向不同类型的链发送交易的链账户。
 
 ``` gr
-[WeCross.org1-admin]>listAccount
+[WeCross.org1-admin]> listAccount
 Universal Account:
 username: org1-admin
 pubKey  : 3059301306...
@@ -93,7 +93,7 @@ chainAccounts: [
   * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用，可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
-[WeCross.org1-admin]>listResources
+[WeCross.org1-admin]> listResources
 path: payment.group2.WeCrossHub, type: BCOS2.0, distance: 1
 path: payment.group1.WeCrossHub, type: BCOS2.0, distance: 0
 path: payment.group2.HelloWorldGroup2, type: BCOS2.0, distance: 1
@@ -109,7 +109,7 @@ total: 4
   
 ```bash
 # 调用Group1 HelloWorld合约中的get接口
-[WeCross.org1-admin]>call payment.group1.HelloWorldGroup1 get
+[WeCross.org1-admin]> call payment.group1.HelloWorldGroup1 get
 Result: [Hello, World!] // 初次get，值为Hello World!
 ```
 
