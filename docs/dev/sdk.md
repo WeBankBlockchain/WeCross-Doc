@@ -1,4 +1,4 @@
-# Java SDK开发应用
+# WeCross Java SDK开发应用
 
 WeCross 跨链路由向外部暴露了所有的UBI接口，开发者可以通过SDK实现这些接口的快速调用。
 

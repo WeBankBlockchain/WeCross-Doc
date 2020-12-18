@@ -13,7 +13,7 @@
 ### 创建Gradle项目
 Gradle依赖分类
 - Stub API定义
-- Java SDK，区块链Java版的SDK
+- SDK(Java版)，区块链Java版的SDK
 - 其他依赖，例如：toml解析工具
 
 ```shell
