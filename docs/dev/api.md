@@ -1,4 +1,4 @@
-# Java SDK API
+# WeCross Java SDK API
 
 SDK API分为两大类型，一种是对跨链路由RPC接口调用的封装，一种是资源接口。
 ## API列表
