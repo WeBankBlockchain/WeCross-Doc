@@ -1049,13 +1049,13 @@ http://localhost:8250/s/index.html#/login
 
 管理台中包含如下内容，点击链接进入相关操作指导。
 
-* [登录/注册](../../manual/webApp.html#id10)
-* [平台首页](../../manual/webApp.html#id11)
-* [账户管理](../../manual/webApp.html#id12)
-* [路由管理](../../manual/webApp.html#id13)
-* [资源管理](../../manual/webApp.html#id14)
-* [交易管理](../../manual/webApp.html#id15)
-* [事务管理](../../manual/webApp.html#id16)
+* [登录/注册](../manual/webApp.html#id10)
+* [平台首页](../manual/webApp.html#id11)
+* [账户管理](../manual/webApp.html#id12)
+* [路由管理](../manual/webApp.html#id13)
+* [资源管理](../manual/webApp.html#id14)
+* [交易管理](../manual/webApp.html#id15)
+* [事务管理](../manual/webApp.html#id16)
 
 ``` eval_rst
 .. note::
