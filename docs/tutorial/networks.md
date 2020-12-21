@@ -935,7 +935,7 @@ uaID    : 3059301306...
 
 **查看资源**
 
-用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有多个资源：
+用`listResources`命令查看WeCross跨链网络中的所有资源。可看到有多个资源：
 
 * `payment.bcos.HelloWorld`
   * 对应于FISCO BCOS链上的HelloWorld.sol合约
@@ -1062,5 +1062,5 @@ http://localhost:8250/s/index.html#/login
     - 若需要远程访问，请在router的conf/wecross.toml中，修改[rpc]标签下的address为所需ip（如：0.0.0.0）。保存后，重启router即可。
 ```
 
-恭喜，你已经完成了整个WeCross网络的体验。相信优秀的你已经对WeCross有了大致的了解。接下来，你可以基于WeCross Java SDK开发更多的跨连应用，通过统一的接口对各种链上的资源进行操作。
+恭喜，你已经完成了整个WeCross网络的体验。相信优秀的你已经对WeCross有了大致的了解。接下来，你可以基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
 
