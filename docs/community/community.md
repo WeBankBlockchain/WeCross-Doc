@@ -32,7 +32,9 @@
 
 >WeCross的开发、维护、运营都由社区协作完成，感谢在各个版本开发过程中积极参与和贡献的每一位小伙伴。
 >
->![](../images/community/contributors.jpeg)
+>![](../images/community/contributors.png)
+
+如有遗漏，欢迎联系社区小助手反馈。
 
 **每一个约定都值得坚守**。为了让用户的诉求得到清晰而充分地表达，为了让开发者更高效便捷地参与WeCross建设，社区协作制定了[PR规范](./contributor.html#pr)，[代码规范](./contributor.html#id5)，[测试规范](./contributor.html#id8)，[改进提案(CIP)规范](./cip.html)等社区规约，欢迎大家一起遵守和完善。
 
