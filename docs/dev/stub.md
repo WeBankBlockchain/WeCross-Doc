@@ -13,10 +13,203 @@
 
 ### Stub开发
 `Stub`开发分为两个部分：
-- 代理合约
+- 系统合约
 - Java插件
 
-#### 代理合约
+#### 系统合约
+
+系统合约包括代理合约(WeCrossProxy)和桥接合约(WeCrossHub)，代理合约是WeCross调用该链其它合约的统一入口，桥接合约用于记录跨链调用请求，以配合跨链路由实现合约跨链调用。
+
+##### 代理合约
+
+功能点：
+
+- 合约调用入口
+- 事务管理
+
+示例：
+
+- [Solidity版](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossProxy.sol)
+- [Golang版](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/master/src/main/resources/chaincode/WeCrossProxy/proxy.go)
+
+以Solidity合约为例，接口列表：
+
+```solidity
+
+/** 读接口，调用业务合约（不需要脏读，即无事务ID，读事务中资源）
+ *
+ *  @param _XATransactionID  事务ID
+ *  @param _path   目标资源路径
+ *  @param _func   调用方法
+ *  @param _args   调用参数
+ *  @return 调用结果
+ */ 
+function constantCall(
+    string memory _XATransactionID, 
+    string memory _path, 
+    string memory _func, 
+    bytes memory _args
+) public returns(bytes memory)
+
+
+/** 写接口，调用业务合约
+ *
+ *  @param _uid  交易ID，用于去重
+ *  @param _XATransactionID  事务ID
+ *  @param _XATransactionSeq  事务序列号
+ *  @param _path   目标资源路径
+ *  @param _func   调用方法
+ *  @param _args   调用参数
+ *  @return 调用结果
+ */ 
+function sendTransaction(
+    string memory _uid, 
+    string memory _XATransactionID, 
+    uint256 _XATransactionSeq, 
+    string memory _path, 
+    string memory _func, 
+    bytes memory _args
+) public returns(bytes memory)
+
+
+/** 开启事务
+ *
+ *  @param _XATransactionID  事务ID
+ *  @param _selfPaths  参与事务的己链资源列表
+ *  @param _otherPaths 参与事务的它链资源列表
+ *  @return 执行结果
+ */ 
+function startXATransaction(
+    string memory _xaTransactionID, 
+    string[] memory _selfPaths, 
+    string[] memory _otherPaths
+) public returns(string memory)
+
+
+/** 提交事务
+ *
+ *  @param _XATransactionID  事务ID
+ *  @return 执行结果
+ */ 
+function commitXATransaction(
+    string memory _xaTransactionID
+) public returns(string memory)
+
+
+/** 回滚事务
+ *
+ *  @param _XATransactionID  事务ID
+ *  @return 执行结果
+ */ 
+function rollbackXATransaction(
+  string memory _xaTransactionID
+) public returns(string memory)
+
+
+/** 获取事务列表
+ *
+ *  @param _index 下标
+ *  @param _size  数量
+ *  @return 事务列表详情，JSON格式
+ */ 
+function listXATransactions(
+    string memory _index, 
+    uint256 _size
+) public view returns (string memory)
+
+
+/** 获取事务详情
+ *
+ *  @param _xaTransactionID 事务ID
+ *  @return 事务详情，JSON格式
+ */ 
+function getXATransaction(
+    string memory _xaTransactionID
+) public view returns(string memory)
+
+```
+
+##### 桥接合约
+
+功能点：
+
+- 注册跨链调用请求
+- 查询跨链调用回调结果
+
+示例：
+
+- [Solidity版](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossHub.sol)
+- [Golang版](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/master/src/main/resources/chaincode/WeCrossHub/hub.go)
+
+以Solidity合约为例，接口列表：
+
+```solidity
+
+/** 供业务合约调用，注册跨链调用请求
+ *
+ *  @param _path     目标链合约的路径
+ *  @param _method   调用方法名
+ *  @param _args     调用参数列表
+ *  @param _callbackPath   回调的合约路径
+ *  @param _callbackMethod 回调方法名
+ *  @return 跨链请求的唯一ID
+ */ 
+function interchainInvoke(
+        string memory _path, 
+        string memory _method, 
+        string[] memory _args, 
+        string memory _callbackPath, 
+        string memory _callbackMethod
+) public returns(string memory uid)
+
+
+/** 供跨链路由调用，获取跨链调用请求
+ *
+ *  @param _num   获取数量
+ *  @return       请求列表，JSON格式
+ */ 
+funct
+function getInterchainRequests(
+    uint256 _num
+) public view returns(string memory)
+
+
+/** 供跨链路由调用，更新跨链任务处理进度
+ *
+ *  @param _index  新下标
+ */ 
+function updateCurrentRequestIndex(uint256 _index) public
+
+
+/** 供跨链路由调用，注册回调结果
+ *
+ *  @param _uid  跨链请求的唯一ID
+ *  @param _tid  事务ID
+ *  @param _seq  事务序列号
+ *  @param _errorCode 回调错误码
+ *  @param _errorMsg  回调错误详情
+ *  @param _result    回调结果
+ */ 
+function registerCallbackResult(
+    string memory _uid, 
+    string memory _tid, 
+    string memory _seq, 
+    string memory _errorCode, 
+    string memory _errorMsg, 
+    string[] memory _result
+) public
+
+
+/** 供用户调用，查询回调的调用结果
+ *
+ *  @param _uid   跨链请求的唯一ID
+ *  @return       字符串数组: [事务ID, 事务Seq, 错误码, 错误消息, 回调调用结果的JSON序列化]
+ */ 
+function selectCallbackResult(
+    string memory _uid
+) public view returns(string[] memory)
+
+```
 
 #### Java插件
 
