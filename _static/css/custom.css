@@ -66,6 +66,7 @@ p {
 
 .wy-nav-content {
     background-color: #fff max-width: 1000px;
+    max-width: 1200px !important;
 }
 
 .wy-nav-side {
@@ -83,9 +84,9 @@ p {
 
 .wy-menu-vertical header,
 .wy-menu-vertical p.caption {
-    color: #6ca158;
+    color: #6ab0de;
 }
-
+x
 
 /* Code snippets */
 

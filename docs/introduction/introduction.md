@@ -1,4 +1,4 @@
-# 平台介绍
+# WeCross
 
 ## 基本介绍
 
@@ -16,9 +16,16 @@ WeCross 着眼应对区块链行业现存挑战，不局限于满足同构区块
   * 与链对接，对链上的资源进行抽象
   * 向外暴露统一的接口
   * 将调用请求路由至对应的区块链
+* **账户服务（WeCross Account Manager）**
+  * 管理跨链账户
+  * Router连接所属机构的Account Manager
+  * 用户在Router上登录，以跨链账户的身份发交易
 * **控制台（WeCross Console）**
   * 命令行式的交互
-  * 查询跨链信息，发送调用请求
+  * 查询跨链信息，发送调用请求，操作跨链事务
+* **网页管理平台**
+  * 可视化操作界面
+  * 查询跨链信息，发送调用请求，操作跨链事务
 * **跨链 SDK（WeCross Java SDK）**
   * WeCross开发工具包，供开发者调用WeCross
   * 集成于各种跨链APP中，提供统一的调用接口
@@ -38,7 +45,11 @@ WeCross 着眼应对区块链行业现存挑战，不局限于满足同构区块
   * 多条链通过跨链路由相连，形成跨链分区
   * 跨链分区有唯一标识，即IPath中的第一项（`payment.stub3.resource-d`的`payment`）
 
-![](../images/framework.png)
+![](../images/framework.svg)
+
+
+
+![](../images/tutorial/page.png)
 
 ## 更多资料
 

@@ -1,11 +1,13 @@
 ##############################################################
-操作手册
+社区
 ##############################################################
 
 
 .. toctree::
    :maxdepth: 1
    
-   config.md
-   console.md
-   scripts.md
+   community.md
+   event.md
+   contributor.md
+   cip.md
+   
