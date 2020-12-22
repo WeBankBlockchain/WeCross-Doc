@@ -169,7 +169,6 @@ supportedStubs                   List supported stubs of WeCross router.
 listAccount                      List your Universal Account's information.
 listLocalResources               List local resources configured by WeCross server.
 listResources                    List all resources including remote resources.
-status                           Check if the resource exists.
 detail                           Get resource information.
 call                             Call constant method of smart contract.
 invoke                           Call non-constant method of smart contract, will auto-transfer to command execTransaction during transaction.
@@ -486,19 +485,6 @@ path: payment.fabric.asset, type: Fabric1.4, distance: 1
 total: 12
 ```
 
-##### status
-
-判断跨链资源是否存在。
-
-参数：
-
-- path：跨链资源标识。
-
-```bash
-[WeCross.org1-admin]> status payment.bcos.HelloWorld
-exists
-```
-
 ##### detail
 
 查看跨链资源的详细信息。
@@ -538,6 +524,8 @@ ResourceDetail{
  checksum='058b239a9f10dc2b1154e28910861053c376be61cbbfd539b71f354b85ed309b'
 }
 ```
+
+*注意：* 若在`properties`中`isTemporary`字段为`true`，那么说明该资源有可能还未注册到WeCross，也有可能该资源不存在。
 
 ##### call
 
@@ -1046,15 +1034,8 @@ WeCross控制台提供了一个资源类，通过方法`getResource`来初始化
 ```bash
 # 输入变量名，通过tab键可以看到能够访问的所有命令
 [WeCross.org1-admin]> myResource.
-myResource.call              myResource.status
-myResource.detail            myResource.sendTransaction
-```
-
-##### status
-
-```bash
-[WeCross.org1-admin]> myResource.status
-exists
+myResource.call              myResource.detail
+myResource.sendTransaction
 ```
 
 ##### detail
