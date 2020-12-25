@@ -501,9 +501,15 @@ SUCCESS: Chain "fabric" config framework has been generated to "conf/chains/fabr
 ```bash
 tree conf/chains/fabric/
 conf/chains/fabric
-├── WeCrossProxy
-│   └── proxy.go	   # 代理chaincode
-└── stub.toml          # chain配置文件
+├── chaincode
+│   ├── WeCrossHub   ## 桥接合约
+│   │   └── hub.go
+│   └── WeCrossProxy ## 代理合约
+│       └── proxy.go
+├── orderer-tlsca.crt
+├── org1-tlsca.crt
+├── org2-tlsca.crt
+└── stub.toml  # 链配置文件
 ```
 
 **配置Fabric节点连接**
