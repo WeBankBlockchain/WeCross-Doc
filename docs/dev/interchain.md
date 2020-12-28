@@ -185,7 +185,7 @@ WeCrossHub address: 0xb00b0a913f2c4b6bc9e7a588061a8bc55d07afe1
 
 在WeCross控制台执行以下命令：
 
-````shell
+```shell
 # 登录
 [WeCross]> login org1-admin 123456
 
@@ -242,4 +242,5 @@ Result: [[ "Hello WeCross" ]]
 [WeCross.org1-admin]> call payment.fabric.WeCrossHub selectCallbackResult 1
 
 Result: [["0","0","0","Success","[ \"Hello WeCross\" ]"]]
+
 ```
