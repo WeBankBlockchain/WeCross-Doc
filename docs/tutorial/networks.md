@@ -302,7 +302,7 @@ bash get_account.sh # 生成accounts目录
 生成成功，输出账户地址（address），请记录，用于后续添加链账户
 
 ``` 
-[INFO] Account Address   : 0x129f336960ae6632ac3de903619720dde916d922
+[INFO] Account Address   : 0x4e89af80184147fcddc391c64ad673512236af67
 ```
 
 * 启动控制台
