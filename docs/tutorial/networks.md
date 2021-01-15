@@ -302,7 +302,7 @@ bash get_account.sh # 生成accounts目录
 生成成功，输出账户地址（address），请记录，用于后续添加链账户
 
 ``` 
-[INFO] Account Address   : 0x4e89af80184147fcddc391c64ad673512236af67
+[INFO] Account Address   : 0x129f336960ae6632ac3de903619720dde916d922
 ```
 
 * 启动控制台
@@ -716,4 +716,3 @@ http://localhost:8250/s/index.html#/login
 ```
 
 恭喜，你已经完成了整个WeCross网络的体验。相信优秀的你已经对WeCross有了大致的了解。接下来，你可以基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
-
