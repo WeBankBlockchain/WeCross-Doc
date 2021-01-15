@@ -716,4 +716,3 @@ http://localhost:8250/s/index.html#/login
 ```
 
 恭喜，你已经完成了整个WeCross网络的体验。相信优秀的你已经对WeCross有了大致的了解。接下来，你可以基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
-

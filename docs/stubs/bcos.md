@@ -154,7 +154,7 @@ cp xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross/routers-payment/127.0.0.1-8250-25500
 
 ```toml
 [common]                # 通用配置
-    name = 'bcos'       # stub配置名称，即 [stubNmae] = bcos
+    name = 'bcos'       # stub配置名称，即 [stubName] = bcos
     type = 'BCOS2.0'    # stub类型，`GM_BCOS2.0`或者`BCOS2.0`，`GM_BCOS2.0`国密类型，`BCOS2.0`非国密类型
 
 [chain]                 # FISCO-BCOS 链配置
