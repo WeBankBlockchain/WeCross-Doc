@@ -73,7 +73,7 @@ plugin/
 
 ```shell
 git clone https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub.git
-cd WeCross-BCOS2-StubWeBankBlockchain
+cd WeCross-BCOS2-Stub
 bash gradlew assemble # 在 dist/apps/ 下生成 bcos2-stub-XXXXX.jar 和 bcos2-stub-gm-xxxx.jar
 ```
 
