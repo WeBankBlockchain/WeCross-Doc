@@ -188,7 +188,12 @@ FISCO BCOS 资源部署页面如下图所示，操作可分为`部署合约`和`
 | HelloWorld       | [HelloWorld](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/HelloWorld.zip)             | HelloWorld       |
 | LedgerSampleHTLC | [LedgerSampleHTLC](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/solidity-webApp-demo/LedgerSampleHTLC.zip) | LedgerSampleHTLC |
 
-Hyperledger Fabric 部署页面如下图所示，Fabric的操作分为`安装合约`、`实例化合约`以及`升级合约`。在`安装合约`时，填入的`所属机构名`为当前UA的Fabric1.4类型的默认链账户所属的机构。在安装合约的时候，必须上传`tar.gz`压缩打包的合约，且合约必须在文件夹`src/chaincode`下。例如图中的`asset.tar.gz`，解压缩后文件结构如下：
+Hyperledger Fabric 部署页面如下图所示，Fabric的操作分为`安装合约`、`实例化合约`以及`升级合约`。在`安装合约`时，填入的`所属机构名`为当前UA的Fabric1.4类型的默认链账户所属的机构。
+
+**特别注意：** 由于Fabric的原因，在安装合约的时候，必须符合以下条件：
+
+1. 上传 **GZIP** 格式压缩打包的chaincode文件，即`tar.gz`压缩格式；
+2. chaincode合约 **必须** 在文件夹`src/chaincode`目录下再进行压缩打包，否则将会出现chaincode合约找不到的问题。例如图中的`asset.tar.gz`，解压缩后文件结构如下：
 
 ```bash
 tree -L 3 src
