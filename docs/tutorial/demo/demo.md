@@ -15,47 +15,7 @@ cd ~/wecross-demo
 bash clear.sh
 
 # 运行部署脚本，输入数据库账号密码，第一次运行需耗时10-30分钟左右
-bash build.sh # 若出错，可用 bash clear.sh 清理后重试
-
-# Tips: 可选用配置MySQl参数，进行无交互式部署, 详情请参考下述脚本输出
-bash build.sh -h
-
-Create a wecross demo with bcos and fabric chains.
-Usage:
-    -d                  [Optional] Use default db configuration: -H 127.0.0.1 -P 3306 -u root -p 123456
-    -H                  [Optional] DB ip
-    -P                  [Optional] DB port
-    -u                  [Optional] DB username
-    -p                  [Optional] DB password
-    -h  call for help
-e.g
-    bash build.sh -H 127.0.0.1 -P 3306 -u root -p 123456
-    bash build.sh
-```
-
-```bash
-# 可选的，可通过修改脚本配置，选择指定版本的demo进行部署，默认为最新版本
-vim profile_version.sh
-
-# WeCross
-WECROSS_VERSION=v1.1.0
-# WeCross Console
-WECROSS_CONSOLE_VERSION=v1.1.0
-# WeCross Account Manager
-WECROSS_ACCOUNT_MANAGER_VERSION=v1.1.0
-# WeCross BCOS2.0 Stub
-WECROSS_BCOS2_STUB_VERSION=v1.1.0
-# WeCross Fabric1.4 Stub
-WECROSS_FABRIC1_STUB_VERSION=v1.1.0
-# WeCross Fabric2.0 Stub
-WECROSS_FABRIC2_STUB_VERSION=v2.0.0
-# WeCross Java SDK
-WECROSS_JAVA_SDK_VERSION=v1.1.0
-
-# FISCO BCOS
-BCOS_VERSION=v2.7.1
-# FISCO BCOS Console
-BCOS_CONSOLE_VERSION=v1.0.10
+bash build.sh # 若出错，可用 bash clear.sh 清理后重试。bash build.sh -h 可查看更多用法
 ```
 
 ```eval_rst
