@@ -356,7 +356,7 @@ pubKey  : 3059301306...
 uaID    : 3059301306...
 ```
 
-##### listAccount
+#### listAccount
 
 查看当前全局账号的详细信息。
 
@@ -449,7 +449,7 @@ MIICKTCCAdCgAwIBAgIRAPyuc+VKfnYg+HTl5PvUn9EwCg... #省略
 
 ```
 
-##### listLocalResources
+#### listLocalResources
 
 显示router配置的跨链资源。
 
@@ -464,7 +464,7 @@ path: payment.bcos.asset, type: BCOS2.0, distance: 0
 total: 6
 ```
 
-##### listResources
+#### listResources
 
 查看WeCross跨链代理本地配置的跨链资源和所有的远程资源。
 
@@ -485,7 +485,20 @@ path: payment.fabric.asset, type: Fabric1.4, distance: 1
 total: 12
 ```
 
-##### detail
+#### status
+
+判断跨链资源是否存在。
+
+参数：
+
+- path：跨链资源标识。
+
+```bash
+[WeCross.org1-admin]> status payment.bcos.HelloWorld
+exists
+```
+
+#### detail
 
 查看跨链资源的详细信息。
 
@@ -527,7 +540,7 @@ ResourceDetail{
 
 *注意：* 若在`properties`中`isTemporary`字段为`true`，那么说明该资源有可能还未注册到WeCross，也有可能该资源不存在。
 
-##### call
+#### call
 
 调用智能合约的方法，不涉及状态的更改，不发交易。
 
@@ -546,7 +559,7 @@ Result: [Hello, World!]
 Result: [test2]
 ```
 
-##### sendTransaction
+#### sendTransaction
 
 调用智能合约的方法，会更改链上状态，需要发交易。
 
@@ -563,7 +576,7 @@ BlockNum: 16
 Result  : []
 ```
 
-##### invoke
+#### invoke
 
 在非事务状态时，与命令[sendTransaction](#sendtransaction)功能一致；在事务状态时，与命令[execTransaction](#exectransaction)功能一致
 
@@ -595,7 +608,7 @@ Result  : []
 Result: [test2]
 ```
 
-##### bcosDeploy
+#### bcosDeploy
 
 FISCO BCOS 合约部署命令，成功返回部署的合约地址，失败返回错误描述
 
@@ -613,7 +626,7 @@ FISCO BCOS 合约部署命令，成功返回部署的合约地址，失败返回
 Result: 0xc3c72dce00c1695e8f50696f22310375e3348e1e
 ```
 
-##### bcosRegister
+#### bcosRegister
 
 FISCO BCOS 注册已有合约为跨链资源，成功返回`Success`，失败返回错误描述
 
@@ -631,7 +644,7 @@ FISCO BCOS 注册已有合约为跨链资源，成功返回`Success`，失败返
 Result: success
 ```
 
-##### fabricInstall
+#### fabricInstall
 
 Fabric 安装链码命令，安装后需fabricInstantiate来启动链码
 
@@ -666,7 +679,7 @@ path: classpath:contracts/chaincode/sacc
 Result: Success
 ```
 
-##### fabricInstantiate
+#### fabricInstantiate
 
 Fabric 启动（实例化）已安装的链码。此步骤前需先用fabricInstall向指定机构安装链码。
 
@@ -687,7 +700,7 @@ Result: Instantiating... Please wait and use 'listResources' to check. See route
 
 启动时间较长（1min左右），可用listResources查看是否已启动，若长时间未启动，可查看router的日志进行排查。
 
-##### fabricUpgrade
+#### fabricUpgrade
 
 Fabric 升级已启动的链码逻辑，不改变已上链的数据。此步骤前需先用`fabricInstall`向指定机构安装另一个版本的链码。
 
@@ -708,7 +721,7 @@ Result: Upgrading... Please wait and use 'detail' to check the version. See rout
 
 升级时间较长（1min左右），可用`detail payment.fabric.sacc`查看版本号，若长时间升级完成，可查看router的日志进行排查。
 
-##### genTimelock
+#### genTimelock
 
 跨链转账辅助命令，根据时间差生成两个合法的时间戳。
 
@@ -721,7 +734,7 @@ timelock0: 1607245965
 timelock1: 1607245665
 ```
 
-##### genSecretAndHash
+#### genSecretAndHash
 跨链转账辅助命令，生成一个秘密和它的哈希。
 
 ```bash
@@ -730,7 +743,7 @@ hash  : cdbfc235be9aff715967119a25b03f49e7103480fec459a610d2efe51ff35fad
 secret: 266a85d058afbf743c541f8da4add95d54f02cad27acd90d8b2155947524d303
 ```
 
-##### newHTLCProposal
+#### newHTLCProposal
 新建一个基于哈希时间锁合约的跨链转账提案，该命令由两条链的资金转出方分别执行。
 
 参数：
@@ -757,7 +770,7 @@ BlockNum: 18
 Result: create a htlc proposal successfully
 ```
 
-##### checkTransferStatus
+#### checkTransferStatus
 
 根据提案号（Hash）查询htlc转账状态。
 
@@ -772,7 +785,7 @@ Result: create a htlc proposal successfully
 status: ongoing!
 ```
 
-##### startTransaction
+#### startTransaction
 
 写接口，开始两阶段事务。
 
@@ -790,7 +803,7 @@ Transaction ID is: 024f0ff81cda4b938a0b48805be9eb61
 [WeCross.org1-admin]>
 ```
 
-##### execTransaction
+#### execTransaction
 
 写接口，发起事务交易。
 
@@ -814,7 +827,7 @@ BlockNum: 14
 Result  : [Success]
 ```
 
-##### callTransaction
+#### callTransaction
 
 读接口，查询事务中的数据。
 
@@ -830,7 +843,7 @@ Result  : [Success]
 Result: [Jerry]
 ```
 
-##### commitTransaction
+#### commitTransaction
 
 写接口，提交事务，确认事务执行过程中所有的变动。
 
@@ -853,7 +866,7 @@ Result: success!
 [WeCross.org1-admin]>
 ```
 
-##### rollbackTransaction
+#### rollbackTransaction
 
 写接口，撤销本次事务的所有变更时。
 
@@ -898,7 +911,7 @@ Result: success!
 Result: []
 ```
 
-##### getXATransaction
+#### getXATransaction
 
 读接口，查询事务信息。
 
@@ -936,7 +949,7 @@ XATransactionResponse{
 }
 ```
 
-##### listXATransactions
+#### listXATransactions
 
 读接口，查询所给个数的最新的事务。
 
@@ -973,7 +986,7 @@ Result: [ {
 } ]
 ```
 
-##### loadTransaction
+#### loadTransaction
 
 恢复到某个正在执行的事务上下文。
 
@@ -1000,7 +1013,7 @@ Load transaction success!
 [WeCross.org1-admin]>
 ```
 
-##### getCurrentTransactionID
+#### getCurrentTransactionID
 
 获取当前控制台的事务ID
 
@@ -1012,7 +1025,7 @@ There is a Transaction running now, ID is: 0a359201499047f8a99a6a978b9a7f77.
 
 ### 交互式命令
 
-##### WeCross.getResource
+#### WeCross.getResource
 
 WeCross控制台提供了一个资源类，通过方法`getResource`来初始化一个跨链资源实例，并且赋值给一个变量。
 这样调用同一个跨链资源的不同UBI接口时，不再需要每次都输入跨链资源标识。
@@ -1027,7 +1040,7 @@ WeCross控制台提供了一个资源类，通过方法`getResource`来初始化
 [WeCross.org1-admin]> myResource = WeCross.getResource path
 ```
 
-##### [resource].[command]
+#### [resource].[command]
 
 当初始化一个跨链资源实例后，就可以通过`.command`的方式，调用跨链资源的UBI接口。
 
@@ -1038,7 +1051,7 @@ myResource.call              myResource.detail
 myResource.sendTransaction
 ```
 
-##### detail
+#### detail
 
 ```bash
 [WeCross.org1-admin]> myResource.detail
@@ -1055,14 +1068,14 @@ ResourceDetail{
 }
 ```
 
-##### call
+#### call
 
 ```bash
 [WeCross.org1-admin]> myResource.call get
 Result: [Hello, World!]
 ```
 
-##### sendTransaction
+#### sendTransaction
 
 ```bash
 [WeCross.org1-admin]> myResource.sendTransaction set "Hello, WeCross!"

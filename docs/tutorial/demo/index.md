@@ -1,6 +1,6 @@
 # 快速体验
 
-我们提供跨链Demo帮助用户快速体验并理解WeCross的原理。
+我们提供跨链Demo帮助用户快速体验并理解WeCross的原理，如果想搭建WeCross并**接入已有区块链**，请参考[手动组网](../networks.html)。
 
 **下载 Demo**
 

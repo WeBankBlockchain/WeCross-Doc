@@ -19,9 +19,11 @@ bash build_cross_groups.sh # 若出错，可用 bash clear.sh 清理后重试
 ```
 
 ```eval_rst
-.. note::
+.. important::
+    - 若出现“command not found”， 则说明缺少依赖，请参考 `环境要求 <../env.html#id4>`_ 安装相关依赖
     - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../../faq/faq.html#id3>`_ 的方式解决
     - 输入数据库IP时，若"127.0.0.1"无法成功，请尝试输入"localhost"
+    - 若出现其它问题，请参考常见问题说明 `FAQ <../../faq/faq.html#>`_
 ```
 
 部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
