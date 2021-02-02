@@ -9,7 +9,7 @@
 
 ```eval_rst
 .. important::
-    - FISCO-BCOS版本需要 >= v2.6.0
+    - FISCO-BCOS版本需要 >= v2.1.0
     - 若还未完成WeCross搭建，请参考 `部署指南 <../tutorial/networks.html>`_
     - 以下教程的目录结构基于 `部署指南 <../tutorial/networks.html>`_ 搭建的WeCross环境作介绍
 ```
@@ -140,7 +140,7 @@ conf/chains/bcos/
 
 ```shell
 # 证书目录以实际情况为准
-cp xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains/bcos/
+cp -r xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains/bcos/
 ```
 
 **编辑配置文件**
@@ -163,9 +163,15 @@ cp xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross/routers-payment/127.0.0.1-8250-25500
 
 [channelService]        # FISCO-BCOS 配置，以下文件在BCOS链的nodes/127.0.0.1/sdk目录下拷贝
     caCert = 'ca.crt'   # 根证书
-    sslCert = 'sdk.crt' # sdk证书
-    sslKey = 'sdk.key'  # sdk私钥
-    timeout = 5000      # SDK请求超时时间
+    sslCert = 'sdk.crt' # SDK证书
+    sslKey = 'sdk.key'  # SDK私钥
+    gmConnect = false   # 国密连接开关，若为true则使用BCOS节点SDK的国密证书进行连接，反之则使用非国密证书连接
+    gmCaCert = 'gm/gmca.crt'        # 国密CA证书
+    gmSslCert = 'gm/gmsdk.crt'      # 国密SDK证书
+    gmSslKey = 'gm/gmsdk.key'       # 国密SDK密钥
+    gmEnSslCert = 'gm/gmensdk.crt'  # 国密加密证书
+    gmEnSslKey = 'gm/gmensdk.key'   # 国密加密密钥
+    timeout = 5000                  # SDK请求超时时间
     connectionsStr = ['127.0.0.1:20200']    # 连接列表
 
 # [[resources]] 资源列表，配置链已有的资源
@@ -173,9 +179,6 @@ cp xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross/routers-payment/127.0.0.1-8250-25500
     #name = 'htlc'           # 资源名称
     #type = 'BCOS_CONTRACT'  # 资源类型，BCOS_CONTRACT
     #contractAddress = '0x7540601cce8b0802980f9ebf7aeee22bb4d73c22'  # 合约地址
-
-#[sealers]        # 可信验证，不配则不验证
-   #pubKey = []   # 验证者公钥列表
 ```
 
 ## 部署系统合约
@@ -216,7 +219,7 @@ java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.preparation.H
 
 部署成功，则输出如下内容。若失败可查看提示信息和错误日志。
 
-``` bash 
+``` bash
 SUCCESS: WeCrossProxy:xxxxxxxx has been deployed! chain: chains/bcos
 SUCCESS: WeCrossHub:xxxxxxxx has been deployed! chain: chains/bcos
 ```

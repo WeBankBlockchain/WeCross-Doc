@@ -12,8 +12,6 @@ SDK API分为两大类型，一种是对跨链路由RPC接口调用的封装，�
 
     RemoteCall<ResourceResponse> listResources(Boolean ignoreRemote);
 
-    RemoteCall<Response> status(String path);
-
     RemoteCall<ResourceDetailResponse> detail(String path);
 
     RemoteCall<TransactionResponse> call(String path, String method, String... args);
