@@ -10,9 +10,9 @@
 
 普通命令由两部分组成，即指令和指令相关的参数：
 
-- **指令：**指令是执行的操作命令。**使用提示: 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
+- **指令：** 指令是执行的操作命令。**使用提示: 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
   
-- **指令相关的参数：**指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。
+- **指令相关的参数：** 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。
 #### 交互式命令
 
 WeCross控制台为了方便用户使用，还提供了交互式的使用方式，比如将跨链资源路径赋值给变量，初始化一个类，并用`.command`的方式访问方法。
@@ -483,19 +483,6 @@ path: payment.bcos.asset, type: BCOS2.0, distance: 0
 path: payment.bcos.HelloWorld, type: BCOS2.0, distance: 0
 path: payment.fabric.asset, type: Fabric1.4, distance: 1
 total: 12
-```
-
-#### status
-
-判断跨链资源是否存在。
-
-参数：
-
-- path：跨链资源标识。
-
-```bash
-[WeCross.org1-admin]> status payment.bcos.HelloWorld
-exists
 ```
 
 #### detail

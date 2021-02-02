@@ -1,4 +1,5 @@
 ## 配置
+
 本节描述WeCross Router的配置。
 
 ### 配置结构
@@ -8,6 +9,7 @@ WeCross Router的配置位于`conf`目录下，分为：
 - 主配置（`wecross.toml`）：配置Router连接等信息
 - 链配置（`chains/<chain_name>/stub.toml`）：配置连接至对应区块链、链上资源
 - 账户配置（`accounts/<account_name>/account.toml`）：配置可用于发交易账户的公私钥等信息
+- 区块头验证配置（`verifier.toml`）：配置对应链的区块验证公钥或证书路径，**该配置为可选配置**
 
 配置的目录结构如下：
 
@@ -22,10 +24,11 @@ WeCross Router的配置位于`conf`目录下，分为：
 │       └── account.toml  // 账户配置
 ├── chains         
 │   ├── bcos
-│   │   └── stub.toml	  // 链配置
+│   │   └── stub.toml     // 链配置
 │   └── fabric
 │       └── stub.toml     // 链配置
-└── wecross.toml		  // 主配置
+├── verifier.toml         // 区块头验证配置
+└── wecross.toml          // 主配置
 ```
 
 ### 主配置
@@ -83,12 +86,12 @@ WeCross Router的配置位于`conf`目录下，分为：
 
 跨链服务配置有五个配置项，分别是`[common]`、`[chains]`、`[rpc]`、`[p2p]`以及`[test]`，各个配置项含义如下：
 
-- `[common] `通用配置
+- `[common]` 通用配置
   - zone：字符串；跨链分区标识符；通常一种跨链业务/应用为一个跨链分区
   - visible：布尔；可见性；标明当前跨链分区下的资源是否对其他跨链分区可见
 - `[chains]` 链配置
   - path：字符串；链配置的根目录；WeCross从该目录下去加载各个链的配置
-- `[rpc] `RPC配置
+- `[rpc]` RPC配置
   - address：字符串；RPC服务监听地址，通常设置为本机IP地址
   - port：整型；WeCross Router的RPC端口；WeCross Java SDK调用Router的端口
   - caCert：字符串；WeCross Router根证书路径
@@ -117,7 +120,7 @@ WeCross Router的配置位于`conf`目录下，分为：
   - caCert：字符串；WeCross Router私钥路径
   - maxTotal（可选）：整型，连接Account Manager的连接池maxTotal参数，默认200
   - maxPerRoute（可选）：整型，连接Account Manager的连接池maxPerRoute参数，默认8
-- `[htlc] `htlc配置（可选）
+- `[htlc]` htlc配置（可选）
   - selfPath：本地配置的htlc合约资源路径
   - account1：可调用本地配置的htlc合约的账户
   - counterpartyPath：本地配置的htlc合约的对手方合约路径
@@ -126,22 +129,22 @@ WeCross Router的配置位于`conf`目录下，分为：
 **注：**  
 
 1. WeCross启动时会把`conf`目录指定为classpath，若配置项的路径中开头为`classpath:`，则以`conf`为相对目录。
-2.  `[p2p]`配置项中的证书和私钥可以通过[create_cert.sh](./scripts.html#p2p)脚本生成。
+2. `[p2p]` 配置项中的证书和私钥可以通过[create_cert.sh](./scripts.html#p2p)脚本生成。
 3. 若通过build_wecross.sh脚本生成的项目，那么已自动帮忙配置好了`wecross.toml`，包括P2P的配置，其中链配置的根目录默认为`chains`。
 
 ### 链配置
 
 链配置是Router连接每个区块链的配置：
 
-* 指定链名
+- 指定链名
 
 在`chains/<chain_name>/stub.toml`目录下，通过目录名`<chain_name>`指定链名。
 
-* 区块链链接信息
+- 区块链链接信息
 
 在`stub.toml`中配置与区块链交互所需链接的信息。
 
-* 跨链资源（可选）
+- 跨链资源（可选）
 
 在`stub.toml`中配置需要参与跨链的资源。
 
@@ -156,3 +159,58 @@ WeCross启动后会在`wecross.toml`中所指定的`chains`的根目录下去遍
 **配置Fabric**
 
 请参考：[Fabric 1.4插件配置](../stubs/fabric.html#id3)
+
+### 区块头验证配置
+
+区块头验证配置为 `conf/verifier.toml`，配置示例如下：
+
+```toml
+[verifiers]
+    [verifiers.payment.bcos-group1]
+        chainType = 'BCOS2.0'
+        # 填写所有共识节点的公钥
+        pubKey = [
+            'b949f25fa39a6b3797ece30a2a9e025...',
+            '...'
+        ]
+    [verifiers.payment.bcos-group2]
+        chainType = 'BCOS2.0'
+        # 填写所有共识节点的公钥
+        pubKey = [
+            'b949f25fa39a6b3797ece3132134fa3...',
+            '...'
+        ]
+    [verifiers.payment.bcos-gm]
+        chainType = 'GM_BCOS2.0'
+        pubKey = [
+            'ecc094f00b11a0a5cf616963e313218...'
+        ]
+    [verifiers.payment.fabric-mychannel]
+        chainType = 'Fabric1.4'
+        # 填写所有机构CA的证书路径
+        [verifiers.payment.fabric-mychannel.endorserCA]
+            Org1MSP = 'classpath:verifiers/org1CA/ca.org1.example.com-cert.pem'
+            Org2MSP = 'classpath:verifiers/org2CA/ca.org2.example.com-cert.pem'
+        [verifiers.payment.fabric-mychannel.ordererCA]
+            OrdererMSP = 'classpath:verifiers/ordererCA/ca.example.com-cert.pem'
+```
+
+区块头验证配置有一个主要配置项：
+
+- `[verifiers]`：定义文件Map入口
+  - `[verifiers.zone.chain]`：`zone.chain`为指定某个待验证的链类型，若配置该链则必须配置全；
+    - chainType ：字符串；定义为待验证的链的类型，若配置错误会报错；
+    - 其余字段：根据链类型，配置不同的字段
+
+  - pubKey：字符串数组；仅适用于`BCOS2.0`和`GM_BCOS2.0`类型的链，填入该链类型的共识节点公钥数组，配置必须符合以下条件：
+    - 公钥均以字符串形式填入数组中
+    - 必须包含所有共识节点的公钥信息
+  - `[verifiers.zone.chain.endorserCA]`：Map类型；仅适用于`Fabric1.4`类型的链，填入该类型链的所有机构CA的MSP签名证书路径，其中Map的key是各个机构的MSPID，value是证书路径
+  - `[verifiers.zone.chain.ordererCA]`：Map类型；仅适用于`Fabric1.4`类型的链，填入该类型链的所有Orderer机构颁发的MSP签名证书路径，其中Map的key是各个Orderer的MSPID，value是证书路径
+
+**区块头验证配置注意事项：**
+
+- 若未写`verifier.toml`文件，则默认不进行所有链的区块头验证；
+- 若已配置`verifier.toml`文件，但未设置某条链的验证配置，则默认不进行该链的区块头验证；
+- Fabric链的`endorserCA`和`ordererCA`必须同时配置；
+- 若配置中漏了某个公钥和证书，则会导致验证不通过。

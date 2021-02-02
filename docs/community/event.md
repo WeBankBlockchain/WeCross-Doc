@@ -6,6 +6,10 @@ WeCross社区会不定期举行线上或者线下[Meetup](https://mp.weixin.qq.c
 
 ## 活动上新（NEW!）
 
+### 跨链兴趣小组（CC-SIG）
+
+
+
 ### Task挑战
 
 目前，我们在[WeCross Issues](https://github.com/WeBankBlockchain/WeCross/issues)中设置了低难度（Task-L）和中难度（Task-M）两个梯度的Task，其中标注为help wanted的Issue均为可认领Task。

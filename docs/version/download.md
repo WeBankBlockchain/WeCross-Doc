@@ -17,12 +17,12 @@ bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/re
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_wecross.sh) -s
 
 # 下载特定版本下的
-bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_wecross.sh) -s -t v1.0.1
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_wecross.sh) -s -t v1.1.0
 ```
 
 **方式3：手动下载**
 
-* 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross/v1.0.1/WeCross.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross/v1.0.1/WeCross.tar.gz.md5)
+* 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross/v1.1.0/WeCross.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross/v1.1.0/WeCross.tar.gz.md5)
 
 * [github release](https://github.com/WeBankBlockchain/WeCross/releases)（下载最新版本的 `WeCross.tar.gz`）
 
@@ -53,12 +53,12 @@ bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/re
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_console.sh) -s
 
 # 下载特定版本下的控制台
-bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_console.sh) -s -t v1.0.1
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_console.sh) -s -t v1.1.0
 ```
 
 **方式3：手动下载**
 
-- 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Console/v1.0.1/WeCross-Console.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Console/v1.0.1/WeCross-Console.tar.gz.md5)
+- 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Console/v1.1.0/WeCross-Console.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Console/v1.1.0/WeCross-Console.tar.gz.md5)
 
 - [github release](https://github.com/WeBankBlockchain/WeCross-Console/releases)（下载最新版本的 `WeCross-Console.tar.gz`）
 
@@ -89,12 +89,12 @@ bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/re
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_account_manager.sh) -s
 
 # 下载特定版本下的控制台
-bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_account_manager.sh) -s -t v1.0.1
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_account_manager.sh) -s -t v1.1.0
 ```
 
 **方式3：手动下载**
 
-- 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Account-Manager/v1.0.1/WeCross-Account-Manager.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Account-Manager/v1.0.1/WeCross-Account-Manager.tar.gz.md5)
+- 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Account-Manager/v1.1.0/WeCross-Account-Manager.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Account-Manager/v1.1.0/WeCross-Account-Manager.tar.gz.md5)
 
 - [github release](https://github.com/WeBankBlockchain/WeCross-Account-Manager/releases)（下载最新版本的 `WeCross-Account-Manager.tar.gz`）
 
@@ -122,12 +122,12 @@ bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/re
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
 
 # 下载特定版本下的demo
-bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh) -t v1.0.1
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh) -t v1.1.0
 ```
 
 **方式2：手动下载**
 
-- 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Demo/v1.0.1/demo.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Demo/v1.0.1/demo.tar.gz.md5)
+- 国内资源：[点击下载](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Demo/v1.1.0/demo.tar.gz)，[MD5](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Demo/v1.1.0/demo.tar.gz.md5)
 
 - [github release](https://github.com/WeBankBlockchain/WeCross/releases)（下载最新release下的`demo.tar.gz`）
 

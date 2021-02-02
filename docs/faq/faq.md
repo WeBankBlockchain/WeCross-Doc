@@ -20,12 +20,12 @@ ERROR !!!! Test failed
 **回答**
 Fabric 的demo和机器上的Fabric网络冲突了，尝试用demo目录下的`clear.sh`用脚本清理机器上已有的Fabric网络。
 
-### 3. 问题：MacOS用户出现“无法验证开发者”的情况
+### 3. 问题：macOS用户出现“无法验证开发者”的情况
 
-在部署demo时，**MacOS用户**若出现“**无法打开**”，“**无法验证开发者**”的情况。
+在部署demo时，**macOS用户**若出现“**无法打开**”，“**无法验证开发者**”的情况。
 
 **回答**
-MacOS对下载的包权限要求较为严格，必须同一个进程下载的才可执行，可采用如下方法解决：
+macOS对下载的包权限要求较为严格，必须同一个进程下载的才可执行，可采用如下方法解决：
 
 ``` bash
 # 清理环境
@@ -34,26 +34,26 @@ cd ~/wecross-demo/ && bash clear.sh && cd ~ && rm -rf demo
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh) && cd demo && bash build.sh
 ```
 
-### 4. 问题：用户使用mysql 8.0+ 社区版本时，出现WeCross-Account-Manager启动错误的情况
+### 4. 问题：用户使用MySQL 8.0+ 社区版本时，出现WeCross-Account-Manager启动错误的情况
 
-在部署1.0.0版本的demo时，若出现`WeCross-Account-Manager`连接不上mysql 8.0+版本时，可能有以下原因：
+在部署1.0.0版本的demo时，若出现`WeCross-Account-Manager`连接不上MySQL 8.0+版本时，可能有以下原因：
 
-- mysql配置错误，登录账号没有本地或远程访问某个数据库的权限；
-- mysql 8.0+版本默认开启SSL验证连接导致的SSL连接问题；
-- mysql 8.0+版本使用强密码检查插件；
+- MySQL配置错误，登录账号没有本地或远程访问某个数据库的权限；
+- MySQL 8.0+版本默认开启SSL验证连接导致的SSL连接问题；
+- MySQL 8.0+版本使用强密码检查插件；
 
 可以做以下检查进行规避：
 
-- 检查mysql配置、账号可正确访问；
-- （推荐）正确配置mysql的SSL选项；
-- 尝试将mysql的SSL插件关闭后再连接，或者修改 `WeCross-Account-Manager` 的配置文件 `conf/application.toml` 的JDBC URL后面增加关闭SSL选项L：
+- 检查MySQL配置、账号可正确访问；
+- （推荐）正确配置MySQL的SSL选项；
+- 尝试将MySQL的SSL插件关闭后再连接，或者修改 `WeCross-Account-Manager` 的配置文件 `conf/application.toml` 的JDBC URL后面增加关闭SSL选项L：
 
 ```toml
  #该项将在 1.1.0 版本统一使用
  url = 'jdbc:mysql://localhost:3306/wecross_account_manager?useSSL=false'
 ```
 
-- 关闭强密码选项，或者尝试使用较低版本的mysql。
+- 关闭强密码选项，或者尝试使用较低版本的MySQL。
 
 ## 非技术问题
 
