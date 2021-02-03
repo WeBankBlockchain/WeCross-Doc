@@ -1,14 +1,16 @@
 # 交流 挑战 成长
 
-WeCross社区会不定期举行线上或者线下[Meetup](https://mp.weixin.qq.com/s/X91tRrYudrFUVavig4koaQ)，以及开放WeCross例会，为社区成员提供面对面的交流机会。
+跨链技术专项兴趣小组(Cross-Chain Special Interest Group，[CC-SIG](./cc-sig.html))正式筹建并面向开源社区招募志同道合的伙伴。
 
-成员们可以一起讨论跨链领域的时事热点，一起分享项目开发或者产品使用的宝贵经验，一起制定WeCross技术路线，一起完成WeCross版本规范，一起推动WeCross稳定快速地向前发展。
+CC-SIG工作围绕跨链协作平台WeCross展开，致力于解决FISCO BCOS和其它异构链互联互通问题。兴趣小组将秉承社区对跨链的核心诉求，持续追踪技术发展与行业动态；以WeCross为基础，开展后续跨链功能研发与项目维护工作，不断探索如何构建更高效、更安全、更易用的跨链平台。
 
-## 活动上新（NEW!）
+## 长期活动
 
-### 跨链兴趣小组（CC-SIG）
-
-
+- 社区成员交流
+- 分析跨链行业热点问题
+- 介绍WeCross项目开发进度
+- 剖析WeCross技术原理
+- 制定WeCross技术路线和版本规范
 
 ### Task挑战
 
@@ -23,14 +25,6 @@ WeCross社区会不定期举行线上或者线下[Meetup](https://mp.weixin.qq.c
 - Task-S  (高阶任务)，Do a big deal，一起开发一个新的Stub，期待好汉揭榜！这是一个极具挑战的任务，如果感兴趣，请留言，社区将协助你完成开发。详情请看：[链接](https://github.com/WeBankBlockchain/WeCross/issues/109)
 
 完成Task可获得相应积分，积分可自由兑换社区礼品。
-
-## 长期活动内容
-
-- 社区成员交流
-- 分析跨链行业热点问题
-- 介绍WeCross项目开发进度
-- 剖析WeCross技术原理
-- 制定WeCross技术路线和版本规范
 
 ## 参与方式
 
