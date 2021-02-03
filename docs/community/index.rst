@@ -7,7 +7,7 @@
    :maxdepth: 1
    
    community.md
+   cc-sig.md
    event.md
    contributor.md
-   cip.md
-   
+
