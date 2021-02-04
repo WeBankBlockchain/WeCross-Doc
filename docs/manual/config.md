@@ -100,8 +100,8 @@ WeCross Router的配置位于`conf`目录下，分为：
   - threadNum（可选）：整型，rpc线程数，默认16
   - threadQueueCapacity（可选）：整型，任务队列容量，默认10000
   - sslSwitch：整型，SL加密配置，0：双向验证，1：验Router证书，0：无验证
-  - webRoot：字符串，网页管理台页面存放位置
-  - mimeTypesFile：字符串网页管理台的content-type映射文件存放位置
+  - webRoot：字符串，网页管理平台页面存放位置
+  - mimeTypesFile：字符串网页管理平台的content-type映射文件存放位置
 - `[p2p]` 组网配置
   - listenIP：字符串；P2P服务监听地址；一般为'0.0.0.0'
   - listenPort ：整型；P2P服务监听端口；WeCross Router之间交换消息的端口

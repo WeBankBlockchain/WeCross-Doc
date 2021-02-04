@@ -7,7 +7,7 @@
 * FISCO BCOS 非国密链群组1：bcos-group1
 * FISCO BCOS 非国密链群组2：bcos-group2
 
-搭建后，用户可使用网页管理台和WeCross控制台，对不同的链上资源进行操作。
+搭建后，用户可使用网页管理平台和WeCross控制台，对不同的链上资源进行操作。
 
 ![](../../images/tutorial/demo_cross_all.png)
 
@@ -183,16 +183,16 @@ total: 8
 
 **操作资源**
 
-本demo涉及资源较多，可在[其他demo](./index.html)体验。请直接访问网页管理台，更直观的操作跨链资源。
+本demo涉及资源较多，可在[其他demo](./index.html)体验。请直接访问网页管理平台，更直观的操作跨链资源。
 
 ``` bash
 # 退出当前控制台
 [WeCross.org1-admin]> quit 
 ```
 
-## 访问网页管理台
+## 访问网页管理平台
 
-浏览器访问`router-8250`的网页管理台
+浏览器访问`router-8250`的网页管理平台
 
 ``` url
 http://localhost:8250/s/index.html#/login

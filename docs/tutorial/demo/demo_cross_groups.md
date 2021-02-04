@@ -204,9 +204,9 @@ Result: [Tom]
 
 WeCross Console是基于WeCross Java SDK开发的跨链应用。搭建好跨链网络后，可基于WeCross Java SDK开发更多的跨链应用，通过统一的接口对各种链上的资源进行操作。
 
-## 访问网页管理台
+## 访问网页管理平台
 
-浏览器访问`router-8250`的网页管理台
+浏览器访问`router-8250`的网页管理平台
 
 ``` url
 http://localhost:8250/s/index.html#/login

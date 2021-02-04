@@ -27,7 +27,7 @@ function transfer(string memory from, string memory to, int balance) public {
 
 ```
 
-**注：**案例省略了余额和透支检查的逻辑，只列出了正向交易接口的关键逻辑。
+**注：** 案例省略了余额和透支检查的逻辑，只列出了正向交易接口的关键逻辑。
 
 **逆向接口示例**
 
@@ -75,7 +75,6 @@ transfer1_revert('from1', 'to1', 100)
 Java项目可通过调用Java-SDK的[事务相关接口](../dev/api.html#startxatransaction)实现事务操作，其它语言的项目可通过[JSON-RPC](../dev/rpc.html#startxatransaction)接口完成事务调用。
 
 WeCross控制台也提供了事务相关的命令，操作示例如下：
-
 
 **开始两阶段事务**
 
@@ -129,7 +128,7 @@ execTransaction zone.chainA.res1 transfer 'fromUserName' 'toUserName' 100
 execTransaction zone.chainB.res2 transfer 'fromUserName' 'toUserName' 200 
 ```
 
-**注：**单个事务的步骤不宜过多，否则在获取事务详情或者回滚事务时容易出现gas不足导致执行失败。
+**注：** 单个事务的步骤不宜过多，否则在获取事务详情或者回滚事务时容易出现gas不足导致执行失败。
 
 ### 提交事务
 
