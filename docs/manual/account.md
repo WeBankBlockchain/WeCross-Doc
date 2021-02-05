@@ -109,9 +109,13 @@ vim conf/application.toml
     publicKeyFile = 'classpath:rsa_public.pem'
 
 [db] # 数据库连接配置
-    url = 'jdbc:mysql://localhost:3306/wecross_account_manager'
+    # 可在'?'后面增加其他JDBC连接参数
+    # Note: 对于MySQL 8.0+，默认开启useSSL=false，若MySQl部署在远端，应该正确配置MySQL的SSL选项，使用SSL
+    url = 'jdbc:mysql://localhost:3306/wecross_account_manager?useSSL=false'
     username = 'jimmy'
     password = 'abc123'
+    # 用于加密数据库中的敏感数据，若未配置则不进行加密
+    encryptKey = 'rIBJD38jqSMR@CSM'
 
 [ext] # 拓展配置
     allowImageAuthCodeEmpty = true # 是否允许空验证码，设为false后控制台无法使用
@@ -125,16 +129,9 @@ bash start.sh # 停止：bash stop.sh
 
 ### 账户操作
 
-用户可通过控制台和网页管理台进行操作
+用户可通过控制台和网页管理平台进行操作
 
 * 登录、登出、注册
 * 添加链账户、设置默认账户、删除链账户
 
-可直接查阅[控制台](./console.html)或[网页管理台](./webApp.html)相关部分的说明
-
-
-
-
-
-
-
+可直接查阅[控制台](./console.html)或[网页管理平台](./webApp.html)相关部分的说明

@@ -14,7 +14,7 @@ bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/re
 
 ```eval_rst
 .. note::
-    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../../faq/faq.html#id3>`_ 的方式解决
+    - macOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../../faq/faq.html#id3>`_ 的方式解决
 ```
 
 **Demo 场景**

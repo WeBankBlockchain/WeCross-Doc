@@ -7,7 +7,7 @@
 * FISCO BCOS 非国密链群组1：bcos-group1
 * FISCO BCOS 非国密链群组2：bcos-group2
 
-搭建后，用户可使用网页管理台和WeCross控制台，对不同的链上资源进行操作。
+搭建后，用户可使用网页管理平台和WeCross控制台，对不同的链上资源进行操作。
 
 ![](../../images/tutorial/demo_cross_all.png)
 
@@ -23,19 +23,59 @@ bash clear.sh
 
 # 运行部署脚本，第一次运行需耗时10-30分钟左右
 bash build_cross_all.sh # 若出错，可用 bash clear.sh 清理后重试
+
+# Tips: 可选用配置MySQl参数，进行无交互式部署, 详情请参考下述脚本输出
+bash build_cross_all.sh -h
+
+Create a wecross demo with bcos, bcos_guomi and fabric chains.
+Usage:
+    -d                  [Optional] Use default db configuration: -H 127.0.0.1 -P 3306 -u root -p 123456
+    -H                  [Optional] DB ip
+    -P                  [Optional] DB port
+    -u                  [Optional] DB username
+    -p                  [Optional] DB password
+    -h  call for help
+e.g
+    bash build_cross_all.sh -H 127.0.0.1 -P 3306 -u root -p 123456
+    bash build_cross_all.sh
+```
+
+```bash
+# 可选的，可通过修改脚本配置，选择指定版本的demo进行部署，默认为最新版本
+vim profile_version.sh
+
+# WeCross
+WECROSS_VERSION=v1.1.0
+# WeCross Console
+WECROSS_CONSOLE_VERSION=v1.1.0
+# WeCross Account Manager
+WECROSS_ACCOUNT_MANAGER_VERSION=v1.1.0
+# WeCross BCOS2.0 Stub
+WECROSS_BCOS2_STUB_VERSION=v1.1.0
+# WeCross Fabric1.4 Stub
+WECROSS_FABRIC1_STUB_VERSION=v1.1.0
+# WeCross Fabric2.0 Stub
+WECROSS_FABRIC2_STUB_VERSION=v2.0.0
+# WeCross Java SDK
+WECROSS_JAVA_SDK_VERSION=v1.1.0
+
+# FISCO BCOS
+BCOS_VERSION=v2.7.1
+# FISCO BCOS Console
+BCOS_CONSOLE_VERSION=v1.0.10
 ```
 
 ```eval_rst
 .. important::
     - 若出现“command not found”， 则说明缺少依赖，请参考 `环境要求 <../env.html#id4>`_ 安装相关依赖
-    - MacOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../../faq/faq.html#id3>`_ 的方式解决
+    - macOS用户若出现“无法打开”，“无法验证开发者”的情况，可参考 `FAQ问题3 <../../faq/faq.html#id3>`_ 的方式解决
     - 输入数据库IP时，若"127.0.0.1"无法成功，请尝试输入"localhost"
     - 若出现其它问题，请参考常见问题说明 `FAQ <../../faq/faq.html#>`_
 ```
 
 部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
 
-``` 
+```bash
 [INFO] Success! WeCross demo network is running. Framework:
 
        FISCO BCOS          FISCO BCOS          FISCO BCOS            Fabric
@@ -143,16 +183,16 @@ total: 8
 
 **操作资源**
 
-本demo涉及资源较多，可在[其他demo](./index.html)体验。请直接访问网页管理台，更直观的操作跨链资源。
+本demo涉及资源较多，可在[其他demo](./index.html)体验。请直接访问网页管理平台，更直观的操作跨链资源。
 
 ``` bash
 # 退出当前控制台
 [WeCross.org1-admin]> quit 
 ```
 
-## 访问网页管理台
+## 访问网页管理平台
 
-浏览器访问`router-8250`的网页管理台
+浏览器访问`router-8250`的网页管理平台
 
 ``` url
 http://localhost:8250/s/index.html#/login
@@ -185,11 +225,23 @@ http://localhost:8250/s/index.html#/login
 cd ~/wecross-demo/
 bash clear.sh
 
-mysql -u <your-username> -p # 登录数据库，清理db
+# 可使用脚本drop_account_database.sh删除MySQL中demo使用的数据库
+bash drop_account_database.sh
 
-mysql> drop database wecross_account_manager;
-mysql> exit;
+# Tips: 可选用配置MySQl参数，进行无交互式部署, 详情请参考下述脚本输出
+bash drop_account_database.sh -h
+
+Create a wecross demo with bcos and fabric chains.
+Usage:
+    -d                  [Optional] Use default db configuration: -H 127.0.0.1 -P 3306 -u root -p 123456
+    -H                  [Optional] DB ip
+    -P                  [Optional] DB port
+    -u                  [Optional] DB username
+    -p                  [Optional] DB password
+    -h  call for help
+e.g
+    bash build.sh -H 127.0.0.1 -P 3306 -u root -p 123456
+    bash build.sh
 ```
 
 至此，恭喜你，快速体验完成！可进一步操作，体验其他Demo。
-

@@ -98,7 +98,7 @@ routers-payment/127.0.0.1-8250-25500/
 │   └── wecross.toml  # WeCross Router主配置文件
 ├── create_cert.sh    # 证书生成脚本
 ├── download_wecross.sh
-├── pages             # 网页管理台页面文件
+├── pages             # 网页管理平台页面文件
 ├── plugin            # 插件目录，接入相应类型链的插件
 │   ├── bcos-stub-gm.jar
 │   ├── bcos-stub.jar
@@ -270,7 +270,7 @@ bash start.sh
 
 ```bash
 =================================================================================
-Welcome to WeCross console(v1.0.0)!
+Welcome to WeCross console(v1.1.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =================================================================================
 ```
@@ -282,7 +282,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 [WeCross]> quit
 ```
 
-更多控制台命令及含义详见[控制台命令](../manual/console.html#id13)。
+更多控制台命令及含义详见[控制台命令](../manual/console.html#id14)。
 
 ## 配置跨链账户
 
@@ -553,7 +553,8 @@ Result: Success
 > 参数：ipath，对应的几个Org，chaincode代码工程目录，指定的版本，chaincode语言，背书策略（此处用默认），初始化参数
 
 ``` bash
-[WeCross.org1-admin]> fabricInstantiate payment.fabric.sacc ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"] # fabricInstantiate 时默认Org1MSP或Org2MSP的链账户都可，此处用的Org2MSP
+# fabricInstantiate 时默认Org1MSP或Org2MSP的链账户都可，此处用的Org2MSP
+[WeCross.org1-admin]> fabricInstantiate payment.fabric.sacc ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"]
 Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
 ```
 
@@ -688,9 +689,50 @@ Result: [666] // 再次get，a的值变成666
 [WeCross.org1-admin]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
 ```
 
-## 访问网页管理台
+## 配置区块头验证
 
-浏览器访问`router-8250`的网页管理台
+可在WeCross router端设定其他远端路由接入的区块链配置信息，遵循“谁配置，谁验证”的原则。
+
+用户在连接BCOS和Fabric链的Router端可配置Fabric链各个Org Peer的CA证书和Orderer 的CA证书，以及BCOS链各个节点的公钥，用于验证对应链发来的区块。当在配置中未做该链的配置，则默认为不验证这个链的区块。
+
+若要配置验证逻辑，需要在`conf`目录下新增配置文件`verifier.toml`。这里以[混合场景](./demo/demo_cross_all.html)部署的网络作为举例，配置如下所示（请以实际情况配置）：
+
+```toml
+[verifiers]
+    [verifiers.payment.bcos-group1]
+        chainType = 'BCOS2.0'
+        # 填写所有共识节点的公钥
+        pubKey = [
+            'b949f25fa39a6b3797ece30a2a9e025...',
+            '...'
+        ]
+    [verifiers.payment.bcos-group2]
+        chainType = 'BCOS2.0'
+        # 填写所有共识节点的公钥
+        pubKey = [
+            'b949f25fa39a6b3797ece3132134fa3...',
+            '...'
+        ]
+    [verifiers.payment.bcos-gm]
+        chainType = 'GM_BCOS2.0'
+        pubKey = [
+            'ecc094f00b11a0a5cf616963e313218...'
+        ]
+    [verifiers.payment.fabric-mychannel]
+        chainType = 'Fabric1.4'
+        # 填写所有机构CA的证书路径
+        [verifiers.payment.fabric-mychannel.endorserCA]
+            Org1MSP = 'classpath:verifiers/org1CA/ca.org1.example.com-cert.pem'
+            Org2MSP = 'classpath:verifiers/org2CA/ca.org2.example.com-cert.pem'
+        [verifiers.payment.fabric-mychannel.ordererCA]
+            OrdererMSP = 'classpath:verifiers/ordererCA/ca.example.com-cert.pem'
+```
+
+配置详情请查看 [区块头验证配置](../manual/config.html)
+
+## 访问网页管理平台
+
+浏览器访问`router-8250`的网页管理平台
 
 ``` url
 http://localhost:8250/s/index.html#/login
