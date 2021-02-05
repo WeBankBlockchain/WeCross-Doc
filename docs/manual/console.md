@@ -142,7 +142,7 @@ cd ~/wecross/WeCross-Console
 bash start.sh
 # 输出下述信息表明启动成功
 =============================================================================================
-Welcome to WeCross console(v1.0.0)!
+Welcome to WeCross console(v1.1.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
