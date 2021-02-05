@@ -98,7 +98,7 @@ routers-payment/127.0.0.1-8250-25500/
 │   └── wecross.toml  # WeCross Router主配置文件
 ├── create_cert.sh    # 证书生成脚本
 ├── download_wecross.sh
-├── pages             # 网页管理台页面文件
+├── pages             # 网页管理平台页面文件
 ├── plugin            # 插件目录，接入相应类型链的插件
 │   ├── bcos-stub-gm.jar
 │   ├── bcos-stub.jar
@@ -730,9 +730,9 @@ Result: [666] // 再次get，a的值变成666
 
 配置详情请查看 [区块头验证配置](../manual/config.html)
 
-## 访问网页管理台
+## 访问网页管理平台
 
-浏览器访问`router-8250`的网页管理台
+浏览器访问`router-8250`的网页管理平台
 
 ``` url
 http://localhost:8250/s/index.html#/login

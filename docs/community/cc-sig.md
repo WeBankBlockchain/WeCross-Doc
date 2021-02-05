@@ -70,14 +70,14 @@
 
 8. 工具使用分享
 
-   * 网页管理台的使用
+   * 网页管理平台的使用
    * 终端控制台的使用
 
 **日常交流**
 
-​	Do as you like! 
+​	Do as you like :)
 
-## 参与方式 :star:
+## 参与方式
 
 * **获取帮助**
   * 群里提问
@@ -97,6 +97,6 @@
   * meetup分享：在meetup上分享观点，传播理念
   * 发起project：借助已有代码快速搭建基础功能，借助社区平台提高知名度，借助社区力量快速开发，借助社区资源吸引用户与开发者
 
-:heart: **添加小助手微信，了解加入方式。**
+**添加小助手微信，了解加入方式。**
 
-![](https://github.com/WeBankFinTech/WeCross/blob/master/docs/images/assistant.png)
+![](../images/community/assistant.png)

@@ -28,7 +28,10 @@ WeCross负责管理多个Stub并与多条链通讯，同时作为Web Server提�
 
 WeCross作为Java项目，需要安装Java环境包括：
 
-- [JDK8及以上](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#id1)
+- JDK1.8.0_251以上，可参考[链接](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#id1)
+
+目前已经覆盖测试的JDK版本：OracleJDK 1.8.0_251，OracleJDK 1.8.0_271，OracleJDK 14，OracleJDK 15，OpenJDK 1.8.0_282，OpenJDK 14，OpenJDK 15
+
 - Gradle 5.0及以上
 - MySQL 5.6及以上
   - [MySQL官方安装文档](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
