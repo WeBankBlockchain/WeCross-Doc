@@ -639,7 +639,7 @@ WeCross提供一个`Java`模板工程，加快用户开发WeCross Stub的速度�
 
   $ tree -L 1 dist/apps
   dist/apps
-  └── WeCross-Stub-Dev-Template-1.1.0-SNAPSHOT.jar
+  └── WeCross-Stub-Dev-Template-1.0.0-SNAPSHOT.jar
   ```
 
 ### 参考链接
