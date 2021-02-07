@@ -201,7 +201,7 @@ netstat -napl | grep 8251
 netstat -napl | grep 25501
 ```
 
-## 部署WeCross控制台
+## 部署控制台
 
 WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本`build_console.sh`搭建控制台。
 

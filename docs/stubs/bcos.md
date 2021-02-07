@@ -10,8 +10,8 @@
 ```eval_rst
 .. important::
     - FISCO-BCOS版本需要 >= v2.1.0
-    - 若还未完成WeCross搭建，请参考 `部署指南 <../tutorial/deploy/indexhtml>`_
-    - 以下教程的目录结构基于 `部署指南 <../tutorial/deploy/indexhtml>`_ 搭建的WeCross环境作介绍
+    - 若还未完成WeCross搭建，请参考 `部署指南 <../tutorial/deploy/index.html>`_
+    - 以下教程的目录结构基于 `部署指南 <../tutorial/deploy/index.tml>`_ 搭建的WeCross环境作介绍
 ```
 
 ## 搭建区块链
@@ -58,7 +58,7 @@ node3 start successfully
 
 ## 安装插件
 
-基于[部署指南](../tutorial/deploy/indexhtml)搭建的WeCross，已完成插件的安装，位于跨链路由的`plugin`目录，可跳过本节内容。
+基于[部署指南](../tutorial/deploy/index.html)搭建的WeCross，已完成插件的安装，位于跨链路由的`plugin`目录，可跳过本节内容。
 
 ```bash
 plugin/
