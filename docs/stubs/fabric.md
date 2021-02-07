@@ -11,8 +11,8 @@
 ```eval_rst
 .. important::
     - 目前支持的Fabric链版本为1.4
-    - 若还未完成WeCross搭建，请参考 `部署指南 <../tutorial/networks.html>`_
-    - 以下教程的目录结构基于 `部署指南 <../tutorial/networks.html>`_ 搭建的WeCross环境作介绍
+    - 若还未完成WeCross搭建，请参考 `部署指南 <../tutorial/deploy/indexhtml>`_
+    - 以下教程的目录结构基于 `部署指南 <../tutorial/deploy/indexhtml>`_ 搭建的WeCross环境作介绍
 ```
 
 ## 搭建区块链
@@ -52,7 +52,7 @@ CONTAINER ID        IMAGE                               COMMAND             CREA
 
 ## 安装插件
 
-基于[部署指南](../tutorial/networks.html)搭建的WeCross，已完成插件的安装，位于跨链路由的`plugin`目录，可跳过本节内容。
+基于[部署指南](../tutorial/deploy/indexhtml)搭建的WeCross，已完成插件的安装，位于跨链路由的`plugin`目录，可跳过本节内容。
 
 ```bash
 plugin/

@@ -9,7 +9,7 @@ WeCross 跨链路由向外部暴露了所有的UBI接口，开发者可以通过
     - java版本
      要求 `JDK8或以上 <https://openjdk.java.net/>`_
     - WeCross服务部署
-     参考 `部署指南 <../tutorial/deploy/basic_env.md>`_
+     参考 `部署指南 <../tutorial/deploy/index.html#id2>`_
 ```
 
 ## Java应用引入SDK
