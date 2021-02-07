@@ -189,12 +189,12 @@ cp -r xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross/routers-payment/127.0.0.1-8250-25
 
 ```shell
 # 部署代理合约
-java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.preparation.ProxyContractDeployment deploy chains/bcos
+bash deploy_system_contract.sh -t BCOS2.0 -c chains/bcos -P
 
 # 部署桥接合约
-java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.normal.preparation.HubContractDeployment deploy chains/bcos
+bash deploy_system_contract.sh -t BCOS2.0 -c chains/bcos -H
 
-# 若后续有更新系统合约的需求，首先更新conf/chains/bcos下的系统合约代码，然后将上述命令的 deploy 替换为 upgrade，执行并重启跨链路由
+# 若后续有更新系统合约的需求，首先更新conf/chains/bcos下的系统合约代码，在上述命令添加-u参数，执行并重启跨链路由
 ```
 
 部署成功，则输出如下内容。若失败可查看提示信息和错误日志。
@@ -209,12 +209,12 @@ SUCCESS: WeCrossHub:xxxxxxxx has been deployed! chain: chains/bcos
 ```shell
 
 # 部署代理合约
-java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.preparation.ProxyContractDeployment deploy chains/bcos
+bash deploy_system_contract.sh -t GM_BCOS2.0 -c chains/bcos -P
 
 # 部署桥接合约
-java -cp 'conf/:lib/*:plugin/*' com.webank.wecross.stub.bcos.guomi.preparation.HubContractDeployment deploy chains/bcos
+bash deploy_system_contract.sh -t GM_BCOS2.0 -c chains/bcos -H
 
-# 若后续有更新系统合约的需求，首先更新conf/chains/bcos下的系统合约代码，然后将上述命令的 deploy 替换为 upgrade，执行并重启跨链路由
+# 若后续有更新系统合约的需求，首先更新conf/chains/bcos下的系统合约代码，在上述命令添加-u参数，执行并重启跨链路由
 ```
 
 部署成功，则输出如下内容。若失败可查看提示信息和错误日志。

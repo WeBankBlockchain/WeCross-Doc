@@ -96,6 +96,42 @@ Usage:
 - [BCOS2.0 接入配置](../stubs/bcos.md)
 - [Fabric1.4 接入配置](../stubs/fabric.md)
 
+## 系统合约工具脚本
+
+**deploy_system_contract.sh**
+
+`deploy_system_contract.sh`脚本用于部署或者更新代理合约/桥接合约。
+
+帮助信息：
+
+```shell
+$ bash deploy_system_contract.sh -h
+
+Usage:
+    -c <chain name>                     [Required] chain name
+    -u <upgrade>                        [Optional] upgrade proxy/hub contract if proxy/hub contract has been deployed, default deploy proxy/hub contract
+    -t <type>                           [Required] type of chain, BCOS2.0 or GM_BCOS2.0 or Fabric1.4
+    -P <proxy contract>                 [Optional] upgrade/deploy operation on proxy contract
+    -H <hub contract>                   [Optional] upgrade/deploy operation on hub contract
+    -h                                  [Optional] Help
+e.g
+    bash deploy_system_contract.sh -t BCOS2.0    -c chains/bcos -P
+    bash deploy_system_contract.sh -t BCOS2.0    -c chains/bcos -H
+    bash deploy_system_contract.sh -t BCOS2.0    -c chains/bcos -u -P
+    bash deploy_system_contract.sh -t BCOS2.0    -c chains/bcos -u -H
+    bash deploy_system_contract.sh -t Fabric1.4  -c chains/fabric -P
+    bash deploy_system_contract.sh -t Fabric1.4  -c chains/fabric -H
+    bash deploy_system_contract.sh -t Fabric1.4  -c chains/fabric -u -P
+    bash deploy_system_contract.sh -t Fabric1.4  -c chains/fabric -u -H
+```
+
+- **`-t`**：操作类型，根据链的类型选择，支持`BCOS2.0`、`GM_BCOS2.0`、`Fabric1.4`三种类型
+- **`-c`**：链配置路径，链配置位于`chains`目录下
+- **`-u`**：更新合约操作，默认情况下为部署合约操作，只有在合约已经部署时才可以更新
+- **`-P`**：操作对象为代理合约
+- **`-H`**：操作对象为桥接合约
+- **`-h`**：帮助信息
+
 ## 创建P2P证书脚本
 
 **create_cert.sh**
@@ -119,7 +155,7 @@ e.g
     bash create_cert.sh -n -D ./ca -d ./ca/node -C 10
 ```
 
-- **`c`**： 生成ca证书，只有生成了ca证书，才能生成节点证书。
+- **`c`**：生成ca证书，只有生成了ca证书，才能生成节点证书。
 - **`C`**：配合`-n`，指定生成节点证书的数量。
 - **`D`**：配合`-n`，指定ca证书路径。
 - **`d`**：指定输出目录。
