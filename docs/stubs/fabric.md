@@ -11,8 +11,8 @@
 ```eval_rst
 .. important::
     - 目前支持的Fabric链版本为1.4
-    - 若还未完成WeCross搭建，请参考 `部署指南 <../tutorial/networks.html>`_
-    - 以下教程的目录结构基于 `部署指南 <../tutorial/networks.html>`_ 搭建的WeCross环境作介绍
+    - 若还未完成WeCross搭建，请参考 `部署指南 <../tutorial/deploy/index.html>`_
+    - 以下教程的目录结构基于 `部署指南 <../tutorial/deploy/index.html>`_ 搭建的WeCross环境作介绍
 ```
 
 ## 搭建区块链
@@ -22,14 +22,13 @@
 为方便Fabric链的搭建，WeCross Demo包中提供了Fabric链搭建脚本。若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
 
 ``` bash
-mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
+mkdir -p ~/wecross-networks/fabric && cd ~/wecross-networks/fabric
 
 # 下载Demo包, 拷贝其中的Fabric demo链环境
-bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
-cp wecross-demo/fabric/* ./
+bash <(curl -sL https://github.com/WeBankBlockchain/wecross/releases/download/resources/download_demo.sh) && cp ./wecross-demo/fabric/* ./
 
-# 搭建
-bash build.sh # 若出错，执行 bash clear.sh 后重新 bash build.sh
+# 搭链，若出错，执行 bash clear.sh 后重新 bash build.sh
+bash build.sh
 ```
 
 搭建成功，查看Fabric链各个容器运行状态。
@@ -52,7 +51,7 @@ CONTAINER ID        IMAGE                               COMMAND             CREA
 
 ## 安装插件
 
-基于[部署指南](../tutorial/networks.html)搭建的WeCross，已完成插件的安装，位于跨链路由的`plugin`目录，可跳过本节内容。
+基于[部署指南](../tutorial/deploy/index.html)搭建的WeCross，已完成插件的安装，位于跨链路由的`plugin`目录，可跳过本节内容。
 
 ```bash
 plugin/
@@ -75,7 +74,7 @@ bash gradlew assemble # 在 dist/apps/ 下生成 fabric1-stub-XXXXX.jar
 在跨链路由的主目录下创建plugin目录，然后将插件拷贝到该目录下完成安装。
 
 ``` bash
-cp dist/apps/* ~/wecross/routers-payment/127.0.0.1-8251-25501/plugin/
+cp dist/apps/* ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/plugin/
 ```
 
 **注：若跨链路由中配置了两个相同的插件，插件冲突，会导致跨链路由启动失败。**
@@ -91,7 +90,7 @@ cp dist/apps/* ~/wecross/routers-payment/127.0.0.1-8251-25501/plugin/
 
 ```shell
 # 切换至对应跨链路由的主目录
-cd ~/wecross/routers-payment/127.0.0.1-8251-25501/
+cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/
 
 # 用脚本生成Fabric账户配置：账户类型（Fabric1.4），账户名（fabric_admin）
 # 接入Fabric链，需要配置一个admin账户
@@ -124,7 +123,8 @@ vim conf/accounts/fabric_admin_org2/account.toml
 Fabric链的证书位于`crypto-config`目录，请参考以下命令并**根据实际情况**完成相关证书的拷贝。
 
 ```shell
-# 假设当前位于跨链路由的主目录
+cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501
+
 # 配置fabric_admin 
 # 拷贝私钥
 cp xxxxxx/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk   conf/accounts/fabric_admin/account.key
@@ -136,7 +136,6 @@ cp xxxxxx/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.exam
 cp xxxxxx/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk   conf/accounts/fabric_admin_org1/account.key
 # 拷贝证书
 cp xxxxxx/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem   conf/accounts/fabric_admin_org1/account.crt
-
 
 # 配置fabric_admin_org2 
 # 拷贝私钥
@@ -171,7 +170,7 @@ conf/accounts/
 进入跨链路由的主目录，用`add_chain.sh`脚本在`conf`目录下生成Fabric链的配置框架。
 
 ```shell
-cd ~/wecross/routers-payment/127.0.0.1-8251-25501
+cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501
 
  # -t 链类型，-n 指定链名字，可根据-h查看使用说明
 bash add_chain.sh -t Fabric1.4 -n fabric

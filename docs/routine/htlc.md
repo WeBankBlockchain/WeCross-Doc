@@ -13,8 +13,8 @@ WeCross提供了[Solidity版本](https://github.com/WeBankBlockchain/WeCross-Con
 要完成资产互换，需要在各自链上部署资产合约以及哈希时间锁合约，然后通过WeCross控制台创建[跨链转账提案](../manual/console.html#newhtlcproposal)，跨链路由会根据提案信息自动完成跨链转账。
 
 **部署WeCross和控制台**
-- 以[组网方式](../tutorial/networks.html)搭建两个跨链路由
-- 搭建WeCross[控制台](../tutorial/networks.html#id11)，连接跨链路由
+- 以[组网方式](../tutorial/deploy/index.md)搭建两个跨链路由
+- 搭建WeCross[控制台](../tutorial/deploy/basic_env.md#id5)，连接跨链路由
 
 
 ### BCOS链前期准备

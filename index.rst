@@ -44,7 +44,7 @@ WeCross是由微众银行自主研发并完全开源的区块链跨链协作平�
 
    docs/tutorial/env.md
    docs/tutorial/demo/index.md
-   docs/tutorial/networks.md
+   docs/tutorial/deploy/index.md
 
 .. toctree::
    :maxdepth: 1
