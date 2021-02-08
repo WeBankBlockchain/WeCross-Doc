@@ -15,7 +15,6 @@
 
 ``` bash
 # 若已搭建WeCross Demo，请先关闭所有服务
-cd ~/wecross-demo && bash stop_all.sh
 
 # 创建手动组网的操作目录
 mkdir -p ~/wecross-networks && cd ~/wecross-networks

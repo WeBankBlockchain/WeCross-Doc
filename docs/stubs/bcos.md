@@ -26,7 +26,7 @@ FISCO BCOS官方提供了一键搭链的教程，详见[单群组FISCO BCOS联�
 
 ```bash
 # 创建操作目录
-mkdir -p ~/wecross/bcos && cd ~/wecross/bcos
+mkdir -p ~/wecross-networks/bcos && cd ~/wecross-networks/bcos
 
 # 下载build_chain.sh脚本
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
@@ -92,7 +92,7 @@ dist/apps
 在跨链路由的主目录下创建plugin目录，然后将插件拷贝到该目录下完成安装。
 
 ``` bash
-cp dist/apps/* ~/wecross/routers-payment/127.0.0.1-8250-25500/plugin/
+cp dist/apps/* ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/plugin/
 ```
 
 **注：若跨链路由中配置了两个相同的插件，插件冲突，会导致跨链路由启动失败。**
@@ -105,7 +105,7 @@ cp dist/apps/* ~/wecross/routers-payment/127.0.0.1-8250-25500/plugin/
 进入跨链路由的主目录，用`add_chain.sh`脚本在`conf`目录下生成BCOS链的配置框架。
 
 ```shell
-cd ~/wecross/routers-payment/127.0.0.1-8250-25500
+cd ~/wecross-networks/routers-payment/127.0.0.1-8250-25500
 
  # -t 链类型，-n 指定链名字，可根据-h查看使用说明
 bash add_chain.sh -t BCOS2.0 -n bcos
@@ -140,7 +140,7 @@ conf/chains/bcos/
 
 ```shell
 # 证书目录以实际情况为准
-cp -r xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross/routers-payment/127.0.0.1-8250-25500/conf/chains/bcos/
+cp -r xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/conf/chains/bcos/
 ```
 
 **编辑配置文件**

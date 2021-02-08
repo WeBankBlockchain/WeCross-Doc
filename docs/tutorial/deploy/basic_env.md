@@ -178,11 +178,11 @@ bash start.sh
 ```bash
 # 启动 router-8250
 cd ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/
-bash start.sh   # 停止: bash stop.sh
+bash start.sh
 
 # 启动 router-8251
 cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/
-bash start.sh   # 停止: bash stop.sh
+bash start.sh
 ```
 
 启动成功，输出如下：
@@ -218,8 +218,10 @@ bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/re
 
 ```bash
 cd ~/wecross-networks/WeCross-Console
+
 # 拷贝连接router所需的TLS证书，从生成的routers-payment/cert/sdk目录下拷贝
-cp ~/wecross-networks/routers-payment/cert/sdk/* conf/ # 包含：ca.crt、node.nodeid、ssl.crt、ssl.key
+cp ~/wecross-networks/routers-payment/cert/sdk/* conf/ 
+
 # 拷贝配置文件，并配置跨链路由RPC服务地址以及端口。此处采用默认配置，默认连接至本地8250端口。
 cp conf/application-sample.toml conf/application.toml
 ```

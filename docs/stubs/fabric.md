@@ -22,10 +22,10 @@
 为方便Fabric链的搭建，WeCross Demo包中提供了Fabric链搭建脚本。若下载较慢，可选择[更多下载方式](../version/download.html#wecross-demo)。
 
 ``` bash
-mkdir -p ~/wecross/fabric && cd ~/wecross/fabric
+mkdir -p ~/wecross-networks/fabric && cd ~/wecross-networks/fabric
 
 # 下载Demo包, 拷贝其中的Fabric demo链环境
-bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
+bash <(curl -sL https://github.com/WeBankBlockchain/wecross-networks/releases/download/resources/download_demo.sh)
 cp wecross-demo/fabric/* ./
 
 # 搭建
@@ -75,7 +75,7 @@ bash gradlew assemble # 在 dist/apps/ 下生成 fabric1-stub-XXXXX.jar
 在跨链路由的主目录下创建plugin目录，然后将插件拷贝到该目录下完成安装。
 
 ``` bash
-cp dist/apps/* ~/wecross/routers-payment/127.0.0.1-8251-25501/plugin/
+cp dist/apps/* ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/plugin/
 ```
 
 **注：若跨链路由中配置了两个相同的插件，插件冲突，会导致跨链路由启动失败。**
@@ -91,7 +91,7 @@ cp dist/apps/* ~/wecross/routers-payment/127.0.0.1-8251-25501/plugin/
 
 ```shell
 # 切换至对应跨链路由的主目录
-cd ~/wecross/routers-payment/127.0.0.1-8251-25501/
+cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/
 
 # 用脚本生成Fabric账户配置：账户类型（Fabric1.4），账户名（fabric_admin）
 # 接入Fabric链，需要配置一个admin账户
@@ -171,7 +171,7 @@ conf/accounts/
 进入跨链路由的主目录，用`add_chain.sh`脚本在`conf`目录下生成Fabric链的配置框架。
 
 ```shell
-cd ~/wecross/routers-payment/127.0.0.1-8251-25501
+cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501
 
  # -t 链类型，-n 指定链名字，可根据-h查看使用说明
 bash add_chain.sh -t Fabric1.4 -n fabric
