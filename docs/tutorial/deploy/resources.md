@@ -120,6 +120,7 @@ Result: Success
 ``` bash
 # fabricInstantiate 时默认Org1MSP或Org2MSP的链账户都可，此处用的Org2MSP
 [WeCross.org1-admin]> fabricInstantiate payment.fabric.sacc ["Org1","Org2"] contracts/chaincode/sacc 1.0 GO_LANG default ["a","10"]
+
 Result: Instantiating... Please wait and use 'listResources' to check. See router's log for more information.
 ```
 

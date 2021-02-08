@@ -13,11 +13,11 @@
 ```bash
 # 重启 router-8250
 cd ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/
-bash stop && bash start.sh 
+bash stop.sh && bash start.sh 
 
 # 重启 router-8251
 cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/
-bash stop && bash start.sh 
+bash stop.sh && bash start.sh 
 ```
 
 检查日志，可看到刷出已加载的跨链资源，`ctrl + c` 退出。

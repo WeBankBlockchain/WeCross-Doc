@@ -25,11 +25,10 @@
 mkdir -p ~/wecross-networks/fabric && cd ~/wecross-networks/fabric
 
 # 下载Demo包, 拷贝其中的Fabric demo链环境
-bash <(curl -sL https://github.com/WeBankBlockchain/wecross-networks/releases/download/resources/download_demo.sh)
-cp wecross-demo/fabric/* ./
+bash <(curl -sL https://github.com/WeBankBlockchain/wecross/releases/download/resources/download_demo.sh) && cp ./wecross-demo/fabric/* ./
 
-# 搭建
-bash build.sh # 若出错，执行 bash clear.sh 后重新 bash build.sh
+# 搭链，若出错，执行 bash clear.sh 后重新 bash build.sh
+bash build.sh
 ```
 
 搭建成功，查看Fabric链各个容器运行状态。
@@ -124,7 +123,8 @@ vim conf/accounts/fabric_admin_org2/account.toml
 Fabric链的证书位于`crypto-config`目录，请参考以下命令并**根据实际情况**完成相关证书的拷贝。
 
 ```shell
-# 假设当前位于跨链路由的主目录
+cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501
+
 # 配置fabric_admin 
 # 拷贝私钥
 cp xxxxxx/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk   conf/accounts/fabric_admin/account.key
@@ -136,7 +136,6 @@ cp xxxxxx/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.exam
 cp xxxxxx/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/*_sk   conf/accounts/fabric_admin_org1/account.key
 # 拷贝证书
 cp xxxxxx/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem   conf/accounts/fabric_admin_org1/account.crt
-
 
 # 配置fabric_admin_org2 
 # 拷贝私钥
