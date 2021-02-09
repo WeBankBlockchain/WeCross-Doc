@@ -15,7 +15,7 @@
     - 以下教程的目录结构基于 `部署指南 <../tutorial/deploy/index.html>`_ 搭建的WeCross环境作介绍
 ```
 
-## 搭建区块链
+## 1. 搭建区块链
 
 如果已存在Fabric链，不需搭建新链，可跳过本节内容。
 
@@ -49,7 +49,7 @@ CONTAINER ID        IMAGE                               COMMAND             CREA
 18747185608f        hyperledger/fabric-peer:latest      "peer node start"   2 minutes ago       Up 2 minutes        0.0.0.0:7051->7051/tcp     peer0.org1.example.com
 ```
 
-## 安装插件
+## 2. 安装插件
 
 基于[部署指南](../tutorial/deploy/index.html)搭建的WeCross，已完成插件的安装，位于跨链路由的`plugin`目录，可跳过本节内容。
 
@@ -62,7 +62,7 @@ plugin/
 
 用户如有特殊需求，可以自行编译，替换`plugin`目录下的插件。
 
-### 下载编译
+### 2.1 下载编译
 
 ```shell
 git clone https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub.git
@@ -70,7 +70,7 @@ cd WeCross-Fabric1-Stub
 bash gradlew assemble # 在 dist/apps/ 下生成 fabric1-stub-XXXXX.jar
 ```
 
-### 拷贝安装
+### 2.2 拷贝安装
 在跨链路由的主目录下创建plugin目录，然后将插件拷贝到该目录下完成安装。
 
 ``` bash
@@ -79,14 +79,14 @@ cp dist/apps/* ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/plugin/
 
 **注：若跨链路由中配置了两个相同的插件，插件冲突，会导致跨链路由启动失败。**
 
-## 配置内置账户
+## 3. 配置内置账户
 
 在跨链路由中需配置用于与Fabric链进行交互的内置账户。内置账户需配置多个：
 
 - admin账户：必配，一个admin账户，用于接入此Fabric链
 - 机构admin账户：选配，每个Fabric的Org配置一个admin账户，用于在每个Org上部署系统合约
 
-### 生成账户配置框架
+### 3.1 生成账户配置框架
 
 ```shell
 # 切换至对应跨链路由的主目录
@@ -106,7 +106,7 @@ bash add_account.sh -t Fabric1.4 -n fabric_admin_org1
 bash add_account.sh -t Fabric1.4 -n fabric_admin_org2
 ```
 
-### 完成配置
+### 3.2 完成配置
 
 **修改账户配置**
 
@@ -163,9 +163,9 @@ conf/accounts/
     └── account.toml
 ```
 
-## 配置插件
+## 4. 配置插件
 
-### 生成插件配置框架
+### 4.1 生成插件配置框架
 
 进入跨链路由的主目录，用`add_chain.sh`脚本在`conf`目录下生成Fabric链的配置框架。
 
@@ -195,7 +195,7 @@ conf/chains/fabric/
 └── stub.toml         # 插件配置文件
 ```
 
-### 完成配置
+### 4.2 完成配置
 
 **拷贝证书**
 
@@ -245,7 +245,7 @@ cp xxxxxx/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.exam
          endorsers = ['grpcs://localhost:9051'] # endorser的ip:port列表，可配置多个
 ```
 
-## 部署系统合约
+## 5. 部署系统合约
 
 每个Stub需要部署两个系统合约，分别是代理合约和桥接合约，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。在跨链路由主目录执行以下命令：
 

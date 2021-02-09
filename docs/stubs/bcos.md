@@ -14,7 +14,7 @@
     - 以下教程的目录结构基于 `部署指南 <../tutorial/deploy/index.tml>`_ 搭建的WeCross环境作介绍
 ```
 
-## 搭建区块链
+## 1. 搭建区块链
 
 如果已存在FISCO BCOS链，不需搭建新链，可跳过本节内容。
 
@@ -56,7 +56,7 @@ node0 start successfully
 node3 start successfully
 ```
 
-## 安装插件
+## 2. 安装插件
 
 基于[部署指南](../tutorial/deploy/index.html)搭建的WeCross，已完成插件的安装，位于跨链路由的`plugin`目录，可跳过本节内容。
 
@@ -69,7 +69,7 @@ plugin/
 
 用户如有特殊需求，可以自行编译，替换`plugin`目录下的插件。
 
-### 下载编译
+### 2.1 下载编译
 
 ```shell
 git clone https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub.git
@@ -88,7 +88,7 @@ dist/apps
 └── bcos2-stub-xxxx.jar       # 非国密插件
 ```
 
-### 拷贝安装
+### 2.2 拷贝安装
 在跨链路由的主目录下创建plugin目录，然后将插件拷贝到该目录下完成安装。
 
 ``` bash
@@ -98,9 +98,9 @@ cp dist/apps/* ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/plugin/
 **注：若跨链路由中配置了两个相同的插件，插件冲突，会导致跨链路由启动失败。**
 
 
-## 配置插件
+## 3. 配置插件
 
-### 生成配置框架
+### 3.1 生成配置框架
 
 进入跨链路由的主目录，用`add_chain.sh`脚本在`conf`目录下生成BCOS链的配置框架。
 
@@ -132,7 +132,7 @@ conf/chains/bcos/
 └── stub.toml                 # 插件配置文件
 ```
 
-### 完成配置
+### 3.2 完成配置
 
 **拷贝证书**
 
@@ -181,11 +181,11 @@ cp -r xxxxxx/nodes/127.0.0.1/sdk/*   ~/wecross-networks/routers-payment/127.0.0.
     #contractAddress = '0x7540601cce8b0802980f9ebf7aeee22bb4d73c22'  # 合约地址
 ```
 
-## 部署系统合约
+## 4. 部署系统合约
 
 每个Stub需要部署两个系统合约，分别是代理合约和桥接合约，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。在跨链路由主目录执行以下命令：
 
-### 非国密链
+### 4.1 非国密链
 
 ```shell
 # 部署代理合约
@@ -204,7 +204,7 @@ SUCCESS: WeCrossProxy:xxxxxxxx has been deployed! chain: chains/bcos
 SUCCESS: WeCrossHub:xxxxxxxx has been deployed! chain: chains/bcos
 ```
 
-### 国密链
+### 4.2 国密链
 
 ```shell
 
