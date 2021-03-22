@@ -22,6 +22,9 @@ WeCross中包含了生成跨链路由的工具，执行以下命令进行下载�
 
 ```bash
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_wecross.sh)
+
+# 若出现长时间下载WeCross包失败，请尝试以下命令重新下载：
+bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_wecross.sh)
 ```
 
 ## 部署跨链路由
@@ -109,6 +112,9 @@ routers-payment/127.0.0.1-8250-25500/
 ``` bash
 cd ~/wecross-networks
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_account_manager.sh)
+
+# 若出现长时间下载WeCross-Account-Manager包失败，请尝试以下命令重新下载：
+bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_account_manager.sh)
 ```
 
 - 拷贝证书
@@ -212,6 +218,9 @@ WeCross提供了控制台，方便用户进行跨链开发和调试。可通过�
 ```bash
 cd ~/wecross-networks
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_console.sh)
+
+# 若出现长时间下载WeCross-Console包失败，请尝试以下命令重新下载：
+bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_console.sh)
 ```
 
 - 配置

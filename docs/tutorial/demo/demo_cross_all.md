@@ -125,7 +125,7 @@ chainAccounts: [
 * `payment.bcos-gm.HelloWorld`
   * 对应于国密FISCO BCOS链上的HelloWorld.sol合约
 * `payment.fabric-mychannel.sacc`
-  * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
+  * 对应于Fabric链上的sacc.go合约
 * `payment.xxxx.WeCrossHub`
   * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用，可参考[《合约跨链》](../../dev/interchain.html)
 

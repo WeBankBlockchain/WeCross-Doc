@@ -10,6 +10,9 @@
 cd ~
 # 下载WeCross demo合集，生成wecross-demo目录，目录下包含各种类型的demo
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
+
+# 若出现长时间下载Demo包失败，请尝试以下命令重新下载：
+bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_demo.sh)
 ```
 
 ```eval_rst

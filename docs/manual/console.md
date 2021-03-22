@@ -1,26 +1,33 @@
-## 终端控制台
+# 终端控制台
 
-[控制台](https://github.com/WeBankBlockchain/WeCross-Console)是WeCross重要的客户端工具，它基于[WeCross-Java-SDK](../dev/sdk.html)与WeCross跨链路由建立连接，实现对跨链资源的读写访问请求。控制台拥有丰富的命令，包括获取跨链资源列表，调用跨链资源，发起事务等等。
 
-### 控制台命令
+控制台是WeCross重要的客户端工具，它基于[WeCross-Java-SDK](../dev/sdk.html)与WeCross跨链路由建立连接，实现对跨链资源的读写访问请求。控制台拥有丰富的命令，包括获取跨链资源列表，调用跨链资源，发起事务等等。
+
+WeCross控制台源码访问链接：
+
+- [GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-Console)
+- [GitHub访问链接](https://gitee.com/WeBank/WeCross-Console)
+
+## 1. 控制台命令
 
 控制台命令可分为两类，普通命令和交互式命令。
 
-#### 普通命令
+### 1.1 普通命令
 
 普通命令由两部分组成，即指令和指令相关的参数：
 
 - **指令：** 指令是执行的操作命令。**使用提示: 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
   
 - **指令相关的参数：** 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。
-#### 交互式命令
+
+### 1.2 交互式命令
 
 WeCross控制台为了方便用户使用，还提供了交互式的使用方式，比如将跨链资源路径赋值给变量，初始化一个类，并用`.command`的方式访问方法。
 详见：[交互式命令](#id15)
 
-### 常用命令链接
+## 2. 常用命令链接
 
-#### 普通命令
+### 2.1 普通命令
 
 - 账号操作
   - [login](#login)：在当前控制台登录全局账号
@@ -50,12 +57,12 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 - 跨链转账
   - [newHTLCProposal](#newhtlcproposal)：创建转账提案
 
-#### 交互式命令
+### 2.2 交互式命令
 
 - 初始化资源实例: [WeCross.getResource](#wecross-getresource)
 - 访问资源UBI接口: [\[resource\].\[command\]](#resource-command)
 
-### 快捷键
+## 3. 快捷键
 
 - `Ctrl+A`：光标移动到行首
 - `Ctrl+E`：光标移动到行尾
@@ -64,7 +71,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 - &darr;：  向后浏览历史命令
 - `tab`： 自动补全，支持命令、变量名、资源名以及其它固定参数的补全
 
-### 控制台响应
+## 4. 控制台响应
 
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 
@@ -72,14 +79,14 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
 - **状态码:** 控制台的命令调用JSON-RPC接口时，状态码[参考这里](../dev/rpc.html#id1)。
 
-### 控制台配置与运行
+## 5. 控制台配置与运行
 
 ```eval_rst
 .. important::
     前置条件：部署WeCross请参考 `快速部署 <../tutorial/deploy/basic_env.md>`_。
 ```
 
-#### 获取控制台
+### 5.1 获取控制台
 
 可通过脚本`download_console.sh`获取控制台。
 
@@ -87,8 +94,11 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 cd ~ && mkdir -p wecross && cd wecross
 # 获取控制台
 bash <(curl -sL https://github.com/WeBankBlockchain/WeCross-Console/releases/download/resources/download_console.sh)
+
+# 若因网络原因出现长时间下载控制台失败，可尝试以下命令：
+bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_console.sh)
 ```
-WeBankBlockchain
+
 执行成功后，会生成`WeCross-Console`目录，结构如下：
 
 ```bash
@@ -102,7 +112,7 @@ WeBankBlockchain
 └── start.sh                 # 启动脚本
 ```
 
-#### 配置控制台
+### 5.2 配置控制台
 
 控制台配置文件为 `conf/application-toml`，启动控制台前需配置
 
@@ -127,13 +137,14 @@ vim conf/application.toml
     sslCert = 'classpath:ssl.crt'
     caCert = 'classpath:ca.crt'
     sslSwitch = 2 # disable ssl:2, SSL without client auth:1 , SSL with client and server auth: 0
+    # urlPrefix = '/' # v1.1.1新增配置，使用该配置可访问已配置urlPrefix的router跨链路由
 # 可配置全局账号密码，执行命令`login`时可不输入账号密码
 [login]
     username = 'username'
     password = 'password'
 ```
 
-#### 启动控制台
+### 5.3 启动控制台
 
 在跨链路由已经启动的情况下，启动控制台
 
@@ -148,11 +159,11 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-### 普通命令
+## 6. 普通命令
 
 **注：** 以下所有跨链资源相关命令的执行结果以实际配置为准，此处只是示例。
 
-##### help
+### help
 
 输入help或者h，查看控制台所有的命令。
 
@@ -210,7 +221,7 @@ Usage: detail [path]
 ---------------------------------------------------------------------------------------------
 ```
 
-##### supportedStubs
+### supportedStubs
 
 显示router当前支持的插件列表。
 
@@ -219,7 +230,7 @@ Usage: detail [path]
 [BCOS2.0, GM_BCOS2.0, Fabric1.4]
 ```
 
-#### login
+### login
 
 在当前控制台登录全局账号。
 
@@ -261,7 +272,7 @@ uaID    : 3059301306...
 [WeCross.org1-admin]>
 ```
 
-#### logout
+### logout
 
 在当前控制台登出账号。
 
@@ -270,7 +281,7 @@ uaID    : 3059301306...
 Result: success
 ```
 
-#### registerAccount
+### registerAccount
 
 注册全局账号。
 
@@ -294,7 +305,7 @@ password:
 Result: success
 ```
 
-#### addChainAccount
+### addChainAccount
 
 在当前全局账号添加一个链账号。
 
@@ -335,7 +346,7 @@ pubKey  : 3059301306...
 uaID    : 3059301306...
 ```
 
-#### setDefaultAccount
+### setDefaultAccount
 
 设定某个账号为这个链类型的交易发送默认账号。
 
@@ -356,7 +367,7 @@ pubKey  : 3059301306...
 uaID    : 3059301306...
 ```
 
-#### listAccount
+### listAccount
 
 查看当前全局账号的详细信息。
 
@@ -449,7 +460,7 @@ MIICKTCCAdCgAwIBAgIRAPyuc+VKfnYg+HTl5PvUn9EwCg... #省略
 
 ```
 
-#### listLocalResources
+### listLocalResources
 
 显示router配置的跨链资源。
 
@@ -464,7 +475,7 @@ path: payment.bcos.asset, type: BCOS2.0, distance: 0
 total: 6
 ```
 
-#### listResources
+### listResources
 
 查看WeCross跨链代理本地配置的跨链资源和所有的远程资源。
 
@@ -485,7 +496,7 @@ path: payment.fabric.asset, type: Fabric1.4, distance: 1
 total: 12
 ```
 
-#### detail
+### detail
 
 查看跨链资源的详细信息。
 
@@ -527,7 +538,7 @@ ResourceDetail{
 
 *注意：* 若在`properties`中`isTemporary`字段为`true`，那么说明该资源有可能还未注册到WeCross，也有可能该资源不存在。
 
-#### call
+### call
 
 调用智能合约的方法，不涉及状态的更改，不发交易。
 
@@ -546,7 +557,7 @@ Result: [Hello, World!]
 Result: [test2]
 ```
 
-#### sendTransaction
+### sendTransaction
 
 调用智能合约的方法，会更改链上状态，需要发交易。
 
@@ -563,7 +574,7 @@ BlockNum: 16
 Result  : []
 ```
 
-#### invoke
+### invoke
 
 在非事务状态时，与命令[sendTransaction](#sendtransaction)功能一致；在事务状态时，与命令[execTransaction](#exectransaction)功能一致
 
@@ -595,7 +606,7 @@ Result  : []
 Result: [test2]
 ```
 
-#### bcosDeploy
+### bcosDeploy
 
 FISCO BCOS 合约部署命令，成功返回部署的合约地址，失败返回错误描述
 
@@ -613,7 +624,7 @@ FISCO BCOS 合约部署命令，成功返回部署的合约地址，失败返回
 Result: 0xc3c72dce00c1695e8f50696f22310375e3348e1e
 ```
 
-#### bcosRegister
+### bcosRegister
 
 FISCO BCOS 注册已有合约为跨链资源，成功返回`Success`，失败返回错误描述
 
@@ -631,7 +642,7 @@ FISCO BCOS 注册已有合约为跨链资源，成功返回`Success`，失败返
 Result: success
 ```
 
-#### fabricInstall
+### fabricInstall
 
 Fabric 安装链码命令，安装后需fabricInstantiate来启动链码
 
@@ -666,7 +677,7 @@ path: classpath:contracts/chaincode/sacc
 Result: Success
 ```
 
-#### fabricInstantiate
+### fabricInstantiate
 
 Fabric 启动（实例化）已安装的链码。此步骤前需先用fabricInstall向指定机构安装链码。
 
@@ -687,7 +698,7 @@ Result: Instantiating... Please wait and use 'listResources' to check. See route
 
 启动时间较长（1min左右），可用listResources查看是否已启动，若长时间未启动，可查看router的日志进行排查。
 
-#### fabricUpgrade
+### fabricUpgrade
 
 Fabric 升级已启动的链码逻辑，不改变已上链的数据。此步骤前需先用`fabricInstall`向指定机构安装另一个版本的链码。
 
@@ -708,7 +719,7 @@ Result: Upgrading... Please wait and use 'detail' to check the version. See rout
 
 升级时间较长（1min左右），可用`detail payment.fabric.sacc`查看版本号，若长时间升级完成，可查看router的日志进行排查。
 
-#### genTimelock
+### genTimelock
 
 跨链转账辅助命令，根据时间差生成两个合法的时间戳。
 
@@ -721,7 +732,8 @@ timelock0: 1607245965
 timelock1: 1607245665
 ```
 
-#### genSecretAndHash
+### genSecretAndHash
+
 跨链转账辅助命令，生成一个秘密和它的哈希。
 
 ```bash
@@ -730,7 +742,8 @@ hash  : cdbfc235be9aff715967119a25b03f49e7103480fec459a610d2efe51ff35fad
 secret: 266a85d058afbf743c541f8da4add95d54f02cad27acd90d8b2155947524d303
 ```
 
-#### newHTLCProposal
+### newHTLCProposal
+
 新建一个基于哈希时间锁合约的跨链转账提案，该命令由两条链的资金转出方分别执行。
 
 参数：
@@ -757,7 +770,7 @@ BlockNum: 18
 Result: create a htlc proposal successfully
 ```
 
-#### checkTransferStatus
+### checkTransferStatus
 
 根据提案号（Hash）查询htlc转账状态。
 
@@ -772,7 +785,7 @@ Result: create a htlc proposal successfully
 status: ongoing!
 ```
 
-#### startTransaction
+### startTransaction
 
 写接口，开始两阶段事务。
 
@@ -790,7 +803,7 @@ Transaction ID is: 024f0ff81cda4b938a0b48805be9eb61
 [WeCross.org1-admin]>
 ```
 
-#### execTransaction
+### execTransaction
 
 写接口，发起事务交易。
 
@@ -814,7 +827,7 @@ BlockNum: 14
 Result  : [Success]
 ```
 
-#### callTransaction
+### callTransaction
 
 读接口，查询事务中的数据。
 
@@ -830,7 +843,7 @@ Result  : [Success]
 Result: [Jerry]
 ```
 
-#### commitTransaction
+### commitTransaction
 
 写接口，提交事务，确认事务执行过程中所有的变动。
 
@@ -853,7 +866,7 @@ Result: success!
 [WeCross.org1-admin]>
 ```
 
-#### rollbackTransaction
+### rollbackTransaction
 
 写接口，撤销本次事务的所有变更时。
 
@@ -898,7 +911,7 @@ Result: success!
 Result: []
 ```
 
-#### getXATransaction
+### getXATransaction
 
 读接口，查询事务信息。
 
@@ -936,7 +949,7 @@ XATransactionResponse{
 }
 ```
 
-#### listXATransactions
+### listXATransactions
 
 读接口，查询所给个数的最新的事务。
 
@@ -973,7 +986,7 @@ Result: [ {
 } ]
 ```
 
-#### loadTransaction
+### loadTransaction
 
 恢复到某个正在执行的事务上下文。
 
@@ -1000,7 +1013,7 @@ Load transaction success!
 [WeCross.org1-admin]>
 ```
 
-#### getCurrentTransactionID
+### getCurrentTransactionID
 
 获取当前控制台的事务ID
 
@@ -1010,9 +1023,9 @@ Load transaction success!
 There is a Transaction running now, ID is: 0a359201499047f8a99a6a978b9a7f77.
 ```
 
-### 交互式命令
+## 7. 交互式命令
 
-#### WeCross.getResource
+### WeCross.getResource
 
 WeCross控制台提供了一个资源类，通过方法`getResource`来初始化一个跨链资源实例，并且赋值给一个变量。
 这样调用同一个跨链资源的不同UBI接口时，不再需要每次都输入跨链资源标识。
@@ -1027,7 +1040,7 @@ WeCross控制台提供了一个资源类，通过方法`getResource`来初始化
 [WeCross.org1-admin]> myResource = WeCross.getResource path
 ```
 
-#### [resource].[command]
+### [resource].[command]
 
 当初始化一个跨链资源实例后，就可以通过`.command`的方式，调用跨链资源的UBI接口。
 
@@ -1038,7 +1051,7 @@ myResource.call              myResource.detail
 myResource.sendTransaction
 ```
 
-#### detail
+### detail
 
 ```bash
 [WeCross.org1-admin]> myResource.detail
@@ -1055,14 +1068,14 @@ ResourceDetail{
 }
 ```
 
-#### call
+### call
 
 ```bash
 [WeCross.org1-admin]> myResource.call get
 Result: [Hello, World!]
 ```
 
-#### sendTransaction
+### sendTransaction
 
 ```bash
 [WeCross.org1-admin]> myResource.sendTransaction set "Hello, WeCross!"
