@@ -29,8 +29,15 @@
 
 示例：
 
-- [Solidity版](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossProxy.sol)
-- [Golang版](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/master/src/main/resources/chaincode/WeCrossProxy/proxy.go)
+Solidity版：
+
+- [GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossProxy.sol)
+- [Gitee访问链接](https://gitee.com/WeBank/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossProxy.sol)
+
+Golang版：
+
+- [GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/master/src/main/resources/chaincode/WeCrossProxy/proxy.go)
+- [Gitee访问链接](https://gitee.com/WeBank/WeCross-Fabric1-Stub/blob/master/src/main/resources/chaincode/WeCrossProxy/proxy.go)
 
 以Solidity合约为例，接口列表：
 
@@ -138,8 +145,15 @@ function getXATransaction(
 
 示例：
 
-- [Solidity版](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossHub.sol)
-- [Golang版](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/master/src/main/resources/chaincode/WeCrossHub/hub.go)
+Solidity版：
+
+- [GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossHub.sol)
+- [Gitee访问链接](https://gitee.com/WeBank/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossHub.sol)
+
+Golang版：
+
+- [GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/master/src/main/resources/chaincode/WeCrossHub/hub.go)
+- [Gitee访问链接](https://gitee.com/WeBank/WeCross-Fabric1-Stub/blob/master/src/main/resources/chaincode/WeCrossHub/hub.go)
 
 以Solidity合约为例，接口列表：
 

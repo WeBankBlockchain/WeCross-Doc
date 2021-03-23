@@ -9,6 +9,7 @@ WeCross 技术文档
 WeCross是由微众银行自主研发并完全开源的区块链跨链协作平台，支持应用与多链互操作、同/异构链间互操作等多维跨链交互。
 
 - `Github主页 <https://github.com/WeBankBlockchain/WeCross>`_
+- `Gitee主页 <https://gitee.com/WeBank/WeCross>`_
 - `深度解析系列文章 <https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&album_id=1337945984353107969&__biz=MzU0MDY4MDMzOA==#wechat_redirect>`_
 - `贡献代码 <https://github.com/WebankBlockchain/WeCross/wiki/%E8%B4%A1%E7%8C%AE%E4%BB%A3%E7%A0%81>`_
 - `反馈问题 <https://github.com/WeBankBlockchain/WeCross/issues/new/choose>`_

@@ -15,6 +15,11 @@
     - 以下教程的目录结构基于 `部署指南 <../tutorial/deploy/index.html>`_ 搭建的WeCross环境作介绍
 ```
 
+WeCross-Fabric1-Stub源码访问地址：
+
+* [GitHub访问地址](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub)
+* [Gitee访问地址](https://gitee.com/WeBank/WeCross-Fabric1-Stub)
+
 ## 1. 搭建区块链
 
 如果已存在Fabric链，不需搭建新链，可跳过本节内容。
@@ -24,8 +29,14 @@
 ``` bash
 mkdir -p ~/wecross-networks/fabric && cd ~/wecross-networks/fabric
 
-# 下载Demo包, 拷贝其中的Fabric demo链环境
-bash <(curl -sL https://github.com/WeBankBlockchain/wecross/releases/download/resources/download_demo.sh) && cp ./wecross-demo/fabric/* ./
+# 下载Demo包
+bash <(curl -sL https://github.com/WeBankBlockchain/wecross/releases/download/resources/download_demo.sh)
+
+# 若出现长时间下载Demo包失败，请尝试以下命令重新下载：
+bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_demo.sh)
+
+# 拷贝其中的Fabric demo链环境
+cp ./wecross-demo/fabric/* ./
 
 # 搭链，若出错，执行 bash clear.sh 后重新 bash build.sh
 bash build.sh
@@ -66,6 +77,10 @@ plugin/
 
 ```shell
 git clone https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub.git
+
+# 若因网络原因出现长时间拉取代码失败，请尝试以下命令：
+git clone https://gitee.com/WeBank/WeCross-Fabric1-Stub.git
+
 cd WeCross-Fabric1-Stub
 bash gradlew assemble # 在 dist/apps/ 下生成 fabric1-stub-XXXXX.jar
 ```

@@ -7,6 +7,10 @@
 * 配置插件
 * 部署系统合约
 
+WeCross-BCOS2-Stub 源码访问链接：
+[GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub)，
+[Gitee访问链接](https://gitee.com/WeBank/WeCross-BCOS2-Stub)
+
 ```eval_rst
 .. important::
     - FISCO-BCOS版本需要 >= v2.1.0
@@ -30,6 +34,9 @@ mkdir -p ~/wecross-networks/bcos && cd ~/wecross-networks/bcos
 
 # 下载build_chain.sh脚本
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
+
+# 若因为网络原因出现长时间下载失败，请尝试以下命令：
+curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/v2.7.1/tools/build_chain.sh && chmod u+x build_chain.sh
 
 # 搭建单群组4节点联盟链
 # 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
@@ -73,6 +80,10 @@ plugin/
 
 ```shell
 git clone https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub.git
+
+# 若因网络原因出现长时间下载失败，请尝试以下命令：
+git clone https://gitee.com/WeBank/WeCross-BCOS2-Stub.git
+
 cd WeCross-BCOS2-Stub
 bash gradlew assemble # 在 dist/apps/ 下生成 bcos2-stub-XXXXX.jar 和 bcos2-stub-gm-xxxx.jar
 ```

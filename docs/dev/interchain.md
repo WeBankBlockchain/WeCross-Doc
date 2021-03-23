@@ -25,6 +25,14 @@ WeCross提供了两个系统合约，分别是代理合约和桥接合约。代�
 
 WeCross提供了[Solidity版本](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossHub.sol)和[Golang版本](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/dev/src/main/resources/chaincode/WeCrossHub/hub.go)的桥接合约。
 
+Solidity版本合约下载地址：
+[GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub/blob/master/src/main/resources/WeCrossHub.sol)
+[Gitee访问链接](https://gitee.com/WeBank/WeCross-BCOS2-Stub/raw/master/src/main/resources/WeCrossHub.sol)
+
+Golang版本合约下载地址：
+[GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub/blob/dev/src/main/resources/chaincode/WeCrossHub/hub.go)
+[Gitee访问链接](https://gitee.com/WeBank/WeCross-Fabric1-Stub/raw/master/src/main/resources/chaincode/WeCrossHub/hub.go)
+
 - Solidity版本
 
 ``` solidity
@@ -80,7 +88,8 @@ func (h *Hub) selectCallbackResult(
 .. important::
     - 调用的目标链的接口定义必须匹配: ``string[] func(string[] args)``
     - 回调函数的接口定义必须匹配: ``string[] func(bool state, string[] result)``，state表示调用目标链是否成功，result是调用结果
-    - 实现跨链调用的业务合约编写规范可参考示例合约: `Solidity版 <https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/solidity/InterchainSample.sol>`_ 和 `Golang版 <https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/chaincode/interchain/interchainSample.go>`_ 
+    - 实现跨链调用的业务合约编写规范可参考示例合约，GitHub访问： `Solidity版 <https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/solidity/InterchainSample.sol>`_ 和 `Golang版 <https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/chaincode/interchain/interchainSample.go>`_ 
+    - Gitee访问： `Solidity版 <https://gitee.com/WeBank/WeCross-Console/blob/master/src/main/resources/contracts/solidity/InterchainSample.sol>`_ 和 `Golang版 <https://gitee.com/WeBank/WeCross-Console/blob/master/src/main/resources/contracts/chaincode/interchain/interchainSample.go>`_
 ```
 
 ## 操作示例
