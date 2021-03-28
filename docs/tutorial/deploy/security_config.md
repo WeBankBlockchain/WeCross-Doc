@@ -7,36 +7,24 @@
 
 若要配置验证逻辑，需要在跨链路由的`conf`目录下新增配置文件`verifier.toml`（和`wecross.toml`在相同目录）。
 
-这里以[混合场景](../demo/demo_cross_all.html)部署的网络作为举例，配置如下所示（请以实际情况配置）：
+这里以[跨平台 FISCO BCOS & Fabric](../demo/demo.html)部署的网络作为举例，配置如下所示（请以实际情况配置）：
 
 ```toml
 [verifiers]
-    [verifiers.payment.bcos-group1]
+    [verifiers.payment.bcos]
         chainType = 'BCOS2.0'
         # 填写所有共识节点的公钥
         pubKey = [
             'b949f25fa39a6b3797ece30a2a9e025...',
             '...'
         ]
-    [verifiers.payment.bcos-group2]
-        chainType = 'BCOS2.0'
-        # 填写所有共识节点的公钥
-        pubKey = [
-            'b949f25fa39a6b3797ece3132134fa3...',
-            '...'
-        ]
-    [verifiers.payment.bcos-gm]
-        chainType = 'GM_BCOS2.0'
-        pubKey = [
-            'ecc094f00b11a0a5cf616963e313218...'
-        ]
-    [verifiers.payment.fabric-mychannel]
+    [verifiers.payment.fabric]
         chainType = 'Fabric1.4'
         # 填写所有机构CA的证书路径
-        [verifiers.payment.fabric-mychannel.endorserCA]
+        [verifiers.payment.fabric.endorserCA]
             Org1MSP = 'classpath:verifiers/org1CA/ca.org1.example.com-cert.pem'
             Org2MSP = 'classpath:verifiers/org2CA/ca.org2.example.com-cert.pem'
-        [verifiers.payment.fabric-mychannel.ordererCA]
+        [verifiers.payment.fabric.ordererCA]
             OrdererMSP = 'classpath:verifiers/ordererCA/ca.example.com-cert.pem'
 ```
 
