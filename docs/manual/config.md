@@ -104,6 +104,7 @@ WeCross Router的配置位于`conf`目录下，分为：
   - webRoot：字符串，网页管理平台页面存放位置
   - mimeTypesFile：字符串网页管理平台的content-type映射文件存放位置
   - urlPrefix: 用于收敛请求URL，若不配置则默认为空，若配置则必须配置正确，支持数字英文和特殊符号( -, _ )，长度1-18
+    - 若需要进行控制台/网页管理平台访问修改URL前置的跨链路由router，可参考[控制台配置](./console.html#id12)中的`urlPrefix`字段，参考[网页管理平台配置](./webApp.html#url)中的配置方法。
 - `[p2p]` 组网配置
   - listenIP：字符串；P2P服务监听地址；一般为'0.0.0.0'
   - listenPort ：整型；P2P服务监听端口；WeCross Router之间交换消息的端口

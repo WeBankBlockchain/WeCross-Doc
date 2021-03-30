@@ -150,9 +150,11 @@ npm run build:prod
 cp -r ./dist/* /wecross-demo/routers-payment/127.0.0.1-8250-25500/pages
 ```
 
-再次访问（这里必须保证router跨链路由也配置了URL前缀，可参考链接[router主配置](https://wecross.readthedocs.io/zh_CN/latest/docs/manual/config.html#id3)）：
+再次访问（这里必须保证router跨链路由也配置了URL前缀，可参考链接[router主配置](./config.html#id3)中`urlPrefix`字段）：
 
 在浏览器输入 http://127.0.0.1:8250/wecross/s/index.html 访问。
+
+若需要进行控制台访问修改URL前置的跨链路由router，那么也需要配置控制台的配置，可参考[控制台配置](./console.html#id12)中的`urlPrefix`字段。
 
 ## 2. 使用手册
 
