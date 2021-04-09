@@ -91,6 +91,8 @@ uaID    : 3059301306...
 
 ### 添加Fabric链账户
 
+**注意：** 在添加Fabric链账户之前，请确保已搭建Fabric链，请参考[搭建Fabric区块链](../../stubs/fabric.html#id1)
+
 - 拷贝公私钥
 
 将fabric链的公私钥拷贝至控制台目录，为添加链账户做准备。
