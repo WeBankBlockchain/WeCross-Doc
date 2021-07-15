@@ -8,4 +8,5 @@
    
    bcos.md
    fabric.md
+   fabric2.md
 ..    
