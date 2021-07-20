@@ -160,7 +160,7 @@ Result: Query success. Please wait and use 'listResources' to check.
 path: payment.fabric.ledger, type: Fabric1.4, distance: 0
 
 # 实例化哈希时间锁合约，需要写入[己方资产合约名，channel]
-[WeCross.org1-admin]> fabricInstantiate payment.fabric.htlc ["Org1","Org2"] contracts/chaincode/htlc 1.0 GO_LANG default ["ledger","mychannel",]
+[WeCross.org1-admin]> fabricInstantiate payment.fabric.htlc ["Org1","Org2"] contracts/chaincode/htlc 1.0 GO_LANG default ["ledger","mychannel"]
 
 Result: Query success. Please wait and use 'listResources' to check.
 
