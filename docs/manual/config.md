@@ -39,6 +39,7 @@ WeCross Router的配置位于`conf`目录下，分为：
 [common]
     zone = 'payment'
     visible = true
+    enableAccessControl = false
 
 [chains]
     path = 'classpath:chains'
@@ -90,6 +91,7 @@ WeCross Router的配置位于`conf`目录下，分为：
 - `[common]` 通用配置
   - zone：字符串；跨链分区标识符；通常一种跨链业务/应用为一个跨链分区
   - visible：布尔；可见性；标明当前跨链分区下的资源是否对其他跨链分区可见
+  - enableAccessControl：布尔；是否开启权限控制，开启后，仅admin账户可访问所有资源，普通账户需admin账户在网页管理台中为其授权后才可访问相应资源
 - `[chains]` 链配置
   - path：字符串；链配置的根目录；WeCross从该目录下去加载各个链的配置
 - `[rpc]` RPC配置
