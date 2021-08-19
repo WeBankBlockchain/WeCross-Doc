@@ -76,7 +76,7 @@ WeCross Router的配置位于`conf`目录下，分为：
     caCert = 'classpath:ca.crt'
     maxTotal = 200
     maxPerRoute = 8
-
+    allowNameToken = false
 
 #[[htlc]]
 #    selfPath = 'payment.bcos.htlc'
@@ -125,6 +125,7 @@ WeCross Router的配置位于`conf`目录下，分为：
   - caCert：字符串；WeCross Router私钥路径
   - maxTotal（可选）：整型，连接Account Manager的连接池maxTotal参数，默认200
   - maxPerRoute（可选）：整型，连接Account Manager的连接池maxPerRoute参数，默认8
+  - allowNameToken (可选)：布尔类型，是否允许用户名认证方式，在大多数场景下这个配置都不应该打开
 - `[htlc]` htlc配置（可选）
   - selfPath：本地配置的htlc合约资源路径
   - account1：可调用本地配置的htlc合约的账户
