@@ -1,8 +1,8 @@
-# 跨国密、非国密
+# 跨平台 FISCO BCOS & Fabric2
 
-此Demo搭建了一个WeCross跨链网络，连接FISCO BCOS的国密区块链和非国密区块链。用户可通过WeCross控制台，对不同链的链上资源进行操作。实际情况下，WeCross接入链的场景不受限制，用户可配置接入多条各种类型的区块链。
+此Demo搭建了一个WeCross跨链网络，连接FISCO BCOS和Hyperledger Fabric2区块链。用户可通过WeCross控制台，对不同的链上资源进行操作。
 
-![](../../images/tutorial/demo_cross_gm.png)
+![](../../images/tutorial/demo.png)
 
 ## 网络部署
 
@@ -15,7 +15,7 @@ cd ~/wecross-demo
 bash clear.sh
 
 # 运行部署脚本，输入数据库账号密码，第一次运行需耗时10-30分钟左右
-bash build_cross_gm.sh # 若出错，可用 bash clear.sh 清理后重试。bash build.sh -h 可查看更多用法
+bash build_cross_fabric2.sh # 若出错，可用 bash clear.sh 清理后重试。bash build_cross_fabric2.sh -h 可查看更多用法
 ```
 
 ```eval_rst
@@ -26,14 +26,14 @@ bash build_cross_gm.sh # 若出错，可用 bash clear.sh 清理后重试。bash
     - 若出现其它问题，请参考常见问题说明 `FAQ <../../faq/faq.html#>`_
 ```
 
-部署成功后会输出Demo的网络架构，FISCO BCOS的国密和非国密链通过Cross Router相连。（输入Y，回车，进入WeCross控制台）
+部署成功后会输出Demo的网络架构，FISCO BCOS和Fabric2通过各自的WeCross Router相连。（输入Y，回车，进入WeCross控制台）
 
 ```bash
 [INFO] Success! WeCross demo network is running. Framework:
 
-                          FISCO BCOS
-               Normal                     Guomi
-            (HelloWorld)               (HelloWorld)
+            FISCO BCOS                    Fabric2
+           (4node pbft)              (test-network)
+          (HelloWorld.sol)              (sacc.go)
                  |                          |
                  |                          |
                  |                          |
@@ -43,8 +43,8 @@ bash build_cross_gm.sh # 若出错，可用 bash clear.sh 清理后重试。bash
          /              \
         /                \
  WeCross WebApp     WeCross Console
-    
-Start console? [Y/n]
+
+Start WeCross Console? [Y/n]
 ```
 
 ## 操作跨链资源
@@ -77,35 +77,41 @@ chainAccounts: [
         BCOS2.0 Account:
         keyID    : 0
         type     : BCOS2.0
-        address  : 0x8120dde72685b1ac07d0c20d0069696e42ace1db
+        address  : 0x347271c6b24cb9ee6c7c18fd258f83a03bd6d3df
         isDefault: true
         ----------
-        GM_BCOS2.0 Account:
-        keyID    : 1
-        type     : GM_BCOS2.0
-        address  : 0x0e5c45e9431578fd8ac114781c6d61a2ad4946e5
+        Fabric2.0 Account:
+        keyID    : 2
+        type     : Fabric2.0
+        MembershipID : Org2MSP
         isDefault: true
+        ----------
+        Fabric2.0 Account:
+        keyID    : 1
+        type     : Fabric2.0
+        MembershipID : Org1MSP
+        isDefault: false
         ----------
 ]
 ```
 
 **查看资源**
 
-用`listResources`命令查看WeCross跨连网络中的所有资源。可看到有多个资源：
+用`listResources`命令查看WeCross跨连网络中的所有资源。可看到已经部署了多个资源：
 
 * `payment.bcos.HelloWorld`
-  * 对应于**非国密FISCO BCOS链**上的HelloWorld.sol合约
-* `payment.bcos_gm.HelloWorld`
-  * 对应于**国密FISCO BCOS链**上的HelloWorld.sol合约
+  * 对应于FISCO BCOS链上的HelloWorld.sol合约
+* `payment.fabric2.sacc`
+  * 对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约
 * `payment.xxxx.WeCrossHub`
   * 每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用，可参考[《合约跨链》](../../dev/interchain.html)
 
 ```bash
 [WeCross.org1-admin]> listResources
 path: payment.bcos.HelloWorld, type: BCOS2.0, distance: 0
-path: payment.bcos_gm.HelloWorld, type: GM_BCOS2.0, distance: 1
 path: payment.bcos.WeCrossHub, type: BCOS2.0, distance: 0
-path: payment.bcos_gm.WeCrossHub, type: GM_BCOS2.0, distance: 1
+path: payment.fabric2.WeCrossHub, type: Fabric2.0, distance: 1
+path: payment.fabric2.sacc, type: Fabric2.0, distance: 1
 total: 4
 ```
 
@@ -114,21 +120,21 @@ total: 4
 - 读资源
   - 命令：`call path 接口名 [参数列表]`
   - 示例：`call payment.bcos.HelloWorld get`
-
+  
 ```bash
-# 调用非国密链上HelloWorld合约中的get接口
+# 调用HelloWorld合约中的get接口
 [WeCross.org1-admin]> call payment.bcos.HelloWorld get
-Result: [Hello, World!] // 初次get，值为Hello World!
+Result: [Hello, World!]
 ```
 
 - 写资源
   - 命令：`sendTransaction path 接口名 [参数列表]`
-  - 示例：`sendTransaction payment.bcos.HelloWorld set Tom`
+  - 示例：`sendTransaction payment.bcos.HelloWeCross set Tom`
 
 ```bash
-# 调用非国密链上HelloWeCross合约中的set接口
+# 调用HelloWeCross合约中的set接口
 [WeCross.org1-admin]> sendTransaction payment.bcos.HelloWorld set Tom
-Txhash  : 0x4b2d6a5f2365318b6574a02fba2df1f4cdba8e581513c8588033f7b793afc061
+Txhash  : 0x7043064899fa48b6c3138f545ecf0f8d6f823d45e0783406bc2afe489061c77c
 BlockNum: 6
 Result  : []     // 将Tom给set进去
 
@@ -136,33 +142,25 @@ Result  : []     // 将Tom给set进去
 Result: [Tom]    // 再次get，Tom已set
 ```
 
-**操作资源：payment.bcos_gm.HelloWorld**
+**操作资源：payment.fabric2.sacc**
 
 跨链资源是对各个不同链上资源的统一和抽象，因此操作的命令是保持一致的。
-
-- 读资源
-
-```bash
-# 调用国密链上HelloWorld合约中的get接口
-[WeCross.org1-admin]> call payment.bcos_gm.HelloWorld get
-Result: [Hello, World!] // 初次get，值为Hello World!
-```
 
 - 写资源
 
 ```bash
-# 调用国密链上HelloWeCross合约中的set接口
-[WeCross.org1-admin]> sendTransaction payment.bcos_gm.HelloWorld set Jerry
-Txhash  : 0x95d54faaca7499b5cb19e7af0dafc4965676c3b136809e5957c50d8ca07ed408
-BlockNum: 6
-Result  : []     // 将Jerry给set进去
+# 调用sacc合约中的set接口
+[WeCross.org1-admin]> sendTransaction payment.fabric2.sacc set a 666
+Txhash  : 85dd6c2c76b959cd5d6d5c60d1f4bc509df4c84a48ef7066f6c66bd59b67c6be
+BlockNum: 14
+Result  : [666]
+```
 
-[WeCross.org1-admin]> call payment.bcos_gm.HelloWorld get
-Result: [Jerry]    // 再次get，Jerry已set
+* 读资源
 
-# 检查非国密链上的资源，不会因为国密链上的资源被修改而改变
-[WeCross.org1-admin]> call payment.bcos.HelloWorld get
-Result: [Tom]
+``` bash
+[WeCross.org1-admin]> call payment.fabric2.sacc get a
+Result: [666] // get，a的值已是666
 
 # 退出WeCross控制台
 [WeCross.org1-admin]> quit # 若想再次启动控制台，cd至WeCross-Console，执行start.sh即可
@@ -180,7 +178,7 @@ http://localhost:8250/s/index.html#/login
 
 用demo已配置账户进行登录：`org1-admin`，密码：`123456`
 
-![](../../images/tutorial/page_gm.png)
+![](../../images/tutorial/page_bcos_fabric.png)
 
 管理台中包含如下内容，点击链接进入相关操作指导。
 
