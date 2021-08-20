@@ -211,17 +211,17 @@ bash drop_account_database.sh
 # Tips: 可选用配置MySQl参数，进行无交互式部署, 详情请参考下述脚本输出
 bash drop_account_database.sh -h
 
-Create a wecross demo with bcos and fabric chains.
+Drop wecross-account-manager database named wecross_account_manager.
 Usage:
-    -d                  [Optional] Use default db configuration: -H 127.0.0.1 -P 3306 -u root -p 123456
-    -H                  [Optional] DB ip
-    -P                  [Optional] DB port
-    -u                  [Optional] DB username
-    -p                  [Optional] DB password
+    -d                              [Optional] Use default db configuration: -H 127.0.0.1 -P 3306 -u root -p 123456
+    -H                              [Optional] DB ip
+    -P                              [Optional] DB port
+    -u                              [Optional] DB username
+    -p                              [Optional] DB password
     -h  call for help
 e.g
-    bash build.sh -H 127.0.0.1 -P 3306 -u root -p 123456
-    bash build.sh
+    bash drop_account_database.sh -H 127.0.0.1 -P 3306 -u root -p 123456
+    bash drop_account_database.sh
 ```
 
 至此，恭喜你，快速体验完成！可进入[手动组网](../deploy/index.md)章节深入了解更多细节。
