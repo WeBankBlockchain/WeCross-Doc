@@ -15,7 +15,7 @@ cd ~/wecross-demo
 bash clear.sh
 
 # 运行部署脚本，输入数据库账号密码，第一次运行需耗时10-30分钟左右
-bash build_cross_fabric2.sh # 若出错，可用 bash clear.sh 清理后重试。bash build.sh -h 可查看更多用法
+bash build_cross_fabric2.sh # 若出错，可用 bash clear.sh 清理后重试。bash build_cross_fabric2.sh -h 可查看更多用法
 ```
 
 ```eval_rst
