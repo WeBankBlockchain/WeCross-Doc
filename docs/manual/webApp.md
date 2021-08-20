@@ -221,6 +221,8 @@ WeCross网页管理平台共包含以下功能模块：
 
 添加Hyperledger Fabric链类型的账户方式如下图所示，目前只支持自行上传私钥、公钥证书的方式添加Fabric链类型账户。**注意：** Hyperledger Fabric账号只支持上传`PEM、KeyStore`类型的私钥、`CRT`格式的证书。
 
+MSPID为Fabric链账户所在的MembershipID，请以实际情况为准，这里以Org1MSP为例。（ **注意：** 输入错误将导致不能使用该链账户发起Fabric交易调用）
+
 ![](../images/webApp/addFabricAccount.png)
 
 点击链账户中的任意一行，可查看该链账户的详细信息，如下图所示。可点击红框1查看私钥详细信息，点击红框2删除该链账户。

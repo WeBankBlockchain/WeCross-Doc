@@ -157,7 +157,7 @@ cd ~/wecross/WeCross-Console
 bash start.sh
 # 输出下述信息表明启动成功
 =============================================================================================
-Welcome to WeCross console(v1.1.1)!
+Welcome to WeCross console(v1.2.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
@@ -339,8 +339,9 @@ username: org1-admin
 pubKey  : 3059301306...
 uaID    : 3059301306...
 
-#添加Fabric链账号
-[WeCross.org1-admin]> addChainAccount Fabric1.4 conf/accounts/fabric_admin/account.crt conf/accounts/fabric_admin/account.key Org1 true
+#添加Fabric链账号，机构名请以实际为准，这里的机构名以Org1MSP为例
+
+[WeCross.org1-admin]> addChainAccount Fabric1.4 conf/accounts/fabric_admin/account.crt conf/accounts/fabric_admin/account.key Org1MSP true
 Universal Account info has been changed, now auto-login again.
 Result: success
 =============================================================================================
