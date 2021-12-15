@@ -19,7 +19,7 @@ WeCross 跨链路由向外部暴露了所有的UBI接口，开发者可以通过
 - gradle:
 
 ```gradle
-compile ('com.webank:wecross-java-sdk:1.2.0')
+compile ('com.webank:wecross-java-sdk:1.2.1')
 ```
 
 - maven:
@@ -28,7 +28,7 @@ compile ('com.webank:wecross-java-sdk:1.2.0')
 <dependency>
     <groupId>com.webank</groupId>
     <artifactId>wecross-java-sdk</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 
