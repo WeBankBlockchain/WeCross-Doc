@@ -50,7 +50,7 @@ total: 3
 
 ## 部署Hyperledger Fabric跨链资源
 
-WeCross支持通过控制台向BCOS链上部署chaincode，部署步骤如下：
+WeCross支持通过控制台向Hyperledger Fabric链上部署chaincode，部署步骤如下：
 
 
 - 准备chaincode代码（以sacc为例）
