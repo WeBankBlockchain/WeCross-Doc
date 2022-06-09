@@ -105,7 +105,7 @@ cp dist/apps/* ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/plugin/
 # 切换至对应跨链路由的主目录
 cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/
 
-# 用脚本生成Fabric账户配置：账户类型（Fabric1.4），账户名（fabric_admin）
+# 用脚本生成Fabric账户配置：账户类型（Fabric2.0），账户名（fabric_admin）
 # 接入Fabric链，需要配置一个admin账户
 bash add_account.sh -t Fabric2.0 -n fabric2_admin 
 
