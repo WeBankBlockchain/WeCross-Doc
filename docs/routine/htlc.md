@@ -4,7 +4,17 @@
 
 如果你想**快速体验**跨链转账可以参考[体验WeCross](../tutorial/demo/demo.html#id3)。
 
-WeCross提供了[Solidity版本](https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/solidity/HTLC.sol)和[Golang版本](https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/chaincode/htlc/htlc.go)的htlc基类合约，基于htlc基类合约可以轻松开发适用于不同资产类型的htlc应用合约。
+WeCross提供了Solidity版本和Golang版本的htlc基类合约，基于htlc基类合约可以轻松开发适用于不同资产类型的htlc应用合约。
+
+Solidity版本源码：
+
+- [GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/solidity/HTLC.sol)
+- [Gitee访问链接](https://gitee.com/WeBank/WeCross-Console/blob/master/src/main/resources/contracts/solidity/HTLC.sol)
+
+Golang版本源码：
+
+- [GitHub访问链接](https://github.com/WeBankBlockchain/WeCross-Console/blob/master/src/main/resources/contracts/chaincode/htlc/htlc.go)
+- [Gitee访问链接](https://gitee.com/WeBank/WeCross-Console/blob/master/src/main/resources/contracts/chaincode/htlc/htlc.go)
 
 本章节以FISCO BCOS和Hyperledger Fabric的**示例资产合约**为例，演示如何实现两条异构链的资产互换。
 
@@ -150,7 +160,7 @@ Result: Query success. Please wait and use 'listResources' to check.
 path: payment.fabric.ledger, type: Fabric1.4, distance: 0
 
 # 实例化哈希时间锁合约，需要写入[己方资产合约名，channel]
-[WeCross.org1-admin]> fabricInstantiate payment.fabric.htlc ["Org1","Org2"] contracts/chaincode/htlc 1.0 GO_LANG default ["ledger","mychannel",]
+[WeCross.org1-admin]> fabricInstantiate payment.fabric.htlc ["Org1","Org2"] contracts/chaincode/htlc 1.0 GO_LANG default ["ledger","mychannel"]
 
 Result: Query success. Please wait and use 'listResources' to check.
 

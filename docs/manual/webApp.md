@@ -6,11 +6,11 @@
 
 本文分为[部署手册](#id1)和[使用手册](#id7)两部分，部署手册介绍WeCross网页管理平台的部署启动方式，使用手册介绍WeCross网页管理平台的实际操作和使用方式。
 
-## 部署手册
+## 1. 部署手册
 
 本手册主要介绍WeCross网页管理平台在使用和编译的环境要求、两种启动方式以及远程访问跨链路由的方式。
 
-### 环境要求
+### 1.1 环境要求
 
 - 为了您有最好的操作体验，请尽量使用[Chrome浏览器](https://www.google.cn/chrome/)，或使用支持ECMAScript 2015语法的浏览器，可参考链接：[caniuse](https://caniuse.com/es6)。*若使用过时的浏览器，有可能会出现部分功能不可使用的问题 :(*
 - 若您需要进行手动源码编译网页管理平台，请确保在您的编译环境中`node.js`和`npm`版本支持ECMAScript 2015语法，可参考链接：[node.green](https://node.green/)。推荐版本为`node.js >= 8.10, npm >= 6.4.1`。
@@ -26,11 +26,11 @@ npm -v
 6.4.1
 ```
 
-### 启动方式
+### 1.2 启动方式
 
 网页管理平台的启动方式分为两种方式：[快速体验](#id4)、[手动编译](#id6)。
 
-#### 快速体验
+#### 1.2.1 快速体验
 
 若您是从WeCross [快速体验](../tutorial/demo/index.html)搭建的跨链Demo，那么在Demo中已经默认完成对网页管理平台的下载部署工作，您可以直接从浏览器输入以下地址即可访问：
 
@@ -46,7 +46,7 @@ http://localhost:8250/s/index.html#/login
 
 在快速体验Demo中，已配置默认账号`org1-admin`，可输入密码`123456`进行登录体验。
 
-#### 手动编译
+#### 1.2.2 手动编译
 
 若您目前已经有跨链路由正在运行，请确认跨链路由的版本为`1.0.0`及以上，即可进行手动源码编译网页管理平台，进行跨链路由的访问。主要步骤如下：
 
@@ -54,6 +54,9 @@ http://localhost:8250/s/index.html#/login
 
 ```bash
 git clone https://github.com/WeBankBlockchain/WeCross-WebApp.git
+
+# 若因为网络原因出现长时间拉取代码失败，请尝试以下命令：
+git clone https://gitee.com/WeBank/WeCross-WebApp.git
 ```
 
 2.`npm`安装相关依赖，请注意[编译环境要求](#id2)；
@@ -85,7 +88,7 @@ cp -r ./WeCross-WebApp/dist/* ./routers-payment/127.0.0.1-8250-25500/pages/
 
 6.在浏览器中输入`[跨链路由IP]:[跨链路由端口]/s/index.html`访问WeCross网页管理平台，请注意[浏览器版本要求](#id2)。
 
-### 远程访问
+### 1.3 远程访问
 
 若需要网页管理平台进行远程访问跨链路由，请将跨链路由所在目录的 `conf/wecross.toml` 文件，修改`[rpc]`标签下的`address`字段为所需IP（如：0.0.0.0），再通过以下命令重启当前的路由模块，在浏览器输入远程IP进行访问。
 
@@ -93,7 +96,7 @@ cp -r ./WeCross-WebApp/dist/* ./routers-payment/127.0.0.1-8250-25500/pages/
 bash stop.sh && bash start.sh
 ```
 
-### 开启HTTPS访问
+### 1.4 开启HTTPS访问
 
 **注意：** 请确认跨链路由的配置 `wecross.toml`中已开启SSL配置：
 
@@ -113,21 +116,59 @@ bash stop.sh && bash start.sh
 
 ![](../images/webApp/chromeCert.png)
 
-## 使用手册
+### 1.5 可视化管理台变更请求URL前缀
+
+为了运维方便，所有请求都收敛到同一个URL前缀，支持修改URL前缀。
+
+**注意：** 该功能只支持v1.1.1版本以上的WeCross跨链路由，且只支持源码编译WeCross-WebApp。
+
+修改方式如下，本节以`/wecross/`为例（手动编译方法请参考本文1.2.2小节）：
+
+```shell
+# 手动修改.env.production文件
+# vim打开
+vim .env.production
+```
+
+修改`.env.production`文件，修改规则请参考`dotenv`规则[dotenv rules](https://github.com/motdotla/dotenv#rules)或[dotenv rules gitee](https://gitee.com/mirrors_motdotla/dotenv?_from=gitee_search#rules)
+
+```conf
+ENV = 'production'
+# base api
+# 原配置：
+# VUE_APP_BASE_API = '/'
+# 修改为
+VUE_APP_BASE_API = '/wecross/'
+```
+
+重新编译：
+
+```shell
+# 修改后的配置会在编译时注入配置
+npm run build:prod
+# 在dist生成静态文件，替换router跨链路由的pages中的静态文件，这里以~/wecross-demo/routers-payment/127.0.0.1-8250-25500/为例
+cp -r ./dist/* /wecross-demo/routers-payment/127.0.0.1-8250-25500/pages
+```
+
+再次访问（这里必须保证router跨链路由也配置了URL前缀，可参考链接[router主配置](./config.html#id3)中`urlPrefix`字段）：
+
+在浏览器输入 http://127.0.0.1:8250/wecross/s/index.html 访问。
+
+若需要进行控制台访问修改URL前置的跨链路由router，那么也需要配置控制台的配置，可参考[控制台配置](./console.html#id12)中的`urlPrefix`字段。
+
+## 2. 使用手册
 
 本手册主要介绍WeCross网页管理平台的功能模块，以及各个功能的使用方法。
 
-### 新手用户指引
+### 2.1 新手用户指引
 
 对于初次登录的新手用户，将会弹框引导用户进行操作。
-
-
 
 此外，可点击页面中 **“?”** 按钮获取更多帮助信息。
 
 ![](../images/webApp/helper.png)
 
-### 功能模块
+### 2.2 功能模块
 
 WeCross网页管理平台共包含以下功能模块：
 
@@ -140,7 +181,7 @@ WeCross网页管理平台共包含以下功能模块：
 - 事务管理模块：查看所有跨链事务详情，可在页面开启/执行/结束事务；
 - 其他模块：查看参考文档、快速提Issue、修改账号密码、账号登出网页等。
 
-### 登录与注册模块
+### 2.3 登录与注册模块
 
 在注册模块，用户可自行申请注册一个UA账号，界面如下图所示，用户填入用户名和密码，并填入正确的验证码即可。若出现验证码不能显示的问题，请尝试刷新页面，或点击验证码手动刷新。
 
@@ -152,7 +193,7 @@ WeCross网页管理平台共包含以下功能模块：
 
 ![](../images/webApp/login.png)
 
-### 平台首页展示模块
+### 2.4 平台首页展示模块
 
 如下图所示，在登录成功后会进入`平台首页`模块，展示出已部署的WeCross跨链网络的整体信息情况。总共可分为三个部分（在图中已圈出）：
 
@@ -162,7 +203,7 @@ WeCross网页管理平台共包含以下功能模块：
 
 ![](../images/webApp/homepage.png)
 
-### 账户管理模块
+### 2.5 账户管理模块
 
 在账户管理模块，用户可查看当前UA的详细信息，包括账户名、账户公钥以及链账户详情，并对链账户进行默认链账户设置、添加链账户、删除链账户的操作。UA账户和链链账户的详细介绍可参考：[链接](./account.html)。
 
@@ -180,19 +221,21 @@ WeCross网页管理平台共包含以下功能模块：
 
 添加Hyperledger Fabric链类型的账户方式如下图所示，目前只支持自行上传私钥、公钥证书的方式添加Fabric链类型账户。**注意：** Hyperledger Fabric账号只支持上传`PEM、KeyStore`类型的私钥、`CRT`格式的证书。
 
+MSPID为Fabric链账户所在的MembershipID，请以实际情况为准，这里以Org1MSP为例。（ **注意：** 输入错误将导致不能使用该链账户发起Fabric交易调用）
+
 ![](../images/webApp/addFabricAccount.png)
 
 点击链账户中的任意一行，可查看该链账户的详细信息，如下图所示。可点击红框1查看私钥详细信息，点击红框2删除该链账户。
 
 ![](../images/webApp/accountDetail.png)
 
-### 路由管理模块
+### 2.6 路由管理模块
 
 用户可通过该模块查看当前跨链路由的Peer路由信息，添加新的Peer路由信息，以及设置Peer路由的别名。值得注意的是，当一个孤立路由启动时添加Peer路由信息才有效，设置Peer路由别名仅在本机环境有效。
 
 ![](../images/webApp/routerManager.png)
 
-### 资源管理模块
+### 2.7 资源管理模块
 
 资源管理模块页面分为两大块，如下图所示。左边红框内的是`资源导航`，从`zone`到`chain`的树状结构，类似于Windows的资源管理界面。右边蓝框内的是`资源列表视图`，左边红框内的`资源导航`每一次点击叶子结点表示选定某条链，右边蓝框`资源列表视图`都会展示出该链的所有资源。
 
@@ -251,13 +294,13 @@ src
 | htlc              | [htlc](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/chaincode-webApp-demo/htlc.tar.gz)         | []         |
 | sacc              | [sacc](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/Resources/chaincode-webApp-demo/sacc.tar.gz)         | ["a","10"] |
 
-### 交易管理模块
+### 2.8 交易管理模块
 
 用户可通过交易管理模块查看所有跨链资源的每一笔交易详情，进行跨链资源调用。界面如下图所示，与[资源管理模块](#id13)相似，分为两大块，右边蓝框1内为`交易列表视图`，展示所选定的链所有交易信息，包含交易哈希、账户、区块高度、资源、调用方法和回执等信息，点击蓝框2内可查看这一行交易的回执详细信息。
 
 ![](../images/webApp/transactionManager.png)
 
-### 事务管理模块
+### 2.9 事务管理模块
 
 用户可通过事务管理模块查看所有跨链事务详情，可在页面开始、执行、提交/回滚事务。界面如下图所示，界面展示了当前WeCross网络的事务列表。列表包含事务开始时间、事务ID、跨链账户、锁定资源、事务状态的字段，事务状态包含`processing`、`rolledback`和`committed`三种状态。点击`执行步骤`，可查看该事务的详细步骤。若状态为`processing`，则可以点击`继续执行按钮`，恢复到该事务上下文。
 
@@ -280,7 +323,7 @@ src
 
 ![](../images/webApp/doneXA.png)
 
-### 其他模块
+### 2.10 其他模块
 
 可通过点击界面右上角的`用户`按钮，将弹出下拉框，可点击修改密码选项进入修改密码界面。
 

@@ -1,17 +1,24 @@
-# 基础组件部署
+# 手动多机组网
 
-本章节指导完成以下组件的部署，完成WeCross基础网络的搭建。
+你可以基于已有（或新部署）的区块链环境，搭建一个与[Demo](../demo/demo.md)相似的跨链多机器网络。
 
-* **[跨链路由](../../introduction/introduction.html#id2)（router）**：与区块链节点对接，并彼此互连，形成[跨链分区](../../introduction/introduction.html#id2)，负责跨链请求的转发
-* **账户服务（account manager）**：为跨链系统提供账户管理
-* **跨链控制台（console）**：查询和发送交易的操作终端
+![](../../images/tutorial/demo.png)
 
-![](../../images/tutorial/routers.png)
+操作步骤分为以下4项：
 
-进入操作目录：
+- **[基础组件部署](./basic_env.md)**：部署WeCross基础组件，包括跨链路由、账户服务、控制台、网页管理台
+- **[区块链接入与账户配置](./chains_config.md)**：将区块链接入WeCross跨链网络，并配置跨链账户
+- **[资源部署与操作](./resources.md)**：基于搭建好的WeCross环境部署和操作跨链资源
+- **[区块头验证配置](./security_config.md)**：配置区块头验证参数，完善跨链交易的验证逻辑
+
+手动组网教程以`~/wecross-networks/`目录下为例进行:
 
 ``` bash
-cd ~/wecross-networks
+# 若已搭建WeCross Demo，请先关闭所有服务
+
+# 创建手动组网的操作目录
+mkdir -p ~/wecross-networks && cd ~/wecross-networks
+
 ```
 
 ## 下载WeCross
@@ -31,15 +38,15 @@ bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_wec
 
 本例将构建两个跨链路由。首先创建一个`ipfile`配置文件，将需要构建的两个跨链路由信息（`ip:rpc_port:p2p_port`）按行分隔，保存到文件中。
 
-**注**：请确保机器的`8250`，`8251`, `25500`，`25501`端口没有被占用。
+**注**：请确保机器的`8250`， `25500`端口没有被占用。
 
 ```bash
 cd ~/wecross-networks
 vim ipfile
 
-# 在文件中键入以下内容
-127.0.0.1:8250:25500
-127.0.0.1:8251:25501
+# 在文件中键入以下内容 如果需要更多路由可按需添加
+196.128.0.1:8250:25500
+196.128.0.2:8250:25500
 ```
 
 生成好`ipfile`文件后，使用脚本[build_wecross.sh](../../manual/scripts.html#wecross)生成两个跨链路由。
@@ -49,8 +56,8 @@ vim ipfile
 bash ./WeCross/build_wecross.sh -n payment -o routers-payment -f ipfile
 
 # 成功输出如下信息
-[INFO] Create routers-payment/127.0.0.1-8250-25500 successfully
-[INFO] Create routers-payment/127.0.0.1-8251-25501 successfully
+[INFO] Create routers-payment/196.128.0.1-8250-25500 successfully
+[INFO] Create routers-payment/196.128.0.2-8250-25500 successfully
 [INFO] All completed. WeCross routers are generated in: routers-payment/
 ```
 
@@ -66,17 +73,17 @@ bash ./WeCross/build_wecross.sh -n payment -o routers-payment -f ipfile
 ``` bash
 tree routers-payment/ -L 1
 routers-payment/
-├── 127.0.0.1-8251-25501
-├── 127.0.0.1-8252-25502
+├── 196.128.0.1-8250-25500
+├── 196.128.0.2-8250-25500
 └── cert
 ```
 
-生成的跨链路由目录内容如下，以`127.0.0.1-8250-25500`为例。
+生成的跨链路由目录内容如下，以`196.128.0.1-8250-25500`为例。
 
 ```bash
 # 已屏蔽lib和pages目录，该目录存放所有依赖的jar包
-tree routers-payment/127.0.0.1-8250-25500/
-routers-payment/127.0.0.1-8250-25500/
+tree routers-payment/196.128.0.1-8250-25500/
+routers-payment/1196.128.0.1-8250-25500/
 ├── add_chain.sh      # 区块链配置文件创建脚本
 ├── apps
 │   └── WeCross.jar   # WeCross路由jar包
@@ -181,13 +188,46 @@ bash start.sh
 
 ## 启动跨链路由
 
+拷贝路由到具体机器，将 routers-payment/196.128.0.2-8250-25500 拷贝到196.128.0.2服务器(~/wecross-networks/routers-payment/……)
+
 ```bash
-# 启动 router-8250
-cd ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/
+# 启动 router-196.128.0.1
+cd ~/wecross-networks/routers-payment/196.128.0.1-8250-25500/
 bash start.sh
 
-# 启动 router-8251
-cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/
+# 启动 router-196.128.0.2
+cd ~/wecross-networks/routers-payment/196.128.0.2-8250-25500/conf
+#修改配置
+vim wecross.toml
+#修改[account-manager] server端口替换
+#修改[rpc] # rpc ip & port address = 0.0.0.0
+#修改[p2p] listenIP = ''0.0.0.0'
+[account-manager]
+    server =  '192.168.0.1:8340'
+    admin = 'org1-admin'
+    password = '123456'
+    sslKey = 'classpath:ssl.key'
+    sslCert = 'classpath:ssl.crt'
+    caCert = 'classpath:ca.crt'
+[rpc] # rpc ip & port
+    address = '0.0.0.0'
+    port = 8250
+    caCert = 'classpath:ca.crt'
+    sslCert = 'classpath:ssl.crt'
+    sslKey = 'classpath:ssl.key'
+    sslSwitch = 2  # disable ssl:2, SSL without client auth:1 , SSL with client and server auth: 0
+    webRoot = 'classpath:pages'
+    mimeTypesFile = 'classpath:conf/mime.types' # set the content-types of a file
+[p2p]
+    listenIP = '0.0.0.0'
+    listenPort = 25500
+    caCert = 'classpath:ca.crt'
+    sslCert = 'classpath:ssl.crt'
+    sslKey = 'classpath:ssl.key'
+    peers = ['192.168.0.1:25000']
+#修改[account-manager] server端口替换
+#保存退出切换目录
+cd ~/wecross-networks/routers-payment/196.128.0.2-8250-25500/
 bash start.sh
 ```
 
@@ -203,63 +243,13 @@ WeCross start successfully
 ``` bash
 netstat -napl | grep 8250
 netstat -napl | grep 25500
-netstat -napl | grep 8251
-netstat -napl | grep 25501
+
 ```
 
-## 部署控制台
+## 后续部署
 
-WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本`build_console.sh`搭建控制台。
+- **[区块链接入与账户配置](./chains_config.md)**：将区块链接入WeCross跨链网络，并配置跨链账户
+- **[资源部署与操作](./resources.md)**：基于搭建好的WeCross环境部署和操作跨链资源
+- **[区块头验证配置](./security_config.md)**：配置区块头验证参数，完善跨链交易的验证逻辑
 
-- 下载
-
-执行如下命令进行下载（提供[三种下载方式](../../version/download.html#id2)，可根据网络环境选择合适的方式进行下载），下载完成后在当前目录下生成`WeCross-Console`目录。
-
-```bash
-cd ~/wecross-networks
-bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_console.sh)
-
-# 若出现长时间下载WeCross-Console包失败，请尝试以下命令重新下载：
-bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_console.sh)
-```
-
-- 配置
-
-```bash
-cd ~/wecross-networks/WeCross-Console
-
-# 拷贝连接router所需的TLS证书，从生成的routers-payment/cert/sdk目录下拷贝
-cp ~/wecross-networks/routers-payment/cert/sdk/* conf/ 
-
-# 拷贝配置文件，并配置跨链路由RPC服务地址以及端口。此处采用默认配置，默认连接至本地8250端口。
-cp conf/application-sample.toml conf/application.toml
-```
-
-```eval_rst
-.. important::
-    - 若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/application.toml，详见 `控制台配置 <../../manual/console.html#id12>`_。
-```
-
-- 启动
-
-```bash
-bash start.sh
-```
-
-启动成功则输出如下信息，通过`help`可查看控制台帮助。
-
-```bash
-=================================================================================
-Welcome to WeCross console(v1.1.0)!
-Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
-=================================================================================
-```
-
-- 测试功能
-
-```bash
-# 正常进入，可先退出控制台，等待后续配置
-[WeCross]> quit
-```
-
-更多控制台命令及含义详见[控制台命令](../../manual/console.html#id14)。
+后续部署与单机部署接入一致。

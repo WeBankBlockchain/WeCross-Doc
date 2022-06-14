@@ -30,8 +30,14 @@ macOS对下载的包权限要求较为严格，必须同一个进程下载的才
 ``` bash
 # 清理环境
 cd ~/wecross-demo/ && bash clear.sh && cd ~ && rm -rf demo
-# 将三个步骤的命令拼成一条命令执行
-bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh) && cd demo && bash build.sh
+# 执行下载demo包
+bash <(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_demo.sh)
+
+# 若出现网络原因长时间无法下载，可执行以下命令下载demo包
+bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_demo.sh)
+
+# 进入demo文件夹，执行构建逻辑
+cd demo && bash build.sh
 ```
 
 ### 4. 问题：用户使用MySQL 8.0+ 社区版本时，出现WeCross-Account-Manager启动错误的情况

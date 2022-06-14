@@ -39,6 +39,7 @@ WeCross Router的配置位于`conf`目录下，分为：
 [common]
     zone = 'payment'
     visible = true
+    enableAccessControl = false
 
 [chains]
     path = 'classpath:chains'
@@ -54,6 +55,7 @@ WeCross Router的配置位于`conf`目录下，分为：
     sslSwitch = 2  # disable ssl:2, SSL without client auth:1 , SSL with client and server auth: 0
     webRoot = 'classpath:pages'
     mimeTypesFile = 'classpath:conf/mime.types' # set the content-types of a file
+    # urlPrefix = '/wecross' # v1.1.1新增配置，使用该配置可收敛所有请求URL前缀
 
 [p2p]
     listenIP = '0.0.0.0'
@@ -74,7 +76,7 @@ WeCross Router的配置位于`conf`目录下，分为：
     caCert = 'classpath:ca.crt'
     maxTotal = 200
     maxPerRoute = 8
-
+    allowNameToken = false
 
 #[[htlc]]
 #    selfPath = 'payment.bcos.htlc'
@@ -89,6 +91,7 @@ WeCross Router的配置位于`conf`目录下，分为：
 - `[common]` 通用配置
   - zone：字符串；跨链分区标识符；通常一种跨链业务/应用为一个跨链分区
   - visible：布尔；可见性；标明当前跨链分区下的资源是否对其他跨链分区可见
+  - enableAccessControl：布尔；是否开启权限控制，开启后，仅admin账户可访问所有资源，普通账户需admin账户在网页管理台中为其授权后才可访问相应资源
 - `[chains]` 链配置
   - path：字符串；链配置的根目录；WeCross从该目录下去加载各个链的配置
 - `[rpc]` RPC配置
@@ -102,6 +105,8 @@ WeCross Router的配置位于`conf`目录下，分为：
   - sslSwitch：整型，SL加密配置，0：双向验证，1：验Router证书，0：无验证
   - webRoot：字符串，网页管理平台页面存放位置
   - mimeTypesFile：字符串网页管理平台的content-type映射文件存放位置
+  - urlPrefix: 用于收敛请求URL，若不配置则默认为空，若配置则必须配置正确，支持数字英文和特殊符号( -, _ )，长度1-18
+    - 若需要进行控制台/网页管理平台访问修改URL前置的跨链路由router，可参考[控制台配置](./console.html#id12)中的`urlPrefix`字段，参考[网页管理平台配置](./webApp.html#url)中的配置方法。
 - `[p2p]` 组网配置
   - listenIP：字符串；P2P服务监听地址；一般为'0.0.0.0'
   - listenPort ：整型；P2P服务监听端口；WeCross Router之间交换消息的端口
@@ -120,6 +125,7 @@ WeCross Router的配置位于`conf`目录下，分为：
   - caCert：字符串；WeCross Router私钥路径
   - maxTotal（可选）：整型，连接Account Manager的连接池maxTotal参数，默认200
   - maxPerRoute（可选）：整型，连接Account Manager的连接池maxPerRoute参数，默认8
+  - allowNameToken (可选)：布尔类型，用于适配外部登录系统，设置为true后router取消对登录token的校验，此时删除header中的Authorization，在url中加上`&wecross-name-token=xxx`，即可直接将xxx作为登陆者id，在大多数场景下此配置应为false
 - `[htlc]` htlc配置（可选）
   - selfPath：本地配置的htlc合约资源路径
   - account1：可调用本地配置的htlc合约的账户
@@ -150,7 +156,15 @@ WeCross Router的配置位于`conf`目录下，分为：
 
 WeCross启动后会在`wecross.toml`中所指定的`chains`的根目录下去遍历所有的一级目录，目录名即为chain的名字，不同的目录代表不同的链，然后尝试读取每个目录下的`stub.toml`文件。
 
-目前WeCross支持的Stub类型包括：[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)和[Fabric](https://github.com/hyperledger/fabric)。
+目前WeCross支持的Stub类型包括：FISCO BCOS 和Hyperledger Fabric。
+
+FISCO BCOS访问链接：
+[GitHub访问链接](https://github.com/FISCO-BCOS/FISCO-BCOS)，
+[Gitee访问链接](https://github.com/FISCO-BCOS/FISCO-BCOS)
+
+Hyperledger Fabric访问链接：
+[GitHub访问链接](https://github.com/hyperledger/fabric)，
+[Gitee访问链接](https://gitee.com/mirrors/hyperledger-fabric)
 
 **配置FISCO BCOS**
 

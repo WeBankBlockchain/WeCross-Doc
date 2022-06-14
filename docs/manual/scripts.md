@@ -161,3 +161,65 @@ e.g
 - **`d`**：指定输出目录。
 - **`n`**：生成节点证书。
 - **`t`**：指定`cert.cnf`的路径
+
+## 升级脚本
+
+已经部署的环境需要升级至最新版本时可以使用升级脚本，包括`upgrade_wecross.sh、upgrade_console.sh、upgrade_account_manager.sh`三个工具，分别升级对应服务。
+**注意: 升级的版本与部署的版本必须保持兼容，才能够进行升级操作，各个版本之间的兼容性参见[WeCross程序版本](https://wecross.readthedocs.io/zh_CN/latest/docs/version/index.html)对应版本的兼容性章节。**
+
+- **upgrade_wecross.sh**
+
+升级`Router`
+
+```shell
+$ bash upgrade_wecross.sh -h
+
+Usage:
+    -s <upgrade dir>                    [Optional] the router's upgrade dir
+    -d <router dir>                     [Optional] the router's deploy dir
+    -h                                  [Optional] Help
+e.g
+    bash upgrade_wecross.sh -d ~/wecross-demo/router/127.0.0.1-8250-25500/
+```
+
+参数:
+- `-s`: 待升级的安装包的目录，默认为当前目录
+- `-d`: 已部署环境的目录
+
+- **upgrade_console.sh**
+
+升级控制台
+
+```shell
+$ bash upgrade_console.sh -h
+
+Usage:
+    -s <upgrade dir>                    [Optional] the WeCross Console's upgrade dir
+    -d <console's dir>                  [Optional] the WeCross Console's deploy dir
+    -h                                  [Optional] Help
+e.g
+    bash upgrade_console.sh -d ~/wecross-demo/WeCross-Console
+```
+
+参数:
+- `-s`: 待升级的安装包的目录，默认为当前目录
+- `-d`: 已部署环境的目录
+
+- **upgrade_account_manager.sh**
+
+```shell
+$ bash upgrade_account_manager.sh -h
+
+升级`Account-Manager`
+
+Usage:
+    -s <upgrade dir>                    [Optional] the WeCross Account Manager's upgrade dir
+    -d <account manager's dir>          [Optional] the WeCross Account Manager's deploy dir
+    -h                                  [Optional] Help
+e.g
+    bash upgrade_account_manager.sh -d ~/wecross-demo/WeCross-Account-Manager
+```
+
+参数:
+- `-s`: 待升级的安装包的目录，默认为当前目录
+- `-d`: 已部署环境的目录

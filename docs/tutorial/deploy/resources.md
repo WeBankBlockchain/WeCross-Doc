@@ -161,7 +161,7 @@ uaID    : 3059301306...
 
 `payment.bcos.HelloWorld`：对应于FISCO BCOS链上的HelloWorld.sol合约。
 
-`payment.fabric.sacc`：对应于Fabric链上的[sacc.go](https://github.com/hyperledger/fabric-samples/blob/v1.4.4/chaincode/sacc/sacc.go)合约。
+`payment.fabric.sacc`：对应于Fabric链上的sacc.go合约。
 
 `payment.xxxx.WeCrossHub`：每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考[《合约跨链》](../../dev/interchain.html)
 
@@ -243,13 +243,13 @@ http://localhost:8250/s/index.html#/login
 
 管理台中包含如下内容，点击链接进入相关操作指导。
 
-* [登录/注册](../../manual/webApp.html#id10)
-* [平台首页](../../manual/webApp.html#id11)
-* [账户管理](../../manual/webApp.html#id12)
-* [路由管理](../../manual/webApp.html#id13)
-* [资源管理](../../manual/webApp.html#id14)
-* [交易管理](../../manual/webApp.html#id15)
-* [事务管理](../../manual/webApp.html#id16)
+* [登录/注册](../../manual/webApp.html#id11)
+* [平台首页](../../manual/webApp.html#id12)
+* [账户管理](../../manual/webApp.html#id13)
+* [路由管理](../../manual/webApp.html#id14)
+* [资源管理](../../manual/webApp.html#id15)
+* [交易管理](../../manual/webApp.html#id16)
+* [事务管理](../../manual/webApp.html#id17)
 
 ``` eval_rst
 .. note::
