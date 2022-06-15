@@ -386,7 +386,7 @@ SDK API分为两大类型，一种是对跨链路由RPC接口调用的封装，�
     XAResponse xaResponse =
         weCrossRPC
             .startXATransaction(
-                "0001", new String[]{"payment.bcos", "payment.fabric"},)
+                "0001", new String[]{"payment.bcos", "payment.fabric"})
             .send();
 ```
 
