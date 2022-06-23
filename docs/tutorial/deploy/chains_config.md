@@ -79,7 +79,7 @@ uaID    : 3059301306...
 为当前登录的跨链账户添加用于发交易的链账户，示例如下（每次生成的账户地址有所不同，需按具体情况填入）。
 
 ``` bash
-# 参数： addChainAccount BCOS2.0 私钥位置 公钥位置 账户地址(address) 是否设置为发交易的默认链账户
+# 参数： addChainAccount BCOS2.0 公钥位置 私钥位置 账户地址(address) 是否设置为发交易的默认链账户
 [WeCross.org1-admin]> addChainAccount BCOS2.0 conf/accounts/accounts/0x4e89af80184147fcddc391c64ad673512236af67.public.pem conf/accounts/accounts/0x4e89af80184147fcddc391c64ad673512236af67.pem 0x4e89af80184147fcddc391c64ad673512236af67 true
 ```
 
