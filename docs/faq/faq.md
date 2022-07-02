@@ -61,7 +61,7 @@ cd demo && bash build.sh
 
 - 关闭强密码选项，或者尝试使用较低版本的MySQL。
 
-### 5. 问题：macOS用户执行完/wecross-demo/bulid.sh后，wecross-account-manager启动出现加密包相关报错
+### 5. 问题：macOS用户执行完wecross-demo/bulid.sh后，WeCross-Account-Manager启动出现加密包相关报错
 
 ```toml
 Caused by: java.lang.ClassCastException: org.bouncycastle.asn1.DLSequence cannot be cast to org.bouncycastle.asn1.ASN1Integer
