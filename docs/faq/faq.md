@@ -61,6 +61,24 @@ cd demo && bash build.sh
 
 - 关闭强密码选项，或者尝试使用较低版本的MySQL。
 
+### 5. 问题：macOS用户执行完/wecross-demo/bulid.sh后，wecross-account-manager启动出现加密包相关报错
+
+```toml
+Caused by: java.lang.ClassCastException: org.bouncycastle.asn1.DLSequence cannot be cast to org.bouncycastle.asn1.ASN1Integer
+	at org.bouncycastle.asn1.pkcs.RSAPrivateKey.<init>(Unknown Source) ~[bcprov-jdk15on-1.60.jar:1.60.0]
+	at org.bouncycastle.asn1.pkcs.RSAPrivateKey.getInstance(Unknown Source) ~[bcprov-jdk15on-1.60.jar:1.60.0]
+	at com.webank.wecross.account.service.utils.RSAUtility.createPrivateKey(RSAUtility.java:68) ~[wecross-account-manager-1.2.1.jar:?]
+	at com.webank.wecross.account.service.config.UAManagerConfig.initRSAKeyPairManager(UAManagerConfig.java:111) ~[wecross-account-manager-1.2.1.jar:?]
+	at com.webank.wecross.account.service.config.UAManagerConfig.newRestRequestFilter(UAManagerConfig.java:95) ~[wecross-account-manager-1.2.1.jar:?]
+	at com.webank.wecross.account.service.config.UAManagerConfig$$EnhancerBySpringCGLIB$$46a832ce.CGLIB$newRestRequestFilter$2(<generated>) ~[wecross-account-manager-1.2.1.jar:?]
+ ....
+```
+
+如果出现以上错误，大概率是依赖库的版本出现问题，可以从以下几个方面排查：
+- 检查是否使用了文档中推荐的JDK版本；
+- MacOS默认使用LibreSSL，需要换成OpenSSL；
+- 使用OpenSSL 3.x也会出现以上错误，需要使用OpenSSL 1.x；
+
 ## 非技术问题
 
 **Q：WeCross和FISCO BCOS是什么关系？**
