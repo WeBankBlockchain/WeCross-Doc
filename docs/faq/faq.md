@@ -61,7 +61,7 @@ cd demo && bash build.sh
 
 - 关闭强密码选项，或者尝试使用较低版本的MySQL。
 
-### 5. 问题：macOS用户执行完wecross-demo/bulid.sh后，WeCross-Account-Manager启动出现加密包相关报错
+### 5. 问题：MacOS用户执行wecross-demo/bulid.sh，WeCross-Account-Manager启动出现加密包相关报错
 
 ```toml
 Caused by: java.lang.ClassCastException: org.bouncycastle.asn1.DLSequence cannot be cast to org.bouncycastle.asn1.ASN1Integer
@@ -78,6 +78,15 @@ Caused by: java.lang.ClassCastException: org.bouncycastle.asn1.DLSequence cannot
 - 检查是否使用了文档中推荐的JDK版本；
 - MacOS默认使用LibreSSL，需要换成OpenSSL；
 - 使用OpenSSL 3.x也会出现以上错误，需要使用OpenSSL 1.x；
+
+### 6. 问题：MacOS m1用户执行wecross-demo/bulid.sh，拉取fabric docker image出错
+
+MacOS如果出现如下图类似的错误（无法下载arm64架构的image）：
+![image](https://user-images.githubusercontent.com/41276823/176999068-c8a9352a-5f62-4267-8261-16f5480b41f3.png)
+
+可以尝试在wecross-demo/frabic/build.sh中添加红框中shell命令，指定拉取amd64架构的image：
+![image](https://user-images.githubusercontent.com/41276823/176999128-0c418314-1aa9-4e4c-811f-b086a1c83f7a.png)
+
 
 ## 非技术问题
 
