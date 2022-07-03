@@ -81,12 +81,22 @@ Caused by: java.lang.ClassCastException: org.bouncycastle.asn1.DLSequence cannot
 
 ### 6. 问题：MacOS m1用户执行wecross-demo/bulid.sh，拉取fabric docker image出错
 
-MacOS如果出现如下图类似的错误（无法下载arm64架构的image）：
+#### 6.1 MacOS m1如果出现如下图类似的错误（无法下载arm64架构的image）：
 ![image](https://user-images.githubusercontent.com/41276823/176999068-c8a9352a-5f62-4267-8261-16f5480b41f3.png)
 
 可以尝试在wecross-demo/frabic/build.sh中添加红框中shell命令，指定拉取amd64架构的image：
 ![image](https://user-images.githubusercontent.com/41276823/176999128-0c418314-1aa9-4e4c-811f-b086a1c83f7a.png)
 
+#### 6.2 MacOS m1如果解决了上面这个问题后，继续等待build.sh脚本执行，也许还会出现下面这个错误：
+![image](https://user-images.githubusercontent.com/41276823/177021729-98b394aa-85f6-44c2-84a3-b83fc2f316b7.png)
+
+这个问题的出现是由于wecross-demo/fabric/fabric-samples-1.4.4/first-network/byfn.sh取了本地go env的GOARCH
+![image](https://user-images.githubusercontent.com/41276823/177021785-d61c590a-5f5e-480f-8b12-548b1558ca03.png)
+
+如果一些m1的用户装的amd版本的go那就不会出现这个问题，但是如果装的arm版本的go就会出现这个问题，提供其中一些解决思路：
+- 把脚本从`$(go env GOARCH)"-"$OPTARG`改为`"amd64-"$OPTARG`；（实际这个不好用，因为再次执行build.sh脚本，first-network目录会重装，相当于你改的内容会被清空）
+- 把本机的go版本从arm64重装为amd64；（这个其实很麻烦，因为go pkg包重装时会删除原版本的go，相当于又要重新配置一遍go env，而且本来在m1上也不应该用amd64版本的go）
+- 执行`go env -w GOARCH=amd64`，将go env GOARCH的值改为amd64；（这个虽然方便，但是记得后面改回arm64！因为不知道会不会对其他项目产生影响！）
 
 ## 非技术问题
 
