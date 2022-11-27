@@ -38,7 +38,7 @@ type WeCrossRPC interface {
 * 资源接口
 
 ```go
-func NewResource(rpc.WeCrossRPC, string) *Resource {}
+func NewResource(weCrossRPC rpc.WeCrossRPC, path string) *Resource {}
 func (rsc *Resource) Check() *common.WeCrossSDKError {}
 func (rsc *Resource) IsActive() bool {}
 func (rsc *Resource) Detail() (*resources.ResourceDetail, *common.WeCrossSDKError) {}
