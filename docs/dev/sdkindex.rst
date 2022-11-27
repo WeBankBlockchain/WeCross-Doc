@@ -8,3 +8,5 @@
    
    sdk.md
    api.md
+   go_sdk.md
+   go_sdk_api.md

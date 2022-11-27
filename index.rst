@@ -23,7 +23,8 @@ WeCross是由微众银行自主研发并完全开源的区块链跨链协作平�
     - 快速体验WeCross，请参考 `BCOS-Fabric Demo <./docs/tutorial/demo/demo.html>`_
     - `网页管理平台 <./docs/manual/webApp.html>`_：**可视化跨链管理台**，账户注册与登录，跨链资源管理，跨链交易管理等
     - `终端控制台 <./docs/manual/console.html>`_：**交互式命令行工具**，部署和调用跨链资源，发起跨链事务等
-    - `Java-SDK <./docs/dev/sdk.html>`_：提供访问跨链跨链、调用跨链资源的接口
+    - `Java-SDK <./docs/dev/sdk.html>`_：提供Java项目访问跨链跨链、调用跨链资源的接口
+    - `Go-SDK <./docs/dev/go_sdk.html>`_：提供Go项目问跨链跨链、调用跨链资源的接口
     - JSON-RPC接口，请参考 `JSON-RPC API <./docs/dev/rpc.html>`_
 
 .. admonition:: 关键特性
