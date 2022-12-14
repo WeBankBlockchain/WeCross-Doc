@@ -83,7 +83,7 @@ WeCross控制台为了方便用户使用，还提供了交互式的使用方式�
 
 ```eval_rst
 .. important::
-    前置条件：部署WeCross请参考 `快速部署 <../tutorial/deploy/basic_env.md>`_。
+    前置条件：部署WeCross请参考 `快速部署 <../tutorial/deploy/basic_env.md>`_ 。
 ```
 
 ### 5.1 获取控制台

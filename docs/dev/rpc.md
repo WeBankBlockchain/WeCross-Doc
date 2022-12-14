@@ -1,6 +1,6 @@
 # JSON-RPC API
 
-WeCross提供了[Java-SDK](./sdk.html)，方便Java项目直接引入，其它语言的项目则可通过调用JSON-RPC API完成跨链开发。
+WeCross提供了[Java-SDK](./sdk.html)与[Go-SDK](./go_sdk.html)，方便Java项目与Go项目直接引入，其它语言的项目则可通过调用JSON-RPC API完成跨链开发。
 
 ## 状态码
 

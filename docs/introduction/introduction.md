@@ -26,7 +26,7 @@ WeCross 着眼应对区块链行业现存挑战，不局限于满足同构区块
 * **网页管理平台**
   * 可视化操作界面
   * 查询跨链信息，发送调用请求，操作跨链事务
-* **跨链 SDK（WeCross Java SDK）**
+* **跨链 SDK（WeCross Java SDK, WeCross Go SDK）**
   * WeCross开发工具包，供开发者调用WeCross
   * 集成于各种跨链APP中，提供统一的调用接口
   * 与跨链路由建立连接，调用跨链路由
