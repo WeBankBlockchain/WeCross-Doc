@@ -7,6 +7,7 @@
    :maxdepth: 1
    
    download.md
+   v1.3.0.md
    v1.2.1.md
    v1.2.0.md
    v1.1.1.md

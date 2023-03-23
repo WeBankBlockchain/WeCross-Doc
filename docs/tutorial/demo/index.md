@@ -23,7 +23,7 @@ bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_dem
 **Demo 场景**
 
 1. Demo：[混合场景（Fabric、FISCO BCOS 国密非国密、多群组）](demo_cross_all.md)
-2. Demo：[跨平台 FISCO BCOS & Fabric](demo.md) 
+2. Demo：[跨平台 FISCO BCOS & Fabric](demo.md)
 
    * [跨链资源操作](./demo.html#id2)
    * [跨链转账（HTLC）](./demo.html#id3)
@@ -31,6 +31,7 @@ bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_dem
 3. Demo：[跨平台 FISCO BCOS & Fabric2](demo_cross_fabric2.md)
 4. Demo：[跨多群组](demo_cross_groups.md)
 5. Demo：[跨国密、非国密](demo_cross_gm.md)
+6. Demo：[跨FISCO BCOS 3.+ & 2.+](demo_cross_bcos3.md)
 
 实际情况下，WeCross的场景不仅限于两条链，用户可配置接入多条各种类型的区块链。
 
@@ -40,6 +41,7 @@ bash <(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_dem
    :maxdepth: 1
    
    demo_cross_all.md
+   demo_cross_bcos3.md
    demo.md
    demo_cross_fabric2.md
    demo_cross_groups.md
