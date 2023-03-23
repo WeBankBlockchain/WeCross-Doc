@@ -182,7 +182,6 @@ function interchainInvoke(
  *  @param _num   获取数量
  *  @return       请求列表，JSON格式
  */ 
-funct
 function getInterchainRequests(
     uint256 _num
 ) public view returns(string memory)
