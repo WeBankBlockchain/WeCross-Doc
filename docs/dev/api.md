@@ -412,8 +412,8 @@ SDK API分为两大类型，一种是对跨链路由RPC接口调用的封装，�
 ```java
     XAResponse xaResponse =
         weCrossRPC
-            .commitTransaction(
-                "0001", new String[]{"payment.bcos", "payment.fabric"},)
+            .commitXATransaction(
+                "0001", new String[]{"payment.bcos", "payment.fabric"})
             .send();
 ```
 
@@ -439,8 +439,8 @@ SDK API分为两大类型，一种是对跨链路由RPC接口调用的封装，�
 ```java
     XAResponse xaResponse =
         weCrossRPC
-            .rollbackTransaction(
-                "0001", new String[]{"payment.bcos", "payment.fabric"},)
+            .rollbackXATransaction(
+                "0001", new String[]{"payment.bcos", "payment.fabric"})
             .send();
 ```
 
@@ -466,8 +466,8 @@ SDK API分为两大类型，一种是对跨链路由RPC接口调用的封装，�
 ```java
     XATransactionResponse xaTransactionResponse =
         weCrossRPC
-            .getTransactionInfo(
-                "0001", new String[]{"payment.bcos", "payment.fabric"},)
+            .getXATransaction(
+                "0001", new String[]{"payment.bcos", "payment.fabric"})
             .send();
 ```
 
