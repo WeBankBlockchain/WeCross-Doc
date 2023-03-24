@@ -80,11 +80,19 @@ e.g
 脚本`add_chain.sh`用于在router中创建特定区块链的连接配置
 
 ```bash
-Usage: 
-    -t <type>                           [Required] type of chain, BCOS2.0 or GM_BCOS2.0 or Fabric1.4
+Usage:
+    -t <type>                           [Required] type of chain: BCOS2.0, GM_BCOS2.0, BCOS3_ECDSA_EVM, BCOS3_GM_EVM, Fabric1.4, Fabric2.0
     -n <name>                           [Required] name of chain
-    -d <dir>                            [Optional] generated target_directory, default conf/stubs/
+    -d <dir>                            [Optional] generated target_directory, default conf/chains/
     -h                                  [Optional] Help
+e.g
+    bash add_chain.sh -t BCOS2.0 -n my_bcos_chain
+    bash add_chain.sh -t GM_BCOS2.0 -n my_gm_bcos_chain
+    bash add_chain.sh -t BCOS3_ECDSA_EVM -n my_bcos3_chain
+    bash add_chain.sh -t BCOS3_GM_EVM -n my_gm_bcos3_chain
+    bash add_chain.sh -t Fabric1.4 -n my_fabric_chain
+    bash add_chain.sh -t Fabric2.0 -n my_fabric_chain
+
 ```
 
 - **`-t`**：连接类型，按照插件选择，如BCOS2.0或Fabric1.4
@@ -93,6 +101,7 @@ Usage:
 
 不同的链有不同的操作方法，具体操作请查看（操作后，请重启router，让router重启加载配置）：
 
+- [BCOS3.0 接入配置](../stubs/bcos3.md)
 - [BCOS2.0 接入配置](../stubs/bcos.md)
 - [Fabric1.4 接入配置](../stubs/fabric.md)
 
@@ -110,7 +119,7 @@ $ bash deploy_system_contract.sh -h
 Usage:
     -c <chain name>                     [Required] chain name
     -u <upgrade>                        [Optional] upgrade proxy/hub contract if proxy/hub contract has been deployed, default deploy proxy/hub contract
-    -t <type>                           [Required] type of chain, BCOS2.0 or GM_BCOS2.0 or Fabric1.4
+    -t <type>                           [Required] type of chain, support: BCOS2.0, GM_BCOS2.0, Fabric1.4, Fabric2.0, BCOS3_ECDSA_EVM, BCOS3_GM_EVM
     -P <proxy contract>                 [Optional] upgrade/deploy operation on proxy contract
     -H <hub contract>                   [Optional] upgrade/deploy operation on hub contract
     -h                                  [Optional] Help
@@ -119,13 +128,22 @@ e.g
     bash deploy_system_contract.sh -t BCOS2.0    -c chains/bcos -H
     bash deploy_system_contract.sh -t BCOS2.0    -c chains/bcos -u -P
     bash deploy_system_contract.sh -t BCOS2.0    -c chains/bcos -u -H
+    bash deploy_system_contract.sh -t BCOS3_ECDSA_EVM    -c chains/bcos3 -P
+    bash deploy_system_contract.sh -t BCOS3_ECDSA_EVM    -c chains/bcos3 -H
+    bash deploy_system_contract.sh -t BCOS3_ECDSA_EVM    -c chains/bcos3 -u -P
+    bash deploy_system_contract.sh -t BCOS3_ECDSA_EVM    -c chains/bcos3 -u -H
     bash deploy_system_contract.sh -t Fabric1.4  -c chains/fabric -P
     bash deploy_system_contract.sh -t Fabric1.4  -c chains/fabric -H
     bash deploy_system_contract.sh -t Fabric1.4  -c chains/fabric -u -P
     bash deploy_system_contract.sh -t Fabric1.4  -c chains/fabric -u -H
+    bash deploy_system_contract.sh -t Fabric2.0  -c chains/fabric2 -P
+    bash deploy_system_contract.sh -t Fabric2.0  -c chains/fabric2 -H
+    bash deploy_system_contract.sh -t Fabric2.0  -c chains/fabric2 -u -P
+    bash deploy_system_contract.sh -t Fabric2.0  -c chains/fabric2 -u -H
+
 ```
 
-- **`-t`**：操作类型，根据链的类型选择，支持`BCOS2.0`、`GM_BCOS2.0`、`Fabric1.4`三种类型
+- **`-t`**：操作类型，根据链的类型选择，支持`BCOS3_ECDSA_EVM`、`BCOS3_GM_EVM`、`BCOS2.0`、`GM_BCOS2.0`、`Fabric1.4`五种类型
 - **`-c`**：链配置路径，链配置位于`chains`目录下
 - **`-u`**：更新合约操作，默认情况下为部署合约操作，只有在合约已经部署时才可以更新
 - **`-P`**：操作对象为代理合约
