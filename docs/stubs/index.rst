@@ -6,6 +6,7 @@
 .. toctree::
    :maxdepth: 1
    
+   bcos3.md
    bcos.md
    fabric.md
    fabric2.md

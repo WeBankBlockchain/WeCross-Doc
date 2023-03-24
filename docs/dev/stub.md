@@ -656,7 +656,10 @@ WeCross提供一个`Java`模板工程，加快用户开发WeCross Stub的速度�
   ```
 
 ### 参考链接
-[WeCross-BCOS-Stub](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub)
+
+[WeCross-BCOS3-Stub](https://github.com/WeBankBlockchain/WeCross-BCOS3-Stub)
+
+[WeCross-BCOS2-Stub](https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub)
 
 [WeCross-Fabric-Stub](https://github.com/WeBankBlockchain/WeCross-Fabric1-Stub)  
 

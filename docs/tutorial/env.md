@@ -10,7 +10,7 @@ WeCross负责管理多个Stub并与多条链通讯，同时作为Web Server提�
 +==========+=========+=============================================+
 | CPU      | 1.5GHz  | 2.4GHz                                      |
 +----------+---------+---------------------------------------------+
-| 内存     | 4GB     | 8GB                                         |
+| 内存     | 8GB     | 16GB                                         |
 +----------+---------+---------------------------------------------+
 | 核心     | 4核     | 8核                                         |
 +----------+---------+---------------------------------------------+
@@ -47,7 +47,7 @@ sudo apt-get install -y openssl curl expect tree fontconfig
 sudo yum install -y openssl curl expect tree
 
 # macOS
-brew install openssl curl expect tree md5sha1sum
+brew install openssl@1.1 curl expect tree md5sha1sum
 ```
 
 运行WeCross Demo时，需安装
