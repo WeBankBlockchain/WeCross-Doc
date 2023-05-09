@@ -46,7 +46,7 @@ vim ipfile
 
 ```bash
 # -f 表示以文件为输入
-bash ./WeCross/build_wecross.sh -n payment -o routers-payment -f ipfile
+bash ./WeCross/build_wecross.sh -n payment -o routers-payment -f ../ipfile
 
 # 成功输出如下信息
 [INFO] Create routers-payment/127.0.0.1-8250-25500 successfully
